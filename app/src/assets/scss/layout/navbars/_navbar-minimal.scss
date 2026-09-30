@@ -1,0 +1,16 @@
+// ══════════════════════════════════════════════════════════════════
+// NAVBAR VARIANT: Minimal
+// Clean navbar with subtle light border.
+// Used with: Minimal
+// ══════════════════════════════════════════════════════════════════
+
+.navbar {
+  border-color: $border-color-light;
+}
+
+// ── Dark Mode ────────────────────────────────────
+[data-theme="dark"] {
+  .navbar {
+    border-color: rgba($dark-border-color, 0.5) !important;
+  }
+}

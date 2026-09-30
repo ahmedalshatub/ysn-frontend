@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Hide browser default password reveal button */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-password-reveal-button {
+  display: none !important;
+  appearance: none !important;
+}

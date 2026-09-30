@@ -1,0 +1,61 @@
+// ══════════════════════════════════════════════════════════════════
+// SIDEBAR VARIANT: Compact Dark
+// Dark compact sidebar with smaller paddings.
+// Navbar: Standard │ Variables: "Compact Dark Sidebar" in _variables.scss
+// ══════════════════════════════════════════════════════════════════
+
+.sidebar-dark {
+  background-color: $sidebar-bg;
+  border-color: $sidebar-border !important;
+}
+
+.sidebar-dark-alt {
+  background-color: $sidebar-alt-bg;
+  border-color: $sidebar-alt-border !important;
+}
+
+.sidebar-dark-border {
+  border-color: $sidebar-border !important;
+}
+
+.sidebar-dark-logo {
+  border-color: $sidebar-logo-border !important;
+}
+
+.sidebar-dark-item-active {
+  background-color: $sidebar-item-active-bg;
+  color: $sidebar-item-active-text;
+}
+
+.sidebar-dark-item-inactive {
+  color: $sidebar-item-inactive-text;
+
+  &:hover {
+    background-color: $sidebar-item-hover-bg;
+    color: $sidebar-item-hover-text;
+  }
+}
+
+.sidebar-dark-sub-active {
+  color: $sidebar-sub-active-text;
+}
+
+.sidebar-dark-sub-inactive {
+  color: $sidebar-sub-inactive-text;
+
+  &:hover {
+    color: $sidebar-sub-hover-text;
+  }
+}
+
+.sidebar-dark-group-title {
+  color: $sidebar-group-title-text;
+}
+
+.sidebar-dark-user-card {
+  background-color: $sidebar-user-card-bg;
+}
+
+.sidebar-dark-online-text {
+  color: $sidebar-online-text;
+}

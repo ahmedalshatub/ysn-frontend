@@ -1,0 +1,11 @@
+.watermark-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.watermark-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}

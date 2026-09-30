@@ -1,0 +1,22 @@
+.qrcode-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  --qr-bg: #ffffff;
+  --qr-fg: #000000;
+}
+
+.qrcode-bordered {
+  padding: 0.75rem;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  background-color: $card-bg;
+}
+
+.qrcode-canvas {
+  display: block;
+}
+
+[data-theme="dark"] {
+  .qrcode-bordered { border-color: $dark-border-color; background-color: $dark-card-bg; }
+}

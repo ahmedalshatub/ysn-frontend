@@ -1,0 +1,83 @@
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  gap: 0.75rem;
+}
+
+.result-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.result-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.result-icon-success {
+  background-color: rgba($color-success, 0.1);
+  .result-icon { color: $color-success; }
+}
+
+.result-icon-error {
+  background-color: rgba($color-danger, 0.1);
+  .result-icon { color: $color-danger; }
+}
+
+.result-icon-warning {
+  background-color: rgba($color-warning, 0.1);
+  .result-icon { color: $color-warning; }
+}
+
+.result-icon-info {
+  background-color: rgba($color-info, 0.1);
+  .result-icon { color: $color-info; }
+}
+
+.result-title {
+  font-size: $font-xl;
+  font-weight: 700;
+  color: $heading-color;
+}
+
+.result-subtitle {
+  font-size: $font-sm;
+  color: $text-secondary;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.result-extra {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+[data-theme="dark"] {
+  .result-title { color: $dark-heading-color; }
+  .result-subtitle { color: $dark-text-secondary; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .result-container {
+    text-align: center;
+  }
+}

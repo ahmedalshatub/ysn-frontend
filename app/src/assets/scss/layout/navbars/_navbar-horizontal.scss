@@ -1,0 +1,120 @@
+// ══════════════════════════════════════════════════════════════════
+// HORIZONTAL NAV: Light
+// Light horizontal navigation bar for HorizontalAuthLayout.
+// ══════════════════════════════════════════════════════════════════
+
+.horizontal-nav {
+  background-color: $surface-bg;
+  border-color: $border-color;
+}
+
+.horizontal-nav-item {
+  color: $text-secondary;
+
+  &:hover {
+    background-color: $surface-secondary;
+    color: $heading-color;
+  }
+
+  &.horizontal-nav-item-active {
+    background-color: rgba($color-primary, 0.08);
+    color: $color-primary;
+  }
+}
+
+.horizontal-dropdown {
+  background-color: $surface-bg;
+  border: 1px solid $border-color;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+  .horizontal-dropdown-item {
+    color: $text-secondary;
+
+    &:hover {
+      background-color: $surface-secondary;
+      color: $heading-color;
+    }
+
+    &.horizontal-dropdown-item-active {
+      background-color: rgba($color-primary, 0.08);
+      color: $color-primary;
+    }
+  }
+}
+
+.horizontal-scroll-btn {
+  color: $text-secondary;
+
+  &:hover {
+    color: $heading-color;
+  }
+}
+
+.horizontal-scroll-area {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .horizontal-nav {
+    direction: rtl;
+  }
+
+  .horizontal-scroll-btn {
+    svg {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+// ── Dark Mode ────────────────────────────────────
+[data-theme="dark"] {
+  .horizontal-nav {
+    background-color: $dark-body-bg;
+    border-color: $dark-border-color;
+  }
+  .horizontal-nav-item {
+    color: $dark-text-muted;
+    &:hover {
+      background-color: $dark-surface-tertiary;
+      color: $dark-body-text;
+    }
+    &.horizontal-nav-item-active {
+      background-color: $dark-surface-tertiary;
+      color: lighten($color-primary, 15%);
+    }
+  }
+  .horizontal-dropdown {
+    background-color: $dark-surface-bg;
+    border-color: $dark-border-color;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    .horizontal-dropdown-item {
+      color: $dark-text-muted;
+      &:hover {
+        background-color: $dark-surface-tertiary;
+        color: $dark-body-text;
+      }
+      &.horizontal-dropdown-item-active {
+        background-color: $dark-surface-tertiary;
+        color: lighten($color-primary, 15%);
+      }
+    }
+  }
+  .horizontal-scroll-btn {
+    color: $dark-text-muted;
+    &:hover {
+      color: $dark-body-text;
+    }
+  }
+}

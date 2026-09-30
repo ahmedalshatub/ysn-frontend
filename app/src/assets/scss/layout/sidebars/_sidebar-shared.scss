@@ -1,0 +1,162 @@
+// ══════════════════════════════════════════════════════════════════
+// SHARED SIDEBAR STYLES
+// These styles are used by ALL sidebar variants. Always keep imported.
+// ══════════════════════════════════════════════════════════════════
+
+.sidebar-item-active {
+  background-color: rgba($color-primary, 0.08);
+  color: $color-primary;
+}
+
+.sidebar-item-inactive {
+  color: $text-secondary;
+
+  &:hover {
+    background-color: $surface-tertiary;
+    color: $heading-color;
+  }
+}
+
+.sidebar-sub-active {
+  color: $color-primary;
+}
+
+.sidebar-sub-inactive {
+  color: $text-muted;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.sidebar-submenu-border {
+  border-color: $border-color !important;
+}
+
+.sidebar-tooltip {
+  background-color: $heading-color;
+  color: #ffffff;
+  box-shadow: $shadow-lg;
+}
+
+.sidebar-tooltip-sub-link {
+  color: rgba(255, 255, 255, 0.7);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+}
+
+.sidebar-tooltip-divider {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.sidebar-close-btn {
+  color: $text-muted;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+  }
+}
+
+.sidebar-online-dot {
+  background-color: #34d399;
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .sidebar-classic,
+  .sidebar-bordered,
+  .sidebar-compact,
+  .sidebar-minimal,
+  .sidebar-shadow {
+    border-right: none;
+    border-left: 1px solid $sidebar-border;
+  }
+
+  .sidebar-item-icon {
+    margin-right: 0;
+    margin-left: 0.75rem;
+  }
+
+  .sidebar-sub-menu {
+    padding-left: 0;
+    padding-right: 2.5rem;
+  }
+
+  .sidebar-sub-dot {
+    left: auto;
+    right: 1.25rem;
+  }
+
+  .sidebar-chevron {
+    margin-left: 0;
+    margin-right: auto;
+    transform: rotate(180deg);
+
+    &.sidebar-chevron-open {
+      transform: rotate(90deg);
+    }
+  }
+
+  .sidebar-dual {
+    flex-direction: row-reverse;
+  }
+
+  .sidebar-dual-icon-bar {
+    border-right: none;
+    border-left: 1px solid;
+  }
+
+  .sidebar-dual-menu-panel {
+    border-right: none;
+    border-left: 1px solid;
+  }
+
+  .sidebar-tooltip {
+    left: auto;
+    right: 100%;
+    margin-right: 0.5rem;
+    margin-left: 0;
+  }
+}
+
+// ── Dark Mode ────────────────────────────────────
+[data-theme="dark"] {
+  .sidebar-item-active {
+    background-color: $dark-surface-tertiary;
+    color: lighten($color-primary, 15%);
+  }
+  .sidebar-item-inactive {
+    color: $dark-text-muted;
+    &:hover {
+      background-color: rgba($dark-surface-tertiary, 0.6);
+      color: $dark-body-text;
+    }
+  }
+  .sidebar-sub-active {
+    color: lighten($color-primary, 15%);
+  }
+  .sidebar-sub-inactive {
+    color: $dark-text-muted;
+    &:hover {
+      color: $dark-text-secondary;
+    }
+  }
+  .sidebar-submenu-border {
+    border-color: $dark-border-color !important;
+  }
+  .sidebar-tooltip {
+    background-color: $dark-surface-tertiary;
+    color: $dark-body-text;
+  }
+  .sidebar-close-btn {
+    color: $dark-text-muted;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+    }
+  }
+}

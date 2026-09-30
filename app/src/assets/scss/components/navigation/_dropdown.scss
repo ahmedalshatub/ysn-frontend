@@ -1,0 +1,182 @@
+@keyframes dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dropdown-enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.97);
+  transform-origin: top;
+  transition: opacity $transition-fast, visibility $transition-fast, transform $transition-fast;
+  background-color: $card-bg;
+
+  &.dropdown-menu-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    animation: dropdown-enter 0.15s ease-out;
+  }
+
+  &.dropdown-menu-up {
+    transform-origin: bottom;
+
+    &.dropdown-menu-open {
+      animation: dropdown-enter-up 0.15s ease-out;
+    }
+  }
+}
+
+.dropdown-menu-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: darken($border-color, 5%) transparent;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: darken($border-color, 5%);
+    border-radius: 3px;
+  }
+}
+
+.dropdown-panel-header {
+  border-bottom: 1px solid $border-color-light;
+}
+
+.dropdown-panel-footer {
+  border-top: 1px solid $border-color-light;
+}
+
+.dropdown-divider {
+  border-top-color: $border-color-light;
+}
+
+.dropdown-header-text {
+  color: $text-muted;
+}
+
+.dropdown-item-default {
+  color: $body-text;
+
+  &:hover {
+    background-color: $surface-secondary;
+    color: $heading-color;
+  }
+}
+
+.dropdown-item-default-icon {
+  color: $text-muted;
+}
+
+.dropdown-item-danger-style {
+  color: $color-danger;
+
+  &:hover {
+    background-color: $color-danger-lighter;
+    color: darken($color-danger, 8%);
+  }
+}
+
+.dropdown-item-danger-icon {
+  color: lighten($color-danger, 10%);
+}
+
+.dropdown-item-success-style {
+  color: $color-success;
+
+  &:hover {
+    background-color: rgba($color-success, 0.06);
+    color: darken($color-success, 8%);
+  }
+}
+
+.dropdown-item-success-icon {
+  color: lighten($color-success, 10%);
+}
+
+.dropdown-item-warning-style {
+  color: $color-warning;
+
+  &:hover {
+    background-color: rgba($color-warning, 0.06);
+    color: darken($color-warning, 8%);
+  }
+}
+
+.dropdown-item-warning-icon {
+  color: lighten($color-warning, 5%);
+}
+
+.dropdown-item-active-bg {
+  background-color: rgba($color-primary, 0.06);
+  color: $color-primary;
+}
+
+.dropdown-item-active-icon {
+  color: $color-primary;
+}
+
+.dropdown-item-desc {
+  color: $text-muted;
+}
+
+[data-theme="dark"] {
+  .dropdown-menu { background-color: $dark-card-bg; }
+  .dropdown-menu-scroll { scrollbar-color: $dark-border-color transparent; &::-webkit-scrollbar-thumb { background-color: $dark-border-color; } }
+  .dropdown-panel-header { border-bottom-color: $dark-border-color; }
+  .dropdown-panel-footer { border-top-color: $dark-border-color; }
+  .dropdown-divider { border-top-color: $dark-border-color; }
+  .dropdown-header-text { color: $dark-text-muted; }
+  .dropdown-item-default { color: $dark-body-text; &:hover { background-color: $dark-surface-secondary; color: $dark-heading-color; } }
+  .dropdown-item-default-icon { color: $dark-text-muted; }
+  .dropdown-item-active-bg { background-color: rgba($color-primary, 0.1); color: $color-primary; }
+  .dropdown-item-desc { color: $dark-text-muted; }
+}
+
+[data-theme="dark"] {
+  .dropdown-menu { background-color: $dark-card-bg; border-color: $dark-card-border; box-shadow: $dark-dropdown-shadow; }
+  .dropdown-menu-scroll { scrollbar-color: $dark-surface-tertiary transparent; &::-webkit-scrollbar-thumb { background-color: $dark-surface-tertiary; } }
+  .dropdown-panel-header { border-bottom-color: $dark-border-color; }
+  .dropdown-panel-footer { border-top-color: $dark-border-color; }
+  .dropdown-divider { border-top-color: $dark-border-color; }
+  .dropdown-header-text { color: $dark-text-muted; }
+  .dropdown-item-default { color: $dark-body-text; &:hover { background-color: $dark-surface-secondary; color: $dark-heading-color; } }
+  .dropdown-item-default-icon { color: $dark-text-muted; }
+  .dropdown-item-active-bg { background-color: rgba($color-primary, 0.1); color: $color-primary; }
+  .dropdown-item-desc { color: $dark-text-muted; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .dropdown-menu {
+    text-align: right;
+
+    &.dropdown-end {
+      right: auto;
+      left: 0;
+    }
+  }
+}

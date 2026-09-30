@@ -1,0 +1,182 @@
+@keyframes tabs-indicator-slide {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tabs-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tabs-pill-pop {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.tabs-line-indicator {
+  transition: left $transition-normal, width $transition-normal;
+
+  &.tabs-line-indicator-hidden {
+    color: transparent;
+  }
+}
+
+.tabs-pill-active {
+  animation: tabs-pill-pop 0.2s ease-out;
+}
+
+.tabs-content-enter {
+  animation: tabs-content-enter 0.25s ease-out;
+}
+
+.tabs-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  touch-action: pan-x;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tabs-item {
+  transition: color $transition-fast, background-color $transition-fast, border-color $transition-fast;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.tabs-badge {
+  transition: background-color $transition-fast, color $transition-fast;
+}
+
+.tab-line-primary { border-color: $color-primary; color: $color-primary; }
+.tab-line-secondary { border-color: $color-secondary; color: $color-secondary-hover; }
+.tab-line-success { border-color: $color-success; color: $color-success; }
+.tab-line-danger { border-color: $color-danger; color: $color-danger; }
+.tab-line-warning { border-color: $color-warning; color: $color-warning-hover; }
+.tab-line-info { border-color: $color-info; color: $color-info; }
+.tab-line-dark { border-color: $color-dark; color: $color-dark; }
+
+.tab-line-hover-primary { &:hover { color: $color-primary; border-color: rgba($color-primary, 0.4); } }
+.tab-line-hover-secondary { &:hover { color: $color-secondary; border-color: rgba($color-secondary, 0.4); } }
+.tab-line-hover-success { &:hover { color: $color-success; border-color: rgba($color-success, 0.4); } }
+.tab-line-hover-danger { &:hover { color: $color-danger; border-color: rgba($color-danger, 0.4); } }
+.tab-line-hover-warning { &:hover { color: $color-warning-hover; border-color: rgba($color-warning, 0.4); } }
+.tab-line-hover-info { &:hover { color: $color-info; border-color: rgba($color-info, 0.4); } }
+.tab-line-hover-dark { &:hover { color: $color-secondary-hover; border-color: rgba($color-dark, 0.3); } }
+
+.tab-pill-primary { background-color: $color-primary; color: #fff; }
+.tab-pill-secondary { background-color: $color-secondary; color: #fff; }
+.tab-pill-success { background-color: $color-success; color: #fff; }
+.tab-pill-danger { background-color: $color-danger; color: #fff; }
+.tab-pill-warning { background-color: $color-warning; color: #fff; }
+.tab-pill-info { background-color: $color-info; color: #fff; }
+.tab-pill-dark { background-color: $color-dark; color: #fff; }
+
+.tab-pill-hover-primary { &:hover { background-color: $color-primary-lighter; color: $color-primary; } }
+.tab-pill-hover-secondary { &:hover { background-color: $surface-tertiary; color: $color-secondary-hover; } }
+.tab-pill-hover-success { &:hover { background-color: $color-success-lighter; color: $color-success; } }
+.tab-pill-hover-danger { &:hover { background-color: $color-danger-lighter; color: $color-danger; } }
+.tab-pill-hover-warning { &:hover { background-color: $color-warning-lighter; color: $color-warning-hover; } }
+.tab-pill-hover-info { &:hover { background-color: $color-info-lighter; color: $color-info; } }
+.tab-pill-hover-dark { &:hover { background-color: $surface-tertiary; color: $color-dark; } }
+
+.tab-badge-active-primary { background-color: rgba($color-primary, 0.3); color: #fff; }
+.tab-badge-active-secondary { background-color: rgba($color-secondary, 0.3); color: #fff; }
+.tab-badge-active-success { background-color: rgba($color-success, 0.3); color: #fff; }
+.tab-badge-active-danger { background-color: rgba($color-danger, 0.3); color: #fff; }
+.tab-badge-active-warning { background-color: rgba($color-warning, 0.3); color: #fff; }
+.tab-badge-active-info { background-color: rgba($color-info, 0.3); color: #fff; }
+.tab-badge-active-dark { background-color: rgba($color-secondary, 0.3); color: #fff; }
+
+.tab-badge-inactive-primary { background-color: $color-primary-light; color: $color-primary; }
+.tab-badge-inactive-secondary { background-color: $surface-tertiary; color: $color-secondary; }
+.tab-badge-inactive-success { background-color: $color-success-light; color: $color-success; }
+.tab-badge-inactive-danger { background-color: $color-danger-light; color: $color-danger; }
+.tab-badge-inactive-warning { background-color: $color-warning-light; color: $color-warning-hover; }
+.tab-badge-inactive-info { background-color: $color-info-light; color: $color-info; }
+.tab-badge-inactive-dark { background-color: $surface-tertiary; color: $color-secondary-hover; }
+
+.tab-disabled {
+  color: $text-disabled;
+  cursor: not-allowed;
+}
+
+.tab-inactive {
+  color: $text-secondary;
+}
+
+.tab-badge-neutral {
+  background-color: $surface-tertiary;
+  color: $text-secondary;
+}
+
+.tabs-pills-wrapper {
+  background-color: $surface-tertiary;
+}
+
+.tabs-line-border {
+  border-bottom: 1px solid $border-color;
+}
+
+[data-theme="dark"] {
+  .tab-inactive { color: $dark-text-secondary; }
+  .tab-disabled { color: $dark-text-muted; }
+  .tab-badge-neutral { background-color: $dark-surface-tertiary; color: $dark-text-secondary; }
+  .tabs-pills-wrapper { background-color: $dark-surface-secondary; }
+  .tabs-line-border { border-bottom-color: $dark-border-color; }
+  .tab-line-dark { border-color: $dark-border-color; color: $dark-body-text; }
+  .tab-line-hover-dark:hover { color: $dark-text-secondary; border-color: $dark-border-color; }
+  .tab-pill-hover-primary:hover { background-color: rgba($color-primary, 0.12); color: lighten($color-primary, 10%); }
+  .tab-pill-hover-secondary:hover { background-color: $dark-surface-tertiary; color: $dark-text-secondary; }
+  .tab-pill-hover-success:hover { background-color: rgba($color-success, 0.12); color: lighten($color-success, 10%); }
+  .tab-pill-hover-danger:hover { background-color: rgba($color-danger, 0.12); color: lighten($color-danger, 10%); }
+  .tab-pill-hover-warning:hover { background-color: rgba($color-warning, 0.12); color: lighten($color-warning, 10%); }
+  .tab-pill-hover-info:hover { background-color: rgba($color-info, 0.12); color: lighten($color-info, 10%); }
+  .tab-pill-hover-dark:hover { background-color: $dark-surface-tertiary; color: $dark-body-text; }
+  .tab-line-hover-primary:hover { color: lighten($color-primary, 10%); }
+  .tab-line-hover-secondary:hover { color: $dark-text-secondary; }
+  .tab-line-hover-success:hover { color: lighten($color-success, 10%); }
+  .tab-line-hover-danger:hover { color: lighten($color-danger, 10%); }
+  .tab-line-hover-warning:hover { color: lighten($color-warning, 10%); }
+  .tab-line-hover-info:hover { color: lighten($color-info, 10%); }
+  .tab-line-hover-dark:hover { color: $dark-text-secondary; border-color: $dark-border-color; }
+  .tab-badge-inactive-secondary { background-color: $dark-surface-tertiary; }
+  .tab-badge-inactive-dark { background-color: $dark-surface-tertiary; }
+  .tab-badge-inactive-primary { background-color: rgba($color-primary, 0.15); }
+  .tab-badge-inactive-success { background-color: rgba($color-success, 0.15); }
+  .tab-badge-inactive-danger { background-color: rgba($color-danger, 0.15); }
+  .tab-badge-inactive-warning { background-color: rgba($color-warning, 0.15); }
+  .tab-badge-inactive-info { background-color: rgba($color-info, 0.15); }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .tabs-list {
+    direction: rtl;
+  }
+}

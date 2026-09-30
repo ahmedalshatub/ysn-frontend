@@ -1,0 +1,91 @@
+.switch-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color $transition-normal;
+
+  &.switch-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.switch-thumb {
+  position: absolute;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform $transition-normal;
+}
+
+.switch-sm {
+  width: 2rem;
+  height: 1.125rem;
+
+  .switch-thumb {
+    width: 0.875rem;
+    height: 0.875rem;
+    left: 2px;
+  }
+
+  &.switch-on .switch-thumb {
+    transform: translateX(0.875rem);
+  }
+}
+
+.switch-md {
+  width: 2.75rem;
+  height: 1.5rem;
+
+  .switch-thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+    left: 2px;
+  }
+
+  &.switch-on .switch-thumb {
+    transform: translateX(1.25rem);
+  }
+}
+
+.switch-lg {
+  width: 3.5rem;
+  height: 1.875rem;
+
+  .switch-thumb {
+    width: 1.625rem;
+    height: 1.625rem;
+    left: 2px;
+  }
+
+  &.switch-on .switch-thumb {
+    transform: translateX(1.625rem);
+  }
+}
+
+.switch-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+
+  &.switch-wrapper-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .switch-container {
+    flex-direction: row-reverse;
+
+    .switch-label {
+      margin-left: 0;
+      margin-right: 0.5rem;
+    }
+  }
+}

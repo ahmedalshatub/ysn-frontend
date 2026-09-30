@@ -1,0 +1,229 @@
+.calendar {
+  width: 100%;
+  max-width: 360px;
+  user-select: none;
+}
+
+.calendar-default {
+  background-color: $surface-bg;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.calendar-bordered {
+  background-color: $surface-bg;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.calendar-filled {
+  background-color: $surface-secondary;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.calendar-header-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-month-year {
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-dark;
+}
+
+.calendar-today-btn {
+  font-size: 11px;
+  font-weight: 500;
+  color: $color-primary;
+  background: none;
+  border: 1px solid $color-primary;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $color-primary;
+    color: #ffffff;
+  }
+}
+
+.calendar-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $surface-tertiary;
+    color: $color-dark;
+  }
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: $text-muted;
+  padding: 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4px 2px;
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 36px;
+  transition: all $transition-fast;
+
+  &:hover {
+    background-color: $surface-tertiary;
+  }
+}
+
+.calendar-day-empty {
+  min-height: 36px;
+}
+
+.calendar-day-number {
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-dark;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.calendar-day-outside {
+  .calendar-day-number {
+    color: darken($border-color, 5%);
+  }
+}
+
+.calendar-day-today {
+  .calendar-day-number {
+    background-color: lighten($color-primary, 34%);
+    color: $color-primary;
+    font-weight: 700;
+  }
+}
+
+.calendar-day-selected {
+  .calendar-day-number {
+    background-color: $color-primary;
+    color: #ffffff;
+    font-weight: 700;
+  }
+}
+
+.calendar-day-disabled {
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.calendar-events {
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.calendar-event-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.calendar-event-primary { background-color: $color-primary; }
+.calendar-event-secondary { background-color: $color-secondary; }
+.calendar-event-success { background-color: $color-success; }
+.calendar-event-warning { background-color: $color-warning; }
+.calendar-event-danger { background-color: $color-danger; }
+.calendar-event-info { background-color: $color-info; }
+
+@media (max-width: 400px) {
+  .calendar {
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .calendar-day-number {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+}
+
+[data-theme="dark"] {
+  .calendar-default { background-color: $dark-surface-bg; }
+  .calendar-bordered { background-color: $dark-surface-bg; border-color: $dark-border-color; }
+  .calendar-filled { background-color: $dark-surface-secondary; }
+  .calendar-month-year { color: $dark-heading-color; }
+  .calendar-nav-btn { color: $dark-text-secondary; &:hover { background-color: $dark-surface-tertiary; color: $dark-heading-color; } }
+  .calendar-weekday { color: $dark-text-muted; }
+  .calendar-day { &:hover { background-color: $dark-surface-secondary; } }
+  .calendar-day-number { color: $dark-body-text; }
+  .calendar-day-outside .calendar-day-number { color: $dark-text-muted; }
+  .calendar-day-today .calendar-day-number { background-color: rgba($color-primary, 0.15); color: $color-primary; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .calendar-nav-btn {
+    &.calendar-nav-prev {
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+
+    &.calendar-nav-next {
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+  }
+
+  .calendar-nav-btn svg {
+    transform: scaleX(-1);
+  }
+}

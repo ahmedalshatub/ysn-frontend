@@ -1,0 +1,258 @@
+@keyframes stepper-check-in {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes stepper-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba($color-primary, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba($color-primary, 0);
+  }
+}
+
+@keyframes stepper-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stepper-line-fill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes stepper-dot-pop {
+  0% {
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.stepper-step-enter {
+  animation: stepper-fade-in 0.3s ease-out;
+}
+
+.stepper-check {
+  animation: stepper-check-in 0.35s ease-out;
+}
+
+.stepper-active-pulse {
+  animation: stepper-pulse 2s ease-in-out infinite;
+}
+
+.stepper-line-animated {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: inherit;
+    animation: stepper-line-fill 0.4s ease-out forwards;
+  }
+}
+
+.stepper-dot-enter {
+  animation: stepper-dot-pop 0.3s ease-out;
+}
+
+.stepper-connector {
+  transition: background-color $transition-normal;
+}
+
+.stepper-icon-wrapper {
+  transition: all $transition-normal;
+}
+
+.stepper-label {
+  transition: color $transition-fast;
+}
+
+.stepper-content {
+  animation: stepper-fade-in 0.25s ease-out;
+}
+
+.stepper-h-connector {
+  margin-top: 0;
+}
+
+.stepper-responsive {
+  @media (max-width: 639px) {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+
+    .stepper-h-connector {
+      display: none;
+    }
+
+    .stepper-v-connector {
+      display: block;
+    }
+
+    .stepper-h-step {
+      flex-direction: row !important;
+      align-items: center;
+
+      .stepper-label-bottom {
+        text-align: left;
+        margin-top: 0;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  @media (min-width: 640px) {
+    .stepper-v-connector {
+      display: none;
+    }
+  }
+}
+
+.stepper-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.stepper-label-completed {
+  color: $heading-color;
+}
+
+.stepper-label-upcoming {
+  color: $text-muted;
+}
+
+.stepper-connector-default {
+  background-color: $border-color-light;
+}
+
+.stepper-icon-default-bg {
+  background-color: $card-bg;
+}
+
+.stepper-icon-upcoming-bg {
+  background-color: $card-bg;
+}
+
+.stepper-icon-upcoming-border {
+  border-color: $border-color;
+}
+
+.stepper-icon-upcoming-text {
+  color: $text-muted;
+}
+
+.stepper-icon-filled-upcoming-bg {
+  background-color: $surface-secondary;
+}
+
+.stepper-icon-gradient-upcoming-bg {
+  background-color: $surface-secondary;
+}
+
+.stepper-icon-gradient-upcoming-border {
+  border-color: $border-color;
+}
+
+.stepper-icon-outlined-active-bg {
+  background-color: rgba($color-primary, 0.08);
+}
+
+.stepper-icon-outlined-error-bg {
+  background-color: rgba($color-danger, 0.08);
+}
+
+.stepper-icon-outlined-warning-bg {
+  background-color: rgba($color-warning, 0.08);
+}
+
+.stepper-icon-gradient-active-ring {
+  --tw-ring-color: rgba($color-primary, 0.1);
+}
+
+.stepper-completed-bg { background-color: $color-primary; }
+.stepper-completed-border { border-color: $color-primary; }
+.stepper-completed-text { color: $color-primary; }
+.stepper-active-border { border-color: $color-primary; }
+.stepper-active-text { color: $color-primary; }
+.stepper-active-bg { background-color: darken($color-primary, 5%); }
+.stepper-error-bg { background-color: $color-danger; }
+.stepper-error-border { border-color: $color-danger; }
+.stepper-error-text { color: $color-danger; }
+.stepper-warning-bg { background-color: $color-warning; }
+.stepper-warning-border { border-color: $color-warning; }
+.stepper-warning-text { color: $color-warning; }
+.stepper-connector-active { background-color: $color-primary; }
+.stepper-connector-gradient { background: linear-gradient(to right, $color-primary, $color-indigo); }
+.stepper-gradient-completed-bg { background: linear-gradient(to bottom right, $color-primary, $color-indigo); }
+.stepper-gradient-active-bg { background: linear-gradient(to bottom right, lighten($color-primary, 5%), lighten($color-indigo, 3%)); }
+.stepper-gradient-error-bg { background: linear-gradient(to bottom right, $color-danger, darken($color-danger, 8%)); }
+.stepper-gradient-warning-bg { background: linear-gradient(to bottom right, $color-warning, darken($color-warning, 10%)); }
+.stepper-label-active { color: $color-primary; }
+.stepper-optional-text { color: $text-muted; }
+.stepper-desc-active { color: $text-secondary; }
+.stepper-desc-default { color: $text-muted; }
+
+[data-theme="dark"] {
+  .stepper-label-completed { color: $dark-heading-color; }
+  .stepper-label-upcoming { color: $dark-text-muted; }
+  .stepper-connector-default { background-color: $dark-surface-tertiary; }
+  .stepper-icon-default-bg { background-color: $dark-card-bg; }
+  .stepper-icon-upcoming-bg { background-color: $dark-card-bg; }
+  .stepper-icon-upcoming-border { border-color: $dark-border-color; }
+  .stepper-icon-upcoming-text { color: $dark-text-muted; }
+  .stepper-icon-filled-upcoming-bg { background-color: $dark-surface-secondary; }
+  .stepper-icon-gradient-upcoming-bg { background-color: $dark-surface-secondary; }
+  .stepper-icon-gradient-upcoming-border { border-color: $dark-border-color; }
+  .stepper-optional-text { color: $dark-text-muted; }
+  .stepper-desc-active { color: $dark-text-secondary; }
+  .stepper-desc-default { color: $dark-text-muted; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .stepper-horizontal {
+    flex-direction: row-reverse;
+  }
+
+  .stepper-connector {
+    &.stepper-connector-horizontal {
+      transform: scaleX(-1);
+    }
+  }
+}

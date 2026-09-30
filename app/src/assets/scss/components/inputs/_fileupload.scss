@@ -1,0 +1,275 @@
+.file-upload-wrapper {
+  width: 100%;
+}
+
+.file-upload-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all $transition-normal;
+  outline: none;
+  user-select: none;
+}
+
+.file-upload-default {
+  border: 2px dashed darken($border-color, 5%);
+  background: $surface-secondary;
+
+  &:hover {
+    border-color: $color-primary;
+    background: lighten($color-primary, 42%);
+  }
+}
+
+.file-upload-minimal {
+  border: 1px solid $border-color;
+  background: transparent;
+
+  &:hover {
+    border-color: $color-primary;
+    background: $surface-secondary;
+  }
+}
+
+.file-upload-bordered {
+  border: 2px solid $border-color;
+  background: $surface-bg;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  &:hover {
+    border-color: $color-primary;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.12);
+  }
+}
+
+.file-upload-filled {
+  border: 2px dashed transparent;
+  background: $surface-tertiary;
+
+  &:hover {
+    background: darken($surface-tertiary, 3%);
+    border-color: darken($border-color, 5%);
+  }
+}
+
+.file-upload-drag-active {
+  border-color: $color-primary !important;
+  background: lighten($color-primary, 40%) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  transform: scale(1.01);
+}
+
+.file-upload-drag-reject {
+  border-color: $color-danger !important;
+  background: lighten($color-danger, 38%) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.file-upload-error {
+  border-color: $color-danger !important;
+}
+
+.file-upload-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.file-upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.file-upload-list {
+  animation: fileListFadeIn 250ms ease-out;
+}
+
+.file-upload-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: $surface-secondary;
+  border: 1px solid $border-color;
+  transition: all $transition-fast;
+  animation: fileItemSlideIn 200ms ease-out;
+
+  &:hover {
+    background: $surface-tertiary;
+    border-color: darken($border-color, 5%);
+
+    .file-upload-remove {
+      opacity: 1;
+    }
+  }
+}
+
+.file-upload-preview {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  border: 1px solid $border-color;
+}
+
+.file-upload-file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: $surface-tertiary;
+  border-radius: 8px;
+}
+
+.file-upload-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: $text-muted;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all $transition-fast;
+  flex-shrink: 0;
+
+  &:hover {
+    background: lighten($color-danger, 38%);
+    color: $color-danger;
+    opacity: 1;
+  }
+}
+
+.file-upload-icon-drag {
+  color: $color-primary;
+}
+
+.file-upload-icon-reject {
+  color: $color-danger;
+}
+
+.file-upload-icon-default {
+  color: $text-muted;
+}
+
+.file-upload-text-active {
+  color: $color-primary;
+}
+
+.file-upload-text-reject {
+  color: $color-danger;
+}
+
+.file-upload-text-default {
+  color: $body-text;
+}
+
+.file-upload-link {
+  color: $color-primary;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-primary-hover;
+  }
+}
+
+.file-upload-text-muted {
+  color: $text-muted;
+}
+
+.file-upload-filename {
+  color: $body-text;
+}
+
+.file-upload-filesize {
+  color: $text-muted;
+}
+
+@keyframes fileListFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fileItemSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+[data-theme="dark"] {
+  .file-upload-default {
+    border-color: $dark-border-color;
+    background-color: $dark-surface-secondary;
+    &:hover { border-color: $color-primary; background-color: rgba($color-primary, 0.06); }
+  }
+  .file-upload-minimal {
+    border-color: $dark-border-color;
+    &:hover { border-color: $color-primary; background-color: $dark-surface-secondary; }
+  }
+  .file-upload-bordered {
+    border-color: $dark-border-color;
+    background-color: $dark-surface-bg;
+    &:hover { border-color: $color-primary; }
+  }
+  .file-upload-filled {
+    background-color: $dark-surface-secondary;
+    &:hover { background-color: $dark-surface-tertiary; border-color: $dark-border-color; }
+  }
+  .file-upload-drag-active {
+    background-color: rgba($color-primary, 0.1) !important;
+  }
+  .file-upload-drag-reject {
+    background-color: rgba($color-danger, 0.1) !important;
+  }
+  .file-upload-item {
+    background-color: $dark-surface-secondary;
+    border-color: $dark-border-color;
+    &:hover { background-color: $dark-surface-tertiary; border-color: $dark-border-color; }
+  }
+  .file-upload-preview { border-color: $dark-border-color; }
+  .file-upload-file-icon { background-color: $dark-surface-tertiary; }
+  .file-upload-remove {
+    color: $dark-text-muted;
+    &:hover { background-color: rgba($color-danger, 0.15); color: $color-danger; }
+  }
+  .file-upload-icon-default { color: $dark-text-muted; }
+  .file-upload-text-default { color: $dark-body-text; }
+  .file-upload-text-muted { color: $dark-text-muted; }
+  .file-upload-filename { color: $dark-body-text; }
+  .file-upload-filesize { color: $dark-text-muted; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .fileupload-file {
+    .fileupload-remove {
+      right: auto;
+      left: 0.5rem;
+    }
+
+    .fileupload-icon {
+      margin-right: 0;
+      margin-left: 0.75rem;
+    }
+  }
+}

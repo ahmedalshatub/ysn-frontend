@@ -1,0 +1,38 @@
+// ══════════════════════════════════════════════════════════════════
+// SIDEBAR VARIANT: Gradient
+// Sidebar with a dark blue-to-dark gradient background.
+// Navbar: Standard │ Variables: "Gradient Sidebar" in _variables.scss
+// ══════════════════════════════════════════════════════════════════
+
+.sidebar-gradient {
+  background: $sidebar-bg;
+}
+
+.sidebar-gradient-item-inactive {
+  color: $sidebar-item-inactive-text;
+
+  &:hover {
+    background-color: $sidebar-item-hover-bg;
+    color: $sidebar-item-hover-text;
+  }
+}
+
+.sidebar-gradient-sub-inactive {
+  color: $sidebar-sub-inactive-text;
+
+  &:hover {
+    color: $sidebar-sub-hover-text;
+  }
+}
+
+.sidebar-gradient-item-active {
+  background-color: $sidebar-item-active-bg;
+  color: $sidebar-item-active-text;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+.sidebar-gradient-sub-active {
+  color: $sidebar-sub-active-text;
+  font-weight: 500;
+}

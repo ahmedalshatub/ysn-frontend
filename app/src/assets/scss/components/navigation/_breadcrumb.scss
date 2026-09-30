@@ -1,0 +1,198 @@
+@keyframes breadcrumb-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes breadcrumb-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.breadcrumb-animate {
+  animation: breadcrumb-fade-in 0.3s ease-out both;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 0.06}s;
+    }
+  }
+}
+
+.page-breadcrumb-animate {
+  animation: breadcrumb-slide-down 0.35s ease-out both;
+}
+
+.page-breadcrumb-title-animate {
+  animation: breadcrumb-slide-down 0.4s ease-out 0.08s both;
+}
+
+.page-breadcrumb-meta-animate {
+  animation: breadcrumb-slide-down 0.4s ease-out 0.16s both;
+}
+
+.breadcrumb-separator-color {
+  color: $border-color;
+}
+
+.breadcrumb-item-default {
+  color: $text-muted;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.breadcrumb-item-current {
+  color: $heading-color;
+}
+
+.breadcrumb-item-contained-active {
+  background-color: rgba($color-primary, 0.06);
+  color: $color-primary;
+}
+
+.breadcrumb-item-contained {
+  color: $text-muted;
+
+  &:hover {
+    background-color: $surface-secondary;
+  }
+}
+
+.breadcrumb-item-pills-active {
+  background-color: $color-primary;
+  color: #fff;
+}
+
+.breadcrumb-item-bordered-active {
+  color: $color-primary;
+  border-bottom-color: $color-primary;
+}
+
+.breadcrumb-item-bordered {
+  color: $text-muted;
+
+  &:hover {
+    color: $body-text;
+    border-bottom-color: $border-color;
+  }
+}
+
+.breadcrumb-wrapper-contained {
+  background-color: $surface-secondary;
+}
+
+.breadcrumb-wrapper-bordered {
+  border-bottom-color: $border-color;
+}
+
+.page-bc-bg-card {
+  background-color: $card-bg;
+  border-color: $border-color-light;
+}
+
+.page-bc-title {
+  color: $heading-color;
+}
+
+.page-bc-subtitle {
+  color: $text-muted;
+}
+
+.page-bc-separator {
+  color: $text-muted;
+}
+
+.page-bc-icon-muted {
+  color: $text-muted;
+}
+
+.page-bc-icon-primary-bg {
+  background-color: rgba($color-primary, 0.06);
+}
+
+.page-bc-icon-primary {
+  color: $color-primary;
+}
+
+.page-bc-date-bg {
+  background-color: $surface-secondary;
+}
+
+.page-bc-date-text {
+  color: $text-secondary;
+}
+
+.page-bc-date-icon {
+  color: $text-muted;
+}
+
+.page-bc-modern-bg {
+  background: linear-gradient(to right, $surface-secondary, $card-bg);
+  border-color: $border-color-light;
+}
+
+.page-bc-modern-date-bg {
+  border-color: $border-color;
+  background-color: $card-bg;
+}
+
+.page-bc-modern-date-icon {
+  color: $color-primary;
+}
+
+.page-bc-modern-date-text {
+  color: $body-text;
+}
+
+.page-bc-path-primary {
+  color: $color-primary;
+}
+
+.page-bc-default-border {
+  border-bottom-color: $border-color;
+}
+
+[data-theme="dark"] {
+  .breadcrumb-separator-color { color: $dark-border-color; }
+  .breadcrumb-item-default { color: $dark-text-muted; &:hover { color: $color-primary; } }
+  .breadcrumb-item-current { color: $dark-heading-color; }
+  .breadcrumb-item-contained { color: $dark-text-muted; &:hover { background-color: $dark-surface-secondary; } }
+  .breadcrumb-item-contained-active { background-color: rgba($color-primary, 0.1); color: $color-primary; }
+  .breadcrumb-item-bordered { color: $dark-text-muted; &:hover { color: $dark-body-text; border-bottom-color: $dark-border-color; } }
+  .breadcrumb-item-bordered-active { color: $color-primary; border-bottom-color: $color-primary; }
+  .breadcrumb-wrapper-contained { background-color: $dark-surface-bg; }
+  .breadcrumb-wrapper-bordered { border-bottom-color: $dark-border-color; }
+  .page-bc-bg-card { background-color: $dark-card-bg; border-color: $dark-card-border; }
+  .page-bc-title { color: $dark-heading-color; }
+  .page-bc-subtitle { color: $dark-text-muted; }
+  .page-bc-separator { color: $dark-text-muted; }
+  .page-bc-icon-muted { color: $dark-text-muted; }
+  .page-bc-icon-primary-bg { background-color: rgba($color-primary, 0.1); }
+  .page-bc-date-bg { background-color: $dark-surface-secondary; }
+  .page-bc-date-text { color: $dark-text-secondary; }
+  .page-bc-date-icon { color: $dark-text-muted; }
+  .page-bc-modern-bg { background: linear-gradient(to right, $dark-surface-secondary, $dark-card-bg); border-color: $dark-card-border; }
+  .page-bc-modern-date-bg { border-color: $dark-border-color; background-color: $dark-card-bg; }
+  .page-bc-modern-date-text { color: $dark-body-text; }
+  .page-bc-default-border { border-bottom-color: $dark-border-color; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .breadcrumb-separator {
+    transform: scaleX(-1);
+  }
+}

@@ -1,0 +1,174 @@
+import { useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import type { LoginDto } from "../../types/Auth.types";
+import { login } from "../../slices/Auth.slice";
+import { toggleTheme } from "../../../../core/slices/theme.slice";
+import { useLoginMutation } from "../../api/Auth.api";
+import { showSuccess, showError } from "../../../../shared/components/feedback/Toast";
+import { getErrorMessage } from "../../../../shared/utils/errorHandler";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState, AppDispatch } from "../../../../app/store";
+import useTitle from "../../../../shared/hooks/useTitle";
+import UnAuthLayout from "../../../../core/layout/UnAuthLayout";
+import Logo from "../../../../shared/components/display/Logo";
+import FormInput from "../../../../shared/components/inputs/FormInput";
+import FormPasswordInput from "../../../../shared/components/inputs/FormPasswordInput";
+import Button from "../../../../shared/components/buttons/Button";
+import SunIcon from "../../../../assets/icons/SunIcon";
+import MoonIcon from "../../../../assets/icons/MoonIcon";
+import LanguageSwitcher from "../../../../shared/components/navigation/LanguageSwitcher";
+
+const MinimalLogin = () => {
+  const { t } = useTranslation();
+  useTitle(t("login.title"));
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("next") ?? "/dashboard";
+
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
+  
+  const [loginMutation, { isLoading }] = useLoginMutation();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
+
+
+  const schemaResolver = yup.object().shape({
+    username: yup.string().required(t("login.emailRequired")),
+    password: yup
+      .string()
+      .required(t("login.passwordRequired"))
+      .min(6, t("login.passwordMin6"))
+      .matches(/[A-Z]/, t("login.passwordMustContainUppercase"))
+      .matches(/[a-z]/, t("login.passwordMustContainLowercase"))
+      .matches(/[0-9]/, t("login.passwordMustContainDigit"))
+      .matches(/[^A-Za-z0-9]/, t("login.passwordMustContainSpecialCharacter")),
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginDto>({
+    resolver: yupResolver(schemaResolver),
+    mode: "onBlur",
+    defaultValues: { username: "", password: "" },
+  });
+
+  const onSubmit = async (data: LoginDto) => {
+    try {
+      const result = await loginMutation(data).unwrap();
+      dispatch(
+        login({
+          firstName: result.firstName,
+          lastName: result.lastName,
+          roleID: result.roleId,
+          jwtToken: result.accessToken,
+          refreshToken: result.refreshToken,
+          profileImageUrl: result.profileImage || null,
+          forcePasswordChange: result.forcePasswordChange,
+        })
+      );
+      showSuccess(t("login.loginSuccess"));
+      navigate(redirectUrl, { replace: true });
+    } catch (error: any) {
+      showError(getErrorMessage(error));
+    }
+  };
+
+  return (
+    <UnAuthLayout>
+      <div className={`min-h-screen auth-page-bg`}>
+        {/* Theme & Language toggles */}
+        <div className="flex items-center justify-end px-6 py-5 sm:px-10">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => dispatch(toggleTheme())}
+              className={`text-sm font-medium transition-colors auth-minimal-theme-btn`}
+            >
+              {themeMode === "dark" ? (
+                <SunIcon className="h-5 w-5" />
+              ) : (
+                <MoonIcon className="h-5 w-5" />
+              )}
+            </button>
+            <LanguageSwitcher />
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center justify-center px-6 py-16 sm:px-10">
+          <div className="w-full max-w-sm">
+            {/* Logo centered above the form */}
+            <div className="mb-8 flex justify-center">
+              <Logo orientation="landscape" theme={themeMode === "dark" ? "dark" : "light"} height={200} />
+            </div>
+
+            <div className="mb-10 text-center">
+              <h1 className={`text-3xl font-bold tracking-tight auth-heading`}>
+                {t("login.title")}
+              </h1>
+              <p className={`mt-2 text-sm auth-subtext`}>
+                {t("common.appName")}
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+              <FormInput<LoginDto>
+                name="username"
+                control={control}
+                label={t("login.email")}
+                placeholder={t("login.emailPlaceholder")}
+                error={!!errors.username}
+                errorMessage={errors.username?.message}
+              />
+              <div>
+                <FormPasswordInput<LoginDto>
+                  name="password"
+                  control={control}
+                  label={t("login.password")}
+                  placeholder={t("login.passwordPlaceholder")}
+                  error={!!errors.password}
+                  errorMessage={errors.password?.message}
+                />
+                <div className="mt-1.5 flex justify-end">
+                  <Link
+                    to="/forgot-password"
+                    className={`text-xs font-medium transition-colors auth-muted-link`}
+                  >
+                    {t("login.forgotPassword")}
+                  </Link>
+                </div>
+              </div>
+              <Button
+                type="submit"
+                variant="primary"
+                block
+                loading={isLoading}
+                label={t("login.loginButton")}
+              />
+              <p className="text-center text-sm auth-subtext">
+                {t("register.noAccount")}{" "}
+                <Link to="/register/minimal" className="font-medium auth-link transition-colors">
+                  {t("register.signUp")}
+                </Link>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </UnAuthLayout>
+  );
+};
+
+export default MinimalLogin;

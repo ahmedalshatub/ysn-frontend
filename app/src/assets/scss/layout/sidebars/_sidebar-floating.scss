@@ -1,0 +1,19 @@
+// ══════════════════════════════════════════════════════════════════
+// SIDEBAR VARIANT: Floating
+// Sidebar with rounded corners, glass-like background, and shadow.
+// Navbar: Floating │ Variables: "Floating Sidebar" in _variables.scss
+// ══════════════════════════════════════════════════════════════════
+
+.sidebar-floating {
+  background-color: $sidebar-bg;
+  box-shadow: $sidebar-shadow;
+  backdrop-filter: $sidebar-blur;
+}
+
+// ── Dark Mode ────────────────────────────────────
+[data-theme="dark"] {
+  .sidebar-floating {
+    background-color: rgba($dark-surface-bg, 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+}

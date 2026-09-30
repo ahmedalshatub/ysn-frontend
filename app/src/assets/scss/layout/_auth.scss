@@ -1,0 +1,90 @@
+.auth-layout {
+  background-color: $surface-secondary;
+}
+
+.auth-container {
+  background-color: $body-bg;
+  color: $body-text;
+}
+
+.auth-card {
+  background-color: $card-bg;
+  border: 1px solid $card-border;
+  box-shadow: $card-shadow;
+}
+
+.auth-title {
+  color: $heading-color;
+}
+
+.auth-subtitle {
+  color: $text-secondary;
+}
+
+.auth-link {
+  color: $color-primary;
+
+  &:hover {
+    color: darken($color-primary, 10%);
+  }
+}
+
+.auth-divider {
+  border-color: $border-color;
+
+  span {
+    background-color: $card-bg;
+    color: $text-muted;
+  }
+}
+
+.auth-card-min-h {
+  min-height: $auth-card-min-height;
+}
+
+.auth-card-min-h-lg {
+  min-height: $auth-card-min-height-lg;
+}
+
+.auth-carousel-text-area {
+  height: $auth-carousel-text-height;
+}
+
+.auth-carousel-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-pattern-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.auth-bg-image {
+  background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-dot-active {
+  background-color: #ffffff;
+}
+
+.auth-dot-inactive {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] {
+  .auth-layout { background-color: $dark-body-bg; }
+  .auth-container { background-color: $dark-body-bg; color: $dark-body-text; }
+  .auth-card { background-color: $dark-card-bg; border-color: $dark-card-border; }
+  .auth-title { color: $dark-heading-color; }
+  .auth-subtitle { color: $dark-text-secondary; }
+  .auth-divider { border-color: $dark-border-color; span { background-color: $dark-card-bg; color: $dark-text-muted; } }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .auth-container {
+    text-align: right;
+  }
+}

@@ -1,0 +1,20 @@
+// ══════════════════════════════════════════════════════════════════
+// NAVBAR VARIANT: Standard
+// Default navbar with subtle border and backdrop blur.
+// Used with: Classic, Modern, Compact, Gradient, Dual, Shadow,
+//   ClassicDark, CompactDark, DualDark, Colorful*, GlassDark
+// ══════════════════════════════════════════════════════════════════
+
+.navbar {
+  background-color: rgba($surface-bg, 0.8);
+  border-color: $border-color;
+  backdrop-filter: blur(12px);
+}
+
+// ── Dark Mode ────────────────────────────────────
+[data-theme="dark"] {
+  .navbar {
+    background-color: rgba($dark-body-bg, 0.8);
+    border-color: $dark-border-color !important;
+  }
+}

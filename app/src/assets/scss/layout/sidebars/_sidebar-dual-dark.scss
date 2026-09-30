@@ -1,0 +1,96 @@
+// ══════════════════════════════════════════════════════════════════
+// SIDEBAR VARIANT: Dual Dark
+// Dark two-panel sidebar: icon bar + sub-menu panel.
+// Navbar: Standard │ Variables: "Dual Dark Sidebar" in _variables.scss
+// ══════════════════════════════════════════════════════════════════
+
+.sidebar-dark {
+  background-color: $sidebar-bg;
+  border-color: $sidebar-border !important;
+}
+
+.sidebar-dark-border {
+  border-color: $sidebar-border !important;
+}
+
+.sidebar-dark-logo {
+  border-color: $sidebar-logo-border !important;
+}
+
+.sidebar-dark-item-active {
+  background-color: $sidebar-item-active-bg;
+  color: $sidebar-item-active-text;
+}
+
+.sidebar-dark-item-inactive {
+  color: $sidebar-item-inactive-text;
+
+  &:hover {
+    background-color: $sidebar-item-hover-bg;
+    color: $sidebar-item-hover-text;
+  }
+}
+
+.sidebar-dark-sub-active {
+  color: $sidebar-sub-active-text;
+}
+
+.sidebar-dark-sub-inactive {
+  color: $sidebar-sub-inactive-text;
+
+  &:hover {
+    color: $sidebar-sub-hover-text;
+  }
+}
+
+.sidebar-dark-dual-icons {
+  background-color: $sidebar-dual-icons-bg;
+  border-color: $sidebar-dual-icons-border !important;
+}
+
+.sidebar-dark-dual-panel {
+  background-color: $sidebar-dual-panel-bg;
+  border-color: $sidebar-dual-panel-border !important;
+}
+
+.sidebar-dark-dual-panel-title {
+  color: $sidebar-dual-panel-title-text;
+}
+
+.sidebar-dark-dual-divider {
+  border-color: $sidebar-divider-border !important;
+}
+
+.sidebar-dark-dual-icon-active {
+  background-color: $sidebar-icon-active-bg;
+  color: $sidebar-icon-active-text;
+}
+
+.sidebar-dark-dual-icon-inactive {
+  color: $sidebar-icon-inactive-text;
+
+  &:hover {
+    background-color: $sidebar-icon-hover-bg;
+    color: $sidebar-icon-hover-text;
+  }
+}
+
+.sidebar-dark-dual-sub-active {
+  background-color: $sidebar-dual-sub-active-bg;
+  color: $sidebar-dual-sub-active-text;
+}
+
+.sidebar-dark-dual-sub-inactive {
+  color: $sidebar-dual-sub-inactive-text;
+
+  &:hover {
+    background-color: $sidebar-dual-sub-hover-bg;
+    color: $sidebar-dual-sub-hover-text;
+  }
+}
+
+.sidebar-dark-dropdown {
+  background-color: $sidebar-dropdown-bg;
+  border-color: $sidebar-dropdown-border !important;
+  box-shadow: $sidebar-dropdown-shadow;
+}

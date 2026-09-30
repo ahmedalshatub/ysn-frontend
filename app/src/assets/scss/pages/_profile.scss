@@ -1,0 +1,27 @@
+.profile-surface {
+  background-color: $surface-secondary;
+  border-color: $border-color;
+}
+
+.profile-field-label {
+  color: $text-muted;
+}
+
+.profile-field-value {
+  color: $heading-color;
+}
+
+[data-theme="dark"] {
+  .profile-surface {
+    background-color: $dark-surface-secondary;
+    border-color: $dark-border-color;
+  }
+
+  .profile-field-label {
+    color: $dark-text-muted;
+  }
+
+  .profile-field-value {
+    color: $dark-heading-color;
+  }
+}

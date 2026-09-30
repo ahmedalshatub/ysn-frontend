@@ -1,0 +1,91 @@
+.splitter-container {
+  display: flex;
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background-color: $card-bg;
+}
+
+.splitter-horizontal {
+  flex-direction: row;
+}
+
+.splitter-vertical {
+  flex-direction: column;
+  height: 100%;
+}
+
+.splitter-pane {
+  overflow: auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.splitter-gutter {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $surface-secondary;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: $surface-tertiary;
+  }
+
+  &:active {
+    background-color: rgba($color-primary, 0.1);
+  }
+}
+
+.splitter-gutter-horizontal {
+  width: 8px;
+  cursor: col-resize;
+
+  .splitter-gutter-handle {
+    width: 3px;
+    height: 28px;
+    border-radius: 2px;
+    background-color: $text-muted;
+    opacity: 0.5;
+    transition: opacity 150ms ease;
+  }
+
+  &:hover .splitter-gutter-handle {
+    opacity: 0.8;
+  }
+}
+
+.splitter-gutter-vertical {
+  height: 8px;
+  cursor: row-resize;
+
+  .splitter-gutter-handle {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    background-color: $text-muted;
+    opacity: 0.5;
+    transition: opacity 150ms ease;
+  }
+
+  &:hover .splitter-gutter-handle {
+    opacity: 0.8;
+  }
+}
+
+[data-theme="dark"] {
+  .splitter-container { border-color: $dark-border-color; background-color: $dark-card-bg; }
+  .splitter-gutter { background-color: $dark-surface-secondary; &:hover { background-color: $dark-surface-tertiary; } }
+  .splitter-gutter-horizontal .splitter-gutter-handle { background-color: $dark-text-muted; }
+  .splitter-gutter-vertical .splitter-gutter-handle { background-color: $dark-text-muted; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .splitter-container {
+    direction: ltr;
+  }
+}

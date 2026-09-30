@@ -1,0 +1,237 @@
+// ══════════════════════════════════════════════════════════════════
+// NAVBAR SHARED STYLES
+// Common styles used by ALL navbar variants. Always keep imported.
+// ══════════════════════════════════════════════════════════════════
+
+.logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.navbar-btn {
+  color: $text-secondary;
+
+  &:hover {
+    background-color: $surface-tertiary;
+    color: $body-text;
+  }
+}
+
+.navbar-theme-btn {
+  color: $text-secondary;
+
+  &:hover {
+    background-color: $surface-tertiary;
+  }
+}
+
+.navbar-lang-btn {
+  color: $text-secondary;
+
+  &:hover {
+    background-color: $surface-tertiary;
+  }
+}
+
+.navbar-avatar-fallback {
+  background-color: rgba($color-primary, 0.1);
+  color: darken($color-primary, 5%);
+}
+
+.navbar-username {
+  color: $heading-color;
+}
+
+.navbar-chevron {
+  color: $text-muted;
+}
+
+.navbar-dropdown {
+  background-color: $surface-bg;
+  border: 1px solid $border-color;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+  .navbar-dropdown-header {
+    border-color: $border-color-light;
+  }
+
+  .navbar-dropdown-title {
+    color: $heading-color;
+  }
+
+  .navbar-dropdown-divider {
+    border-color: $border-color-light;
+  }
+}
+
+.notif-item {
+  border-color: $border-color-light;
+
+  &:hover {
+    background-color: $surface-secondary;
+  }
+
+  &.notif-unread {
+    background-color: rgba($color-primary, 0.04);
+
+    &:hover {
+      background-color: rgba($color-primary, 0.08);
+    }
+  }
+}
+
+.notif-title {
+  color: $heading-color;
+}
+
+.notif-message {
+  color: $text-secondary;
+}
+
+.notif-time {
+  color: $text-muted;
+}
+
+.notif-empty-icon {
+  color: $border-color;
+}
+
+.notif-empty-text {
+  color: $text-muted;
+}
+
+.user-dropdown-item {
+  color: $text-secondary;
+
+  &:hover {
+    background-color: $surface-tertiary;
+    color: $body-text;
+  }
+}
+
+.user-dropdown-logout {
+  color: $color-danger;
+
+  &:hover {
+    background-color: rgba($color-danger, 0.12);
+  }
+}
+
+.notif-mark-all {
+  color: $color-primary;
+
+  &:hover {
+    color: $color-primary-hover;
+  }
+}
+
+.notif-unread-dot {
+  background-color: $color-primary;
+}
+
+.notif-badge {
+  background-color: $color-danger;
+}
+
+.auth-spinner {
+  border-color: $color-primary;
+  border-top-color: transparent;
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .navbar {
+    .navbar-actions {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+}
+
+// ── Dark Mode ────────────────────────────────────
+[data-theme="dark"] {
+  .navbar-btn {
+    color: $dark-text-muted;
+    &:hover {
+      background-color: $dark-surface-tertiary;
+      color: $dark-body-text;
+    }
+  }
+  .navbar-theme-btn {
+    color: #facc15;
+    &:hover {
+      background-color: $dark-surface-tertiary;
+    }
+  }
+  .navbar-lang-btn {
+    color: $dark-text-secondary;
+    &:hover {
+      background-color: $dark-surface-tertiary;
+    }
+  }
+  .navbar-avatar-fallback {
+    background-color: $color-primary;
+    color: #ffffff;
+  }
+  .navbar-username {
+    color: $dark-body-text;
+  }
+  .navbar-chevron {
+    color: $dark-text-muted;
+  }
+  .navbar-dropdown {
+    background-color: $dark-surface-bg;
+    border-color: $dark-border-color !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    .navbar-dropdown-header {
+      border-color: $dark-border-color !important;
+    }
+    .navbar-dropdown-title {
+      color: #ffffff;
+    }
+    .navbar-dropdown-divider {
+      border-color: $dark-border-color !important;
+    }
+  }
+  .notif-item {
+    border-color: $dark-border-color !important;
+    &:hover {
+      background-color: rgba($dark-surface-tertiary, 0.5);
+    }
+    &.notif-unread {
+      background-color: rgba($dark-surface-tertiary, 0.3);
+      &:hover {
+        background-color: rgba($dark-surface-tertiary, 0.6);
+      }
+    }
+  }
+  .notif-title {
+    color: $dark-body-text;
+  }
+  .notif-message {
+    color: $dark-text-muted;
+  }
+  .notif-time {
+    color: $dark-text-muted;
+  }
+  .notif-empty-icon {
+    color: $dark-surface-tertiary;
+  }
+  .notif-empty-text {
+    color: $dark-text-muted;
+  }
+  .user-dropdown-item {
+    color: $dark-text-secondary;
+    &:hover {
+      background-color: $dark-surface-tertiary;
+      color: $dark-body-text;
+    }
+  }
+  .user-dropdown-logout {
+    color: $color-danger;
+    &:hover {
+      background-color: rgba($color-danger, 0.2);
+    }
+  }
+}

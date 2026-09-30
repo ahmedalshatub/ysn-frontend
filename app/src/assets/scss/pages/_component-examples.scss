@@ -1,0 +1,245 @@
+.ce-page {
+  background-color: $surface-bg;
+}
+
+.ce-heading {
+  color: $heading-color;
+}
+
+.ce-subheading {
+  color: $text-secondary;
+}
+
+.ce-text {
+  color: $body-text;
+}
+
+.ce-muted {
+  color: $text-muted;
+}
+
+.ce-divider {
+  border-color: $border-color;
+}
+
+.ce-panel {
+  background-color: $card-bg;
+}
+
+.ce-panel-heading {
+  color: $heading-color;
+}
+
+.ce-panel-text {
+  color: $body-text;
+}
+
+.ce-link {
+  color: $color-primary;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.ce-dot-primary {
+  background-color: $color-primary;
+}
+
+.ce-icon-primary-bg {
+  background-color: rgba($color-primary, 0.1);
+  color: $color-primary;
+}
+
+.ce-checkbox {
+  color: $color-primary;
+  border-color: $border-color;
+
+  &:focus {
+    box-shadow: 0 0 0 2px $color-primary;
+  }
+}
+
+.ce-drawer-hint {
+  color: $color-primary;
+}
+
+.ce-input-border {
+  border-color: $border-color;
+}
+
+.ce-input-label {
+  color: $body-text;
+}
+
+.ce-modal-footer-border {
+  border-color: $border-color;
+}
+
+.ce-modal-bg {
+  background-color: $card-bg;
+}
+
+.ce-breadcrumb-slash {
+  color: $border-color;
+}
+
+.ce-breadcrumb-link {
+  color: $text-muted;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.ce-breadcrumb-current {
+  color: $heading-color;
+}
+
+.ce-file-upload-area {
+  border-color: $border-color;
+  background-color: $surface-secondary;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+}
+
+.ce-file-icon {
+  color: $text-muted;
+}
+
+.ce-file-label {
+  color: $color-primary;
+}
+
+.ce-file-hint {
+  color: $text-muted;
+}
+
+.ce-file-item-bg {
+  background-color: $surface-secondary;
+}
+
+.ce-file-item-name {
+  color: $heading-color;
+}
+
+.ce-file-item-size {
+  color: $text-muted;
+}
+
+.ce-file-item-remove {
+  color: $text-muted;
+
+  &:hover {
+    color: $color-danger;
+  }
+}
+
+.ce-progress-bg {
+  background-color: $border-color;
+}
+
+.ce-progress-fill {
+  background-color: $color-primary;
+}
+
+.ce-card-bg {
+  background-color: $card-bg;
+  border-color: $border-color;
+}
+
+.ce-card-heading {
+  color: $heading-color;
+}
+
+.ce-card-text {
+  color: $body-text;
+}
+
+.ce-success-text {
+  color: $color-success;
+}
+
+.ce-danger-text {
+  color: $color-danger;
+}
+
+.ce-warning-text {
+  color: $color-warning;
+}
+
+.ce-stepper-divider {
+  background-color: $border-color;
+}
+
+.ce-code-bg {
+  background-color: $surface-secondary;
+  color: $color-primary;
+}
+
+.ce-focus-ring {
+  &:focus {
+    box-shadow: 0 0 0 2px $color-primary;
+  }
+}
+
+.ce-focus-border {
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.ce-danger-bg {
+  background-color: $color-danger;
+}
+
+.ce-danger-border {
+  border-color: $color-danger-light;
+}
+
+[data-theme="dark"] {
+  .ce-page { background-color: $dark-surface-bg; }
+  .ce-heading { color: $dark-heading-color; }
+  .ce-subheading { color: $dark-text-secondary; }
+  .ce-text { color: $dark-body-text; }
+  .ce-muted { color: $dark-text-muted; }
+  .ce-divider { border-color: $dark-border-color; }
+  .ce-panel { background-color: $dark-card-bg; }
+  .ce-panel-heading { color: $dark-heading-color; }
+  .ce-panel-text { color: $dark-body-text; }
+  .ce-checkbox { border-color: $dark-border-color; }
+  .ce-input-border { border-color: $dark-border-color; }
+  .ce-input-label { color: $dark-body-text; }
+  .ce-modal-footer-border { border-color: $dark-border-color; }
+  .ce-modal-bg { background-color: $dark-card-bg; }
+  .ce-breadcrumb-slash { color: $dark-border-color; }
+  .ce-breadcrumb-link { color: $dark-text-muted; }
+  .ce-breadcrumb-current { color: $dark-heading-color; }
+  .ce-file-upload-area { border-color: $dark-border-color; background-color: $dark-surface-secondary; }
+  .ce-file-icon { color: $dark-text-muted; }
+  .ce-file-hint { color: $dark-text-muted; }
+  .ce-file-item-bg { background-color: $dark-surface-secondary; }
+  .ce-file-item-name { color: $dark-heading-color; }
+  .ce-file-item-size { color: $dark-text-muted; }
+  .ce-file-item-remove { color: $dark-text-muted; }
+  .ce-progress-bg { background-color: $dark-surface-tertiary; }
+  .ce-card-bg { background-color: $dark-card-bg; border-color: $dark-card-border; }
+  .ce-card-heading { color: $dark-heading-color; }
+  .ce-card-text { color: $dark-body-text; }
+  .ce-stepper-divider { background-color: $dark-border-color; }
+  .ce-code-bg { background-color: $dark-surface-secondary; color: $color-primary; }
+}
+
+.ce-danger-light-bg {
+  background-color: rgba($color-danger, 0.05);
+}
+
+.ce-dark-panel {
+  background-color: $heading-color;
+}
+
+.ce-warning-bg {
+  background-color: $color-warning;
+}

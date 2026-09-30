@@ -1,0 +1,23 @@
+// ══════════════════════════════════════════════════════════════════
+// SIDEBAR VARIANT: Minimal
+// Transparent sidebar with subtle separators.
+// Navbar: Minimal │ Variables: "Minimal Sidebar" in _variables.scss
+// ══════════════════════════════════════════════════════════════════
+
+.sidebar-minimal {
+  background-color: $sidebar-bg;
+}
+
+.sidebar-minimal-logo {
+  border-color: $sidebar-logo-border !important;
+}
+
+// ── Dark Mode ────────────────────────────────────
+[data-theme="dark"] {
+  .sidebar-minimal {
+    background-color: transparent;
+  }
+  .sidebar-minimal-logo {
+    border-color: rgba($dark-border-color, 0.5) !important;
+  }
+}

@@ -1,0 +1,65 @@
+.radio-checked-primary { background-color: $color-primary; border-color: $color-primary; }
+.radio-checked-secondary { background-color: $color-secondary; border-color: $color-secondary; }
+.radio-checked-danger { background-color: $color-danger; border-color: $color-danger; }
+.radio-checked-success { background-color: $color-success; border-color: $color-success; }
+.radio-checked-warning { background-color: $color-warning; border-color: $color-warning; }
+.radio-checked-info { background-color: $color-info; border-color: $color-info; }
+.radio-checked-dark { background-color: $color-dark; border-color: $color-dark; }
+
+.radio-unchecked {
+  border-color: $border-color;
+}
+
+.radio-label {
+  font-weight: 500;
+  color: $heading-color;
+}
+
+.radio-desc {
+  color: $text-secondary;
+}
+
+.radio-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  background-color: #ffffff;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform $transition-fast;
+  pointer-events: none;
+}
+
+.radio-checked .radio-dot {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.radio-wrapper {
+  display: inline-flex;
+  align-items: start;
+  gap: $spacing-sm;
+  cursor: pointer;
+
+  &.radio-wrapper-disabled {
+    cursor: not-allowed;
+  }
+}
+
+[data-theme="dark"] {
+  .radio-unchecked {
+    border-color: $dark-input-border;
+    background-color: $dark-input-bg;
+  }
+  .radio-label { color: $dark-heading-color; }
+  .radio-desc { color: $dark-text-secondary; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .radio-container {
+    .radio-input {
+      margin-right: 0;
+      margin-left: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,145 @@
+// All variables (colors, sizes, radius, transitions, etc.)
+@import "variables";
+
+// ── Base Styles ────────────────────────────────────
+@import "base";
+
+// ── Component Imports ──────────────────────────────
+
+@import "components/buttons/buttons";
+@import "components/buttons/switch";
+@import "components/buttons/popconfirm";
+
+@import "components/badges/badge";
+
+@import "components/inputs/checkbox";
+@import "components/inputs/radio";
+@import "components/inputs/select";
+@import "components/inputs/fileupload";
+@import "components/inputs/knob";
+@import "components/inputs/slider";
+@import "components/inputs/treeselect";
+@import "components/inputs/rate";
+@import "components/inputs/transfer";
+@import "components/inputs/colorpicker";
+@import "components/inputs/datepicker";
+@import "components/inputs/input";
+@import "components/inputs/pagebreadcrumb";
+
+@import "components/navigation/accordion";
+@import "components/navigation/breadcrumb";
+@import "components/navigation/drawer";
+@import "components/navigation/dropdown";
+@import "components/navigation/filter-accordion";
+@import "components/navigation/filter-drawer";
+@import "components/navigation/filter-dynamic";
+@import "components/navigation/stepper";
+@import "components/navigation/tabs";
+@import "components/navigation/toolbar";
+@import "components/navigation/treeview";
+@import "components/navigation/notification";
+@import "components/navigation/pagination";
+
+@import "components/cards/statcards";
+@import "components/cards/card";
+@import "components/cards/viewcard";
+
+@import "components/media/avatar";
+@import "components/media/carousel";
+@import "components/media/videoplayer";
+@import "components/media/avatarupload";
+@import "components/media/imagedisplay";
+@import "components/media/galleryviewer";
+@import "components/media/imageviewer";
+
+@import "components/feedback/toast";
+@import "components/feedback/message";
+@import "components/feedback/loader";
+@import "components/feedback/skeleton";
+
+@import "components/charts/charts";
+
+@import "components/modals/modal";
+
+@import "components/display/timeline";
+@import "components/display/orgchart";
+@import "components/display/calendar";
+@import "components/display/result";
+@import "components/display/watermark";
+@import "components/display/qrcode";
+@import "components/display/splitter";
+
+@import "components/table/treetable";
+@import "components/table/datatable";
+
+@import "components/editors/workfloweditor";
+
+// ── Layout Imports ─────────────────────────────────
+
+// ── Navbar: Shared styles (always keep imported) ───
+@import "layout/navbars/navbar-shared";
+
+// ══════════════════════════════════════════════════════════════════
+// NAVBAR VARIANT SELECTION
+// Uncomment ONE navbar variant below that matches your chosen
+// sidebar variant. See sidebar comments for which navbar to use.
+// ══════════════════════════════════════════════════════════════════
+// @import "layout/navbars/navbar-standard";            // Standard — Classic, Modern, Compact, Gradient, Dual, Shadow, ClassicDark, CompactDark, DualDark, Colorful*, GlassDark
+@import "layout/navbars/navbar-floating";              // Floating — Floating, FloatingDark, FloatingColorful*, FloatingGlass
+// @import "layout/navbars/navbar-bordered";            // Bordered — Bordered
+// @import "layout/navbars/navbar-minimal";             // Minimal  — Minimal
+// @import "layout/navbars/navbar-horizontal";          // Horizontal (Light) — HorizontalAuthLayout
+// @import "layout/navbars/navbar-horizontal-dark";     // Horizontal (Dark) — HorizontalDarkAuthLayout
+
+// ── Sidebar: Shared styles (always keep imported) ──
+@import "layout/sidebars/sidebar-shared";
+
+// ══════════════════════════════════════════════════════════════════
+// SIDEBAR VARIANT SELECTION
+// Uncomment ONE sidebar variant below that matches your chosen
+// sidebar component. Delete the rest when you're done choosing.
+// ══════════════════════════════════════════════════════════════════
+
+// ── Light Sidebars ─────────────────────────────────
+// @import "layout/sidebars/sidebar-classic";           // ClassicSidebar        → Navbar: Standard
+// @import "layout/sidebars/sidebar-compact";           // CompactSidebar        → Navbar: Standard
+@import "layout/sidebars/sidebar-floating";            // FloatingSidebar       → Navbar: Floating
+// @import "layout/sidebars/sidebar-bordered";          // BorderedSidebar       → Navbar: Bordered
+// @import "layout/sidebars/sidebar-minimal";           // MinimalSidebar        → Navbar: Minimal
+// @import "layout/sidebars/sidebar-shadow";            // ShadowSidebar         → Navbar: Standard
+// @import "layout/sidebars/sidebar-dual";              // DualSidebar           → Navbar: Standard
+
+// ── Dark Sidebars ──────────────────────────────────
+// @import "layout/sidebars/sidebar-modern";            // ModernSidebar         → Navbar: Standard
+// @import "layout/sidebars/sidebar-gradient";          // GradientSidebar       → Navbar: Standard
+// @import "layout/sidebars/sidebar-classic-dark";      // ClassicDarkSidebar    → Navbar: Standard
+// @import "layout/sidebars/sidebar-floating-dark";     // FloatingDarkSidebar   → Navbar: Floating
+// @import "layout/sidebars/sidebar-compact-dark";      // CompactDarkSidebar    → Navbar: Standard
+// @import "layout/sidebars/sidebar-dual-dark";         // DualDarkSidebar       → Navbar: Standard
+
+// ── Colorful Sidebars ──────────────────────────────
+// @import "layout/sidebars/sidebar-colorful";          // ColorfulSidebar (Pink)          → Navbar: Standard
+// @import "layout/sidebars/sidebar-colorful-teal";     // ColorfulTealSidebar             → Navbar: Standard
+// @import "layout/sidebars/sidebar-colorful-orange";   // ColorfulOrangeSidebar           → Navbar: Standard
+// @import "layout/sidebars/sidebar-colorful-ocean";    // ColorfulOceanSidebar            → Navbar: Standard
+// @import "layout/sidebars/sidebar-floating-colorful"; // FloatingColorfulSidebar (Pink)  → Navbar: Floating
+// @import "layout/sidebars/sidebar-floating-colorful-teal"; // FloatingColorfulTealSidebar → Navbar: Floating
+
+// ── Glass Sidebars (require glass variables below) ─
+// @import "layout/sidebars/sidebar-glass-dark";        // GlassDarkSidebar      → Navbar: Standard
+// @import "layout/sidebars/sidebar-floating-glass";    // FloatingGlassSidebar   → Navbar: Floating
+
+// NOTE: Horizontal nav SCSS is now in the navbar variants above:
+// Use navbar-horizontal or navbar-horizontal-dark instead.
+
+@import "layout/auth";
+@import "layout/pages";
+
+// ── Page Imports ───────────────────────────────────
+
+@import "pages/dashboard";
+@import "pages/component-examples";
+@import "pages/component-showcase";
+@import "pages/home";
+@import "pages/profile";
+
