@@ -27,7 +27,7 @@ import { fileURLToPath } from 'node:url';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, '..', '..');
-const APP = path.join(REPO_ROOT, 'app');
+const APP = path.join(REPO_ROOT, 'YSN');
 const I18N = path.join(APP, 'src', 'core', 'i18n');
 const LOCALES = path.join(I18N, 'locales');
 const REGISTRY = path.join(I18N, 'languages.ts');

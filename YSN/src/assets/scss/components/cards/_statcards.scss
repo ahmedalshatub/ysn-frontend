@@ -1,0 +1,320 @@
+@keyframes stat-count-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stat-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes stat-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stat-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes stat-pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+@keyframes stat-progress-fill {
+  from {
+    width: 0%;
+  }
+}
+
+@keyframes stat-ring-fill {
+  from {
+    stroke-dashoffset: var(--stat-ring-circumference);
+  }
+}
+
+.stat-card-animate {
+  animation: stat-fade-in 0.5s $transition-normal both;
+
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 0.08}s;
+    }
+  }
+}
+
+.stat-value-animate {
+  animation: stat-count-up 0.6s $transition-normal both;
+  animation-delay: 0.2s;
+}
+
+.stat-slide-animate {
+  animation: stat-slide-up 0.5s $transition-normal both;
+
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 0.1}s;
+    }
+  }
+}
+
+.stat-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: stat-shimmer 2s infinite;
+}
+
+.stat-pulse-ring {
+  animation: stat-pulse-ring 3s ease-in-out infinite;
+}
+
+.stat-progress-bar {
+  animation: stat-progress-fill 1s $transition-normal both;
+  animation-delay: 0.3s;
+}
+
+.stat-ring-circle {
+  animation: stat-ring-fill 1.2s $transition-normal both;
+  animation-delay: 0.3s;
+}
+
+.stat-card {
+  background-color: $card-bg;
+  border-color: $border-color-light;
+}
+
+.stat-change-up-text { color: $color-stat-up; }
+.stat-change-down-text { color: $color-stat-down; }
+
+.stat-card-title {
+  color: $text-muted;
+}
+
+.stat-card-value {
+  color: $heading-color;
+}
+
+.stat-card-muted {
+  color: $text-muted;
+}
+
+.stat-card-label {
+  color: $text-muted;
+}
+
+.stat-change-up {
+  background-color: rgba($color-stat-up, 0.08);
+  color: $color-stat-up-text;
+}
+
+.stat-change-down {
+  background-color: rgba($color-stat-down, 0.08);
+  color: $color-stat-down-text;
+}
+
+.stat-icon-primary {
+  background-color: rgba($color-primary, 0.1);
+  color: $color-primary-hover;
+}
+
+.stat-icon-secondary {
+  background-color: $surface-secondary;
+  color: $text-secondary;
+}
+
+.stat-icon-success {
+  background-color: rgba($color-stat-up, 0.1);
+  color: $color-stat-up-text;
+}
+
+.stat-icon-danger {
+  background-color: rgba($color-danger, 0.1);
+  color: $color-danger-hover;
+}
+
+.stat-icon-warning {
+  background-color: rgba($color-warning, 0.1);
+  color: $color-warning-hover;
+}
+
+.stat-icon-info {
+  background-color: rgba($color-info, 0.1);
+  color: $color-info-hover;
+}
+
+.stat-icon-dark {
+  background-color: $color-dark;
+  color: $color-dark-text;
+}
+
+.stat-track-primary {
+  background-color: $color-primary-light;
+}
+
+.stat-track-success {
+  background-color: $color-success-light;
+}
+
+.stat-track-danger {
+  background-color: $color-danger-light;
+}
+
+.stat-track-warning {
+  background-color: $color-warning-light;
+}
+
+.stat-track-info {
+  background-color: $color-info-light;
+}
+
+[data-theme="dark"] {
+  .stat-track-primary { background-color: rgba($color-primary, 0.2); }
+  .stat-track-success { background-color: rgba($color-success, 0.2); }
+  .stat-track-danger { background-color: rgba($color-danger, 0.2); }
+  .stat-track-warning { background-color: rgba($color-warning, 0.2); }
+  .stat-track-info { background-color: rgba($color-info, 0.2); }
+}
+
+.stat-ring-track-primary {
+  stroke: $color-primary-light;
+}
+
+.stat-ring-track-success {
+  stroke: $color-success-light;
+}
+
+.stat-ring-track-danger {
+  stroke: $color-danger-light;
+}
+
+.stat-ring-track-warning {
+  stroke: $color-warning-light;
+}
+
+.stat-ring-track-info {
+  stroke: $color-info-light;
+}
+
+.stat-text-primary {
+  color: $color-primary-hover;
+}
+
+.stat-text-success {
+  color: $color-stat-up-text;
+}
+
+.stat-text-danger {
+  color: $color-danger-hover;
+}
+
+.stat-text-warning {
+  color: $color-warning-hover;
+}
+
+.stat-text-info {
+  color: $color-info-hover;
+}
+
+.stat-bar-primary { background-color: $color-primary; }
+.stat-bar-success { background-color: $color-success; }
+.stat-bar-danger { background-color: $color-danger; }
+.stat-bar-warning { background-color: $color-warning; }
+.stat-bar-info { background-color: $color-info; }
+
+.stat-gradient-blue { background: $gradient-blue; }
+.stat-gradient-purple { background: $gradient-purple; }
+.stat-gradient-emerald { background: $gradient-emerald; }
+.stat-gradient-rose { background: $gradient-rose; }
+.stat-gradient-amber { background: $gradient-amber; }
+.stat-gradient-cyan { background: $gradient-cyan; }
+.stat-gradient-dark { background: $gradient-dark; }
+
+.stat-gradient-down-badge {
+  background-color: rgba($color-danger, 0.3);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] {
+  .stat-card {
+    background-color: $dark-card-bg;
+    border-color: $dark-card-border;
+    box-shadow: $dark-card-shadow;
+  }
+  .stat-card-title {
+    color: $dark-text-secondary;
+  }
+  .stat-card-value {
+    color: $dark-heading-color;
+  }
+  .stat-card-desc {
+    color: $dark-text-muted;
+  }
+  .stat-card-icon-wrapper {
+    background-color: $dark-surface-secondary;
+  }
+  .stat-card-footer {
+    border-top-color: $dark-border-color;
+    color: $dark-text-muted;
+  }
+  .stat-card-divider {
+    background-color: $dark-border-color;
+  }
+  .stat-trend-up {
+    background-color: rgba($color-success, 0.15);
+    color: lighten($color-success, 10%);
+  }
+  .stat-trend-down {
+    background-color: rgba($color-danger, 0.15);
+    color: lighten($color-danger, 10%);
+  }
+  .stat-trend-neutral {
+    background-color: $dark-surface-tertiary;
+    color: $dark-text-muted;
+  }
+  .stat-sparkline-up { color: lighten($color-success, 10%); }
+  .stat-sparkline-down { color: lighten($color-danger, 10%); }
+  .stat-progress-track {
+    background-color: $dark-surface-tertiary;
+  }
+  .stat-card-skeleton {
+    background-color: $dark-card-bg;
+    border-color: $dark-card-border;
+  }
+  .stat-gradient-down-badge {
+    background-color: rgba($color-danger, 0.35);
+  }
+}

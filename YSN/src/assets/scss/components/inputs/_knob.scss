@@ -1,0 +1,61 @@
+.knob-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.knob-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.knob-svg {
+  display: block;
+}
+
+.knob-interactive {
+  cursor: pointer;
+}
+
+.knob-track {
+  stroke: $border-color;
+}
+
+.knob-fill {
+  transition: stroke-dashoffset 50ms linear;
+}
+
+.knob-fill-primary { stroke: $color-primary; }
+.knob-fill-secondary { stroke: $color-secondary; }
+.knob-fill-success { stroke: $color-success; }
+.knob-fill-warning { stroke: $color-warning; }
+.knob-fill-danger { stroke: $color-danger; }
+.knob-fill-info { stroke: $color-info; }
+.knob-fill-dark { stroke: $color-dark; }
+
+.knob-value-text {
+  fill: $color-dark;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.knob-label {
+  color: $text-secondary;
+  font-weight: 500;
+  text-align: center;
+}
+
+[data-theme="dark"] {
+  .knob-track { stroke: $dark-surface-tertiary; }
+  .knob-value-text { fill: $dark-heading-color; }
+  .knob-label { color: $dark-text-secondary; }
+  .knob-fill-dark { stroke: $dark-border-color; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .knob-container {
+    direction: ltr;
+  }
+}

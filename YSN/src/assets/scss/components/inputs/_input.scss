@@ -1,0 +1,489 @@
+.input-error-text {
+  font-size: 12px;
+  color: $color-danger;
+}
+
+.input-error {
+  border-color: $color-danger;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba($color-danger, 0.15);
+    border-color: $color-danger;
+  }
+}
+
+.input-error-placeholder {
+  color: rgba($color-danger, 0.6);
+}
+
+.input-active-option {
+  background-color: $color-primary;
+  color: #fff;
+}
+
+.editor-toolbar-active {
+  background-color: $color-primary-light;
+  color: $color-primary;
+}
+
+.editor-toolbar-inactive {
+  color: $text-secondary;
+
+  &:hover {
+    background-color: $surface-tertiary;
+    color: $heading-color;
+  }
+}
+
+.rte-separator {
+  background-color: $border-color;
+}
+
+.rte-border-default {
+  border-color: $input-border;
+}
+
+.rte-bg {
+  background-color: $input-bg;
+}
+
+.rte-disabled {
+  background-color: $surface-tertiary;
+  opacity: 0.6;
+}
+
+.rte-toolbar {
+  border-color: $border-color-light;
+  background-color: $surface-secondary;
+}
+
+.rte-wrapper .tiptap p.is-editor-empty:first-child::before {
+  color: $input-placeholder;
+}
+
+.rte-wrapper {
+  &.rte-focus-primary:focus-within {
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+    border-color: $color-primary;
+  }
+
+  &.rte-focus-danger:focus-within {
+    box-shadow: 0 0 0 3px rgba($color-danger, 0.15);
+    border-color: $color-danger;
+  }
+}
+
+.rte-content {
+  color: $body-text;
+  line-height: 1.75;
+  font-size: 0.9375rem;
+
+  p { margin-bottom: 0.75rem; }
+  h1 { font-size: 1.75rem; font-weight: 700; color: $heading-color; margin-bottom: 0.75rem; }
+  h2 { font-size: 1.375rem; font-weight: 700; color: $heading-color; margin-bottom: 0.5rem; }
+  h3 { font-size: 1.125rem; font-weight: 600; color: $heading-color; margin-bottom: 0.5rem; }
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+  u { text-decoration: underline; }
+  s { text-decoration: line-through; }
+
+  ul { list-style: disc; padding-inline-start: 1.5rem; margin-bottom: 0.75rem; }
+  ol { list-style: decimal; padding-inline-start: 1.5rem; margin-bottom: 0.75rem; }
+  li { margin-bottom: 0.25rem; }
+
+  blockquote {
+    border-inline-start: 4px solid $border-color;
+    padding-inline-start: 1rem;
+    color: $text-secondary;
+    margin: 0.75rem 0;
+    font-style: italic;
+  }
+
+  code {
+    background-color: $border-color-light;
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+    font-size: 0.875em;
+    font-family: monospace;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+  }
+
+  pre {
+    background-color: $border-color-light;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 0.75rem;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid $border-color;
+    margin: 1rem 0;
+  }
+
+  a {
+    color: $color-primary;
+    text-decoration: underline;
+    &:hover { opacity: 0.8; }
+  }
+
+  img {
+    max-width: 100%;
+    border-radius: 6px;
+  }
+
+  [data-theme="dark"] & {
+    color: $dark-body-text;
+    h1, h2, h3 { color: $dark-heading-color; }
+    blockquote { border-color: $dark-border-color; color: $dark-text-secondary; }
+    code, pre { background-color: $dark-border-color-light; }
+    hr { border-color: $dark-border-color; }
+  }
+}
+
+.form-input,
+.form-textarea,
+.form-password,
+.form-search-input,
+.form-number-input {
+  width: 100%;
+  border: 1px solid $input-border;
+  background-color: $input-bg;
+  color: $input-text;
+  border-radius: 8px;
+  transition: border-color $transition-fast, box-shadow $transition-fast, background-color $transition-fast;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: $surface-tertiary;
+  }
+
+  &.input-error {
+    border-color: $color-danger;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($color-danger, 0.15);
+    }
+  }
+}
+
+.form-label {
+  font-weight: 500;
+  color: $body-text;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.form-error-text {
+  font-size: 12px;
+  color: $color-danger;
+  margin-top: 4px;
+}
+
+.password-toggle-btn {
+  color: $text-muted;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.form-input-disabled {
+  background-color: $surface-tertiary;
+}
+
+.form-input-readonly {
+  background-color: $surface-secondary;
+}
+
+.otp-cell {
+  border: 1px solid $input-border;
+  background-color: $input-bg;
+  color: $input-text;
+  border-radius: 8px;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba($color-primary, 0.15);
+  }
+
+  &.otp-filled {
+    border-color: $color-primary;
+    background-color: rgba($color-primary, 0.04);
+  }
+}
+
+.otp-focus-primary { &:focus { box-shadow: 0 0 0 2px rgba($color-primary, 0.15); border-color: $color-primary; } }
+.otp-focus-secondary { &:focus { box-shadow: 0 0 0 2px rgba($color-secondary, 0.15); border-color: $color-secondary; } }
+.otp-focus-danger { &:focus { box-shadow: 0 0 0 2px rgba($color-danger, 0.15); border-color: $color-danger; } }
+.otp-focus-success { &:focus { box-shadow: 0 0 0 2px rgba($color-success, 0.15); border-color: $color-success; } }
+.otp-focus-warning { &:focus { box-shadow: 0 0 0 2px rgba($color-warning, 0.15); border-color: $color-warning; } }
+.otp-focus-info { &:focus { box-shadow: 0 0 0 2px rgba($color-info, 0.15); border-color: $color-info; } }
+.otp-focus-dark { &:focus { box-shadow: 0 0 0 2px rgba($color-dark, 0.15); border-color: $color-dark; } }
+
+.otp-filled-primary { border-color: $color-primary; }
+.otp-filled-secondary { border-color: $color-secondary; }
+.otp-filled-danger { border-color: $color-danger; }
+.otp-filled-success { border-color: $color-success; }
+.otp-filled-warning { border-color: $color-warning; }
+.otp-filled-info { border-color: $color-info; }
+.otp-filled-dark { border-color: $color-dark; }
+
+.otp-cell-disabled {
+  background-color: $surface-tertiary;
+}
+
+.number-input-field {
+  background-color: $input-bg;
+  border-color: $input-border;
+  color: $input-text;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+}
+
+.select-trigger {
+  background-color: $input-bg;
+  border: 1px solid $input-border;
+  color: $input-text;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+  }
+
+  .select-placeholder {
+    color: $input-placeholder;
+  }
+}
+
+.select-dropdown {
+  background-color: $surface-bg;
+  border: 1px solid $border-color;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+  div.select-search {
+    border-bottom: 1px solid $border-color;
+    background-color: $surface-secondary;
+  }
+
+  input.select-search {
+    color: $input-text;
+
+    &::placeholder {
+      color: $input-placeholder;
+    }
+  }
+}
+
+.select-option {
+  color: $body-text;
+  transition: background-color $transition-fast;
+
+  &:hover,
+  &.select-option-highlight {
+    background-color: $surface-tertiary;
+  }
+
+  &.select-option-selected {
+    color: $color-primary;
+    background-color: rgba($color-primary, 0.06);
+  }
+}
+
+.search-icon {
+  color: $text-muted;
+}
+
+.select-empty {
+  color: $text-muted;
+  text-align: center;
+}
+
+.select-label {
+  font-weight: 500;
+  color: $body-text;
+}
+
+.number-input-btn {
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &.number-btn-disabled-color {
+    background-color: $surface-tertiary;
+    color: $text-muted;
+  }
+}
+
+.number-btn-primary { background-color: $color-primary; color: #fff; &:hover { background-color: $color-primary-hover; } &:active { background-color: $color-primary-active; } }
+.number-btn-secondary { background-color: $color-secondary; color: #fff; &:hover { background-color: $color-secondary-hover; } &:active { background-color: $color-secondary-active; } }
+.number-btn-danger { background-color: $color-danger; color: #fff; &:hover { background-color: $color-danger-hover; } &:active { background-color: $color-danger-active; } }
+.number-btn-success { background-color: $color-success; color: #fff; &:hover { background-color: $color-success-hover; } &:active { background-color: $color-success-active; } }
+.number-btn-warning { background-color: $color-warning; color: $color-dark; &:hover { background-color: $color-warning-hover; } &:active { background-color: $color-warning-active; } }
+.number-btn-info { background-color: $color-info; color: #fff; &:hover { background-color: $color-info-hover; } &:active { background-color: $color-info-active; } }
+.number-btn-dark { background-color: $color-dark; color: #fff; &:hover { background-color: $color-dark-hover; } &:active { background-color: $color-dark-active; } }
+
+.number-focus-primary { &:focus { box-shadow: 0 0 0 2px $color-primary; } }
+.number-focus-secondary { &:focus { box-shadow: 0 0 0 2px $color-secondary; } }
+.number-focus-danger { &:focus { box-shadow: 0 0 0 2px $color-danger; } }
+.number-focus-success { &:focus { box-shadow: 0 0 0 2px $color-success; } }
+.number-focus-warning { &:focus { box-shadow: 0 0 0 2px $color-warning; } }
+.number-focus-info { &:focus { box-shadow: 0 0 0 2px $color-info; } }
+.number-focus-dark { &:focus { box-shadow: 0 0 0 2px $color-dark; } }
+
+.input-disabled {
+  background-color: $surface-tertiary;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.input-readonly {
+  background-color: $surface-secondary;
+  cursor: default;
+}
+
+.input-focus-primary { &:focus { box-shadow: 0 0 0 3px rgba($color-primary, 0.15); border-color: $color-primary; } }
+.input-focus-danger { &:focus { box-shadow: 0 0 0 3px rgba($color-danger, 0.15); border-color: $color-danger; } }
+
+[data-theme="dark"] {
+  .form-input,
+  .form-textarea,
+  .form-password,
+  .form-search-input,
+  .form-number-input {
+    background-color: $dark-input-bg;
+    border-color: $dark-input-border;
+    color: $dark-input-text;
+    &::placeholder { color: $dark-input-placeholder; }
+  }
+  .password-toggle-btn {
+    color: $dark-text-muted;
+    &:hover { color: $dark-text-secondary; }
+  }
+  .search-icon { color: $dark-text-muted; }
+  .editor-toolbar-active {
+    background-color: rgba($color-primary, 0.15);
+    color: lighten($color-primary, 10%);
+  }
+  .editor-toolbar-inactive {
+    color: $dark-text-secondary;
+    &:hover { background-color: $dark-surface-tertiary; color: $dark-heading-color; }
+  }
+  .rte-disabled { background-color: $dark-surface-tertiary; opacity: 0.5; }
+  .form-label { color: $dark-body-text; }
+  .otp-cell {
+    background-color: $dark-input-bg;
+    border-color: $dark-input-border;
+    color: $dark-input-text;
+    &.otp-filled { border-color: $dark-input-border; }
+  }
+  .otp-cell-disabled { background-color: $dark-surface-tertiary; }
+  .rte-bg { background-color: $dark-input-bg; }
+  .rte-border-default { border-color: $dark-input-border !important; }
+  .rte-toolbar { background-color: $dark-surface-secondary; border-bottom-color: $dark-border-color; }
+  .rte-separator { background-color: $dark-border-color; }
+  .rte-prose {
+    color: $dark-body-text;
+    h1, h2, h3, h4, h5, h6 { color: $dark-heading-color; }
+    strong { color: $dark-heading-color; }
+    a { color: lighten($color-primary, 10%); }
+    blockquote { border-color: $dark-border-color; color: $dark-text-secondary; }
+    code { color: $dark-body-text; background-color: $dark-surface-tertiary; }
+    pre { background-color: $dark-surface-tertiary; code { background-color: transparent; } }
+    hr { border-color: $dark-border-color; }
+    th { color: $dark-heading-color; border-color: $dark-border-color; }
+    td { border-color: $dark-border-color; }
+  }
+  .number-input-field {
+    background-color: $dark-input-bg;
+    border-color: $dark-input-border;
+    color: $dark-input-text;
+  }
+  .number-btn-dark { background-color: $dark-surface-tertiary; color: $dark-body-text; &:hover { background-color: $dark-border-color; } }
+  .input-disabled { background-color: $dark-surface-tertiary; }
+  .input-readonly { background-color: $dark-surface-secondary; }
+  .select-trigger {
+    background-color: $dark-input-bg;
+    border-color: $dark-input-border;
+    color: $dark-input-text;
+  }
+  .select-dropdown div.select-search { border-color: $dark-border-color; background-color: $dark-surface-bg; }
+  .select-dropdown input.select-search {
+    color: $dark-input-text;
+    &::placeholder { color: $dark-input-placeholder; }
+  }
+  .select-option {
+    color: $dark-body-text;
+    &:hover,
+    &.select-option-highlight {
+      background-color: $dark-surface-tertiary;
+    }
+    &.select-option-selected {
+      color: lighten($color-primary, 10%);
+      background-color: rgba($color-primary, 0.1);
+    }
+  }
+  .select-empty { color: $dark-text-muted; }
+  .select-label { color: $dark-body-text; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .form-input,
+  .form-textarea,
+  .form-password,
+  .form-search-input,
+  .form-number-input {
+    text-align: right;
+  }
+
+  .password-toggle-btn {
+    right: auto;
+    left: 0.75rem;
+  }
+
+  .form-error-text {
+    text-align: right;
+  }
+
+  .otp-wrapper {
+    direction: ltr;
+  }
+
+  .number-input-wrapper {
+    .number-input-decrement {
+      border-radius: 0 0.375rem 0.375rem 0;
+    }
+
+    .number-input-increment {
+      border-radius: 0.375rem 0 0 0.375rem;
+    }
+  }
+
+  .rte-wrapper {
+    direction: ltr;
+  }
+}

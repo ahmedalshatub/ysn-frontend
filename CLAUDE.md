@@ -1,5 +1,11 @@
 # CLAUDE.md — how to work in this template
 
+> **Yanabee Sumer (YSN) project rules come first.** Read
+> [`docs/rules/FRONTEND_RULES.md`](docs/rules/FRONTEND_RULES.md) before any change.
+> Where it disagrees with this file, it wins. Feature plans are in the backend
+> repository under `docs/plan/`. The app folder is `YSN/`; paths below that
+> start with `app/` mean `YSN/`.
+
 **Read this before adding a feature.** It is the *how*: the conventions that keep
 this codebase and the RAS dashboard (`RASPM`) structurally interchangeable. A
 project generated from this template should be navigable by anyone who knows
@@ -46,7 +52,7 @@ app/src/
 |---|---|
 | a screen at a route | `features/<feature>/pages/` |
 | something a screen renders (modal, drawer, tab, card, step) | `features/<feature>/components/` |
-| RTK Query endpoints | `features/<feature>/api/<Entity>.api.ts` (+ a tag in `app/api/instanceApi.ts`) |
+| RTK Query endpoints | `features/<feature>/api/<Entity>.api.ts` |
 | a DTO / request shape / seed data | `features/<feature>/types/<Entity>.types.ts` |
 | a yup schema | `features/<feature>/validation/<Entity>.validation.ts` |
 | redux state for one feature | `features/<feature>/slices/<Entity>.slice.ts` |
@@ -222,8 +228,8 @@ app/src/features/invoices/
 
 **The API slice.** Endpoints are `getX` (detail), `getXs` (paginated
 `PaginatedResponse<T>`), `addX`, `updateX` (signature `{ id, data }`), `deleteX`.
-List `providesTags` = per-row `{type, id}` + `{type, id: "LIST"}`; mutations
-invalidate the row id + `"LIST"`.
+No `providesTags` or `invalidatesTags`: queries use `refetchOnMountOrArgChange`,
+and the page calls the list query's `refetch` after a create, update or delete.
 
 **The page.** Local `filterValues` state seeded
 `{ pageSize: 25, pageNumber: 1, sortBy: "Id", isAscending: false, …filters }`.
@@ -233,14 +239,13 @@ server-controlled (`currentPage`/`pageSize`/`totalItems`/`onPageChange`/
 `TableActionDropdown`. Dialog state as one object plus `selectedId`/`selectedRow`,
 modals conditionally mounted.
 
-**Then register it — four files, nothing else:**
+**Then register it — three files, nothing else:**
 
 1. `core/routes/index.tsx` — lazy import + an `allAdminRoutes` entry with `allowedRoles`
 2. `core/config/Menu.tsx` — sidebar entry with matching `allowedRoles`
 3. `core/i18n/locales/*.ts` — the `invoices.*` block and every `errors.Invoice.*` key, in **every** locale
-4. `app/api/instanceApi.ts` — add `"Invoices"` to `tagTypes`, or the tags will not type-check
 
-**Verify:** `cd app && npx tsc -b tsconfig.json --noEmit` clean, then click
+**Verify:** `cd YSN && npx tsc -b tsconfig.json --noEmit` clean, then click
 through list → filter → create → edit → delete for each role that can reach it.
 
 ---

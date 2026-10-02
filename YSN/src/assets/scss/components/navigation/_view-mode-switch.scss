@@ -1,0 +1,49 @@
+.view-mode-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  background-color: $surface-bg;
+}
+
+.view-mode-switch-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $text-muted;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    color: $heading-color;
+  }
+}
+
+.view-mode-switch-button-active {
+  background-color: $color-primary;
+  color: #ffffff;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+[data-theme="dark"] .view-mode-switch {
+  border-color: $dark-border-color;
+  background-color: $dark-surface-bg;
+}
+
+[data-theme="dark"] .view-mode-switch-button:hover {
+  color: $dark-heading-color;
+}
+
+[data-theme="dark"] .view-mode-switch-button-active,
+[data-theme="dark"] .view-mode-switch-button-active:hover {
+  color: #ffffff;
+}

@@ -33,7 +33,7 @@ import { fileURLToPath } from 'node:url';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, '..', '..');
-const APP = path.join(REPO_ROOT, 'app');
+const APP = path.join(REPO_ROOT, 'YSN');
 const SRC = path.join(APP, 'src');
 const LAYOUT_DIR = path.join(SRC, 'core', 'layout');
 const SIDEBARS = path.join(LAYOUT_DIR, 'sidebars');

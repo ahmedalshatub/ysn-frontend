@@ -33,7 +33,7 @@ import { fileURLToPath } from 'node:url';
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, '..', '..');
-const APP_DIR = path.join(REPO_ROOT, 'app');
+const APP_DIR = path.join(REPO_ROOT, 'YSN');
 
 const c = {
   reset: '\x1b[0m', bold: '\x1b[1m', dim: '\x1b[2m',

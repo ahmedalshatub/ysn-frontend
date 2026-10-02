@@ -1,0 +1,94 @@
+.page-breadcrumb {
+  .breadcrumb-title {
+    color: $heading-color;
+  }
+
+  .breadcrumb-subtitle {
+    color: $text-secondary;
+  }
+
+  .breadcrumb-link {
+    color: $text-muted;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  .breadcrumb-current {
+    color: $body-text;
+    font-weight: 600;
+  }
+
+  .breadcrumb-separator {
+    color: $text-muted;
+  }
+
+  .breadcrumb-date {
+    color: $text-secondary;
+  }
+}
+
+.page-breadcrumb-card {
+  background-color: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 16px;
+  box-shadow: $card-shadow;
+}
+
+.page-breadcrumb-minimal {
+  border-bottom: 1px solid $border-color-light;
+}
+
+[data-theme="dark"] {
+  .page-breadcrumb {
+    .breadcrumb-title { color: $dark-heading-color; }
+    .breadcrumb-subtitle { color: $dark-text-secondary; }
+    .breadcrumb-link { color: $dark-text-muted; &:hover { color: lighten($color-primary, 10%); } }
+    .breadcrumb-current { color: $dark-body-text; }
+    .breadcrumb-separator { color: $dark-text-muted; }
+    .breadcrumb-date { color: $dark-text-secondary; }
+  }
+  .page-breadcrumb-card {
+    background-color: $dark-card-bg;
+    border-color: $dark-card-border;
+    box-shadow: $dark-card-shadow;
+  }
+  .page-breadcrumb-minimal { border-bottom-color: $dark-border-color; }
+  .page-breadcrumb-modern {
+    background: linear-gradient(to right, $dark-surface-secondary, $dark-card-bg) !important;
+    border-color: $dark-card-border !important;
+  }
+  .breadcrumb-item-current { color: $dark-heading-color !important; }
+  .breadcrumb-item-default { color: $dark-text-muted !important; &:hover { color: lighten($color-primary, 10%) !important; } }
+  .breadcrumb-separator-color { color: $dark-text-muted !important; }
+  .breadcrumb-wrapper-contained { background-color: $dark-surface-secondary !important; }
+  .breadcrumb-item-contained-active { background-color: rgba($color-primary, 0.12) !important; color: lighten($color-primary, 10%) !important; }
+  .breadcrumb-item-contained { color: $dark-text-muted !important; &:hover { background-color: $dark-surface-tertiary !important; } }
+  .breadcrumb-wrapper-bordered { border-bottom-color: $dark-border-color !important; }
+  .breadcrumb-item-bordered-active { color: lighten($color-primary, 10%) !important; border-bottom-color: lighten($color-primary, 10%) !important; }
+  .breadcrumb-item-bordered { color: $dark-text-muted !important; &:hover { color: $dark-body-text !important; } }
+  .breadcrumb-item-pills-active { background-color: rgba($color-primary, 0.12) !important; color: lighten($color-primary, 10%) !important; }
+  .page-bc-bg-card { background-color: $dark-card-bg !important; border-color: $dark-card-border !important; }
+  .page-bc-title { color: $dark-heading-color !important; }
+  .page-bc-subtitle { color: $dark-text-muted !important; }
+  .page-bc-separator { color: $dark-text-muted !important; }
+  .page-bc-icon-muted { color: $dark-text-muted !important; }
+  .page-bc-icon-primary-bg { background-color: rgba($color-primary, 0.12) !important; }
+  .page-bc-icon-primary { color: lighten($color-primary, 10%) !important; }
+  .page-bc-date-bg { background-color: $dark-surface-secondary !important; }
+  .page-bc-date-text { color: $dark-text-secondary !important; }
+  .page-bc-path-primary { color: lighten($color-primary, 10%) !important; }
+  .page-bc-modern-bg { background: linear-gradient(to right, $dark-surface-secondary, $dark-card-bg) !important; border-color: $dark-card-border !important; }
+  .page-bc-modern-date-bg { border-color: $dark-border-color !important; background-color: $dark-card-bg !important; }
+  .page-bc-modern-date-text { color: $dark-body-text !important; }
+  .page-bc-default-border { border-bottom-color: $dark-border-color !important; }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .page-breadcrumb {
+    text-align: right;
+  }
+}

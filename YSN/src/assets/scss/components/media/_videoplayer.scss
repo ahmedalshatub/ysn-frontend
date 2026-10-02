@@ -1,0 +1,208 @@
+@keyframes vp-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vp-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vp-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes vp-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+@keyframes vp-progress-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 4px rgba($color-primary, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba($color-primary, 0.7);
+  }
+}
+
+.vp-container {
+  &:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+
+    .vp-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .vp-controls {
+      border-radius: 0;
+    }
+  }
+}
+
+.vp-controls {
+  animation: vp-slide-up 0.25s ease-out;
+  transition: opacity $transition-normal;
+}
+
+.vp-controls-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vp-overlay {
+  animation: vp-fade-in 0.2s ease-out;
+}
+
+.vp-spinner {
+  animation: vp-spinner 0.8s linear infinite;
+}
+
+.vp-play-pulse {
+  animation: vp-pulse 0.4s ease-out;
+}
+
+.vp-progress-track {
+  cursor: pointer;
+  transition: height $transition-fast;
+
+  &:hover {
+    height: 6px;
+
+    .vp-progress-thumb {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.vp-progress-filled {
+  transition: width 0.1s linear;
+}
+
+.vp-progress-thumb {
+  opacity: 0;
+  transform: scale(0);
+  transition: all $transition-fast;
+  animation: vp-progress-glow 2s ease-in-out infinite;
+
+  margin-left: -7px;
+}
+
+.vp-progress-buffer {
+  transition: width 0.3s ease-out;
+}
+
+.vp-volume-slider {
+  appearance: none;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  cursor: pointer;
+  transition: opacity $transition-fast;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.vp-speed-menu {
+  background-color: rgba($color-dark, 0.95);
+  animation: vp-slide-up 0.2s ease-out;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+  }
+}
+
+.vp-speed-active {
+  color: lighten($color-primary, 10%);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.vp-tooltip {
+  animation: vp-fade-in 0.15s ease-out;
+  pointer-events: none;
+}
+
+.vp-time-preview {
+  animation: vp-fade-in 0.1s ease-out;
+  pointer-events: none;
+}
+
+.vp-progress-color {
+  background-color: $color-primary;
+}
+
+[data-theme="dark"] {
+  .video-controls { background: linear-gradient(transparent, rgba(0, 0, 0, 0.85)); }
+  .vp-control-bar { background-color: $dark-surface-bg; border-color: $dark-border-color; }
+  .vp-btn { color: $dark-text-secondary; &:hover { color: $dark-body-text; background-color: $dark-surface-secondary; } }
+  .vp-volume-slider { background-color: $dark-surface-tertiary; }
+  .vp-time { color: $dark-text-secondary; }
+  .vp-progress-track { background-color: $dark-surface-tertiary; }
+  .vp-buffered { background-color: $dark-surface-secondary; }
+  .vp-speed-menu { background-color: $dark-card-bg; border-color: $dark-card-border; }
+  .vp-speed-option { color: $dark-body-text; &:hover { background-color: $dark-surface-secondary; } &.active { color: $color-primary; } }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .video-controls {
+    direction: ltr;
+  }
+
+  .vp-container {
+    direction: ltr;
+  }
+}

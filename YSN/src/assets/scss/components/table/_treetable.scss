@@ -1,0 +1,179 @@
+.treetable-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.treetable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.treetable-th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid $border-color;
+  white-space: nowrap;
+}
+
+.treetable-row {
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $surface-secondary;
+  }
+}
+
+.treetable-row-selected {
+  background-color: lighten($color-primary, 38%);
+
+  &:hover {
+    background-color: lighten($color-primary, 35%);
+  }
+}
+
+.treetable-cell {
+  padding: 8px 12px;
+  border-bottom: 1px solid $border-color-light;
+  color: $color-dark;
+  vertical-align: middle;
+}
+
+.treetable-cell-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.treetable-cell-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.treetable-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.treetable-toggle-spacer {
+  display: inline-block;
+  width: 14px;
+}
+
+.treetable-chevron {
+  color: $text-muted;
+  transition: transform $transition-fast;
+}
+
+.treetable-chevron-open {
+  transform: rotate(90deg);
+}
+
+.treetable-check-cell {
+  width: 40px;
+}
+
+.treetable-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 2px solid darken($border-color, 5%);
+  cursor: pointer;
+  transition: all $transition-fast;
+}
+
+.treetable-checkbox-checked {
+  background-color: $color-primary;
+  border-color: $color-primary;
+  color: #ffffff;
+}
+
+.treetable-checkbox-indeterminate {
+  background-color: $color-primary;
+  border-color: $color-primary;
+}
+
+.treetable-checkbox-dash {
+  display: block;
+  width: 8px;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 1px;
+}
+
+.treetable-striped {
+  tbody tr:nth-child(even) {
+    background-color: $surface-secondary;
+  }
+}
+
+.treetable-bordered {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .treetable-th,
+  .treetable-cell {
+    border-right: 1px solid $border-color-light;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.treetable-compact {
+  .treetable-th {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .treetable-cell {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+[data-theme="dark"] {
+  .treetable-th { color: $dark-text-secondary; border-bottom-color: $dark-border-color; }
+  .treetable-row:hover { background-color: $dark-surface-secondary; }
+  .treetable-row-selected { background-color: rgba($color-primary, 0.1); &:hover { background-color: rgba($color-primary, 0.15); } }
+  .treetable-cell { border-bottom-color: $dark-border-color; color: $dark-body-text; }
+  .treetable-chevron { color: $dark-text-muted; }
+  .treetable-checkbox { border-color: $dark-border-color; }
+  .treetable-striped tbody tr:nth-child(even) { background-color: $dark-surface-secondary; }
+  .treetable-bordered { border-color: $dark-border-color; .treetable-th, .treetable-cell { border-right-color: $dark-border-color; } }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .treetable {
+    th,
+    td {
+      text-align: right;
+    }
+  }
+
+  .treetable-chevron {
+    transform: rotate(180deg);
+
+    &.treetable-chevron-open {
+      transform: rotate(90deg);
+    }
+  }
+}

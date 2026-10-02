@@ -1,0 +1,32 @@
+.auth-layout {
+  background-color: $surface-secondary;
+}
+
+.auth-container {
+  background-color: $body-bg;
+  color: $body-text;
+}
+
+.auth-link {
+  color: $color-primary;
+
+  &:hover {
+    color: darken($color-primary, 10%);
+  }
+}
+
+[data-theme="dark"] {
+  .auth-layout { background-color: $dark-body-bg; }
+  .auth-container { background-color: $dark-body-bg; color: $dark-body-text; }
+  .auth-card { background-color: $dark-card-bg; border-color: $dark-card-border; }
+  .auth-title { color: $dark-heading-color; }
+  .auth-subtitle { color: $dark-text-secondary; }
+  .auth-divider { border-color: $dark-border-color; span { background-color: $dark-card-bg; color: $dark-text-muted; } }
+}
+
+// ── RTL Support ──────────────────────────────────
+[dir="rtl"] {
+  .auth-container {
+    text-align: right;
+  }
+}

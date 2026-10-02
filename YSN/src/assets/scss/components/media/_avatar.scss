@@ -1,0 +1,82 @@
+@keyframes avatar-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes avatar-pulse-status {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+  }
+}
+
+.avatar-animate {
+  animation: avatar-fade-in 0.3s ease-out both;
+}
+
+.avatar-group-animate {
+  animation: avatar-fade-in 0.25s ease-out both;
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 0.05}s;
+    }
+  }
+}
+
+.avatar-status-online {
+  animation: avatar-pulse-status 2s ease-in-out infinite;
+}
+
+.avatar-primary { background-color: $color-primary-light; color: $color-primary; }
+.avatar-secondary { background-color: $surface-tertiary; color: $text-secondary; }
+.avatar-success { background-color: $color-success-light; color: $color-success; }
+.avatar-danger { background-color: $color-danger-light; color: $color-danger; }
+.avatar-warning { background-color: $color-warning-light; color: $color-warning-hover; }
+.avatar-info { background-color: $color-info-light; color: $color-info; }
+.avatar-dark { background-color: $color-dark; color: $color-dark-text; }
+
+.avatar-status-dot-online { background-color: $color-success; }
+.avatar-status-dot-offline { background-color: $text-muted; }
+.avatar-status-dot-busy { background-color: $color-danger; }
+.avatar-status-dot-away { background-color: $color-warning; }
+
+.avatar-fallback {
+  background-color: $surface-tertiary;
+  color: $text-muted;
+}
+
+.avatar-overflow {
+  background-color: $surface-tertiary;
+
+  &:hover {
+    background-color: $border-color;
+  }
+}
+
+.avatar-overflow-text {
+  font-weight: 600;
+  color: $text-secondary;
+  line-height: 1;
+}
+
+[data-theme="dark"] {
+  .avatar-fallback { background-color: $dark-surface-tertiary !important; color: $dark-text-secondary !important; }
+  .avatar-overflow { background-color: $dark-surface-tertiary !important; &:hover { background-color: $dark-border-color !important; } }
+  .avatar-overflow-text { color: $dark-text-secondary; }
+  .avatar-primary { background-color: rgba($color-primary, 0.2) !important; color: lighten($color-primary, 15%) !important; }
+  .avatar-secondary { background-color: rgba($color-secondary, 0.2) !important; color: lighten($color-secondary, 20%) !important; }
+  .avatar-success { background-color: rgba($color-success, 0.2) !important; color: lighten($color-success, 15%) !important; }
+  .avatar-danger { background-color: rgba($color-danger, 0.2) !important; color: lighten($color-danger, 15%) !important; }
+  .avatar-warning { background-color: rgba($color-warning, 0.2) !important; color: lighten($color-warning, 10%) !important; }
+  .avatar-info { background-color: rgba($color-info, 0.2) !important; color: lighten($color-info, 15%) !important; }
+  .avatar-dark { background-color: rgba(255, 255, 255, 0.12) !important; color: $dark-body-text !important; }
+}
