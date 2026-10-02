@@ -6,7 +6,7 @@ import Select from "../../../shared/components/inputs/Select";
 import DatePicker from "../../../shared/components/inputs/DatePicker";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import { getStatusFilterOptions, getYesNoFilterOptions } from "../../../shared/utils/constants";
-import { useGetActiveCountriesQuery } from "../../countries/api/Countries.api";
+import { useGetCountriesQuery } from "../../countries/api/Countries.api";
 import { useGetCustomersQuery } from "../api/Customers.api";
 import { CustomerApp, CustomerType, customerFullName, type CustomerRequest, type CustomerTypeValue } from "../types/Customers.types";
 
@@ -26,7 +26,11 @@ const fromNumberValue = (value: string) => (value === "" ? undefined : Number(va
 const CustomerFilters = ({ customerType, values, fixedParentAgent, onChange, onSearch, onClear }: CustomerFiltersProps) => {
   const { t } = useTranslation();
   const { cities } = useMyCities();
-  const { data: countries } = useGetActiveCountriesQuery(undefined, { refetchOnMountOrArgChange: true });
+  const { data: countryList } = useGetCountriesQuery(
+    { isActive: true, isDeleted: false, sortBy: "Name", isAscending: true },
+    { refetchOnMountOrArgChange: true }
+  );
+  const countries = countryList?.items;
   const isSubAgents = customerType === CustomerType.SubAgent;
   const showAgentFilter = isSubAgents && !fixedParentAgent;
   const { data: agents } = useGetCustomersQuery(

@@ -1,16 +1,19 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { useGetActiveCitiesQuery } from "../../features/cities/api/Cities.api";
+import { useGetCitiesQuery } from "../../features/cities/api/Cities.api";
 
 const useMyCities = () => {
   const hasAllCities = useSelector((state: RootState) => state.auth.hasAllCities);
   const isSuperAdmin = useSelector((state: RootState) => state.auth.isSuperAdmin);
   const cityIds = useSelector((state: RootState) => state.auth.cityIds);
-  const { data, isLoading } = useGetActiveCitiesQuery(undefined, { refetchOnMountOrArgChange: true });
+  const { data, isLoading } = useGetCitiesQuery(
+    { isActive: true, isDeleted: false, sortBy: "SortOrder", isAscending: true },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const cities = useMemo(
-    () => (data ?? []).filter((city) => isSuperAdmin || hasAllCities || cityIds.includes(city.id)),
+    () => (data?.items ?? []).filter((city) => isSuperAdmin || hasAllCities || cityIds.includes(city.id)),
     [data, isSuperAdmin, hasAllCities, cityIds]
   );
 

@@ -18,9 +18,6 @@ export const countriesApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    getActiveCountries: builder.query<CountryListDto[], void>({
-      query: () => "Countries/active",
-    }),
     getCountry: builder.query<CountryDto, number>({
       query: (id) => `Countries/${id}`,
     }),
@@ -63,7 +60,6 @@ export const countriesApi = instanceApi.injectEndpoints({
 
 export const {
   useGetCountriesQuery,
-  useGetActiveCountriesQuery,
   useGetCountryQuery,
   useAddCountryMutation,
   useUpdateCountryMutation,

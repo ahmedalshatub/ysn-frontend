@@ -11,9 +11,6 @@ export const citiesApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    getActiveCities: builder.query<CityListDto[], void>({
-      query: () => "Cities/active",
-    }),
     getCity: builder.query<CityDto, number>({
       query: (id) => `Cities/${id}`,
     }),
@@ -56,7 +53,6 @@ export const citiesApi = instanceApi.injectEndpoints({
 
 export const {
   useGetCitiesQuery,
-  useGetActiveCitiesQuery,
   useGetCityQuery,
   useAddCityMutation,
   useUpdateCityMutation,

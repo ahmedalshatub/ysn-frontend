@@ -11,9 +11,6 @@ export const rolesApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    getActiveRoles: builder.query<RoleListDto[], void>({
-      query: () => "Roles/active",
-    }),
     getPermissions: builder.query<PermissionDto[], void>({
       query: () => "Roles/permissions",
     }),
@@ -59,7 +56,6 @@ export const rolesApi = instanceApi.injectEndpoints({
 
 export const {
   useGetRolesQuery,
-  useGetActiveRolesQuery,
   useGetPermissionsQuery,
   useGetRoleQuery,
   useAddRoleMutation,

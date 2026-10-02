@@ -17,8 +17,8 @@ import UsersIcon from "../../../assets/icons/UsersIcon";
 import UserIcon from "../../../assets/icons/UserIcon";
 import ShieldIcon from "../../../assets/icons/ShieldIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
-import { useGetActiveCountriesQuery } from "../../countries/api/Countries.api";
-import { useGetActiveRolesQuery } from "../../roles/api/Roles.api";
+import { useGetCountriesQuery } from "../../countries/api/Countries.api";
+import { useGetRolesQuery } from "../../roles/api/Roles.api";
 import { useCreateUserMutation, useGetUserByIdQuery, useUpdateUserMutation } from "../api/Users.api";
 import { userSchema, type UserFormValues } from "../validation/Users.validation";
 
@@ -51,8 +51,16 @@ const UserModal = ({ open, userId, onClose, onSuccess }: UserModalProps) => {
     skip: !isEdit || !open,
     refetchOnMountOrArgChange: true,
   });
-  const { data: countries } = useGetActiveCountriesQuery(undefined, { refetchOnMountOrArgChange: true });
-  const { data: roles } = useGetActiveRolesQuery(undefined, { refetchOnMountOrArgChange: true });
+  const { data: countryList } = useGetCountriesQuery(
+    { isActive: true, isDeleted: false, sortBy: "Name", isAscending: true },
+    { refetchOnMountOrArgChange: true }
+  );
+  const countries = countryList?.items;
+  const { data: roleList } = useGetRolesQuery(
+    { isActive: true, isDeleted: false, sortBy: "Name", isAscending: true },
+    { refetchOnMountOrArgChange: true }
+  );
+  const roles = roleList?.items;
   const { cities } = useMyCities();
 
   const [createUser, { isLoading: isCreating }] = useCreateUserMutation();

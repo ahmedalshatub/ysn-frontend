@@ -14,7 +14,7 @@ import useMyCities from "../../../shared/hooks/useMyCities";
 import UserIcon from "../../../assets/icons/UserIcon";
 import KeyIcon from "../../../assets/icons/KeyIcon";
 import MonitorIcon from "../../../assets/icons/MonitorIcon";
-import { useGetActiveCountriesQuery } from "../../countries/api/Countries.api";
+import { useGetCountriesQuery } from "../../countries/api/Countries.api";
 import { useAddCustomerMutation, useGetCustomerQuery, useUpdateCustomerMutation } from "../api/Customers.api";
 import { customerSchema, type CustomerFormValues } from "../validation/Customers.validation";
 import AgentFormSelect from "./AgentFormSelect";
@@ -63,7 +63,11 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
     customerId as number,
     { skip: !isEdit || !open, refetchOnMountOrArgChange: true }
   );
-  const { data: countries } = useGetActiveCountriesQuery(undefined, { refetchOnMountOrArgChange: true });
+  const { data: countryList } = useGetCountriesQuery(
+    { isActive: true, isDeleted: false, sortBy: "Name", isAscending: true },
+    { refetchOnMountOrArgChange: true }
+  );
+  const countries = countryList?.items;
   const { cities, singleCityId } = useMyCities();
 
   const [addCustomer, { isLoading: isAdding }] = useAddCustomerMutation();

@@ -6,7 +6,7 @@ import Select from "../../../shared/components/inputs/Select";
 import DatePicker from "../../../shared/components/inputs/DatePicker";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import { getStatusFilterOptions, getYesNoFilterOptions } from "../../../shared/utils/constants";
-import { useGetActiveRolesQuery } from "../../roles/api/Roles.api";
+import { useGetRolesQuery } from "../../roles/api/Roles.api";
 import type { UserRequest } from "../types/Users.types";
 
 interface UserFiltersProps {
@@ -22,7 +22,11 @@ const fromNumberValue = (value: string) => (value === "" ? undefined : Number(va
 
 const UserFilters = ({ values, onChange, onSearch, onClear }: UserFiltersProps) => {
   const { t } = useTranslation();
-  const { data: roles } = useGetActiveRolesQuery(undefined, { refetchOnMountOrArgChange: true });
+  const { data: roleList } = useGetRolesQuery(
+    { isActive: true, isDeleted: false, sortBy: "Name", isAscending: true },
+    { refetchOnMountOrArgChange: true }
+  );
+  const roles = roleList?.items;
   const { cities } = useMyCities();
 
   const roleOptions = useMemo(() => (roles ?? []).map((role) => ({ value: role.id, name: role.name })), [roles]);
