@@ -7,6 +7,9 @@ import DeleteCustomerAlert from "./DeleteCustomerAlert";
 import RestoreCustomerAlert from "./RestoreCustomerAlert";
 import MessagesModal from "../../messages/components/MessagesModal";
 import SendMessageModal from "../../messages/components/SendMessageModal";
+import CustomerTransactionsModal from "../../transactions/components/CustomerTransactionsModal";
+import BalanceChangeModal from "../../transactions/components/BalanceChangeModal";
+import { TransactionType } from "../../transactions/types/Transactions.types";
 
 interface CustomerDialogsProps {
   dialog: CustomerDialogName | null;
@@ -44,6 +47,12 @@ const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onT
       return <MessagesModal open customer={customer} onClose={onClose} />;
     case "sendMessage":
       return <SendMessageModal open customer={customer} onClose={onClose} onSuccess={onSuccess} />;
+    case "transactions":
+      return <CustomerTransactionsModal open customer={customer} onClose={onClose} onChanged={onSuccess} />;
+    case "deposit":
+      return <BalanceChangeModal open type={TransactionType.Deposit} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
+    case "withdraw":
+      return <BalanceChangeModal open type={TransactionType.Withdraw} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     case "restore":
       return <RestoreCustomerAlert open customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     default:

@@ -8,6 +8,9 @@ import KeyIcon from "../../../assets/icons/KeyIcon";
 import RefreshCwIcon from "../../../assets/icons/RefreshCwIcon";
 import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import MailIcon from "../../../assets/icons/MailIcon";
+import WalletIcon from "../../../assets/icons/WalletIcon";
+import TrendUpIcon from "../../../assets/icons/TrendUpIcon";
+import TrendDownIcon from "../../../assets/icons/TrendDownIcon";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
 import useCustomerPermission from "./useCustomerPermission";
@@ -20,7 +23,10 @@ export type CustomerDialogName =
   | "delete"
   | "restore"
   | "messages"
-  | "sendMessage";
+  | "sendMessage"
+  | "transactions"
+  | "deposit"
+  | "withdraw";
 
 interface CustomerActionOptions {
   onOpen?: (customer: CustomerListDto) => void;
@@ -51,6 +57,15 @@ const useCustomerActions = ({ onOpen, onDialog }: CustomerActionOptions) => {
           : []),
         ...(canPermission(Permission.MessagesSendToCustomer) && customer.isActive
           ? [{ label: t("messages.sendMessage"), icon: <MailIcon />, onClick: () => onDialog("sendMessage", customer) }]
+          : []),
+        ...(canPermission(Permission.TransactionsView)
+          ? [{ label: t("transactions.pageTitle"), icon: <WalletIcon />, onClick: () => onDialog("transactions", customer) }]
+          : []),
+        ...(canPermission(Permission.TransactionsDeposit)
+          ? [{ label: t("transactionTypes.deposit"), icon: <TrendUpIcon />, onClick: () => onDialog("deposit", customer) }]
+          : []),
+        ...(canPermission(Permission.TransactionsWithdraw) && customer.balance > 0
+          ? [{ label: t("transactionTypes.withdraw"), icon: <TrendDownIcon />, onClick: () => onDialog("withdraw", customer) }]
           : []),
         ...(can("ChangeStatus")
           ? [{

@@ -11,6 +11,7 @@ import ListOrderedIcon from "../../assets/icons/ListOrderedIcon";
 import UserIcon from "../../assets/icons/UserIcon";
 import ClipboardIcon from "../../assets/icons/ClipboardIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
+import WalletIcon from "../../assets/icons/WalletIcon";
 import { Permission, type PermissionCode } from "../../shared/types/Permissions.types";
 
 const iconSize = 20;
@@ -142,6 +143,13 @@ const Menu: MenuItem[] = [
         permission: Permission.MessagesView,
       },
     ],
+  },
+  {
+    name: "Transactions",
+    title: "sidebar.transactions",
+    icon: <WalletIcon width={iconSize} height={iconSize} />,
+    path: "/transactions",
+    permission: Permission.TransactionsView,
   },
   {
     name: "Cards",
