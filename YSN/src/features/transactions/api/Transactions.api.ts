@@ -8,6 +8,7 @@ import type {
   TransactionListDto,
   TransactionRequest,
   TransactionStatsDto,
+  DailyTransactionTotalDto,
 } from "../types/Transactions.types";
 
 export const transactionsApi = instanceApi.injectEndpoints({
@@ -55,6 +56,9 @@ export const transactionsApi = instanceApi.injectEndpoints({
         responseHandler: excelResponseHandler("Transactions"),
       }),
     }),
+    getTransactionDailyTotals: builder.query<DailyTransactionTotalDto[], TransactionFilter>({
+      query: (params) => ({ url: "Transactions/stats/daily", params }),
+    }),
   }),
 });
 
@@ -66,4 +70,5 @@ export const {
   useDeleteTransactionMutation,
   useRestoreTransactionMutation,
   useExportTransactionsMutation,
+  useGetTransactionDailyTotalsQuery,
 } = transactionsApi;

@@ -1,3 +1,6 @@
+import { useLocation } from "react-router-dom";
+import useUrlFilter from "../../../shared/hooks/useUrlFilter";
+import type { CustomerRequest } from "../types/Customers.types";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
@@ -11,6 +14,8 @@ interface CustomerTypePageProps {
 
 const CustomerTypePage = ({ customerType }: CustomerTypePageProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const initialFilter = useUrlFilter<CustomerRequest>();
   const config = customerTypeConfigs[customerType];
   useTitle(t(config.pluralKey));
 
@@ -24,7 +29,7 @@ const CustomerTypePage = ({ customerType }: CustomerTypePageProps) => {
         showDate
         animated
       />
-      <CustomersList customerType={customerType} viewKey={config.module} />
+      <CustomersList customerType={customerType} viewKey={config.module} key={location.search} initialFilter={initialFilter} />
     </div>
   );
 };

@@ -15,6 +15,7 @@ import type { InvoiceFilter, InvoiceListDto, InvoiceRequest } from "../types/Inv
 interface InvoicesViewProps {
   customerId?: number;
   onChanged?: () => void;
+  initialFilter?: Partial<InvoiceRequest>;
 }
 
 const initialValues: InvoiceRequest = { pageNumber: 1, pageSize: 25, sortBy: "id", isAscending: false };
@@ -36,10 +37,10 @@ const toQueryFilter = (values: InvoiceRequest, customerId?: number): InvoiceFilt
   toDate: values.toDate,
 });
 
-const InvoicesView = ({ customerId, onChanged }: InvoicesViewProps) => {
+const InvoicesView = ({ customerId, onChanged, initialFilter }: InvoicesViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
-  const [values, setValues] = useState<InvoiceRequest>(initialValues);
+  const [values, setValues] = useState<InvoiceRequest>(() => ({ ...initialValues, ...initialFilter }));
   const [dialog, setDialog] = useState<"view" | "delete" | null>(null);
   const [selected, setSelected] = useState<InvoiceListDto | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);

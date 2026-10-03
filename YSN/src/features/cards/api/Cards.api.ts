@@ -12,6 +12,7 @@ import type {
   CardsBulkActionDto,
   CardsBulkActionResultDto,
   UpdateCardDto,
+  CardTypeStockDto,
 } from "../types/Cards.types";
 
 export const cardsApi = instanceApi.injectEndpoints({
@@ -46,6 +47,9 @@ export const cardsApi = instanceApi.injectEndpoints({
     exportCards: builder.mutation<null, CardFilter>({
       query: (params) => ({ url: "Cards/export", method: "GET", params, responseHandler: excelResponseHandler("Cards") }),
     }),
+    getCardStatsByType: builder.query<CardTypeStockDto[], CardFilter>({
+      query: (params) => ({ url: "Cards/stats/by-type", params }),
+    }),
   }),
 });
 
@@ -60,4 +64,5 @@ export const {
   useDeleteCardMutation,
   useRestoreCardMutation,
   useExportCardsMutation,
+  useGetCardStatsByTypeQuery,
 } = cardsApi;

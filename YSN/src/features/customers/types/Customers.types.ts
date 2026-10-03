@@ -166,3 +166,17 @@ export const customerFullName = (customer: Pick<CustomerListDto, "firstName" | "
 
 export const customerPhone = (customer: Pick<CustomerListDto, "phoneCode" | "phoneNumber">) =>
   customer.phoneNumber ? `${customer.phoneCode ?? ""} ${customer.phoneNumber}`.trim() : "";
+
+export interface CustomerTypeStatsDto {
+  userType: number;
+  totalCount: number;
+  activeCount: number;
+  disabledCount: number;
+  balanceTotal: number | null;
+}
+
+export interface DailyCustomerCountDto {
+  date: string;
+  userType: number;
+  count: number;
+}

@@ -10,6 +10,8 @@ import type {
   CustomerTypeValue,
   SetCustomerPasswordDto,
   UpdateCustomerDto,
+  CustomerTypeStatsDto,
+  DailyCustomerCountDto,
 } from "../types/Customers.types";
 
 const toCustomerFormData = (data: AddCustomerDto | UpdateCustomerDto, userType?: CustomerTypeValue) => {
@@ -80,6 +82,12 @@ export const customersApi = instanceApi.injectEndpoints({
         responseHandler: excelResponseHandler("Customers"),
       }),
     }),
+    getCustomerStats: builder.query<CustomerTypeStatsDto[], Partial<CustomerFilter>>({
+      query: (params) => ({ url: "Users/stats", params }),
+    }),
+    getCustomerDailyCounts: builder.query<DailyCustomerCountDto[], Partial<CustomerFilter>>({
+      query: (params) => ({ url: "Users/stats/daily", params }),
+    }),
   }),
 });
 
@@ -93,4 +101,6 @@ export const {
   useDeleteCustomerMutation,
   useRestoreCustomerMutation,
   useExportCustomersMutation,
+  useGetCustomerStatsQuery,
+  useGetCustomerDailyCountsQuery,
 } = customersApi;

@@ -48,6 +48,9 @@ export const messagesApi = instanceApi.injectEndpoints({
         responseHandler: excelResponseHandler("Messages"),
       }),
     }),
+    getMessagesCount: builder.query<number, Partial<MessageRequest>>({
+      query: (params) => ({ url: "Messages/count", params }),
+    }),
   }),
 });
 
@@ -58,4 +61,5 @@ export const {
   useDeleteMessageMutation,
   useRestoreMessageMutation,
   useExportMessagesMutation,
+  useGetMessagesCountQuery,
 } = messagesApi;

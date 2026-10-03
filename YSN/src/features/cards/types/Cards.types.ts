@@ -145,3 +145,13 @@ export interface CardsBulkActionResultDto {
 export type CardSelection =
   | { mode: "ids"; ids: Set<string | number> }
   | { mode: "filter"; filter: CardFilter; count: number };
+
+export interface CardTypeStockDto {
+  cardTypeId: number;
+  name: string | null;
+  categoryName: string | null;
+  cityName: string | null;
+  availableCount: number;
+  takenCount: number;
+  disabledCount: number;
+}

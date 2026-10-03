@@ -21,6 +21,7 @@ import { TransactionType, type TransactionFilter, type TransactionListDto, type 
 interface TransactionsViewProps {
   customer?: CustomerListDto | null;
   onChanged?: () => void;
+  initialFilter?: Partial<TransactionRequest>;
 }
 
 type DialogName = "view" | "deposit" | "withdraw" | "delete" | "restore";
@@ -48,10 +49,10 @@ const toQueryFilter = (values: TransactionRequest, customerId?: number): Transac
   toDate: values.toDate,
 });
 
-const TransactionsView = ({ customer, onChanged }: TransactionsViewProps) => {
+const TransactionsView = ({ customer, onChanged, initialFilter }: TransactionsViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
-  const [values, setValues] = useState<TransactionRequest>(initialValues);
+  const [values, setValues] = useState<TransactionRequest>(() => ({ ...initialValues, ...initialFilter }));
   const [dialog, setDialog] = useState<DialogName | null>(null);
   const [selected, setSelected] = useState<TransactionListDto | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);

@@ -126,3 +126,10 @@ export interface AddTransactionDto {
   amount: number;
   description: string;
 }
+
+export interface DailyTransactionTotalDto {
+  date: string;
+  type: number;
+  count: number;
+  amount: number;
+}

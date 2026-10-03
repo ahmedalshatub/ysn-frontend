@@ -32,6 +32,7 @@ interface CustomersListProps {
   customerType: CustomerTypeValue;
   viewKey: string;
   fixedFilter?: Partial<CustomerFilter>;
+  initialFilter?: Partial<CustomerRequest>;
 }
 
 const emptyFilter: CustomerRequest = {
@@ -65,7 +66,7 @@ const toQueryFilter = (values: CustomerRequest): CustomerFilter => ({
   lastLoginTo: values.lastLoginTo,
 });
 
-const CustomersList = ({ customerType, viewKey, fixedFilter }: CustomersListProps) => {
+const CustomersList = ({ customerType, viewKey, fixedFilter, initialFilter }: CustomersListProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const canCustomer = useCustomerPermission();
@@ -73,7 +74,7 @@ const CustomersList = ({ customerType, viewKey, fixedFilter }: CustomersListProp
 
   const [viewMode, setViewMode] = useViewMode(viewKey);
   const pageSizeFor = (mode: ViewModeType) => (mode === ViewMode.Cards ? CARD_PAGE_SIZE : TABLE_PAGE_SIZE);
-  const [initialValues] = useState<CustomerRequest>(() => ({ ...emptyFilter, ...fixedFilter, pageSize: pageSizeFor(viewMode) }));
+  const [initialValues] = useState<CustomerRequest>(() => ({ ...emptyFilter, ...initialFilter, ...fixedFilter, pageSize: pageSizeFor(viewMode) }));
   const [filterValues, setFilterValues] = useState<CustomerRequest>(initialValues);
   const [dialog, setDialog] = useState<CustomerDialogName | null>(null);
   const [selected, setSelected] = useState<CustomerListDto | null>(null);

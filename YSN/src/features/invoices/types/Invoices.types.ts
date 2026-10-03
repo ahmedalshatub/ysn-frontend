@@ -63,3 +63,17 @@ export interface InvoiceStatsDto {
   deletedCount: number;
   refundedTotal: number;
 }
+
+export interface DailyInvoiceTotalDto {
+  date: string;
+  count: number;
+  cardsSold: number;
+  total: number;
+}
+
+export interface TopCardTypeDto {
+  cardTypeId: number;
+  name: string | null;
+  count: number;
+  total: number;
+}

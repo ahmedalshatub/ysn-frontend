@@ -1,7 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
 import { excelResponseHandler } from "../../../shared/utils/fileDownload";
-import type { UpdateProfileData, UserDto, UserFilter, UserFormData, UserListDto, UserRequest } from "../types/Users.types";
+import type { UpdateProfileData, UserDto, UserFilter, UserFormData, UserListDto, UserRequest,  } from "../types/Users.types";
 
 const toUserFormData = (data: UserFormData) => {
   const formData = new FormData();
@@ -98,6 +98,9 @@ export const userApi = instanceApi.injectEndpoints({
         };
       },
     }),
+    getUsersCount: builder.query<number, Partial<UserRequest>>({
+      query: (params) => ({ url: "Users/count", params }),
+    }),
   }),
 });
 
@@ -113,4 +116,5 @@ export const {
   useExportUsersMutation,
   useGetMyProfileQuery,
   useUpdateProfileMutation,
+  useGetUsersCountQuery,
 } = userApi;

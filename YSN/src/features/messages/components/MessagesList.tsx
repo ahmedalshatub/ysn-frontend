@@ -24,6 +24,7 @@ import {
 
 interface MessagesListProps {
   recipient?: CustomerListDto | null;
+  initialFilter?: Partial<MessageRequest>;
 }
 
 type DialogName = "view" | "send" | "delete" | "restore";
@@ -50,11 +51,11 @@ const toQueryFilter = (values: MessageRequest, userId?: number): MessageFilter =
   toDate: values.toDate,
 });
 
-const MessagesList = ({ recipient }: MessagesListProps) => {
+const MessagesList = ({ recipient, initialFilter }: MessagesListProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const audiences = useMessageAudiences();
-  const [values, setValues] = useState<MessageRequest>(initialValues);
+  const [values, setValues] = useState<MessageRequest>(() => ({ ...initialValues, ...initialFilter }));
   const [dialog, setDialog] = useState<DialogName | null>(null);
   const [selected, setSelected] = useState<MessageListDto | null>(null);
 

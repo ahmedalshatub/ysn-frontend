@@ -1,3 +1,6 @@
+import { useLocation } from "react-router-dom";
+import useUrlFilter from "../../../shared/hooks/useUrlFilter";
+import type { MessageRequest } from "../types/Messages.types";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
@@ -7,6 +10,8 @@ import MessagesList from "../components/MessagesList";
 
 const MessagesPage = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const initialFilter = useUrlFilter<MessageRequest>();
   useTitle(t("messages.pageTitle"));
 
   return (
@@ -20,7 +25,7 @@ const MessagesPage = () => {
         animated
       />
       <Card variant="elevated" padding="md">
-        <MessagesList />
+        <MessagesList key={location.search} initialFilter={initialFilter} />
       </Card>
     </div>
   );
