@@ -16,6 +16,7 @@ import type { SortDirection } from "../../../shared/components/table/TableHeader
 import PlusIcon from "../../../assets/icons/PlusIcon";
 import PackageIcon from "../../../assets/icons/PackageIcon";
 import { useExportCardTypesMutation, useGetCardTypesQuery } from "../api/CardTypes.api";
+import CardsModal from "../../cards/components/CardsModal";
 import useCardTypeActions, { type CardTypeDialogName } from "../hooks/useCardTypeActions";
 import CardTypeFilters from "../components/CardTypeFilters";
 import CardTypeCard from "../components/CardTypeCard";
@@ -177,6 +178,9 @@ const CardTypesPage = () => {
           onClose={closeDialog}
           onSuccess={refetch}
         />
+      )}
+      {dialog === "cards" && selected && (
+        <CardsModal open title={`${t("cards.pageTitle")} - ${selected.name}`} fixedFilter={{ cardTypeId: selected.id }} onClose={closeDialog} />
       )}
       {dialog === "delete" && selected && <DeleteCardTypeAlert open cardType={selected} onClose={closeDialog} onSuccess={refetch} />}
       {dialog === "restore" && selected && <RestoreCardTypeAlert open cardType={selected} onClose={closeDialog} onSuccess={refetch} />}

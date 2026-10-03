@@ -169,6 +169,12 @@ const Menu: MenuItem[] = [
         path: "/card-types",
         permission: Permission.CardTypesView,
       },
+      {
+        name: "cards",
+        title: "sidebar.cardsStock",
+        path: "/cards",
+        permission: Permission.CardsView,
+      },
     ],
   },
   {

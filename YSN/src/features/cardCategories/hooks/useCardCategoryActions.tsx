@@ -9,7 +9,7 @@ import Undo2Icon from "../../../assets/icons/Undo2Icon";
 import LayersIcon from "../../../assets/icons/LayersIcon";
 import type { CardCategoryListDto } from "../types/CardCategories.types";
 
-export type CardCategoryDialogName = "form" | "delete" | "restore";
+export type CardCategoryDialogName = "form" | "delete" | "restore" | "cards";
 
 interface CardCategoryActionOptions {
   onOpenTypes: (category: CardCategoryListDto) => void;
@@ -31,6 +31,9 @@ const useCardCategoryActions = ({ onOpenTypes, onDialog }: CardCategoryActionOpt
       return [
         ...(can(Permission.CardTypesView)
           ? [{ label: t("cardCategories.cardTypes"), icon: <LayersIcon />, onClick: () => onOpenTypes(category) }]
+          : []),
+        ...(can(Permission.CardsView)
+          ? [{ label: t("cards.pageTitle"), icon: <LayersIcon />, onClick: () => onDialog("cards", category) }]
           : []),
         ...(can(Permission.CardCategoriesUpdate)
           ? [{ label: t("common.edit"), icon: <EditIcon />, onClick: () => onDialog("form", category) }]

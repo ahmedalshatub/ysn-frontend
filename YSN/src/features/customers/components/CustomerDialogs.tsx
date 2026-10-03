@@ -1,5 +1,5 @@
 import type { CustomerDialogName } from "../hooks/useCustomerActions";
-import type { CustomerListDto, CustomerTypeValue } from "../types/Customers.types";
+import { customerFullName, type CustomerListDto, type CustomerTypeValue } from "../types/Customers.types";
 import CustomerModal from "./CustomerModal";
 import ChangeCustomerStatusAlert from "./ChangeCustomerStatusAlert";
 import SetCustomerPasswordModal from "./SetCustomerPasswordModal";
@@ -10,6 +10,7 @@ import SendMessageModal from "../../messages/components/SendMessageModal";
 import CustomerTransactionsModal from "../../transactions/components/CustomerTransactionsModal";
 import BalanceChangeModal from "../../transactions/components/BalanceChangeModal";
 import { TransactionType } from "../../transactions/types/Transactions.types";
+import CardsModal from "../../cards/components/CardsModal";
 
 interface CustomerDialogsProps {
   dialog: CustomerDialogName | null;
@@ -53,6 +54,8 @@ const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onT
       return <BalanceChangeModal open type={TransactionType.Deposit} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     case "withdraw":
       return <BalanceChangeModal open type={TransactionType.Withdraw} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
+    case "cards":
+      return <CardsModal open title={customerFullName(customer)} fixedFilter={{ takenBy: customer.id }} onClose={onClose} />;
     case "restore":
       return <RestoreCustomerAlert open customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     default:

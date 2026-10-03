@@ -21,6 +21,7 @@ import CardCategoryFilters from "../components/CardCategoryFilters";
 import CardCategoryCard from "../components/CardCategoryCard";
 import CardCategoriesTable from "../components/CardCategoriesTable";
 import CardCategoryModal from "../components/CardCategoryModal";
+import CardsModal from "../../cards/components/CardsModal";
 import DeleteCardCategoryAlert from "../components/DeleteCardCategoryAlert";
 import RestoreCardCategoryAlert from "../components/RestoreCardCategoryAlert";
 import type { CardCategoryFilter, CardCategoryListDto, CardCategoryRequest } from "../types/CardCategories.types";
@@ -162,6 +163,9 @@ const CardCategoriesPage = () => {
       </Card>
 
       {dialog === "form" && <CardCategoryModal open categoryId={selected?.id ?? null} onClose={closeDialog} onSuccess={refetch} />}
+      {dialog === "cards" && selected && (
+        <CardsModal open title={`${t("cards.pageTitle")} - ${selected.name}`} fixedFilter={{ cardCategoryId: selected.id }} onClose={closeDialog} />
+      )}
       {dialog === "delete" && selected && (
         <DeleteCardCategoryAlert open category={selected} onClose={closeDialog} onSuccess={refetch} />
       )}

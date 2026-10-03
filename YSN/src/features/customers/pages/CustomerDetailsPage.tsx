@@ -16,6 +16,7 @@ import CustomersList from "../components/CustomersList";
 import CustomerDialogs from "../components/CustomerDialogs";
 import MessagesTab from "../../messages/components/MessagesTab";
 import TransactionsView from "../../transactions/components/TransactionsView";
+import CardsView from "../../cards/components/CardsView";
 import CustomerCardCategoryAccessTab from "../../cardCategories/components/CustomerCardCategoryAccessTab";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
@@ -37,12 +38,13 @@ const CustomerDetailsPage = () => {
 
   const openDialog = useCallback((name: CustomerDialogName) => setDialog(name), []);
   const getActions = useCustomerActions({ onDialog: openDialog });
-  const actions = customer ? getActions(customer).filter((action) => action.label !== t("messages.messages") && action.label !== t("transactions.pageTitle")) : [];
+  const actions = customer ? getActions(customer).filter((action) => action.label !== t("messages.messages") && action.label !== t("transactions.pageTitle") && action.label !== t("cards.takenCards")) : [];
 
   const tabs = useMemo(() => {
     const list = [{ id: "overview", label: t("customers.overviewTab") }];
     if (customer?.userType === CustomerType.Agent) list.push({ id: "subAgents", label: t("customers.subAgentsTab") });
     if (can(Permission.TransactionsView)) list.push({ id: "transactions", label: t("transactions.pageTitle") });
+    if (can(Permission.CardsView)) list.push({ id: "cards", label: t("cards.takenCards") });
     if (can(Permission.MessagesView)) list.push({ id: "messages", label: t("messages.messages") });
     if (can(Permission.CardCategoriesView)) list.push({ id: "cardCategories", label: t("cardCategories.customerTab") });
     return list;
@@ -86,6 +88,7 @@ const CustomerDetailsPage = () => {
         <div className="pt-4">
           {activeTab === "overview" && <CustomerOverviewTab customer={customer} />}
           {activeTab === "transactions" && <TransactionsView customer={customer} onChanged={refetch} />}
+          {activeTab === "cards" && <CardsView fixedFilter={{ takenBy: customer.id }} />}
           {activeTab === "messages" && <MessagesTab customer={customer} />}
           {activeTab === "cardCategories" && <CustomerCardCategoryAccessTab customer={customer} onChanged={refetch} />}
           {activeTab === "subAgents" && customer.userType === CustomerType.Agent && (

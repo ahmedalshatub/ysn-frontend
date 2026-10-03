@@ -38,6 +38,7 @@ const Messages = lazy(() => import("../../features/messages/pages/MessagesPage")
 const Transactions = lazy(() => import("../../features/transactions/pages/TransactionsPage"));
 const CardCategories = lazy(() => import("../../features/cardCategories/pages/CardCategoriesPage"));
 const CardTypes = lazy(() => import("../../features/cardTypes/pages/CardTypesPage"));
+const Cards = lazy(() => import("../../features/cards/pages/CardsPage"));
 const Roles = lazy(() => import("../../features/roles/pages/RolesPage"));
 const RoleForm = lazy(() => import("../../features/roles/pages/RoleFormPage"));
 const AuditLogs = lazy(() => import("../../features/auditLogs/pages/AuditLogsPage"));
@@ -69,6 +70,12 @@ const dashboardRoutes: any = [
     name: "Card Categories",
     element: <CardCategories />,
     permission: Permission.CardCategoriesView,
+  },
+  {
+    path: "/cards",
+    name: "Cards",
+    element: <Cards />,
+    permission: Permission.CardsView,
   },
   {
     path: "/card-types",

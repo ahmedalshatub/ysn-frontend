@@ -26,7 +26,8 @@ export type CustomerDialogName =
   | "sendMessage"
   | "transactions"
   | "deposit"
-  | "withdraw";
+  | "withdraw"
+  | "cards";
 
 interface CustomerActionOptions {
   onOpen?: (customer: CustomerListDto) => void;
@@ -66,6 +67,9 @@ const useCustomerActions = ({ onOpen, onDialog }: CustomerActionOptions) => {
           : []),
         ...(canPermission(Permission.TransactionsWithdraw) && customer.balance > 0
           ? [{ label: t("transactionTypes.withdraw"), icon: <TrendDownIcon />, onClick: () => onDialog("withdraw", customer) }]
+          : []),
+        ...(canPermission(Permission.CardsView)
+          ? [{ label: t("cards.takenCards"), icon: <WalletIcon />, onClick: () => onDialog("cards", customer) }]
           : []),
         ...(can("ChangeStatus")
           ? [{

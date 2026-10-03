@@ -6,9 +6,10 @@ import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import EditIcon from "../../../assets/icons/EditIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
 import Undo2Icon from "../../../assets/icons/Undo2Icon";
+import LayersIcon from "../../../assets/icons/LayersIcon";
 import type { CardTypeListDto } from "../types/CardTypes.types";
 
-export type CardTypeDialogName = "form" | "delete" | "restore";
+export type CardTypeDialogName = "form" | "delete" | "restore" | "cards";
 
 const useCardTypeActions = (onDialog: (name: CardTypeDialogName, cardType: CardTypeListDto) => void) => {
   const { t } = useTranslation();
@@ -23,6 +24,9 @@ const useCardTypeActions = (onDialog: (name: CardTypeDialogName, cardType: CardT
       }
 
       return [
+        ...(can(Permission.CardsView)
+          ? [{ label: t("cards.pageTitle"), icon: <LayersIcon />, onClick: () => onDialog("cards", cardType) }]
+          : []),
         ...(can(Permission.CardTypesUpdate)
           ? [{ label: t("common.edit"), icon: <EditIcon />, onClick: () => onDialog("form", cardType) }]
           : []),
