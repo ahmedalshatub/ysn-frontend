@@ -7,25 +7,6 @@ const Login = lazy(() => import("../../features/auth/pages/login/Login"));
 const LoginCode = lazy(() => import("../../features/auth/pages/login-code/LoginCode"));
 const ForgotPassword = lazy(() => import("../../features/auth/pages/forgot-password/ForgotPassword"));
 const ServerError = lazy(() => import("../../features/exceptions/pages/ServerError"));
-const ComponentExamples = lazy(() => import("../../features/showcase/pages/ComponentExamplesPage"));
-const ComponentShowcase = lazy(() => import("../../features/showcase/pages/ComponentShowcasePage"));
-const CategoriesExample1 = lazy(() => import("../../features/categoriesExample/pages/example1/CategoriesExample1"));
-const CategoriesExample2 = lazy(() => import("../../features/categoriesExample/pages/example2/CategoriesExample2"));
-const CategoriesExample3 = lazy(() => import("../../features/categoriesExample/pages/example3/CategoriesExample3"));
-const CategoryFormPage = lazy(() => import("../../features/categoriesExample/pages/example3/CategoryFormPage"));
-const TestTrExample1 = lazy(() => import("../../features/testTrExample/pages/example1/TestTrExample1"));
-const TestTrExample2 = lazy(() => import("../../features/testTrExample/pages/example2/TestTrExample2"));
-const TestTrExample3 = lazy(() => import("../../features/testTrExample/pages/example3/TestTrExample3"));
-const TestTrFormPage = lazy(() => import("../../features/testTrExample/pages/example3/TestTrFormPage"));
-const TestSubTrExample1 = lazy(() => import("../../features/testSubTrExample/pages/TestSubTrExample1"));
-const CustomerStepperExample = lazy(() => import("../../features/stepperExample/pages/CustomerStepperExamplePage"));
-const ProductDetails = lazy(() => import("../../features/productDetails/pages/ProductDetailsPage"));
-const AccountsExample = lazy(() => import("../../features/accountsExample/pages/AccountsExamplePage"));
-const ProfileExample = lazy(() => import("../../features/profileExample/pages/ProfileExamplePage"));
-const PublicCard = lazy(() => import("../../features/publicCard/pages/PublicCardPage"));
-const TicketList = lazy(() => import("../../features/ticketExample/pages/TicketList"));
-const TicketDetails = lazy(() => import("../../features/ticketExample/pages/TicketDetails"));
-const InvoiceExample = lazy(() => import("../../features/invoiceExample/pages/InvoiceExamplePage"));
 
 const Dashboard = lazy(() => import("../../features/dashboard/pages/DashboardPage"));
 const Profile = lazy(() => import("../../features/profile/pages/ProfilePage"));
@@ -182,116 +163,6 @@ const dashboardRoutes: any = [
   },
 ];
 
-const categoryRoutes: any = [
-  {
-    path: "/categories-example",
-    name: "Categories Example",
-    element: <CategoriesExample1 />,
-    permission: Permission.CategoriesManage,
-  },
-  {
-    path: "/categories-example-2",
-    name: "Categories Example 2",
-    element: <CategoriesExample2 />,
-    permission: Permission.CategoriesManage,
-  },
-  {
-    path: "/categories-example-3",
-    name: "Categories Example 3",
-    element: <CategoriesExample3 />,
-    permission: Permission.CategoriesManage,
-  },
-  {
-    path: "/categories-example-3/add",
-    name: "Add Category",
-    element: <CategoryFormPage />,
-    permission: Permission.CategoriesManage,
-  },
-  {
-    path: "/categories-example-3/edit/:id",
-    name: "Edit Category",
-    element: <CategoryFormPage />,
-    permission: Permission.CategoriesManage,
-  },
-];
-
-const testTrRoutes: any = [
-  {
-    path: "/test-tr-example-1",
-    name: "Test TR Example 1",
-    element: <TestTrExample1 />,
-    permission: Permission.TestTrsManage,
-  },
-  {
-    path: "/test-tr-example-2",
-    name: "Test TR Example 2",
-    element: <TestTrExample2 />,
-    permission: Permission.TestTrsManage,
-  },
-  {
-    path: "/test-tr-example-3",
-    name: "Test TR Example 3",
-    element: <TestTrExample3 />,
-    permission: Permission.TestTrsManage,
-  },
-  {
-    path: "/test-tr-example-3/add",
-    name: "Add Test TR",
-    element: <TestTrFormPage />,
-    permission: Permission.TestTrsManage,
-  },
-  {
-    path: "/test-tr-example-3/edit/:id",
-    name: "Edit Test TR",
-    element: <TestTrFormPage />,
-    permission: Permission.TestTrsManage,
-  },
-  {
-    path: "/test-sub-tr-example-1",
-    name: "Test Sub TR Example 1",
-    element: <TestSubTrExample1 />,
-    permission: Permission.TestTrsManage,
-  },
-];
-
-const exampleRoutes: any = [
-  {
-    path: "/profile-example",
-    name: "Profile Example",
-    element: <ProfileExample />,
-  },
-  {
-    path: "/ticket-example",
-    name: "Ticket Example",
-    element: <TicketList />,
-  },
-  {
-    path: "/ticket-example/:id",
-    name: "Ticket Details",
-    element: <TicketDetails />,
-  },
-  {
-    path: "/invoice-example",
-    name: "Invoice Example",
-    element: <InvoiceExample />,
-  },
-  {
-    path: "/stepper-example",
-    name: "Customer Stepper Example",
-    element: <CustomerStepperExample />,
-  },
-  {
-    path: "/product-details",
-    name: "Product Details",
-    element: <ProductDetails />,
-  },
-  {
-    path: "/accounts-example",
-    name: "Chart of Accounts",
-    element: <AccountsExample />,
-  },
-];
-
 const reportsRoutes: any = [];
 
 const authRoutes: any = [
@@ -316,21 +187,6 @@ const authRoutes: any = [
     element: <ForgotPassword />,
   },
   {
-    path: "/components",
-    name: "Component Examples",
-    element: <ComponentExamples />,
-  },
-  {
-    path: "/showcase",
-    name: "Component Showcase",
-    element: <ComponentShowcase />,
-  },
-  {
-    path: "/card/:id",
-    name: "Employee Card",
-    element: <PublicCard />,
-  },
-  {
     path: "/404",
     name: "Not Found",
     element: <NotFound />,
@@ -347,7 +203,7 @@ const authRoutes: any = [
   },
 ];
 
-const allAdminRoutes = [...dashboardRoutes, ...categoryRoutes, ...testTrRoutes, ...exampleRoutes, ...reportsRoutes];
+const allAdminRoutes = [...dashboardRoutes, ...reportsRoutes];
 const allBlankRoutes = [...authRoutes];
 
 export { allAdminRoutes, allBlankRoutes };

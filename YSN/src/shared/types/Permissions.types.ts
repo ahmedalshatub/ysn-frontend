@@ -142,9 +142,7 @@ export const Permission = {
   CountriesExport: "Countries.Export",
   AuditLogsView: "AuditLogs.View",
   NotificationsSend: "Notifications.Send",
-  CategoriesManage: "Categories.Manage",
   PaymentsManage: "Payments.Manage",
-  TestTrsManage: "TestTrs.Manage",
 } as const;
 
 export type PermissionCode = typeof Permission[keyof typeof Permission];
