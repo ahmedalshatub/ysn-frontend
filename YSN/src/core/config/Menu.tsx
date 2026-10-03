@@ -145,6 +145,13 @@ const Menu: MenuItem[] = [
     ],
   },
   {
+    name: "Invoices",
+    title: "sidebar.invoices",
+    icon: <FileTextIcon width={iconSize} height={iconSize} />,
+    path: "/invoices",
+    permission: Permission.InvoicesView,
+  },
+  {
     name: "Transactions",
     title: "sidebar.transactions",
     icon: <WalletIcon width={iconSize} height={iconSize} />,

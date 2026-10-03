@@ -11,6 +11,7 @@ import CustomerTransactionsModal from "../../transactions/components/CustomerTra
 import BalanceChangeModal from "../../transactions/components/BalanceChangeModal";
 import { TransactionType } from "../../transactions/types/Transactions.types";
 import CardsModal from "../../cards/components/CardsModal";
+import CustomerInvoicesModal from "../../invoices/components/CustomerInvoicesModal";
 
 interface CustomerDialogsProps {
   dialog: CustomerDialogName | null;
@@ -54,6 +55,8 @@ const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onT
       return <BalanceChangeModal open type={TransactionType.Deposit} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     case "withdraw":
       return <BalanceChangeModal open type={TransactionType.Withdraw} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
+    case "invoices":
+      return <CustomerInvoicesModal open customer={customer} onClose={onClose} onChanged={onSuccess} />;
     case "cards":
       return <CardsModal open title={customerFullName(customer)} fixedFilter={{ takenBy: customer.id }} onClose={onClose} />;
     case "restore":

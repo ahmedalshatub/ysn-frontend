@@ -35,6 +35,7 @@ const SubAgents = lazy(() => import("../../features/customers/pages/SubAgentsPag
 const Clients = lazy(() => import("../../features/customers/pages/ClientsPage"));
 const CustomerDetails = lazy(() => import("../../features/customers/pages/CustomerDetailsPage"));
 const Messages = lazy(() => import("../../features/messages/pages/MessagesPage"));
+const Invoices = lazy(() => import("../../features/invoices/pages/InvoicesPage"));
 const Transactions = lazy(() => import("../../features/transactions/pages/TransactionsPage"));
 const CardCategories = lazy(() => import("../../features/cardCategories/pages/CardCategoriesPage"));
 const CardTypes = lazy(() => import("../../features/cardTypes/pages/CardTypesPage"));
@@ -82,6 +83,12 @@ const dashboardRoutes: any = [
     name: "Card Types",
     element: <CardTypes />,
     permission: Permission.CardTypesView,
+  },
+  {
+    path: "/invoices",
+    name: "Invoices",
+    element: <Invoices />,
+    permission: Permission.InvoicesView,
   },
   {
     path: "/transactions",
