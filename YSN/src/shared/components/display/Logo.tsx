@@ -16,7 +16,7 @@ const Logo = ({
   width,
 }: LogoProps) => {
   const logoSrc = new URL(
-    `../../assets/images/logo-${theme}-${orientation}.png`,
+    `../../../assets/images/logo-${theme}-${orientation}.png`,
     import.meta.url
   ).href;
 
