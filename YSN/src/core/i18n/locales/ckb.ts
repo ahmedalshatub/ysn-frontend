@@ -472,6 +472,10 @@ export default {
       minutesAgo: "{{count}} خولەک لەمەوبەر",
       hoursAgo: "{{count}} کاتژمێر لەمەوبەر",
       daysAgo: "{{count}} ڕۆژ لەمەوبەر",
+      settings: "ڕێکخستنەکان",
+      settingsHint: "ئەو ئاگادارکردنەوانە هەڵبژێرە کە پێت دەگەن.",
+      settingsSaved: "ڕێکخستنەکانی ئاگادارکردنەوە پاشەکەوت کران",
+      allTypes: "هەموو جۆرەکان",
     },
     countries: {
       pageTitle: "وڵاتان",
@@ -755,8 +759,10 @@ export default {
         ProfileImageTooLarge: "قەبارەی وێنەی پرۆفایل لە زۆرترین قەبارەی ڕێپێدراو زیاترە",
       },
       Notification: {
-        NotFound: "ئاگادارکردنەوە نەدۆزرایەوە",
-        NotFoundOrNotYours: "ئاگادارکردنەوە نەدۆزرایەوە یان هی تۆ نییە",
+        IdsRequired: "ئاگادارکردنەوەکان هەڵبژێرە",
+        IdsCannotBeEmpty: "ئاگادارکردنەوەکان هەڵبژێرە",
+        InvalidIds: "ئاگادارکردنەوەی نادروست",
+        TypeInvalid: "جۆری ئاگادارکردنەوەی نادروست",
       },
       RefreshToken: {
         TokenIsRequired: "تۆکنی نوێکردنەوە پێویستە",
@@ -991,6 +997,9 @@ export default {
         NameAlreadyExists: "سێرڤەرێک بەم ناوە پێشتر هەیە",
         InUse: "هەندێک شار ئەم سێرڤەرە بەکاردەهێنن، بۆیە ناسڕدرێتەوە",
         NotActive: "سێرڤەرێکی چالاک هەڵبژێرە",
+      },
+      Notifications: {
+        NotFound: "ئاگادارکردنەوە نەدۆزرایەوە",
       },
     },
     breadcrumb: {
@@ -2210,10 +2219,128 @@ export default {
       general: {
         title: "ئاگادارکردنەوە",
         body: "",
+        setting: "گشتی",
       },
       message: {
         title: "نامەی نوێ",
         body: "",
+        setting: "نامەکان",
+      },
+      depositReceived: {
+        title: "باڵانس زیادکرا",
+        body: "{{amount}} د.ع خرایە سەر باڵانسەکەت. باڵانسەکەت ئێستا {{balance}} د.ع یە.",
+      },
+      withdrawMade: {
+        title: "باڵانس کێشرایەوە",
+        body: "{{amount}} د.ع لە باڵانسەکەت کێشرایەوە. باڵانسەکەت ئێستا {{balance}} د.ع یە.",
+      },
+      transactionReversed: {
+        title: "مامەڵەیەک هەڵوەشێندرایەوە",
+        body: "{{typeName}}ێک بە بڕی {{amount}} د.ع هەڵوەشێندرایەوە. باڵانسەکەت ئێستا {{balance}} د.ع یە.",
+      },
+      agentDepositSent: {
+        title: "باڵانس نێردرا",
+        body: "{{amount}} د.ع ت نارد بۆ {{subAgent}}. باڵانسەکەت ئێستا {{balance}} د.ع یە.",
+      },
+      agentDepositReceived: {
+        title: "باڵانس وەرگیرا",
+        body: "{{agent}} بڕی {{amount}} د.ع ی بۆ ناردیت. باڵانسەکەت ئێستا {{balance}} د.ع یە.",
+      },
+      ePaymentCompleted: {
+        title: "پڕکردنەوە تەواو بوو",
+        body: "پڕکردنەوەی کی کارد بە بڕی {{amount}} د.ع زیادکرا. باڵانسەکەت ئێستا {{balance}} د.ع یە.",
+      },
+      ePaymentFailed: {
+        title: "پڕکردنەوە سەرکەوتوو نەبوو",
+        body: "پڕکردنەوەی کی کارد بە بڕی {{amount}} د.ع تەواو نەبوو.",
+      },
+      customerTypeChanged: {
+        title: "جۆری هەژمار گۆڕا",
+        body: "هەژمارەکەت لە {{oldTypeName}} ەوە گۆڕا بۆ {{newTypeName}}.",
+      },
+      transactionRestored: {
+        title: "مامەڵەیەک گەڕێندرایەوە",
+        body: "{{typeName}}ێک بە بڕی {{amount}} د.ع گەڕێندرایەوە. باڵانسەکەت ئێستا {{balance}} د.ع یە.",
+      },
+      subAgentDisabledAgentChanged: {
+        title: "هەژمار ناچالاک کرا",
+        body: "هەژمارەکەت ناچالاک کرا چونکە بریکارەکەت ئیتر چالاک نییە.",
+      },
+      ePaymentNeedsReview: {
+        title: "پارەدانی ئەلیکترۆنی پێویستی بە پشکنینە",
+        body: "{{customer}} بڕی {{amount}} د.ع ی دا بەڵام باڵانس زیاد نەکرا (مامەڵەی #{{transactionId}}).",
+        setting: "پارەدانە ئەلیکترۆنییەکانی پێویست بە پشکنین",
+      },
+      customerRegistered: {
+        title: "کڕیاری نوێ",
+        body: "{{customer}} وەک {{typeName}} لە {{city}} خۆی تۆمار کرد.",
+        setting: "تۆمارکردنی کڕیارانی نوێ",
+      },
+      ePaymentReceived: {
+        title: "پارەدانی ئەلیکترۆنی وەرگیرا",
+        body: "{{customer}} بە کی کارد بڕی {{amount}} د.ع ی پڕکردەوە.",
+        setting: "پارەدانە ئەلیکترۆنییە تەواوبووەکان",
+      },
+      ePaymentFailedInternal: {
+        title: "پارەدانی ئەلیکترۆنی سەرکەوتوو نەبوو",
+        body: "پڕکردنەوەی کی کارد بە بڕی {{amount}} د.ع لەلایەن {{customer}} سەرکەوتوو نەبوو یان هەڵوەشێندرایەوە.",
+        setting: "پارەدانە ئەلیکترۆنییە سەرنەکەوتووەکان",
+      },
+      agentDepositMade: {
+        title: "پارەدانانی بریکار",
+        body: "{{agent}} بڕی {{amount}} د.ع ی نارد بۆ {{subAgent}}.",
+        setting: "پارەدانانی بریکاران",
+      },
+      invoiceCreated: {
+        title: "پسوولەی نوێ",
+        body: "{{customer}} {{quantity}} × {{cardType}} ی بە {{total}} د.ع کڕی (پسوولەی #{{invoiceNumber}}).",
+        setting: "پسوولە نوێیەکان",
+      },
+      depositMade: {
+        title: "پارە دانرا",
+        body: "{{employee}} بڕی {{amount}} د.ع ی خستە سەر {{customer}}.",
+        setting: "پارەدانانی فەرمانبەرانی تر",
+      },
+      withdrawMadeInternal: {
+        title: "پارە کێشرایەوە",
+        body: "{{employee}} بڕی {{amount}} د.ع ی لە {{customer}} کێشایەوە.",
+        setting: "کێشانەوەی فەرمانبەرانی تر",
+      },
+      transactionDeleted: {
+        title: "مامەڵەیەک سڕایەوە",
+        body: "{{employee}} {{typeName}}ێکی بە بڕی {{amount}} د.ع بۆ {{customer}} سڕییەوە.",
+        setting: "مامەڵە سڕاوەکان",
+      },
+      transactionRestoredInternal: {
+        title: "مامەڵەیەک گەڕێندرایەوە",
+        body: "{{employee}} {{typeName}}ێکی بە بڕی {{amount}} د.ع بۆ {{customer}} گەڕاندەوە.",
+        setting: "مامەڵە گەڕێندراوەکان",
+      },
+      invoiceDeleted: {
+        title: "پسوولەیەک سڕایەوە",
+        body: "{{employee}} پسوولەی #{{invoiceNumber}} ی {{customer}} ی سڕییەوە: {{reason}}",
+        setting: "پسوولە سڕاوەکان",
+      },
+      customerTypeChangedInternal: {
+        title: "جۆری کڕیار گۆڕا",
+        body: "{{employee}} جۆری {{customer}} ی لە {{oldTypeName}} ەوە گۆڕی بۆ {{newTypeName}}.",
+        setting: "گۆڕینی جۆری کڕیاران",
+      },
+      subAgentsDisabled: {
+        title: "بریکارە لاوەکییەکان ناچالاک کران",
+        body: "{{count}} بریکاری لاوەکی {{agent}} ناچالاک کران چونکە بریکارەکە ئیتر چالاک نییە.",
+        setting: "بریکارە لاوەکییە ناچالاکەکان",
+      },
+      customerDisabled: {
+        title: "کڕیار ناچالاک کرا",
+        body: "{{employee}} کڕیار {{customer}} ی ناچالاک کرد ({{typeName}}).",
+        bodyDeleted: "{{employee}} کڕیار {{customer}} ی سڕییەوە ({{typeName}}).",
+        setting: "کڕیارە ناچالاک یان سڕاوەکان",
+      },
+      cardsAdded: {
+        title: "کارت زیادکران",
+        body: "{{employee}} {{count}} کارتی {{cardType}} ی زیادکرد.",
+        setting: "کارتە زیادکراوەکان",
       },
     },
     cardCategoryAccess: {

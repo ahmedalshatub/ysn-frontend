@@ -2,6 +2,10 @@ import * as signalR from "@microsoft/signalr";
 import { store, type RootState } from "../../app/store";
 import { addNotification, updateNotificationCount } from "../../features/notifications/slices/notification.slice";
 import type { NotificationDto } from "../../features/notifications/types/Notifications.types";
+import { getNotificationText } from "../../features/notifications/utils/notificationText";
+import { instanceApi } from "../../app/api/instanceApi";
+import { showInfo } from "../components/feedback/Toast";
+import i18n from "../../core/i18n";
 
 class SignalRService {
   private connection: signalR.HubConnection | null = null;
@@ -14,25 +18,11 @@ class SignalRService {
   }
 
   private showBrowserNotification(notification: NotificationDto) {
-    if ("Notification" in window) {
-      if (Notification.permission === "granted") {
-        new Notification(notification.title, {
-          body: notification.message,
-          icon: "/favicon.ico",
-          badge: "/favicon.ico",
-          tag: `notification-${notification.id}`,
-          requireInteraction: false,
-        });
-      } else if (Notification.permission === "default") {
-        Notification.requestPermission().then(permission => {
-          if (permission === "granted") {
-            new Notification(notification.title, {
-              body: notification.message,
-              icon: "/favicon.ico",
-            });
-          }
-        });
-      }
+    const { title, body } = getNotificationText(i18n.t, notification);
+    showInfo(title, { description: body || undefined });
+
+    if ("Notification" in window && Notification.permission === "granted" && document.hidden) {
+      new Notification(title, { body, icon: "/favicon.ico", tag: `notification-${notification.id}` });
     }
   }
 
@@ -105,6 +95,7 @@ class SignalRService {
 
     this.connection.on("ReceiveNotification", (notification: NotificationDto) => {
       store.dispatch(addNotification(notification));
+      store.dispatch(instanceApi.util.invalidateTags(["Notification"]));
       this.showBrowserNotification(notification);
     });
 

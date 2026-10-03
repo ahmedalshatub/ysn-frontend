@@ -472,6 +472,10 @@ export default {
       minutesAgo: "{{count}} min ago",
       hoursAgo: "{{count}}h ago",
       daysAgo: "{{count}}d ago",
+      settings: "Settings",
+      settingsHint: "Choose which notifications you receive.",
+      settingsSaved: "Notification settings saved",
+      allTypes: "All types",
     },
     countries: {
       pageTitle: "Countries",
@@ -755,8 +759,10 @@ export default {
         ProfileImageTooLarge: "Profile image size exceeds the maximum allowed size",
       },
       Notification: {
-        NotFound: "Notification not found",
-        NotFoundOrNotYours: "Notification not found or does not belong to you",
+        IdsRequired: "Choose notifications",
+        IdsCannotBeEmpty: "Choose notifications",
+        InvalidIds: "Invalid notifications",
+        TypeInvalid: "Invalid notification type",
       },
       RefreshToken: {
         TokenIsRequired: "Refresh token is required",
@@ -991,6 +997,9 @@ export default {
         NameAlreadyExists: "A server with this name already exists",
         InUse: "Cities use this server, so it cannot be deleted",
         NotActive: "Choose an active server",
+      },
+      Notifications: {
+        NotFound: "Notification not found",
       },
     },
     breadcrumb: {
@@ -2210,10 +2219,128 @@ export default {
       general: {
         title: "Notification",
         body: "",
+        setting: "General",
       },
       message: {
         title: "New message",
         body: "",
+        setting: "Messages",
+      },
+      depositReceived: {
+        title: "Balance added",
+        body: "{{amount}} IQD was added to your balance. Your balance is now {{balance}} IQD.",
+      },
+      withdrawMade: {
+        title: "Balance withdrawn",
+        body: "{{amount}} IQD was withdrawn from your balance. Your balance is now {{balance}} IQD.",
+      },
+      transactionReversed: {
+        title: "Transaction cancelled",
+        body: "A {{typeName}} of {{amount}} IQD was cancelled. Your balance is now {{balance}} IQD.",
+      },
+      agentDepositSent: {
+        title: "Balance sent",
+        body: "You sent {{amount}} IQD to {{subAgent}}. Your balance is now {{balance}} IQD.",
+      },
+      agentDepositReceived: {
+        title: "Balance received",
+        body: "{{agent}} sent you {{amount}} IQD. Your balance is now {{balance}} IQD.",
+      },
+      ePaymentCompleted: {
+        title: "Top-up completed",
+        body: "Your Qi Card top-up of {{amount}} IQD was added. Your balance is now {{balance}} IQD.",
+      },
+      ePaymentFailed: {
+        title: "Top-up failed",
+        body: "Your Qi Card top-up of {{amount}} IQD did not go through.",
+      },
+      customerTypeChanged: {
+        title: "Account type changed",
+        body: "Your account changed from {{oldTypeName}} to {{newTypeName}}.",
+      },
+      transactionRestored: {
+        title: "Transaction restored",
+        body: "A {{typeName}} of {{amount}} IQD was restored. Your balance is now {{balance}} IQD.",
+      },
+      subAgentDisabledAgentChanged: {
+        title: "Account disabled",
+        body: "Your account was disabled because your agent is no longer active.",
+      },
+      ePaymentNeedsReview: {
+        title: "E-payment needs review",
+        body: "{{customer}} paid {{amount}} IQD but the balance was not added (transaction #{{transactionId}}).",
+        setting: "E-payments that need review",
+      },
+      customerRegistered: {
+        title: "New customer",
+        body: "{{customer}} registered as {{typeName}} in {{city}}.",
+        setting: "New customer registrations",
+      },
+      ePaymentReceived: {
+        title: "E-payment received",
+        body: "{{customer}} topped up {{amount}} IQD with Qi Card.",
+        setting: "Completed e-payments",
+      },
+      ePaymentFailedInternal: {
+        title: "E-payment failed",
+        body: "A Qi Card top-up of {{amount}} IQD by {{customer}} failed or was cancelled.",
+        setting: "Failed e-payments",
+      },
+      agentDepositMade: {
+        title: "Agent deposit",
+        body: "{{agent}} sent {{amount}} IQD to {{subAgent}}.",
+        setting: "Agent deposits",
+      },
+      invoiceCreated: {
+        title: "New invoice",
+        body: "{{customer}} bought {{quantity}} × {{cardType}} for {{total}} IQD (invoice #{{invoiceNumber}}).",
+        setting: "New invoices",
+      },
+      depositMade: {
+        title: "Deposit made",
+        body: "{{employee}} added {{amount}} IQD to {{customer}}.",
+        setting: "Deposits by other employees",
+      },
+      withdrawMadeInternal: {
+        title: "Withdraw made",
+        body: "{{employee}} withdrew {{amount}} IQD from {{customer}}.",
+        setting: "Withdraws by other employees",
+      },
+      transactionDeleted: {
+        title: "Transaction deleted",
+        body: "{{employee}} deleted a {{typeName}} of {{amount}} IQD for {{customer}}.",
+        setting: "Deleted transactions",
+      },
+      transactionRestoredInternal: {
+        title: "Transaction restored",
+        body: "{{employee}} restored a {{typeName}} of {{amount}} IQD for {{customer}}.",
+        setting: "Restored transactions",
+      },
+      invoiceDeleted: {
+        title: "Invoice deleted",
+        body: "{{employee}} deleted invoice #{{invoiceNumber}} of {{customer}}: {{reason}}",
+        setting: "Deleted invoices",
+      },
+      customerTypeChangedInternal: {
+        title: "Customer type changed",
+        body: "{{employee}} changed {{customer}} from {{oldTypeName}} to {{newTypeName}}.",
+        setting: "Customer type changes",
+      },
+      subAgentsDisabled: {
+        title: "Sub-agents disabled",
+        body: "{{count}} sub-agents of {{agent}} were disabled because the agent is no longer active.",
+        setting: "Disabled sub-agents",
+      },
+      customerDisabled: {
+        title: "Customer disabled",
+        body: "{{employee}} disabled {{customer}} ({{typeName}}).",
+        bodyDeleted: "{{employee}} deleted {{customer}} ({{typeName}}).",
+        setting: "Disabled or deleted customers",
+      },
+      cardsAdded: {
+        title: "Cards added",
+        body: "{{employee}} added {{count}} cards of {{cardType}}.",
+        setting: "Added cards",
       },
     },
     cardCategoryAccess: {

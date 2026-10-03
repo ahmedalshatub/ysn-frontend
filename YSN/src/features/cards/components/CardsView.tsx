@@ -27,6 +27,7 @@ import type { BulkCardActionValue, CardFilter, CardListDto, CardRequest, CardSel
 
 interface CardsViewProps {
   fixedFilter?: CardFilter;
+  initialFilter?: CardFilter;
 }
 
 type DialogName = "add" | "edit" | "status" | "delete" | "restore" | "bulk" | "byType" | "byCategory";
@@ -46,10 +47,10 @@ const toQueryFilter = (values: CardRequest, fixedFilter?: CardFilter): CardFilte
   ...fixedFilter,
 });
 
-const CardsView = ({ fixedFilter }: CardsViewProps) => {
+const CardsView = ({ fixedFilter, initialFilter }: CardsViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
-  const [values, setValues] = useState<CardRequest>(initialValues);
+  const [values, setValues] = useState<CardRequest>(() => ({ ...initialValues, ...initialFilter }));
   const [dialog, setDialog] = useState<DialogName | null>(null);
   const [selected, setSelected] = useState<CardListDto | null>(null);
   const [bulkAction, setBulkAction] = useState<BulkCardActionValue | null>(null);

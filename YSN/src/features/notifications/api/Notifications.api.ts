@@ -1,6 +1,12 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import type { NotificationDto, NotificationRequest, MarkAsReadDto, UnreadCountResponse } from "../types/Notifications.types";
+import type {
+  MarkAsReadDto,
+  NotificationDto,
+  NotificationRequest,
+  NotificationSettingDto,
+  UpdateNotificationSettingsDto,
+} from "../types/Notifications.types";
 
 export const notificationApi = instanceApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,11 +17,15 @@ export const notificationApi = instanceApi.injectEndpoints({
       }),
       providesTags: ["Notification"],
     }),
-    getNotificationById: builder.query<NotificationDto, string>({
+    getNotificationById: builder.query<NotificationDto, number>({
       query: (id) => `Notifications/${id}`,
       providesTags: ["Notification"],
     }),
-    markAsRead: builder.mutation<void, MarkAsReadDto>({
+    getUnreadCount: builder.query<number, void>({
+      query: () => "Notifications/unread-count",
+      providesTags: ["Notification"],
+    }),
+    markAsRead: builder.mutation<boolean, MarkAsReadDto>({
       query: (body) => ({
         url: "Notifications/mark-as-read",
         method: "PUT",
@@ -23,9 +33,22 @@ export const notificationApi = instanceApi.injectEndpoints({
       }),
       invalidatesTags: ["Notification"],
     }),
-    getUnreadCount: builder.query<UnreadCountResponse, void>({
-      query: () => "Notifications/unread-count",
-      providesTags: ["Notification"],
+    markAllAsRead: builder.mutation<number, void>({
+      query: () => ({
+        url: "Notifications/mark-all-as-read",
+        method: "PUT",
+      }),
+      invalidatesTags: ["Notification"],
+    }),
+    getNotificationSettings: builder.query<NotificationSettingDto[], void>({
+      query: () => "Notifications/settings",
+    }),
+    updateNotificationSettings: builder.mutation<boolean, UpdateNotificationSettingsDto>({
+      query: (body) => ({
+        url: "Notifications/settings",
+        method: "PUT",
+        body,
+      }),
     }),
   }),
 });
@@ -33,6 +56,9 @@ export const notificationApi = instanceApi.injectEndpoints({
 export const {
   useGetAllNotificationsQuery,
   useGetNotificationByIdQuery,
-  useMarkAsReadMutation,
   useGetUnreadCountQuery,
+  useMarkAsReadMutation,
+  useMarkAllAsReadMutation,
+  useGetNotificationSettingsQuery,
+  useUpdateNotificationSettingsMutation,
 } = notificationApi;

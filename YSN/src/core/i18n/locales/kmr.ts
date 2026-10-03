@@ -472,6 +472,10 @@ export default {
       minutesAgo: "بەری {{count}} خولەکان",
       hoursAgo: "بەری {{count}} دەمژمێران",
       daysAgo: "بەری {{count}} رۆژان",
+      settings: "رێکخستن",
+      settingsHint: "وان ئاگەهدارکرنان هەلبژێرە یێن دگەهنە تە.",
+      settingsSaved: "رێکخستنێن ئاگەهدارکرنێ هاتنە پاشەکەفتکرن",
+      allTypes: "هەمی جۆر",
     },
     countries: {
       pageTitle: "وەلات",
@@ -755,8 +759,10 @@ export default {
         ProfileImageTooLarge: "قەبارێ وێنێ پرۆفایلی ژ سنوورێ رێپێدای مەزنترە",
       },
       Notification: {
-        NotFound: "ئاگەهداری نەهاتە دیتن",
-        NotFoundOrNotYours: "ئاگەهداری نەهاتە دیتن یان یا تە نینە",
+        IdsRequired: "ئاگەهدارکرنان هەلبژێرە",
+        IdsCannotBeEmpty: "ئاگەهدارکرنان هەلبژێرە",
+        InvalidIds: "ئاگەهدارکرنێن نەدروست",
+        TypeInvalid: "جۆرێ ئاگەهدارکرنێ نەدروستە",
       },
       RefreshToken: {
         TokenIsRequired: "تۆکنا نویکرنێ پێدڤییە",
@@ -991,6 +997,9 @@ export default {
         NameAlreadyExists: "سێرڤەرەک ب ڤی ناڤی بەری نوکە هەیە",
         InUse: "هندەک باژێر ڤی سێرڤەری بکاردئینن، لەوما نائێتە ژێبرن",
         NotActive: "سێرڤەرەکێ چالاک هەلبژێرە",
+      },
+      Notifications: {
+        NotFound: "ئاگەهدارکرن نەهاتە دیتن",
       },
     },
     breadcrumb: {
@@ -2208,12 +2217,130 @@ export default {
     },
     notificationTypes: {
       general: {
-        title: "ئاگەهداری",
+        title: "ئاگەهدارکرن",
         body: "",
+        setting: "گشتی",
       },
       message: {
-        title: "نامەکا نوو",
+        title: "نامەیەکا نوی",
         body: "",
+        setting: "نامە",
+      },
+      depositReceived: {
+        title: "باڵانس هاتە زێدەکرن",
+        body: "{{amount}} د.ع هاتە سەر باڵانسێ تە. باڵانسێ تە نوکە {{balance}} د.ع یە.",
+      },
+      withdrawMade: {
+        title: "باڵانس هاتە کێشان",
+        body: "{{amount}} د.ع ژ باڵانسێ تە هاتە کێشان. باڵانسێ تە نوکە {{balance}} د.ع یە.",
+      },
+      transactionReversed: {
+        title: "مامەلەیەک هاتە هەلوەشاندن",
+        body: "{{typeName}} ب بڕێ {{amount}} د.ع هاتە هەلوەشاندن. باڵانسێ تە نوکە {{balance}} د.ع یە.",
+      },
+      agentDepositSent: {
+        title: "باڵانس هاتە هنارتن",
+        body: "تە {{amount}} د.ع بۆ {{subAgent}} هنارت. باڵانسێ تە نوکە {{balance}} د.ع یە.",
+      },
+      agentDepositReceived: {
+        title: "باڵانس هاتە وەرگرتن",
+        body: "{{agent}} {{amount}} د.ع بۆ تە هنارت. باڵانسێ تە نوکە {{balance}} د.ع یە.",
+      },
+      ePaymentCompleted: {
+        title: "پڕکرن تەمام بوو",
+        body: "پڕکرنا کی کارد ب بڕێ {{amount}} د.ع هاتە زێدەکرن. باڵانسێ تە نوکە {{balance}} د.ع یە.",
+      },
+      ePaymentFailed: {
+        title: "پڕکرن سەرنەکەفت",
+        body: "پڕکرنا کی کارد ب بڕێ {{amount}} د.ع تەمام نەبوو.",
+      },
+      customerTypeChanged: {
+        title: "جۆرێ هەژمارێ هاتە گوهۆڕین",
+        body: "هەژمارا تە ژ {{oldTypeName}} بۆ {{newTypeName}} هاتە گوهۆڕین.",
+      },
+      transactionRestored: {
+        title: "مامەلەیەک هاتە ڤەگەڕاندن",
+        body: "{{typeName}} ب بڕێ {{amount}} د.ع هاتە ڤەگەڕاندن. باڵانسێ تە نوکە {{balance}} د.ع یە.",
+      },
+      subAgentDisabledAgentChanged: {
+        title: "هەژمار هاتە نەچالاککرن",
+        body: "هەژمارا تە هاتە نەچالاککرن چونکی بریکارێ تە ئێدی نە چالاکە.",
+      },
+      ePaymentNeedsReview: {
+        title: "پارەدانا ئەلیکترۆنی پێدڤی ب پشکنینێ یە",
+        body: "{{customer}} {{amount}} د.ع دا بەلێ باڵانس نەهاتە زێدەکرن (مامەلە #{{transactionId}}).",
+        setting: "پارەدانێن ئەلیکترۆنی یێن پێدڤی ب پشکنینێ",
+      },
+      customerRegistered: {
+        title: "کڕیارەکێ نوی",
+        body: "{{customer}} وەکی {{typeName}} ل {{city}} خۆ تۆمار کر.",
+        setting: "تۆمارکرنا کڕیارێن نوی",
+      },
+      ePaymentReceived: {
+        title: "پارەدانا ئەلیکترۆنی هاتە وەرگرتن",
+        body: "{{customer}} ب کی کارد {{amount}} د.ع پڕکر.",
+        setting: "پارەدانێن ئەلیکترۆنی یێن تەمام",
+      },
+      ePaymentFailedInternal: {
+        title: "پارەدانا ئەلیکترۆنی سەرنەکەفت",
+        body: "پڕکرنا کی کارد ب بڕێ {{amount}} د.ع ژ لایێ {{customer}} سەرنەکەفت یان هاتە هەلوەشاندن.",
+        setting: "پارەدانێن ئەلیکترۆنی یێن سەرنەکەفتی",
+      },
+      agentDepositMade: {
+        title: "پارەدانانا بریکاری",
+        body: "{{agent}} {{amount}} د.ع بۆ {{subAgent}} هنارت.",
+        setting: "پارەدانانێن بریکاران",
+      },
+      invoiceCreated: {
+        title: "پسوولەیەکا نوی",
+        body: "{{customer}} {{quantity}} × {{cardType}} ب {{total}} د.ع کڕی (پسوولە #{{invoiceNumber}}).",
+        setting: "پسوولێن نوی",
+      },
+      depositMade: {
+        title: "پارە هاتە دانان",
+        body: "{{employee}} {{amount}} د.ع خستە سەر {{customer}}.",
+        setting: "پارەدانانێن فەرمانبەرێن دی",
+      },
+      withdrawMadeInternal: {
+        title: "پارە هاتە کێشان",
+        body: "{{employee}} {{amount}} د.ع ژ {{customer}} کێشا.",
+        setting: "کێشانێن فەرمانبەرێن دی",
+      },
+      transactionDeleted: {
+        title: "مامەلەیەک هاتە ژێبرن",
+        body: "{{employee}} {{typeName}} ب بڕێ {{amount}} د.ع بۆ {{customer}} ژێبر.",
+        setting: "مامەلێن ژێبری",
+      },
+      transactionRestoredInternal: {
+        title: "مامەلەیەک هاتە ڤەگەڕاندن",
+        body: "{{employee}} {{typeName}} ب بڕێ {{amount}} د.ع بۆ {{customer}} ڤەگەڕاند.",
+        setting: "مامەلێن ڤەگەڕاندی",
+      },
+      invoiceDeleted: {
+        title: "پسوولەیەک هاتە ژێبرن",
+        body: "{{employee}} پسوولا #{{invoiceNumber}} یا {{customer}} ژێبر: {{reason}}",
+        setting: "پسوولێن ژێبری",
+      },
+      customerTypeChangedInternal: {
+        title: "جۆرێ کڕیاری هاتە گوهۆڕین",
+        body: "{{employee}} جۆرێ {{customer}} ژ {{oldTypeName}} بۆ {{newTypeName}} گوهۆڕی.",
+        setting: "گوهۆڕینا جۆرێ کڕیاران",
+      },
+      subAgentsDisabled: {
+        title: "بریکارێن لاوەکی هاتنە نەچالاککرن",
+        body: "{{count}} بریکارێن لاوەکی یێن {{agent}} هاتنە نەچالاککرن چونکی بریکار ئێدی نە چالاکە.",
+        setting: "بریکارێن لاوەکی یێن نەچالاک",
+      },
+      customerDisabled: {
+        title: "کڕیار هاتە نەچالاککرن",
+        body: "{{employee}} کڕیار {{customer}} نەچالاک کر ({{typeName}}).",
+        bodyDeleted: "{{employee}} کڕیار {{customer}} ژێبر ({{typeName}}).",
+        setting: "کڕیارێن نەچالاک یان ژێبری",
+      },
+      cardsAdded: {
+        title: "کارت هاتنە زێدەکرن",
+        body: "{{employee}} {{count}} کارتێن {{cardType}} زێدەکرن.",
+        setting: "کارتێن زێدەکری",
       },
     },
     cardCategoryAccess: {

@@ -472,6 +472,10 @@ export default {
       minutesAgo: "منذ {{count}} دقيقة",
       hoursAgo: "منذ {{count}} ساعة",
       daysAgo: "منذ {{count}} يوم",
+      settings: "الإعدادات",
+      settingsHint: "اختر الإشعارات التي تصلك.",
+      settingsSaved: "تم حفظ إعدادات الإشعارات",
+      allTypes: "كل الأنواع",
     },
     countries: {
       pageTitle: "الدول",
@@ -755,8 +759,10 @@ export default {
         ProfileImageTooLarge: "حجم صورة الملف الشخصي يتجاوز الحد الأقصى المسموح",
       },
       Notification: {
-        NotFound: "الإشعار غير موجود",
-        NotFoundOrNotYours: "الإشعار غير موجود أو لا ينتمي إليك",
+        IdsRequired: "اختر الإشعارات",
+        IdsCannotBeEmpty: "اختر الإشعارات",
+        InvalidIds: "إشعارات غير صحيحة",
+        TypeInvalid: "نوع إشعار غير صحيح",
       },
       RefreshToken: {
         TokenIsRequired: "رمز التحديث مطلوب",
@@ -991,6 +997,9 @@ export default {
         NameAlreadyExists: "يوجد خادم بهذا الاسم مسبقاً",
         InUse: "هناك مدن تستخدم هذا الخادم، لذا لا يمكن حذفه",
         NotActive: "اختر خادماً مفعلاً",
+      },
+      Notifications: {
+        NotFound: "الإشعار غير موجود",
       },
     },
     breadcrumb: {
@@ -2210,10 +2219,128 @@ export default {
       general: {
         title: "إشعار",
         body: "",
+        setting: "عام",
       },
       message: {
         title: "رسالة جديدة",
         body: "",
+        setting: "الرسائل",
+      },
+      depositReceived: {
+        title: "تمت إضافة رصيد",
+        body: "أضيف {{amount}} د.ع إلى رصيدك. رصيدك الآن {{balance}} د.ع.",
+      },
+      withdrawMade: {
+        title: "تم سحب رصيد",
+        body: "سُحب {{amount}} د.ع من رصيدك. رصيدك الآن {{balance}} د.ع.",
+      },
+      transactionReversed: {
+        title: "تم إلغاء عملية",
+        body: "أُلغيت عملية {{typeName}} بمبلغ {{amount}} د.ع. رصيدك الآن {{balance}} د.ع.",
+      },
+      agentDepositSent: {
+        title: "تم إرسال رصيد",
+        body: "أرسلت {{amount}} د.ع إلى {{subAgent}}. رصيدك الآن {{balance}} د.ع.",
+      },
+      agentDepositReceived: {
+        title: "تم استلام رصيد",
+        body: "أرسل لك {{agent}} مبلغ {{amount}} د.ع. رصيدك الآن {{balance}} د.ع.",
+      },
+      ePaymentCompleted: {
+        title: "تم الشحن",
+        body: "أضيف شحن كي كارد بمبلغ {{amount}} د.ع. رصيدك الآن {{balance}} د.ع.",
+      },
+      ePaymentFailed: {
+        title: "فشل الشحن",
+        body: "لم يكتمل شحن كي كارد بمبلغ {{amount}} د.ع.",
+      },
+      customerTypeChanged: {
+        title: "تغيّر نوع الحساب",
+        body: "تغيّر حسابك من {{oldTypeName}} إلى {{newTypeName}}.",
+      },
+      transactionRestored: {
+        title: "تمت إعادة عملية",
+        body: "أُعيدت عملية {{typeName}} بمبلغ {{amount}} د.ع. رصيدك الآن {{balance}} د.ع.",
+      },
+      subAgentDisabledAgentChanged: {
+        title: "تم تعطيل الحساب",
+        body: "عُطّل حسابك لأن وكيلك لم يعد فعالاً.",
+      },
+      ePaymentNeedsReview: {
+        title: "دفع إلكتروني يحتاج مراجعة",
+        body: "دفع {{customer}} مبلغ {{amount}} د.ع لكن الرصيد لم يُضف (العملية #{{transactionId}}).",
+        setting: "المدفوعات الإلكترونية التي تحتاج مراجعة",
+      },
+      customerRegistered: {
+        title: "عميل جديد",
+        body: "سجّل {{customer}} بصفة {{typeName}} في {{city}}.",
+        setting: "تسجيل العملاء الجدد",
+      },
+      ePaymentReceived: {
+        title: "تم استلام دفع إلكتروني",
+        body: "شحن {{customer}} مبلغ {{amount}} د.ع عبر كي كارد.",
+        setting: "المدفوعات الإلكترونية المكتملة",
+      },
+      ePaymentFailedInternal: {
+        title: "فشل دفع إلكتروني",
+        body: "فشل أو أُلغي شحن كي كارد بمبلغ {{amount}} د.ع من {{customer}}.",
+        setting: "المدفوعات الإلكترونية الفاشلة",
+      },
+      agentDepositMade: {
+        title: "إيداع وكيل",
+        body: "أرسل {{agent}} مبلغ {{amount}} د.ع إلى {{subAgent}}.",
+        setting: "إيداعات الوكلاء",
+      },
+      invoiceCreated: {
+        title: "فاتورة جديدة",
+        body: "اشترى {{customer}} {{quantity}} × {{cardType}} بمبلغ {{total}} د.ع (الفاتورة #{{invoiceNumber}}).",
+        setting: "الفواتير الجديدة",
+      },
+      depositMade: {
+        title: "تم إيداع",
+        body: "أضاف {{employee}} مبلغ {{amount}} د.ع إلى {{customer}}.",
+        setting: "إيداعات الموظفين الآخرين",
+      },
+      withdrawMadeInternal: {
+        title: "تم سحب",
+        body: "سحب {{employee}} مبلغ {{amount}} د.ع من {{customer}}.",
+        setting: "سحوبات الموظفين الآخرين",
+      },
+      transactionDeleted: {
+        title: "تم حذف عملية",
+        body: "حذف {{employee}} عملية {{typeName}} بمبلغ {{amount}} د.ع للعميل {{customer}}.",
+        setting: "العمليات المحذوفة",
+      },
+      transactionRestoredInternal: {
+        title: "تمت إعادة عملية",
+        body: "أعاد {{employee}} عملية {{typeName}} بمبلغ {{amount}} د.ع للعميل {{customer}}.",
+        setting: "العمليات المعادة",
+      },
+      invoiceDeleted: {
+        title: "تم حذف فاتورة",
+        body: "حذف {{employee}} الفاتورة #{{invoiceNumber}} للعميل {{customer}}: {{reason}}",
+        setting: "الفواتير المحذوفة",
+      },
+      customerTypeChangedInternal: {
+        title: "تغيّر نوع عميل",
+        body: "غيّر {{employee}} نوع {{customer}} من {{oldTypeName}} إلى {{newTypeName}}.",
+        setting: "تغييرات نوع العملاء",
+      },
+      subAgentsDisabled: {
+        title: "تم تعطيل وكلاء فرعيين",
+        body: "عُطّل {{count}} وكيل فرعي تابع لـ {{agent}} لأن الوكيل لم يعد فعالاً.",
+        setting: "الوكلاء الفرعيون المعطلون",
+      },
+      customerDisabled: {
+        title: "تم تعطيل عميل",
+        body: "عطّل {{employee}} العميل {{customer}} ({{typeName}}).",
+        bodyDeleted: "حذف {{employee}} العميل {{customer}} ({{typeName}}).",
+        setting: "العملاء المعطلون أو المحذوفون",
+      },
+      cardsAdded: {
+        title: "تمت إضافة بطاقات",
+        body: "أضاف {{employee}} {{count}} بطاقة من {{cardType}}.",
+        setting: "البطاقات المضافة",
       },
     },
     cardCategoryAccess: {
