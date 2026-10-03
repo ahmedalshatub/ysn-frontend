@@ -63,6 +63,14 @@ const CitiesTable = ({
         render: (row: CityListDto) => <span>{row.customersCount}</span>,
       },
       {
+        key: "hasTvSmsApi",
+        header: t("cities.tvSmsApi"),
+        sortable: true,
+        width: "160px",
+        render: (row: CityListDto) =>
+          row.hasTvSmsApi ? <Badge label={row.tvSmsServerName ?? t("cities.tvSmsApi")} variant="info" size="sm" /> : <span>-</span>,
+      },
+      {
         key: "isActive",
         header: t("cities.isActive"),
         sortable: true,

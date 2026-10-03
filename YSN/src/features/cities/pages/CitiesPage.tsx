@@ -34,6 +34,8 @@ type DialogName = "form" | "delete" | "restore";
 
 const toQueryFilter = (values: CityRequest): CityFilter => ({
   name: values.name || undefined,
+  hasTvSmsApi: values.hasTvSmsApi,
+  tvSmsServerId: values.tvSmsServerId,
   isActive: values.isActive,
   isDeleted: values.isDeleted,
   fromDate: values.fromDate,

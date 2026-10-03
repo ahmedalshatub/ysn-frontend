@@ -270,6 +270,12 @@ const Menu: MenuItem[] = [
         path: "/cities",
         permission: Permission.CitiesView,
       },
+      {
+        name: "tv-sms-servers",
+        title: "sidebar.tvSmsServers",
+        path: "/tv-sms-servers",
+        permission: Permission.TvSmsServersView,
+      },
     ],
   },
 ];

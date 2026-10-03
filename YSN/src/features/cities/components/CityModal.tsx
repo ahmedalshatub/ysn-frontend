@@ -10,6 +10,10 @@ import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import GlobeIcon from "../../../assets/icons/GlobeIcon";
 import InfoIcon from "../../../assets/icons/InfoIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
+import ServerIcon from "../../../assets/icons/ServerIcon";
+import usePermission from "../../../shared/hooks/usePermission";
+import { Permission } from "../../../shared/types/Permissions.types";
+import CityTvSmsApiFields from "./CityTvSmsApiFields";
 import { DataLanguage } from "../../../shared/types/DataLanguage.types";
 import { useAddCityMutation, useGetCityQuery, useUpdateCityMutation } from "../api/Cities.api";
 import { addCitySchema, type CityFormValues } from "../validation/Cities.validation";
@@ -25,6 +29,8 @@ interface CityModalProps {
 const emptyValues: CityFormValues = {
   sortOrder: 0,
   isActive: true,
+  hasTvSmsApi: false,
+  tvSmsServerId: null,
   translations: [
     { languageCode: DataLanguage.Arabic, name: "" },
     { languageCode: DataLanguage.English, name: "" },
@@ -33,7 +39,9 @@ const emptyValues: CityFormValues = {
 
 const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
   const { t } = useTranslation();
+  const { can } = usePermission();
   const isEdit = !!cityId;
+  const canChooseServer = can(Permission.TvSmsServersView);
 
   const { data: city, isLoading: isLoadingCity } = useGetCityQuery(cityId as number, {
     skip: !isEdit || !open,
@@ -62,6 +70,8 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
       reset({
         sortOrder: city.sortOrder,
         isActive: city.isActive,
+        hasTvSmsApi: city.hasTvSmsApi,
+        tvSmsServerId: city.tvSmsServerId,
         translations: [
           { languageCode: DataLanguage.Arabic, name: arabic?.name || "" },
           { languageCode: DataLanguage.English, name: english?.name || "" },
@@ -76,6 +86,8 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
     const data: AddCityDto = {
       sortOrder: values.sortOrder,
       isActive: values.isActive,
+      hasTvSmsApi: values.hasTvSmsApi,
+      tvSmsServerId: values.hasTvSmsApi ? (values.tvSmsServerId ?? null) : null,
       translations: (values.translations ?? []).map((translation) => ({
         languageCode: translation.languageCode as AddCityDto["translations"][number]["languageCode"],
         name: translation.name,
@@ -157,6 +169,16 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
             />
           </div>
         </div>
+
+        {canChooseServer && (
+          <div>
+            <div className="form-section-title mb-4">
+              <ServerIcon className="w-4 h-4 text-primary" />
+              <h3>{t("cities.tvSmsApi")}</h3>
+            </div>
+            <CityTvSmsApiFields control={control} errors={errors} />
+          </div>
+        )}
       </div>
     </FormModal>
   );

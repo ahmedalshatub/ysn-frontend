@@ -17,6 +17,15 @@ export const addCitySchema = yup.object({
     .required("errors.City.SortOrderInvalid")
     .min(0, "errors.City.SortOrderInvalid"),
   isActive: yup.boolean().required(),
+  hasTvSmsApi: yup.boolean().required(),
+  tvSmsServerId: yup
+    .number()
+    .nullable()
+    .transform((value, original) => (original === "" || original === null ? null : value))
+    .when("hasTvSmsApi", {
+      is: true,
+      then: (schema) => schema.required("errors.City.TvSmsServerRequired"),
+    }),
   translations: yup.array().of(translationSchema).length(2, "errors.City.TwoTranslationsAreRequired").required(),
 });
 
