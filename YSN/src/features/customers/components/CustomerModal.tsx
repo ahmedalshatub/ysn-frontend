@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
@@ -18,6 +18,8 @@ import { useGetCountriesQuery } from "../../countries/api/Countries.api";
 import { useAddCustomerMutation, useGetCustomerQuery, useUpdateCustomerMutation } from "../api/Customers.api";
 import { customerSchema, type CustomerFormValues } from "../validation/Customers.validation";
 import AgentFormSelect from "./AgentFormSelect";
+import DiscountValueFields from "../../cardTypeDiscounts/components/DiscountValueFields";
+import { DiscountType, type DiscountTypeValue } from "../../cardTypeDiscounts/types/CardTypeDiscounts.types";
 import useCustomerPermission from "../hooks/useCustomerPermission";
 import {
   CustomerType,
@@ -89,6 +91,10 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
   const selectedType = Number(useWatch({ control, name: "userType" })) as CustomerTypeValue;
   const typeChanged = isEdit && selectedType !== customerType;
   const canChangeTvs = !isEdit || canCustomer(selectedType, "ChangeMaxTvs");
+  const canChangeDiscount = isEdit && canCustomer(selectedType, "ChangeDiscount");
+  const [discountType, setDiscountType] = useState<DiscountTypeValue>(DiscountType.None);
+  const [discountValue, setDiscountValue] = useState<number | undefined>(undefined);
+  const [discountError, setDiscountError] = useState("");
   const showAgent =
     selectedType === CustomerType.SubAgent && (!isEdit || typeChanged || canCustomer(CustomerType.SubAgent, "ChangeType"));
 
@@ -104,6 +110,8 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
   useEffect(() => {
     if (!open) return;
     if (isEdit && customer) {
+      setDiscountType(customer.discountType as DiscountTypeValue);
+      setDiscountValue(customer.discountValue || undefined);
       reset({
         ...emptyValues,
         userType: customer.userType,
@@ -136,6 +144,11 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
   const cityOptions = useMemo(() => cities.map((city) => ({ value: city.id, name: city.name })), [cities]);
 
   const onSubmit = async (values: CustomerFormValues) => {
+    if (canChangeDiscount && discountType !== DiscountType.None) {
+      if (!discountValue || discountValue <= 0) return setDiscountError(t("errors.Discount.ValueRequired"));
+      if (discountType === DiscountType.Percent && discountValue > 100) return setDiscountError(t("errors.Discount.PercentTooHigh"));
+    }
+
     const base = {
       firstName: values.firstName.trim(),
       lastName: values.lastName.trim(),
@@ -153,6 +166,8 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
           parentAgentId: showAgent ? Number(values.parentAgentId) : undefined,
           isUnlimitedTvs: canChangeTvs ? values.isUnlimitedTvs : undefined,
           maxTvCount: canChangeTvs && !values.isUnlimitedTvs ? values.maxTvCount ?? null : undefined,
+          discountType: canChangeDiscount ? discountType : undefined,
+          discountValue: canChangeDiscount ? discountValue ?? 0 : undefined,
         };
         await updateCustomer({ id: customerId, data }).unwrap();
         showSuccess(t("customers.successUpdate"));
@@ -310,6 +325,29 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
               />
             </div>
             <p className="form-hint mt-2">{t("customers.passwordHandedOver")}</p>
+          </div>
+        )}
+
+        {canChangeDiscount && (
+          <div>
+            <div className="form-section-title mb-4">
+              <MonitorIcon className="h-4 w-4 text-primary" />
+              <h3>{t("discounts.customerDiscount")}</h3>
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <DiscountValueFields
+                type={discountType}
+                value={discountValue}
+                allowNone
+                error={discountError}
+                onChange={(type, value) => {
+                  setDiscountType(type);
+                  setDiscountValue(value);
+                  setDiscountError("");
+                }}
+              />
+            </div>
+            <p className="form-hint mt-2">{t("discounts.customerDiscountHint")}</p>
           </div>
         )}
 

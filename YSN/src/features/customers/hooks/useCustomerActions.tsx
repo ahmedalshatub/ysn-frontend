@@ -28,7 +28,8 @@ export type CustomerDialogName =
   | "deposit"
   | "withdraw"
   | "cards"
-  | "invoices";
+  | "invoices"
+  | "discounts";
 
 interface CustomerActionOptions {
   onOpen?: (customer: CustomerListDto) => void;
@@ -68,6 +69,9 @@ const useCustomerActions = ({ onOpen, onDialog }: CustomerActionOptions) => {
           : []),
         ...(canPermission(Permission.TransactionsWithdraw) && customer.balance > 0
           ? [{ label: t("transactionTypes.withdraw"), icon: <TrendDownIcon />, onClick: () => onDialog("withdraw", customer) }]
+          : []),
+        ...(canPermission(Permission.CardTypeDiscountsView)
+          ? [{ label: t("discounts.cardTypeDiscounts"), icon: <WalletIcon />, onClick: () => onDialog("discounts", customer) }]
           : []),
         ...(canPermission(Permission.InvoicesView)
           ? [{ label: t("invoices.pageTitle"), icon: <WalletIcon />, onClick: () => onDialog("invoices", customer) }]

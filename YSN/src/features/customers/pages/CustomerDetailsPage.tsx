@@ -18,6 +18,7 @@ import MessagesTab from "../../messages/components/MessagesTab";
 import TransactionsView from "../../transactions/components/TransactionsView";
 import CardsView from "../../cards/components/CardsView";
 import InvoicesView from "../../invoices/components/InvoicesView";
+import CardTypeDiscountsView from "../../cardTypeDiscounts/components/CardTypeDiscountsView";
 import CustomerCardCategoryAccessTab from "../../cardCategories/components/CustomerCardCategoryAccessTab";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
@@ -39,12 +40,13 @@ const CustomerDetailsPage = () => {
 
   const openDialog = useCallback((name: CustomerDialogName) => setDialog(name), []);
   const getActions = useCustomerActions({ onDialog: openDialog });
-  const actions = customer ? getActions(customer).filter((action) => action.label !== t("messages.messages") && action.label !== t("transactions.pageTitle") && action.label !== t("cards.takenCards") && action.label !== t("invoices.pageTitle")) : [];
+  const actions = customer ? getActions(customer).filter((action) => action.label !== t("messages.messages") && action.label !== t("transactions.pageTitle") && action.label !== t("cards.takenCards") && action.label !== t("invoices.pageTitle") && action.label !== t("discounts.cardTypeDiscounts")) : [];
 
   const tabs = useMemo(() => {
     const list = [{ id: "overview", label: t("customers.overviewTab") }];
     if (customer?.userType === CustomerType.Agent) list.push({ id: "subAgents", label: t("customers.subAgentsTab") });
     if (can(Permission.TransactionsView)) list.push({ id: "transactions", label: t("transactions.pageTitle") });
+    if (can(Permission.CardTypeDiscountsView)) list.push({ id: "discounts", label: t("discounts.cardTypeDiscounts") });
     if (can(Permission.InvoicesView)) list.push({ id: "invoices", label: t("invoices.pageTitle") });
     if (can(Permission.CardsView)) list.push({ id: "cards", label: t("cards.takenCards") });
     if (can(Permission.MessagesView)) list.push({ id: "messages", label: t("messages.messages") });
@@ -90,6 +92,7 @@ const CustomerDetailsPage = () => {
         <div className="pt-4">
           {activeTab === "overview" && <CustomerOverviewTab customer={customer} />}
           {activeTab === "transactions" && <TransactionsView customer={customer} onChanged={refetch} />}
+          {activeTab === "discounts" && <CardTypeDiscountsView customer={customer} />}
           {activeTab === "invoices" && <InvoicesView customerId={customer.id} onChanged={refetch} />}
           {activeTab === "cards" && <CardsView fixedFilter={{ takenBy: customer.id }} />}
           {activeTab === "messages" && <MessagesTab customer={customer} />}

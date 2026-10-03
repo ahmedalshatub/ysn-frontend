@@ -137,6 +137,12 @@ const Menu: MenuItem[] = [
         permission: Permission.ClientsView,
       },
       {
+        name: "card-type-discounts",
+        title: "sidebar.cardTypeDiscounts",
+        path: "/card-type-discounts",
+        permission: Permission.CardTypeDiscountsView,
+      },
+      {
         name: "messages",
         title: "sidebar.messages",
         path: "/messages",

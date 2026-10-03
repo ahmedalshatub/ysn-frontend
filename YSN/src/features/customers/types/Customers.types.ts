@@ -97,6 +97,9 @@ export interface CustomerListDto extends BaseDto {
   maxTvCount: number | null;
   isUnlimitedTvs: boolean;
   balance: number;
+  discountType: number;
+  discountValue: number;
+  cardTypeDiscountsCount: number;
   isActive: boolean;
   registrationApp: CustomerAppValue | null;
   lastLoginAt: string | null;
@@ -134,6 +137,8 @@ export interface UpdateCustomerDto {
   parentAgentId?: number | null;
   isUnlimitedTvs?: boolean;
   maxTvCount?: number | null;
+  discountType?: number;
+  discountValue?: number;
 }
 
 export interface ChangeCustomerTypeDto {
