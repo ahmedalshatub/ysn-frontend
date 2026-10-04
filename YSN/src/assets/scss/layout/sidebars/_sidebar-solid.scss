@@ -1,0 +1,65 @@
+.sidebar-solid {
+  border: 1px solid $border-color;
+  background-color: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.sidebar-solid-divider {
+  border-bottom: 1px solid $border-color-light;
+}
+
+.sidebar-solid-item-active {
+  background-color: $color-primary;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba($color-primary, 0.25);
+}
+
+.sidebar-solid-item-inactive {
+  color: $text-muted;
+
+  &:hover {
+    background-color: $color-primary-lighter;
+    color: $color-primary;
+  }
+}
+
+.sidebar-solid-sub-active {
+  color: $color-primary;
+  font-weight: 600;
+}
+
+.sidebar-solid-sub-inactive {
+  color: $text-muted;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+[data-theme="dark"] {
+  .sidebar-solid {
+    border-color: $dark-border-color;
+    background-color: $dark-surface-bg;
+    box-shadow: none;
+  }
+
+  .sidebar-solid-divider {
+    border-bottom-color: $dark-border-color;
+  }
+
+  .sidebar-solid-item-inactive,
+  .sidebar-solid-sub-inactive {
+    color: $dark-text-muted;
+  }
+
+  .sidebar-solid-item-inactive:hover {
+    background-color: rgba($color-primary, 0.15);
+    color: #ffffff;
+  }
+
+  .sidebar-solid-sub-inactive:hover,
+  .sidebar-solid-sub-active {
+    color: #ffffff;
+  }
+}
