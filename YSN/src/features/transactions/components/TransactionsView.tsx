@@ -5,8 +5,7 @@ import ExportButton from "../../../shared/components/buttons/ExportButton";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
-import TrendUpIcon from "../../../assets/icons/TrendUpIcon";
-import TrendDownIcon from "../../../assets/icons/TrendDownIcon";
+import PlusIcon from "../../../assets/icons/PlusIcon";
 import type { CustomerListDto } from "../../customers/types/Customers.types";
 import { useExportTransactionsMutation, useGetTransactionsQuery } from "../api/Transactions.api";
 import TransactionFilters from "./TransactionFilters";
@@ -16,7 +15,7 @@ import TransactionDetailsModal from "./TransactionDetailsModal";
 import BalanceChangeModal from "./BalanceChangeModal";
 import DeleteTransactionAlert from "./DeleteTransactionAlert";
 import RestoreTransactionAlert from "./RestoreTransactionAlert";
-import { TransactionType, type TransactionFilter, type TransactionListDto, type TransactionRequest } from "../types/Transactions.types";
+import type { TransactionFilter, TransactionListDto, TransactionRequest } from "../types/Transactions.types";
 import PageActions from "../../../shared/components/navigation/PageActions";
 import ListContainer from "../../../shared/components/cards/ListContainer";
 
@@ -28,7 +27,7 @@ interface TransactionsViewProps {
   initialFilter?: Partial<TransactionRequest>;
 }
 
-type DialogName = "view" | "deposit" | "withdraw" | "delete" | "restore";
+type DialogName = "view" | "add" | "delete" | "restore";
 
 const initialValues: TransactionRequest = {
   pageNumber: 1,
@@ -107,24 +106,14 @@ const TransactionsView = ({ framed, actionsTarget, customer, onChanged, initialF
             {can(Permission.TransactionsExport) && (
               <ExportButton loading={isExporting} onExport={() => exportTransactions(queryFilter).unwrap()} />
             )}
-            {can(Permission.TransactionsWithdraw) && (
-              <Button
-                variant="light"
-                size="md"
-                label={t("transactionTypes.withdraw")}
-                icon={<TrendDownIcon className="h-4 w-4" />}
-                iconPosition="left"
-                onClick={() => openDialog("withdraw", null)}
-              />
-            )}
-            {can(Permission.TransactionsDeposit) && (
+            {(can(Permission.TransactionsDeposit) || can(Permission.TransactionsWithdraw)) && (
               <Button
                 variant="dark"
                 size="md"
-                label={t("transactionTypes.deposit")}
-                icon={<TrendUpIcon className="h-4 w-4" />}
+                label={t("transactions.addTransaction")}
+                icon={<PlusIcon className="h-4 w-4" />}
                 iconPosition="left"
-                onClick={() => openDialog("deposit", null)}
+                onClick={() => openDialog("add", null)}
               />
             )}
             </PageActions>
@@ -149,10 +138,9 @@ const TransactionsView = ({ framed, actionsTarget, customer, onChanged, initialF
       <TransactionStatsCards filter={queryFilter} refreshKey={refreshKey} />
 
       {dialog === "view" && selected && <TransactionDetailsModal open transactionId={selected.id} onClose={closeDialog} />}
-      {(dialog === "deposit" || dialog === "withdraw") && (
+      {dialog === "add" && (
         <BalanceChangeModal
           open
-          type={dialog === "deposit" ? TransactionType.Deposit : TransactionType.Withdraw}
           customer={customer}
           onClose={closeDialog}
           onSuccess={reload}

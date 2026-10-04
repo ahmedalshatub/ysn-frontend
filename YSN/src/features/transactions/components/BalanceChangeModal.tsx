@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
@@ -17,17 +17,29 @@ import { balanceChangeSchema, type BalanceChangeFormValues } from "../validation
 import { TransactionType } from "../types/Transactions.types";
 import FormSection from "../../../shared/components/forms/FormSection";
 import UserIcon from "../../../assets/icons/UserIcon";
+import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
+import Select from "../../../shared/components/inputs/Select";
+import usePermission from "../../../shared/hooks/usePermission";
+import { Permission } from "../../../shared/types/Permissions.types";
+
+type BalanceChangeType = typeof TransactionType.Deposit | typeof TransactionType.Withdraw;
 
 interface BalanceChangeModalProps {
   open: boolean;
-  type: typeof TransactionType.Deposit | typeof TransactionType.Withdraw;
+  initialType?: BalanceChangeType;
   customer?: CustomerListDto | null;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-const BalanceChangeModal = ({ open, type, customer, onClose, onSuccess }: BalanceChangeModalProps) => {
+const BalanceChangeModal = ({ open, initialType, customer, onClose, onSuccess }: BalanceChangeModalProps) => {
   const { t } = useTranslation();
+  const { can } = usePermission();
+  const typeOptions = [
+    ...(can(Permission.TransactionsDeposit) ? [{ value: TransactionType.Deposit, name: t("transactionTypes.deposit") }] : []),
+    ...(can(Permission.TransactionsWithdraw) ? [{ value: TransactionType.Withdraw, name: t("transactionTypes.withdraw") }] : []),
+  ];
+  const [type, setType] = useState<BalanceChangeType>(initialType ?? (typeOptions[0]?.value as BalanceChangeType) ?? TransactionType.Deposit);
   const [addTransaction, { isLoading }] = useAddTransactionMutation();
   const isWithdraw = type === TransactionType.Withdraw;
   const maxAmount = isWithdraw && customer ? customer.balance : undefined;
@@ -66,14 +78,26 @@ const BalanceChangeModal = ({ open, type, customer, onClose, onSuccess }: Balanc
       open={open}
       onClose={onClose}
       onSubmit={handleSubmit(onSubmit)}
-      title={t(isWithdraw ? "transactionTypes.withdraw" : "transactionTypes.deposit")}
+      title={t("transactions.addTransaction")}
       submitText={t("common.save")}
       cancelText={t("common.cancel")}
       loading={isLoading}
-      size="md"
+      size="lg"
       icon={<WalletIcon className="h-6 w-6" />}
     >
       <div className="space-y-8">
+        <FormSection icon={<ArrowUpDownIcon />} title={t("transactions.type")}>
+          <Select
+            name="type"
+            label={`${t("transactions.type")} *`}
+            value={type}
+            onChange={(value) => setType(Number(value) as BalanceChangeType)}
+            options={typeOptions}
+            valueKey="value"
+            labelKey="name"
+            size="md"
+          />
+        </FormSection>
         <FormSection icon={<UserIcon />} title={t("transactions.customer")}>
           <CustomerSearchSelect<BalanceChangeFormValues>
             name="customerId"

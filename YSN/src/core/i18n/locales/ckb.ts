@@ -1616,6 +1616,7 @@ export default {
       successRestore: "جۆری کارت گەڕێندرایەوە",
     },
     transactions: {
+      addTransaction: "زیادکردنی مامەڵە",
       pageTitle: "مامەڵەکان",
       transaction: "مامەڵە",
       transactionsOf: "مامەڵەکانی {{name}}",

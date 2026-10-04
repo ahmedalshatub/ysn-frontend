@@ -53,9 +53,9 @@ const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onT
     case "transactions":
       return <CustomerTransactionsModal open customer={customer} onClose={onClose} onChanged={onSuccess} />;
     case "deposit":
-      return <BalanceChangeModal open type={TransactionType.Deposit} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
+      return <BalanceChangeModal open initialType={TransactionType.Deposit} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     case "withdraw":
-      return <BalanceChangeModal open type={TransactionType.Withdraw} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
+      return <BalanceChangeModal open initialType={TransactionType.Withdraw} customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     case "discounts":
       return <CustomerDiscountsModal open customer={customer} onClose={onClose} />;
     case "invoices":

@@ -1616,6 +1616,7 @@ export default {
       successRestore: "Card type restored",
     },
     transactions: {
+      addTransaction: "Add transaction",
       pageTitle: "Transactions",
       transaction: "Transaction",
       transactionsOf: "Transactions of {{name}}",

@@ -1616,6 +1616,7 @@ export default {
       successRestore: "تمت استعادة نوع البطاقة",
     },
     transactions: {
+      addTransaction: "إضافة عملية",
       pageTitle: "العمليات",
       transaction: "عملية",
       transactionsOf: "عمليات {{name}}",

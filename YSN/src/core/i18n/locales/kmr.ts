@@ -1616,6 +1616,7 @@ export default {
       successRestore: "جۆرێ کارتێ هاتە ڤەگەڕاندن",
     },
     transactions: {
+      addTransaction: "زێدەکرنا مامەلێ",
       pageTitle: "مامەلە",
       transaction: "مامەلە",
       transactionsOf: "مامەلێن {{name}}",
