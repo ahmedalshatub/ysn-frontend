@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import Badge from "../../../shared/components/badges/Badge";
 import Button from "../../../shared/components/buttons/Button";
+import Dropdown from "../../../shared/components/navigation/Dropdown";
+import ChevronDownIcon from "../../../assets/icons/ChevronDownIcon";
 import ProfileAvatar from "../../../shared/components/media/ProfileAvatar";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
 import type { ActionItem } from "../../../shared/types/ActionItem.types";
@@ -53,20 +55,17 @@ const CustomerDetailsHeader = ({ customer, actions }: CustomerDetailsHeaderProps
         </div>
       </div>
       {actions.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {actions.map((action) => (
-            <Button
-              key={action.label}
-              variant={action.variant === "danger" ? "danger" : "secondary"}
-              outline
-              size="sm"
-              label={action.label}
-              icon={action.icon}
-              iconPosition="left"
-              onClick={action.onClick}
-            />
-          ))}
-        </div>
+        <Dropdown
+          placement="bottom-end"
+          trigger={<Button variant="dark" size="md" label={t("common.actions")} icon={<ChevronDownIcon className="h-4 w-4" />} iconPosition="right" />}
+          items={actions.map((action, index) => ({
+            key: String(index),
+            label: action.label ?? "",
+            icon: action.icon,
+            variant: action.variant === "danger" ? ("danger" as const) : ("default" as const),
+          }))}
+          onSelect={(key) => actions[Number(key)]?.onClick()}
+        />
       )}
     </div>
   );

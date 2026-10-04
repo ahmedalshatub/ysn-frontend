@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Badge from "../../../shared/components/badges/Badge";
-import InfoItem from "../../../shared/components/cards/InfoItem";
+import DetailItem from "../../../shared/components/cards/DetailItem";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
+import UserIcon from "../../../assets/icons/UserIcon";
+import PhoneIcon from "../../../assets/icons/PhoneIcon";
+import MailIcon from "../../../assets/icons/MailIcon";
+import MapPinIcon from "../../../assets/icons/MapPinIcon";
+import LinkIcon from "../../../assets/icons/LinkIcon";
+import UsersIcon from "../../../assets/icons/UsersIcon";
+import WalletIcon from "../../../assets/icons/WalletIcon";
+import MonitorIcon from "../../../assets/icons/MonitorIcon";
+import LogInIcon from "../../../assets/icons/LogInIcon";
+import CalendarIcon from "../../../assets/icons/CalendarIcon";
+import Users2Icon from "../../../assets/icons/Users2Icon";
 import { CustomerApp, CustomerRole, customerPhone, type CustomerDto } from "../types/Customers.types";
 
 interface CustomerOverviewTabProps {
@@ -21,15 +32,16 @@ const CustomerOverviewTab = ({ customer }: CustomerOverviewTabProps) => {
         : t("customers.registeredFromDashboard");
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      <InfoItem title={t("customers.firstName")} value={customer.firstName} />
-      <InfoItem title={t("customers.lastName")} value={customer.lastName} />
-      <InfoItem title={t("customers.phoneNumber")} value={<span dir="ltr">{customerPhone(customer) || "-"}</span>} />
-      <InfoItem title={t("customers.email")} value={customer.email || "-"} />
-      <InfoItem title={t("customers.city")} value={customer.cityName ?? "-"} />
+    <div className="detail-grid">
+      <DetailItem icon={<UserIcon />} label={t("customers.firstName")} value={customer.firstName} />
+      <DetailItem icon={<UserIcon />} label={t("customers.lastName")} value={customer.lastName} />
+      <DetailItem icon={<PhoneIcon />} label={t("customers.phoneNumber")} value={<span dir="ltr">{customerPhone(customer) || "-"}</span>} />
+      <DetailItem icon={<MailIcon />} label={t("customers.email")} value={customer.email || "-"} />
+      <DetailItem icon={<MapPinIcon />} label={t("customers.city")} value={customer.cityName ?? "-"} />
       {customer.roleId === CustomerRole.SubAgent && (
-        <InfoItem
-          title={t("customers.parentAgent")}
+        <DetailItem
+          icon={<LinkIcon />}
+          label={t("customers.parentAgent")}
           value={
             <div className="flex flex-wrap items-center gap-2">
               {customer.parentAgentId ? (
@@ -45,14 +57,18 @@ const CustomerOverviewTab = ({ customer }: CustomerOverviewTabProps) => {
         />
       )}
       {customer.roleId === CustomerRole.Agent && (
-        <InfoItem title={t("customers.subAgentsCount")} value={customer.subAgentsCount} />
+        <DetailItem icon={<UsersIcon />} label={t("customers.subAgentsCount")} value={customer.subAgentsCount} />
       )}
-      <InfoItem title={t("customers.balance")} value={formatCurrency(customer.balance)} />
-      <InfoItem title={t("customers.maxTvCount")} value={customer.isUnlimitedTvs ? t("customers.unlimited") : customer.maxTvCount} />
-      <InfoItem title={t("customers.registeredFrom")} value={registeredFrom} />
-      <InfoItem title={t("common.createdAt")} value={date(customer.createdAt)} />
-      <InfoItem title={t("customers.creator")} value={customer.creator || t("customers.selfRegistered")} />
-      <InfoItem title={t("customers.lastLogin")} value={date(customer.lastLoginAt)} />
+      <DetailItem icon={<WalletIcon />} label={t("customers.balance")} value={formatCurrency(customer.balance)} />
+      <DetailItem
+        icon={<MonitorIcon />}
+        label={t("customers.maxTvCount")}
+        value={customer.isUnlimitedTvs ? t("customers.unlimited") : customer.maxTvCount}
+      />
+      <DetailItem icon={<LogInIcon />} label={t("customers.registeredFrom")} value={registeredFrom} />
+      <DetailItem icon={<CalendarIcon />} label={t("common.createdAt")} value={date(customer.createdAt)} />
+      <DetailItem icon={<Users2Icon />} label={t("customers.creator")} value={customer.creator || t("customers.selfRegistered")} />
+      <DetailItem icon={<CalendarIcon />} label={t("customers.lastLogin")} value={date(customer.lastLoginAt)} />
     </div>
   );
 };

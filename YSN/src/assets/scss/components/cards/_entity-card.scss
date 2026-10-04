@@ -195,3 +195,70 @@
 [data-theme="dark"] .entity-card-meta {
   border-top-color: $dark-border-color;
 }
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  column-gap: 32px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed $border-color-light;
+}
+
+.detail-item-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: $color-primary-lighter;
+  color: $color-primary;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.detail-item-label {
+  display: block;
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.detail-item-value {
+  margin-top: 2px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $heading-color;
+  overflow-wrap: anywhere;
+}
+
+[data-theme="dark"] {
+  .detail-item {
+    border-bottom-color: $dark-border-color-light;
+  }
+
+  .detail-item-icon {
+    background-color: rgba($color-primary, 0.15);
+  }
+
+  .detail-item-value {
+    color: $dark-heading-color;
+  }
+}
