@@ -24,7 +24,7 @@ import XIcon from "../../../assets/icons/XIcon";
 import { useAddRoleMutation, useGetPermissionsQuery, useGetRoleQuery, useUpdateRoleMutation } from "../api/Roles.api";
 import PermissionsMatrix from "../components/PermissionsMatrix";
 import { roleSchema, type RoleFormValues } from "../validation/Roles.validation";
-import type { AddRoleDto } from "../types/Roles.types";
+import { isLockedRole, type AddRoleDto } from "../types/Roles.types";
 
 const emptyValues: RoleFormValues = {
   isActive: true,
@@ -78,7 +78,7 @@ const RoleFormPage = () => {
     });
   }, [isEdit, role, reset]);
 
-  const isLocked = !!role?.isSystem;
+  const isLocked = !!role && isLockedRole(role);
 
   const onSubmit = async (values: RoleFormValues) => {
     const data: AddRoleDto = {

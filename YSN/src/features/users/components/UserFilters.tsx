@@ -7,6 +7,7 @@ import DatePicker from "../../../shared/components/inputs/DatePicker";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import { getStatusFilterOptions, getYesNoFilterOptions } from "../../../shared/utils/constants";
 import { useGetRolesQuery } from "../../roles/api/Roles.api";
+import { EMPLOYEE_ROLE_TYPE } from "../../roles/types/Roles.types";
 import type { UserRequest } from "../types/Users.types";
 
 interface UserFiltersProps {
@@ -23,7 +24,7 @@ const fromNumberValue = (value: string) => (value === "" ? undefined : Number(va
 const UserFilters = ({ values, onChange, onSearch, onClear }: UserFiltersProps) => {
   const { t } = useTranslation();
   const { data: roleList } = useGetRolesQuery(
-    { isActive: true, isDeleted: false, sortBy: "Name", isAscending: true },
+    { isActive: true, isDeleted: false, userType: EMPLOYEE_ROLE_TYPE, sortBy: "Name", isAscending: true },
     { refetchOnMountOrArgChange: true }
   );
   const roles = roleList?.items;

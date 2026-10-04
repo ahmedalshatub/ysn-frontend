@@ -12,7 +12,7 @@ import usePermission from "../../../shared/hooks/usePermission";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { Permission } from "../../../shared/types/Permissions.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
-import type { RoleListDto, RoleRequest } from "../types/Roles.types";
+import { isLockedRole, type RoleListDto, type RoleRequest } from "../types/Roles.types";
 
 interface RolesTableProps {
   items: RoleListDto[];
@@ -50,7 +50,7 @@ const RolesTable = ({
         sortable: true,
         render: (row: RoleListDto) => (
           <div className="flex items-center gap-2">
-            {row.isSystem && <LockIcon className="h-4 w-4 text-primary" />}
+            {isLockedRole(row) && <LockIcon className="h-4 w-4 text-primary" />}
             <span className="font-medium">{row.name}</span>
           </div>
         ),
@@ -88,7 +88,7 @@ const RolesTable = ({
         sortable: true,
         width: "110px",
         render: (row: RoleListDto) =>
-          row.isSystem ? <Badge label={t("roles.locked")} variant="primary" size="sm" /> : <span>-</span>,
+          isLockedRole(row) ? <Badge label={t("roles.locked")} variant="primary" size="sm" /> : <span>-</span>,
       },
       {
         key: "createdAt",
@@ -125,12 +125,12 @@ const RolesTable = ({
             : [
                 ...(can(Permission.RolesUpdate)
                   ? [{
-                      label: row.isSystem ? t("common.view") : t("common.edit"),
-                      icon: row.isSystem ? <EyeIcon /> : <EditIcon />,
+                      label: isLockedRole(row) ? t("common.view") : t("common.edit"),
+                      icon: isLockedRole(row) ? <EyeIcon /> : <EditIcon />,
                       onClick: () => onEdit(row),
                     }]
                   : []),
-                ...(can(Permission.RolesDelete) && !row.isSystem && row.usersCount === 0
+                ...(can(Permission.RolesDelete) && !isLockedRole(row) && row.usersCount === 0
                   ? [{ label: t("common.delete"), icon: <TrashIcon />, variant: "danger" as const, onClick: () => onDelete(row) }]
                   : []),
               ];

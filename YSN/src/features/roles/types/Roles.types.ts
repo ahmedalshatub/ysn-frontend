@@ -5,6 +5,7 @@ export interface RoleFilter {
   name?: string;
   permissionId?: number;
   isSystem?: boolean;
+  userType?: number;
   isActive?: boolean;
   isDeleted?: boolean;
   createdBy?: number;
@@ -18,6 +19,7 @@ export interface RoleListDto extends BaseDto {
   name: string;
   description: string | null;
   isSystem: boolean;
+  userType: number;
   isActive: boolean;
   permissionsCount: number;
   usersCount: number;
@@ -32,6 +34,7 @@ export interface RoleTranslationDto {
 
 export interface RoleDto extends BaseDto {
   isSystem: boolean;
+  userType: number;
   isActive: boolean;
   translations: RoleTranslationDto[];
   permissionIds: number[];
@@ -63,3 +66,7 @@ export interface PermissionModuleGroup {
   module: string;
   permissions: PermissionDto[];
 }
+
+export const EMPLOYEE_ROLE_TYPE = 1;
+
+export const isLockedRole = (role: { isSystem: boolean; userType: number }) => role.isSystem || role.userType !== EMPLOYEE_ROLE_TYPE;
