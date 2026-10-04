@@ -333,7 +333,7 @@ const Select: React.FC<SelectProps> = ({
         onClick={handleToggle}
         disabled={disabled}
       >
-        <span className={selectedOption && selectedValue !== "" ? "" : "select-placeholder"}>
+        <span className={`min-w-0 truncate text-start ${selectedOption && selectedValue !== "" ? "" : "select-placeholder"}`}>
           {selectedOption && selectedValue !== "" ? selectedOption.label : placeholder}
         </span>
         <ChevronDownIcon
