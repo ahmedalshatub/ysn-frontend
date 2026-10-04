@@ -31,7 +31,7 @@ const SelectCardsByTypeModal = ({ open, byCategory, onClose, onSelect }: SelectC
       title={t(byCategory ? "cards.selectByCategory" : "cards.selectByType")}
       submitText={t("cards.select")}
       cancelText={t("common.cancel")}
-      size="md"
+      size="lg"
       icon={<LayersIcon className="h-6 w-6" />}
     >
       <div className="space-y-8">

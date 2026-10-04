@@ -77,7 +77,7 @@ const BulkCardActionModal = ({ open, action, selection, selectedCount, onClose, 
         submitText={t("common.confirm")}
         cancelText={t("common.cancel")}
         loading={isLoading}
-        size="md"
+        size="lg"
         icon={<LayersIcon className="h-6 w-6" />}
       >
         <div className="space-y-8">

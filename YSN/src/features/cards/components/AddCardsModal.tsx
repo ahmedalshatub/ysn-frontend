@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import FormModal from "../../../shared/components/modals/FormModal";
-import Tabs from "../../../shared/components/navigation/Tabs";
 import Input from "../../../shared/components/inputs/Input";
 import TextArea from "../../../shared/components/inputs/TextArea";
 import Message from "../../../shared/components/feedback/Message";
@@ -14,24 +13,22 @@ import MultipleCardsInput from "./MultipleCardsInput";
 import CardsTextFileInput from "./CardsTextFileInput";
 import CardsExcelInput from "./CardsExcelInput";
 import CardProblemsReviewModal from "./CardProblemsReviewModal";
-import { bulkCardProblemKeys, type AddCardsResultDto, type CardFilter } from "../types/Cards.types";
+import { addCardsMethodKeys, bulkCardProblemKeys, type AddCardsMethod, type AddCardsResultDto, type CardFilter } from "../types/Cards.types";
 import FormSection from "../../../shared/components/forms/FormSection";
 import ListBulletIcon from "../../../assets/icons/ListBulletIcon";
 
 interface AddCardsModalProps {
   open: boolean;
+  method: AddCardsMethod;
   fixedFilter?: CardFilter;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-type Method = "single" | "multiple" | "textArea" | "textFile" | "excel";
-
-const AddCardsModal = ({ open, fixedFilter, onClose, onSuccess }: AddCardsModalProps) => {
+const AddCardsModal = ({ open, method, fixedFilter, onClose, onSuccess }: AddCardsModalProps) => {
   const { t } = useTranslation();
   const [categoryId, setCategoryId] = useState<number | undefined>(fixedFilter?.cardCategoryId);
   const [cardTypeId, setCardTypeId] = useState<number | undefined>(fixedFilter?.cardTypeId);
-  const [method, setMethod] = useState<Method>("single");
   const [single, setSingle] = useState("");
   const [rows, setRows] = useState<string[]>([""]);
   const [text, setText] = useState("");
@@ -44,14 +41,6 @@ const AddCardsModal = ({ open, fixedFilter, onClose, onSuccess }: AddCardsModalP
     const raw = method === "single" ? [single] : method === "multiple" ? rows : method === "textArea" ? text.split(/\r?\n/) : fileSerials;
     return raw.filter((serial) => serial.trim().length > 0);
   }, [method, single, rows, text, fileSerials]);
-
-  const tabs = [
-    { id: "single", label: t("cards.methodSingle") },
-    { id: "multiple", label: t("cards.methodMultiple") },
-    { id: "textArea", label: t("cards.methodTextArea") },
-    { id: "textFile", label: t("cards.methodTextFile") },
-    { id: "excel", label: t("cards.methodExcel") },
-  ];
 
   const finish = (result: AddCardsResultDto) => {
     showSuccess(t("cards.successAdd", { added: result.addedCount, skipped: result.invalidCount }));
@@ -86,11 +75,11 @@ const AddCardsModal = ({ open, fixedFilter, onClose, onSuccess }: AddCardsModalP
         onSubmit={() => {
           send(false);
         }}
-        title={t("cards.addCards")}
+        title={`${t("cards.addCards")} - ${t(addCardsMethodKeys[method])}`}
         submitText={t("common.add")}
         cancelText={t("common.cancel")}
         loading={isLoading}
-        size="lg"
+        size="xl"
         icon={<LayersIcon className="h-6 w-6" />}
       >
         <div className="space-y-8">
@@ -110,7 +99,6 @@ const AddCardsModal = ({ open, fixedFilter, onClose, onSuccess }: AddCardsModalP
             </div>
           </FormSection>
           <FormSection icon={<ListBulletIcon />} title={t("cards.serials")}>
-            <Tabs tabs={tabs} activeTab={method} onChange={(id) => setMethod(id as Method)} />
             {method === "single" && (
               <Input name="serialNumber" label={`${t("cards.serialNumber")} *`} value={single} onChange={(event) => setSingle(event.target.value)} size="md" />
             )}
@@ -121,7 +109,7 @@ const AddCardsModal = ({ open, fixedFilter, onClose, onSuccess }: AddCardsModalP
                 label={t("cards.onePerLine")}
                 value={text}
                 onChange={(event) => setText(event.target.value)}
-                rows={10}
+                rows={14}
               />
             )}
             {method === "textFile" && <CardsTextFileInput onRead={setFileSerials} />}

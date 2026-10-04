@@ -26,6 +26,9 @@ import SelectCardsByTypeModal from "./SelectCardsByTypeModal";
 import type { BulkCardActionValue, CardFilter, CardListDto, CardRequest, CardSelection } from "../types/Cards.types";
 import PageActions from "../../../shared/components/navigation/PageActions";
 import ListContainer from "../../../shared/components/cards/ListContainer";
+import Dropdown from "../../../shared/components/navigation/Dropdown";
+import ChevronDownIcon from "../../../assets/icons/ChevronDownIcon";
+import { addCardsMethodKeys, addCardsMethods, type AddCardsMethod } from "../types/Cards.types";
 
 interface CardsViewProps {
   framed?: boolean;
@@ -58,6 +61,7 @@ const CardsView = ({ framed, actionsTarget, fixedFilter, initialFilter }: CardsV
   const [dialog, setDialog] = useState<DialogName | null>(null);
   const [selected, setSelected] = useState<CardListDto | null>(null);
   const [bulkAction, setBulkAction] = useState<BulkCardActionValue | null>(null);
+  const [addMethod, setAddMethod] = useState<AddCardsMethod>("single");
   const [selection, setSelection] = useState<CardSelection>({ mode: "ids", ids: new Set() });
   const [refreshKey, setRefreshKey] = useState(0);
   const [countCards] = useLazyGetCardsCountQuery();
@@ -129,13 +133,14 @@ const CardsView = ({ framed, actionsTarget, fixedFilter, initialFilter }: CardsV
             <PageActions target={actionsTarget}>
             {can(Permission.CardsExport) && <ExportButton loading={isExporting} onExport={() => exportCards(queryFilter).unwrap()} />}
             {can(Permission.CardsCreate) && fixedFilter?.takenBy === undefined && (
-              <Button
-                variant="dark"
-                size="md"
-                label={t("cards.addCards")}
-                icon={<PlusIcon className="h-4 w-4" />}
-                iconPosition="left"
-                onClick={() => open("add", null)}
+              <Dropdown
+                placement="bottom-end"
+                trigger={<Button variant="dark" size="md" label={t("cards.addCards")} icon={<ChevronDownIcon className="h-4 w-4" />} iconPosition="right" />}
+                items={addCardsMethods.map((method) => ({ key: method, label: t(addCardsMethodKeys[method]), icon: <PlusIcon /> }))}
+                onSelect={(key) => {
+                  setAddMethod(key as AddCardsMethod);
+                  open("add", null);
+                }}
               />
             )}
             </PageActions>
@@ -174,7 +179,7 @@ const CardsView = ({ framed, actionsTarget, fixedFilter, initialFilter }: CardsV
       </ListContainer>
       <CardStatsCards filter={queryFilter} refreshKey={refreshKey} />
 
-      {dialog === "add" && <AddCardsModal open fixedFilter={fixedFilter} onClose={close} onSuccess={reload} />}
+      {dialog === "add" && <AddCardsModal open method={addMethod} fixedFilter={fixedFilter} onClose={close} onSuccess={reload} />}
       {dialog === "edit" && selected && <CardModal open card={selected} onClose={close} onSuccess={reload} />}
       {dialog === "status" && selected && <ChangeCardStatusAlert open card={selected} onClose={close} onSuccess={reload} />}
       {dialog === "delete" && selected && <DeleteCardAlert open card={selected} onClose={close} onSuccess={reload} />}

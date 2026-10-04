@@ -65,7 +65,7 @@ const CardModal = ({ open, card, onClose, onSuccess }: CardModalProps) => {
       submitText={t("common.save")}
       cancelText={t("common.cancel")}
       loading={isLoading}
-      size="md"
+      size="lg"
       icon={<EditIcon className="h-6 w-6" />}
     >
       <div className="space-y-8">

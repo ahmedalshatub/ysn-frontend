@@ -155,3 +155,15 @@ export interface CardTypeStockDto {
   takenCount: number;
   disabledCount: number;
 }
+
+export type AddCardsMethod = "single" | "multiple" | "textArea" | "textFile" | "excel";
+
+export const addCardsMethods: AddCardsMethod[] = ["single", "multiple", "textArea", "textFile", "excel"];
+
+export const addCardsMethodKeys: Record<AddCardsMethod, string> = {
+  single: "cards.methodSingle",
+  multiple: "cards.methodMultiple",
+  textArea: "cards.methodTextArea",
+  textFile: "cards.methodTextFile",
+  excel: "cards.methodExcel",
+};
