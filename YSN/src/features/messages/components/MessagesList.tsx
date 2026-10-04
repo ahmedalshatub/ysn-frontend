@@ -45,7 +45,7 @@ const toQueryFilter = (values: MessageRequest, userId?: number): MessageFilter =
   userId,
   name: userId ? undefined : values.name || undefined,
   phoneNumber: userId ? undefined : values.phoneNumber || undefined,
-  userType: userId ? undefined : values.userType,
+  roleId: userId ? undefined : values.roleId,
   cityId: userId ? undefined : values.cityId,
   isRead: values.isRead,
   isDeleted: values.isDeleted,

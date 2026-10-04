@@ -5,7 +5,7 @@ export interface InvoiceFilter {
   customerId?: number;
   customerName?: string;
   customerPhone?: string;
-  customerUserType?: number;
+  customerRoleId?: number;
   cityId?: number;
   cardCategoryId?: number;
   cardTypeId?: number;
@@ -24,7 +24,7 @@ export interface InvoiceRequest extends BaseRequest, InvoiceFilter {}
 export interface InvoiceListDto extends BaseDto {
   customerId: number;
   customerName: string | null;
-  customerUserType: number;
+  customerRoleId: number;
   customerPhone: string | null;
   customerCityName: string | null;
   cardTypeId: number;

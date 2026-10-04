@@ -6,7 +6,7 @@ import Select from "../../../shared/components/inputs/Select";
 import DatePicker from "../../../shared/components/inputs/DatePicker";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import { getStatusFilterOptions, getYesNoFilterOptions } from "../../../shared/utils/constants";
-import { customerTypeConfigs, customerTypeList } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, customerRoleList } from "../../customers/types/Customers.types";
 import { useGetCardCategoriesQuery } from "../../cardCategories/api/CardCategories.api";
 import { CardKind, cardKindKeys, type CardTypeRequest } from "../types/CardTypes.types";
 
@@ -45,7 +45,7 @@ const CardTypeFilters = ({ values, onChange, onSearch, onClear }: CardTypeFilter
     [categories]
   );
   const kindOptions = Object.values(CardKind).map((kind) => ({ value: kind, name: t(cardKindKeys[kind]) }));
-  const targetOptions = customerTypeList.map((type) => ({ value: type, name: t(customerTypeConfigs[type].pluralKey) }));
+  const targetOptions = customerRoleList.map((type) => ({ value: type, name: t(customerRoleConfigs[type].pluralKey) }));
 
   const rangeInput = (name: RangeField, label: string) => (
     <Input
@@ -105,10 +105,10 @@ const CardTypeFilters = ({ values, onChange, onSearch, onClear }: CardTypeFilter
           size="md"
         />
         <Select
-          name="targetUserType"
+          name="targetRoleId"
           label={t("cardTypes.targets")}
-          value={toSelectValue(values.targetUserType)}
-          onChange={(value) => onChange("targetUserType", fromNumberValue(String(value)))}
+          value={toSelectValue(values.targetRoleId)}
+          onChange={(value) => onChange("targetRoleId", fromNumberValue(String(value)))}
           options={targetOptions}
           valueKey="value"
           labelKey="name"

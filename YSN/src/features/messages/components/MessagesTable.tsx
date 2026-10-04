@@ -10,7 +10,7 @@ import type { SortDirection } from "../../../shared/components/table/TableHeader
 import EyeIcon from "../../../assets/icons/EyeIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
 import Undo2Icon from "../../../assets/icons/Undo2Icon";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import type { MessageListDto, MessageRequest } from "../types/Messages.types";
 
 interface MessagesTableProps {
@@ -66,7 +66,7 @@ const MessagesTable = ({
               <div className="flex flex-col gap-1">
                 <span className="font-medium">{row.fullName}</span>
                 <span className="text-xs">
-                  {t(customerTypeConfigs[row.userType as CustomerTypeValue].labelKey)}
+                  {t(customerRoleConfigs[row.roleId as CustomerRoleValue].labelKey)}
                   {row.cityName ? ` - ${row.cityName}` : ""}
                 </span>
               </div>

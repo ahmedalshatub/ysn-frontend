@@ -41,7 +41,7 @@ const toQueryFilter = (values: TransactionRequest, customerId?: number): Transac
   customerId,
   customerName: customerId ? undefined : values.customerName || undefined,
   customerPhone: customerId ? undefined : values.customerPhone || undefined,
-  customerUserType: customerId ? undefined : values.customerUserType,
+  customerRoleId: customerId ? undefined : values.customerRoleId,
   cityId: customerId ? undefined : values.cityId,
   description: values.description || undefined,
   amountFrom: values.amountFrom,

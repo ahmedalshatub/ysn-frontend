@@ -22,7 +22,7 @@ export interface CardTypeFilter {
   cardCategoryId?: number;
   cityId?: number;
   kind?: number;
-  targetUserType?: number;
+  targetRoleId?: number;
   durationMonthsFrom?: number;
   durationMonthsTo?: number;
   agentPriceFrom?: number;
@@ -54,7 +54,7 @@ export interface CardTypeListDto extends BaseDto {
   agentPrice: number | null;
   clientPrice: number | null;
   amount: number;
-  targetUserTypes: number[];
+  targetRoleIds: number[];
   sortOrder: number;
   isActive: boolean;
 }
@@ -74,7 +74,7 @@ export interface CardTypeFormData {
   cardCategoryId: number;
   kind: number;
   durationMonths: number | null;
-  targetUserTypes: number[];
+  targetRoleIds: number[];
   agentPrice: number | null;
   clientPrice: number | null;
   amount: number;

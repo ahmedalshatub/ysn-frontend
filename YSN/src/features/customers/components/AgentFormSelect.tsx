@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import FormSelect from "../../../shared/components/inputs/FormSelect";
 import { useGetCustomersQuery } from "../api/Customers.api";
-import { CustomerType, customerFullName, customerPhone } from "../types/Customers.types";
+import { CustomerRole, customerFullName, customerPhone } from "../types/Customers.types";
 
 interface AgentFormSelectProps<T extends FieldValues> {
   name: Path<T>;
@@ -16,7 +16,7 @@ interface AgentFormSelectProps<T extends FieldValues> {
 const AgentFormSelect = <T extends FieldValues>({ name, control, excludeId, error, errorMessage }: AgentFormSelectProps<T>) => {
   const { t } = useTranslation();
   const { data } = useGetCustomersQuery(
-    { userType: CustomerType.Agent, isActive: true, isDeleted: false, sortBy: "firstName", isAscending: true },
+    { roleId: CustomerRole.Agent, isActive: true, isDeleted: false, sortBy: "firstName", isAscending: true },
     { refetchOnMountOrArgChange: true }
   );
 

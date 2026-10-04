@@ -79,7 +79,7 @@ export interface CardListDto extends BaseDto {
   isTaken: boolean;
   takenBy: number | null;
   takenByName: string | null;
-  takenByUserType: number | null;
+  takenByRoleId: number | null;
   takenAt: string | null;
   isDisabled: boolean;
   disabledAt: string | null;

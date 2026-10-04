@@ -11,7 +11,7 @@ import WalletIcon from "../../../assets/icons/WalletIcon";
 import MonitorIcon from "../../../assets/icons/MonitorIcon";
 import CalendarIcon from "../../../assets/icons/CalendarIcon";
 import LinkIcon from "../../../assets/icons/LinkIcon";
-import { CustomerType, customerFullName, customerPhone, customerTypeConfigs, type CustomerListDto } from "../types/Customers.types";
+import { CustomerRole, customerFullName, customerPhone, customerRoleConfigs, type CustomerListDto } from "../types/Customers.types";
 
 interface CustomerCardProps {
   customer: CustomerListDto;
@@ -37,7 +37,7 @@ const CustomerCard = ({ customer, actions, onOpen }: CustomerCardProps) => {
           <div className="min-w-0">
             <h3 className="entity-card-title truncate">{name}</h3>
             <div className="mt-1 flex flex-wrap gap-1.5">
-              <Badge label={t(customerTypeConfigs[customer.userType].labelKey)} variant="info" size="sm" />
+              <Badge label={t(customerRoleConfigs[customer.roleId].labelKey)} variant="info" size="sm" />
               {customer.isDeleted ? (
                 <Badge label={t("common.deleted")} variant="danger" size="sm" />
               ) : (
@@ -66,7 +66,7 @@ const CustomerCard = ({ customer, actions, onOpen }: CustomerCardProps) => {
           <MapPinIcon className="h-4 w-4 flex-shrink-0" />
           <span>{customer.cityName ?? "-"}</span>
         </p>
-        {customer.userType === CustomerType.SubAgent && (
+        {customer.roleId === CustomerRole.SubAgent && (
           <p className={`entity-card-line ${customer.parentAgentIsActive ? "" : "entity-card-line-warning"}`}>
             <LinkIcon className="h-4 w-4 flex-shrink-0" />
             <span className="truncate">

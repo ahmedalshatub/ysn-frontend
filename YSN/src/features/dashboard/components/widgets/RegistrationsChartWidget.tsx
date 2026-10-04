@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import DashboardWidget from "../DashboardWidget";
 import BarChart from "../../../../shared/components/charts/BarChart";
 import { useGetCustomerDailyCountsQuery } from "../../../customers/api/Customers.api";
-import { customerTypeConfigs } from "../../../customers/types/Customers.types";
+import { customerRoleConfigs } from "../../../customers/types/Customers.types";
 import useVisibleCustomerTypes from "../../hooks/useVisibleCustomerTypes";
 import { dailyValues, rangeDays, rangeFilter, withQuery } from "../../utils/dashboardDates";
 import type { DashboardWidgetProps } from "../../types/Dashboard.types";
@@ -21,15 +21,15 @@ const RegistrationsChartWidget = ({ range }: DashboardWidgetProps) => {
       title={t("dashboard.registrationsChart")}
       loading={isFetching && !data.length}
       empty={!data.length}
-      onOpen={types.length ? () => navigate(withQuery(customerTypeConfigs[types[0]].route, rangeFilter(range))) : undefined}
+      onOpen={types.length ? () => navigate(withQuery(customerRoleConfigs[types[0]].route, rangeFilter(range))) : undefined}
     >
       <BarChart
         labels={days.map((day) => day.slice(5))}
         stacked
         height={260}
         datasets={types.map((type, index) => ({
-          label: t(customerTypeConfigs[type].pluralKey),
-          data: dailyValues(days, data, (row) => row.count, (row) => row.userType === type),
+          label: t(customerRoleConfigs[type].pluralKey),
+          data: dailyValues(days, data, (row) => row.count, (row) => row.roleId === type),
           variant: variants[index % variants.length],
         }))}
       />

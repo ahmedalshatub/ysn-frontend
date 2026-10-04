@@ -17,8 +17,8 @@ const requiredFor = (targets: number[], message: string) =>
 export const sendMessageSchema = yup.object({
   target: yup.number().required(),
   userId: requiredFor([MessageTarget.Customer], "errors.Message.CustomerRequired"),
-  cityId: requiredFor([MessageTarget.City, MessageTarget.UserTypeInCity], "errors.Message.CityRequired"),
-  userType: requiredFor([MessageTarget.UserType, MessageTarget.UserTypeInCity], "errors.Message.UserTypeInvalid"),
+  cityId: requiredFor([MessageTarget.City, MessageTarget.RoleInCity], "errors.Message.CityRequired"),
+  roleId: requiredFor([MessageTarget.Role, MessageTarget.RoleInCity], "errors.Message.RoleInvalid"),
   subject: yup
     .string()
     .trim()

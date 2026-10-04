@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import DashboardWidget from "../DashboardWidget";
 import DashboardRow from "../DashboardRow";
 import { useGetCustomerStatsQuery } from "../../../customers/api/Customers.api";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../../customers/types/Customers.types";
 import { formatCurrency } from "../../../../shared/utils/formatCurrency";
 import { withQuery } from "../../utils/dashboardDates";
 import type { DashboardWidgetProps } from "../../types/Dashboard.types";
@@ -19,10 +19,10 @@ const BalancesWidget = ({ range }: DashboardWidgetProps) => {
       <p className="mb-2 text-2xl font-bold ce-heading">{formatCurrency(total)}</p>
       <div className="divide-y ce-divider">
         {data.map((row) => {
-          const config = customerTypeConfigs[row.userType as CustomerTypeValue];
+          const config = customerRoleConfigs[row.roleId as CustomerRoleValue];
           return (
             <DashboardRow
-              key={row.userType}
+              key={row.roleId}
               title={t(config.pluralKey)}
               values={[formatCurrency(row.balanceTotal)]}
               onClick={() => navigate(withQuery(config.route, { cityId: range.cityId }))}

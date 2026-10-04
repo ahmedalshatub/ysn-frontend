@@ -9,7 +9,7 @@ import { formatAmount } from "../../../shared/utils/formatCurrency";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import ImageIcon from "../../../assets/icons/ImageIcon";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import { cardKindKeys, type CardTypeListDto, type CardTypeRequest } from "../types/CardTypes.types";
 
 interface CardTypesTableProps {
@@ -75,8 +75,8 @@ const CardTypesTable = ({ items, totalCount, loading, filterValues, onPageChange
         width: "170px",
         render: (row: CardTypeListDto) => (
           <div className="flex flex-wrap gap-1">
-            {row.targetUserTypes.map((userType) => (
-              <Badge key={userType} label={t(customerTypeConfigs[userType as CustomerTypeValue].labelKey)} variant="secondary" size="sm" />
+            {row.targetRoleIds.map((roleId) => (
+              <Badge key={roleId} label={t(customerRoleConfigs[roleId as CustomerRoleValue].labelKey)} variant="secondary" size="sm" />
             ))}
           </div>
         ),

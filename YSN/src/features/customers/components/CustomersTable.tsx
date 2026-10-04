@@ -9,16 +9,16 @@ import { formatCurrency } from "../../../shared/utils/formatCurrency";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import {
-  CustomerType,
+  CustomerRole,
   customerFullName,
   customerPhone,
   type CustomerListDto,
   type CustomerRequest,
-  type CustomerTypeValue,
+  type CustomerRoleValue,
 } from "../types/Customers.types";
 
 interface CustomersTableProps {
-  customerType: CustomerTypeValue;
+  customerType: CustomerRoleValue;
   items: CustomerListDto[];
   totalCount: number;
   loading: boolean;
@@ -71,7 +71,7 @@ const CustomersTable = ({
         width: "130px",
         render: (row: CustomerListDto) => <span>{row.cityName ?? "-"}</span>,
       },
-      ...(customerType === CustomerType.SubAgent
+      ...(customerType === CustomerRole.SubAgent
         ? [{
             key: "parentAgentName",
             header: t("customers.parentAgent"),
@@ -84,7 +84,7 @@ const CustomersTable = ({
             ),
           }]
         : []),
-      ...(customerType === CustomerType.Agent
+      ...(customerType === CustomerRole.Agent
         ? [{
             key: "subAgentsCount",
             header: t("customers.subAgentsCount"),

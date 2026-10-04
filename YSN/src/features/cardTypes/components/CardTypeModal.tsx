@@ -39,7 +39,7 @@ const emptyValues: CardTypeFormValues = {
   cardCategoryId: 0,
   kind: CardKind.Normal,
   durationMonths: null,
-  targetUserTypes: [],
+  targetRoleIds: [],
   agentPrice: null,
   clientPrice: null,
   amount: null as unknown as number,
@@ -83,7 +83,7 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
   });
 
   const kind = Number(useWatch({ control, name: "kind" }));
-  const targets = useWatch({ control, name: "targetUserTypes" }) ?? [];
+  const targets = useWatch({ control, name: "targetRoleIds" }) ?? [];
   const showAgentPrice = targets.some((target) => target === 2 || target === 3);
   const showClientPrice = targets.includes(4);
 
@@ -98,7 +98,7 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
         cardCategoryId: cardType.cardCategoryId,
         kind: cardType.kind,
         durationMonths: cardType.durationMonths,
-        targetUserTypes: cardType.targetUserTypes,
+        targetRoleIds: cardType.targetRoleIds,
         agentPrice: cardType.agentPrice,
         clientPrice: cardType.clientPrice,
         amount: cardType.amount,
@@ -139,7 +139,7 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
       cardCategoryId: Number(values.cardCategoryId),
       kind: Number(values.kind),
       durationMonths: isTvKind(Number(values.kind)) ? values.durationMonths ?? null : null,
-      targetUserTypes: values.targetUserTypes,
+      targetRoleIds: values.targetRoleIds,
       agentPrice: showAgentPrice ? values.agentPrice ?? null : null,
       clientPrice: showClientPrice ? values.clientPrice ?? null : null,
       amount: Number(values.amount),
@@ -254,9 +254,9 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
         </FormSection>
         <FormSection icon={<WalletIcon />} title={t("cardTypes.pricing")}>
           <CardTypeTargetsField<CardTypeFormValues>
-            name="targetUserTypes"
+            name="targetRoleIds"
             control={control}
-            errorMessage={fieldError(errors.targetUserTypes?.message)}
+            errorMessage={fieldError(errors.targetRoleIds?.message)}
             onChanged={handleTargetsChanged}
           />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import DashboardWidget from "../DashboardWidget";
 import DashboardRow from "../DashboardRow";
 import { useGetCustomerStatsQuery } from "../../../customers/api/Customers.api";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../../customers/types/Customers.types";
 import { withQuery } from "../../utils/dashboardDates";
 import type { DashboardWidgetProps } from "../../types/Dashboard.types";
 
@@ -16,10 +16,10 @@ const CustomersSummaryWidget = ({ range }: DashboardWidgetProps) => {
     <DashboardWidget title={t("dashboard.customersSummary")} loading={isFetching && !data.length} empty={!data.length}>
       <div className="divide-y ce-divider">
         {data.map((row) => {
-          const config = customerTypeConfigs[row.userType as CustomerTypeValue];
+          const config = customerRoleConfigs[row.roleId as CustomerRoleValue];
           return (
             <DashboardRow
-              key={row.userType}
+              key={row.roleId}
               title={t(config.pluralKey)}
               subtitle={t("dashboard.activeDisabled", { active: row.activeCount, disabled: row.disabledCount })}
               values={[String(row.totalCount)]}

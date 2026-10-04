@@ -10,7 +10,7 @@ import { Permission } from "../../../shared/types/Permissions.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import EyeIcon from "../../../assets/icons/EyeIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import type { InvoiceListDto, InvoiceRequest } from "../types/Invoices.types";
 
 interface InvoicesTableProps {
@@ -59,7 +59,7 @@ const InvoicesTable = ({
               <div className="flex flex-col gap-1">
                 <span className="font-medium">{row.customerName}</span>
                 <span className="text-xs">
-                  {t(customerTypeConfigs[row.customerUserType as CustomerTypeValue].labelKey)}
+                  {t(customerRoleConfigs[row.customerRoleId as CustomerRoleValue].labelKey)}
                   {row.customerCityName ? ` - ${row.customerCityName}` : ""}
                 </span>
               </div>

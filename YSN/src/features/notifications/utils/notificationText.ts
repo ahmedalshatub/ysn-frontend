@@ -1,7 +1,7 @@
 import type { TFunction } from "i18next";
 import { formatAmount } from "../../../shared/utils/formatCurrency";
 import { transactionTypeKeys, type TransactionTypeValue } from "../../transactions/types/Transactions.types";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import { NotificationType, notificationTypeNames, transactionNotificationTypes } from "../types/NotificationTypes.types";
 import type { NotificationDto } from "../types/Notifications.types";
 
@@ -13,7 +13,7 @@ export interface NotificationText {
 const amountKeys = ["amount", "balance", "total"];
 
 const customerTypeName = (t: TFunction, value: unknown) => {
-  const config = customerTypeConfigs[Number(value) as CustomerTypeValue];
+  const config = customerRoleConfigs[Number(value) as CustomerRoleValue];
   return config ? t(config.labelKey) : "";
 };
 
@@ -32,13 +32,12 @@ export const getNotificationText = (t: TFunction, notification: NotificationDto)
     values[key] = amountKeys.includes(key) ? formatAmount(Number(value)) : value == null ? "-" : String(value);
   }
 
-  if (parameters.type != null) {
-    values.typeName = transactionNotificationTypes.includes(notification.type)
-      ? t(transactionTypeKeys[Number(parameters.type) as TransactionTypeValue] ?? "")
-      : customerTypeName(t, parameters.type);
+  if (parameters.type != null && transactionNotificationTypes.includes(notification.type)) {
+    values.typeName = t(transactionTypeKeys[Number(parameters.type) as TransactionTypeValue] ?? "");
   }
-  values.oldTypeName = customerTypeName(t, parameters.oldType);
-  values.newTypeName = customerTypeName(t, parameters.newType);
+  if (parameters.role != null) values.typeName = customerTypeName(t, parameters.role);
+  values.oldTypeName = customerTypeName(t, parameters.oldRole);
+  values.newTypeName = customerTypeName(t, parameters.newRole);
 
   const bodyKey = notification.type === NotificationType.CustomerDisabled && parameters.deleted ? "bodyDeleted" : "body";
   return {

@@ -1,5 +1,5 @@
 import type { CustomerDialogName } from "../hooks/useCustomerActions";
-import { customerFullName, type CustomerListDto, type CustomerTypeValue } from "../types/Customers.types";
+import { customerFullName, type CustomerListDto, type CustomerRoleValue } from "../types/Customers.types";
 import CustomerModal from "./CustomerModal";
 import ChangeCustomerStatusAlert from "./ChangeCustomerStatusAlert";
 import SetCustomerPasswordModal from "./SetCustomerPasswordModal";
@@ -17,10 +17,10 @@ import CustomerDiscountsModal from "../../cardTypeDiscounts/components/CustomerD
 interface CustomerDialogsProps {
   dialog: CustomerDialogName | null;
   customer: CustomerListDto | null;
-  createType: CustomerTypeValue;
+  createType: CustomerRoleValue;
   onClose: () => void;
   onSuccess: () => void;
-  onTypeChanged?: (newType: CustomerTypeValue) => void;
+  onTypeChanged?: (newType: CustomerRoleValue) => void;
 }
 
 const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onTypeChanged }: CustomerDialogsProps) => {
@@ -28,7 +28,7 @@ const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onT
     return (
       <CustomerModal
         open
-        customerType={customer?.userType ?? createType}
+        customerType={customer?.roleId ?? createType}
         customerId={customer?.id ?? null}
         onClose={onClose}
         onSuccess={onSuccess}

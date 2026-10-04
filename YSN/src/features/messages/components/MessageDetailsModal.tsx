@@ -4,7 +4,7 @@ import Loader from "../../../shared/components/feedback/Loader";
 import Badge from "../../../shared/components/badges/Badge";
 import InfoItem from "../../../shared/components/cards/InfoItem";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import { useGetMessageQuery } from "../api/Messages.api";
 
 interface MessageDetailsModalProps {
@@ -40,7 +40,7 @@ const MessageDetailsModal = ({ open, messageId, onClose }: MessageDetailsModalPr
               <InfoItem title={t("messages.customer")} value={message.fullName} />
               <InfoItem
                 title={t("messages.customerType")}
-                value={t(customerTypeConfigs[message.userType as CustomerTypeValue].labelKey)}
+                value={t(customerRoleConfigs[message.roleId as CustomerRoleValue].labelKey)}
               />
               <InfoItem title={t("messages.city")} value={message.cityName || "-"} />
               <InfoItem title={t("messages.sender")} value={message.creator || "-"} />

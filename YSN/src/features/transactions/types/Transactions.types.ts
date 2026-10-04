@@ -56,7 +56,7 @@ export interface TransactionFilter {
   type?: number;
   status?: number;
   customerId?: number;
-  customerUserType?: number;
+  customerRoleId?: number;
   cityId?: number;
   customerName?: string;
   customerPhone?: string;
@@ -77,7 +77,7 @@ export interface TransactionListDto extends BaseDto {
   description: string;
   customerId: number;
   customerName: string | null;
-  customerUserType: number;
+  customerRoleId: number;
   customerPhone: string | null;
   customerCityName: string | null;
   customerBalanceBefore: number | null;

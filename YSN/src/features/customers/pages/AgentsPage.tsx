@@ -1,6 +1,6 @@
 import CustomerTypePage from "../components/CustomerTypePage";
-import { CustomerType } from "../types/Customers.types";
+import { CustomerRole } from "../types/Customers.types";
 
-const AgentsPage = () => <CustomerTypePage customerType={CustomerType.Agent} />;
+const AgentsPage = () => <CustomerTypePage customerType={CustomerRole.Agent} />;
 
 export default AgentsPage;

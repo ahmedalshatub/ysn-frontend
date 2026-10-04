@@ -20,11 +20,11 @@ import CustomersTable from "./CustomersTable";
 import CustomerCard from "./CustomerCard";
 import CustomerDialogs from "./CustomerDialogs";
 import {
-  customerTypeConfigs,
+  customerRoleConfigs,
   type CustomerFilter,
   type CustomerListDto,
   type CustomerRequest,
-  type CustomerTypeValue,
+  type CustomerRoleValue,
 } from "../types/Customers.types";
 
 const CARD_PAGE_SIZE = 24;
@@ -32,7 +32,7 @@ const TABLE_PAGE_SIZE = 25;
 
 interface CustomersListProps {
   actionsTarget?: HTMLElement | null;
-  customerType: CustomerTypeValue;
+  customerType: CustomerRoleValue;
   viewKey: string;
   fixedFilter?: Partial<CustomerFilter>;
   initialFilter?: Partial<CustomerRequest>;
@@ -73,7 +73,7 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
   const { t } = useTranslation();
   const navigate = useNavigate();
   const canCustomer = useCustomerPermission();
-  const config = customerTypeConfigs[customerType];
+  const config = customerRoleConfigs[customerType];
 
   const [viewMode, setViewMode] = useViewMode(viewKey);
   const pageSizeFor = (mode: ViewModeType) => (mode === ViewMode.Cards ? CARD_PAGE_SIZE : TABLE_PAGE_SIZE);
@@ -82,7 +82,7 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
   const [dialog, setDialog] = useState<CustomerDialogName | null>(null);
   const [selected, setSelected] = useState<CustomerListDto | null>(null);
 
-  const queryFilter = { ...toQueryFilter(filterValues), ...fixedFilter, userType: customerType };
+  const queryFilter = { ...toQueryFilter(filterValues), ...fixedFilter, roleId: customerType };
   const { data, isLoading, isFetching, refetch } = useGetCustomersQuery(
     {
       ...queryFilter,

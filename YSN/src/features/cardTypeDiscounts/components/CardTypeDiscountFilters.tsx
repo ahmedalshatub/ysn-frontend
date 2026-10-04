@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import FilterAccordion from "../../../shared/components/navigation/FilterAccordion";
 import Input from "../../../shared/components/inputs/Input";
 import Select from "../../../shared/components/inputs/Select";
-import { customerTypeConfigs, customerTypeList } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, customerRoleList } from "../../customers/types/Customers.types";
 import CardCategoryTypeSelects from "../../cards/components/CardCategoryTypeSelects";
 import { DiscountType, discountTypeKeys, type CardTypeDiscountRequest } from "../types/CardTypeDiscounts.types";
 
@@ -19,7 +19,7 @@ const fromNumberValue = (value: string) => (value === "" ? undefined : Number(va
 
 const CardTypeDiscountFilters = ({ values, forCustomer, onChange, onSearch, onClear }: CardTypeDiscountFiltersProps) => {
   const { t } = useTranslation();
-  const typeOptions = customerTypeList.map((type) => ({ value: type, name: t(customerTypeConfigs[type].pluralKey) }));
+  const typeOptions = customerRoleList.map((type) => ({ value: type, name: t(customerRoleConfigs[type].pluralKey) }));
   const discountOptions = [DiscountType.Percent, DiscountType.Fixed].map((type) => ({ value: type, name: t(discountTypeKeys[type]) }));
 
   return (
@@ -42,10 +42,10 @@ const CardTypeDiscountFilters = ({ values, forCustomer, onChange, onSearch, onCl
               size="md"
             />
             <Select
-              name="customerUserType"
+              name="customerRoleId"
               label={t("customers.customerType")}
-              value={toSelectValue(values.customerUserType)}
-              onChange={(value) => onChange({ customerUserType: fromNumberValue(String(value)) })}
+              value={toSelectValue(values.customerRoleId)}
+              onChange={(value) => onChange({ customerRoleId: fromNumberValue(String(value)) })}
               options={typeOptions}
               valueKey="value"
               labelKey="name"

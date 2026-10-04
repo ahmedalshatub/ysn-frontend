@@ -7,7 +7,7 @@ import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import PhoneIcon from "../../../assets/icons/PhoneIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
 import WalletIcon from "../../../assets/icons/WalletIcon";
-import { customerFullName, customerPhone, customerTypeConfigs, type CustomerDto } from "../types/Customers.types";
+import { customerFullName, customerPhone, customerRoleConfigs, type CustomerDto } from "../types/Customers.types";
 
 interface CustomerDetailsHeaderProps {
   customer: CustomerDto;
@@ -25,7 +25,7 @@ const CustomerDetailsHeader = ({ customer, actions }: CustomerDetailsHeaderProps
         <div className="min-w-0">
           <h2 className="entity-details-title">{name}</h2>
           <div className="mt-2 flex flex-wrap gap-2">
-            <Badge label={t(customerTypeConfigs[customer.userType].labelKey)} variant="info" size="sm" />
+            <Badge label={t(customerRoleConfigs[customer.roleId].labelKey)} variant="info" size="sm" />
             {customer.isDeleted ? (
               <Badge label={t("common.deleted")} variant="danger" size="sm" />
             ) : (

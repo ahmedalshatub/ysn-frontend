@@ -27,7 +27,7 @@ const toQueryFilter = (values: InvoiceRequest, customerId?: number): InvoiceFilt
   customerId,
   customerName: customerId ? undefined : values.customerName || undefined,
   customerPhone: customerId ? undefined : values.customerPhone || undefined,
-  customerUserType: customerId ? undefined : values.customerUserType,
+  customerRoleId: customerId ? undefined : values.customerRoleId,
   cityId: customerId ? undefined : values.cityId,
   cardCategoryId: values.cardCategoryId,
   cardTypeId: values.cardTypeId,

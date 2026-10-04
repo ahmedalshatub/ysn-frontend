@@ -19,7 +19,6 @@ export interface UserFilter {
 export interface UserRequest extends BaseRequest, UserFilter {}
 
 export interface UserListDto extends BaseDto {
-  userType: number;
   userName: string;
   email: string | null;
   firstName: string;

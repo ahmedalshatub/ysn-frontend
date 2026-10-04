@@ -19,7 +19,6 @@ import ShieldIcon from "../../../assets/icons/ShieldIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
 import { useGetCountriesQuery } from "../../countries/api/Countries.api";
 import { useGetRolesQuery } from "../../roles/api/Roles.api";
-import { EMPLOYEE_ROLE_TYPE } from "../../roles/types/Roles.types";
 import { useCreateUserMutation, useGetUserByIdQuery, useUpdateUserMutation } from "../api/Users.api";
 import { userSchema, type UserFormValues } from "../validation/Users.validation";
 
@@ -58,7 +57,7 @@ const UserModal = ({ open, userId, onClose, onSuccess }: UserModalProps) => {
   );
   const countries = countryList?.items;
   const { data: roleList } = useGetRolesQuery(
-    { isActive: true, isDeleted: false, userType: EMPLOYEE_ROLE_TYPE, sortBy: "Name", isAscending: true },
+    { isActive: true, isDeleted: false, isCustomerRole: false, sortBy: "Name", isAscending: true },
     { refetchOnMountOrArgChange: true }
   );
   const roles = roleList?.items;

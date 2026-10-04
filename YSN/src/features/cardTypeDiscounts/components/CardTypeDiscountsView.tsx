@@ -43,7 +43,7 @@ const CardTypeDiscountsView = ({ actionsTarget, customer }: CardTypeDiscountsVie
     userId: customer?.id,
     customerName: customer ? undefined : values.customerName || undefined,
     customerPhone: customer ? undefined : values.customerPhone || undefined,
-    customerUserType: customer ? undefined : values.customerUserType,
+    customerRoleId: customer ? undefined : values.customerRoleId,
     cardCategoryId: values.cardCategoryId,
     cardTypeId: values.cardTypeId,
     discountType: values.discountType,

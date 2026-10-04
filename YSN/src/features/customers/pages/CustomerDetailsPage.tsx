@@ -22,7 +22,7 @@ import CardTypeDiscountsView from "../../cardTypeDiscounts/components/CardTypeDi
 import CustomerCardCategoryAccessTab from "../../cardCategories/components/CustomerCardCategoryAccessTab";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
-import { CustomerType, customerFullName, customerTypeConfigs } from "../types/Customers.types";
+import { CustomerRole, customerFullName, customerRoleConfigs } from "../types/Customers.types";
 
 const CustomerDetailsPage = () => {
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ const CustomerDetailsPage = () => {
 
   const tabs = useMemo(() => {
     const list = [{ id: "overview", label: t("customers.overviewTab") }];
-    if (customer?.userType === CustomerType.Agent) list.push({ id: "subAgents", label: t("customers.subAgentsTab") });
+    if (customer?.roleId === CustomerRole.Agent) list.push({ id: "subAgents", label: t("customers.subAgentsTab") });
     if (can(Permission.TransactionsView)) list.push({ id: "transactions", label: t("transactions.pageTitle") });
     if (can(Permission.CardTypeDiscountsView)) list.push({ id: "discounts", label: t("discounts.cardTypeDiscounts") });
     if (can(Permission.InvoicesView)) list.push({ id: "invoices", label: t("invoices.pageTitle") });
@@ -52,7 +52,7 @@ const CustomerDetailsPage = () => {
     if (can(Permission.MessagesView)) list.push({ id: "messages", label: t("messages.messages") });
     if (can(Permission.CardCategoriesView)) list.push({ id: "cardCategories", label: t("cardCategories.customerTab") });
     return list;
-  }, [customer?.userType, can, t]);
+  }, [customer?.roleId, can, t]);
 
   if (isLoading) {
     return (
@@ -66,7 +66,7 @@ const CustomerDetailsPage = () => {
     return <Result status="404" title={t("customers.notFound")} />;
   }
 
-  const config = customerTypeConfigs[customer.userType];
+  const config = customerRoleConfigs[customer.roleId];
 
   return (
     <div className="space-y-6">
@@ -97,9 +97,9 @@ const CustomerDetailsPage = () => {
           {activeTab === "cards" && <CardsView fixedFilter={{ takenBy: customer.id }} />}
           {activeTab === "messages" && <MessagesTab customer={customer} />}
           {activeTab === "cardCategories" && <CustomerCardCategoryAccessTab customer={customer} onChanged={refetch} />}
-          {activeTab === "subAgents" && customer.userType === CustomerType.Agent && (
+          {activeTab === "subAgents" && customer.roleId === CustomerRole.Agent && (
             <CustomersList
-              customerType={CustomerType.SubAgent}
+              customerType={CustomerRole.SubAgent}
               viewKey="agentSubAgents"
               fixedFilter={{ parentAgentId: customer.id }}
             />
@@ -110,7 +110,7 @@ const CustomerDetailsPage = () => {
       <CustomerDialogs
         dialog={dialog}
         customer={customer}
-        createType={customer.userType}
+        createType={customer.roleId}
         onClose={() => setDialog(null)}
         onSuccess={refetch}
       />

@@ -48,7 +48,7 @@ const maxTvCountField = () =>
 
 export const customerSchema = (isEdit: boolean) =>
   yup.object({
-    userType: yup.number().required(),
+    roleId: yup.number().required(),
     firstName: nameField("FirstName"),
     lastName: nameField("LastName"),
     countryId: requiredId("errors.Customer.CountryRequired"),
@@ -59,7 +59,7 @@ export const customerSchema = (isEdit: boolean) =>
       .matches(/^\+?[0-9 ]{4,20}$/, "errors.Customer.PhoneNumberInvalid"),
     email: yup.string().trim().default("").email("errors.Customer.EmailInvalid").max(255, "errors.Customer.EmailInvalid"),
     cityId: requiredId("errors.Customer.CityRequired"),
-    parentAgentId: optionalNumber().when("userType", {
+    parentAgentId: optionalNumber().when("roleId", {
       is: 3,
       then: (schema) => schema.required("errors.Customer.ParentAgentRequired").min(1, "errors.Customer.ParentAgentRequired"),
     }),

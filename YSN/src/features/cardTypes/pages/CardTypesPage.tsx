@@ -35,7 +35,7 @@ const toQueryFilter = (values: CardTypeRequest): CardTypeFilter => ({
   cardCategoryId: values.cardCategoryId,
   cityId: values.cityId,
   kind: values.kind,
-  targetUserType: values.targetUserType,
+  targetRoleId: values.targetRoleId,
   durationMonthsFrom: values.durationMonthsFrom,
   durationMonthsTo: values.durationMonthsTo,
   agentPriceFrom: values.agentPriceFrom,

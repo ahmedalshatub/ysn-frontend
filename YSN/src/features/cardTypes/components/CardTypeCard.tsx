@@ -7,7 +7,7 @@ import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import ImageIcon from "../../../assets/icons/ImageIcon";
 import LayersIcon from "../../../assets/icons/LayersIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
-import { customerTypeConfigs, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import { cardKindKeys, isTvKind, type CardTypeListDto } from "../types/CardTypes.types";
 
 interface CardTypeCardProps {
@@ -70,8 +70,8 @@ const CardTypeCard = ({ cardType, actions }: CardTypeCardProps) => {
           <span dir="ltr">{formatAmount(cardType.amount)}</span>
         </p>
         <div className="flex flex-wrap gap-1.5">
-          {cardType.targetUserTypes.map((userType) => (
-            <Badge key={userType} label={t(customerTypeConfigs[userType as CustomerTypeValue].pluralKey)} variant="secondary" size="sm" />
+          {cardType.targetRoleIds.map((roleId) => (
+            <Badge key={roleId} label={t(customerRoleConfigs[roleId as CustomerRoleValue].pluralKey)} variant="secondary" size="sm" />
           ))}
         </div>
       </div>

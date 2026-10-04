@@ -20,7 +20,6 @@ export interface ResendLoginCodeDto {
 
 export interface CurrentUserDto {
   id: number;
-  userType: number;
   userName: string;
   email: string | null;
   firstName: string;

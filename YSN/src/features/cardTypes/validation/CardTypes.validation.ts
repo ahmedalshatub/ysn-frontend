@@ -31,15 +31,15 @@ export const cardTypeSchema = yup.object({
     if (value === null || value === undefined) return false;
     return value >= 1 && value <= 120 ? true : this.createError({ message: "errors.CardType.DurationInvalid" });
   }),
-  targetUserTypes: yup.array().of(yup.number().required()).min(1, "errors.CardType.TargetsRequired").required(),
+  targetRoleIds: yup.array().of(yup.number().required()).min(1, "errors.CardType.TargetsRequired").required(),
   agentPrice: nullableNumber().test("agent-price", "errors.CardType.AgentPriceRequired", function (value) {
-    const targets: number[] = this.parent.targetUserTypes ?? [];
+    const targets: number[] = this.parent.targetRoleIds ?? [];
     if (!targets.some((target) => target === 2 || target === 3)) return true;
     if (value === null || value === undefined) return false;
     return value > 0 ? true : this.createError({ message: "errors.CardType.PriceInvalid" });
   }),
   clientPrice: nullableNumber().test("client-price", "errors.CardType.ClientPriceRequired", function (value) {
-    const targets: number[] = this.parent.targetUserTypes ?? [];
+    const targets: number[] = this.parent.targetRoleIds ?? [];
     if (!targets.includes(4)) return true;
     if (value === null || value === undefined) return false;
     return value > 0 ? true : this.createError({ message: "errors.CardType.PriceInvalid" });

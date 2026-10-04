@@ -8,7 +8,7 @@ const toFormData = (data: CardTypeFormData) => {
   formData.append("cardCategoryId", String(data.cardCategoryId));
   formData.append("kind", String(data.kind));
   if (data.durationMonths !== null) formData.append("durationMonths", String(data.durationMonths));
-  data.targetUserTypes.forEach((userType, index) => formData.append(`targetUserTypes[${index}]`, String(userType)));
+  data.targetRoleIds.forEach((roleId, index) => formData.append(`targetRoleIds[${index}]`, String(roleId)));
   if (data.agentPrice !== null) formData.append("agentPrice", String(data.agentPrice));
   if (data.clientPrice !== null) formData.append("clientPrice", String(data.clientPrice));
   formData.append("amount", String(data.amount));

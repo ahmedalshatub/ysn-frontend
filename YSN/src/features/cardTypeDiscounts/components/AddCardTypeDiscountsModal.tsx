@@ -11,7 +11,7 @@ import useMyCities from "../../../shared/hooks/useMyCities";
 import WalletIcon from "../../../assets/icons/WalletIcon";
 import CustomerSearchSelect from "../../customers/components/CustomerSearchSelect";
 import { useGetCustomersQuery } from "../../customers/api/Customers.api";
-import { customerTypeConfigs, customerTypeList, type CustomerListDto } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, customerRoleList, type CustomerListDto } from "../../customers/types/Customers.types";
 import { useSaveCardTypeDiscountsMutation } from "../api/CardTypeDiscounts.api";
 import CardTypesPicker from "./CardTypesPicker";
 import DiscountValueFields from "./DiscountValueFields";
@@ -36,7 +36,7 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
   const { cities } = useMyCities();
   const [cardTypeIds, setCardTypeIds] = useState<number[]>([]);
   const [mode, setMode] = useState<CustomerMode>("one");
-  const [userType, setUserType] = useState<number | undefined>(undefined);
+  const [roleId, setRoleId] = useState<number | undefined>(undefined);
   const [cityId, setCityId] = useState<number | undefined>(undefined);
   const [discountType, setDiscountType] = useState<DiscountTypeValue>(DiscountType.Percent);
   const [discountValue, setDiscountValue] = useState<number | undefined>(undefined);
@@ -45,10 +45,10 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
   const { control } = useForm<{ customerId: number | null }>({ defaultValues: { customerId: customer?.id ?? null } });
   const customerId = useWatch({ control, name: "customerId" });
 
-  const customerFilter = useMemo(() => ({ userType, cityId, isDeleted: false }), [userType, cityId]);
+  const customerFilter = useMemo(() => ({ roleId, cityId, isDeleted: false }), [roleId, cityId]);
   const { data: matching } = useGetCustomersQuery({ ...customerFilter, pageSize: 1 }, { skip: !!customer || mode !== "filter" });
   const cityOptions = useMemo(() => cities.map((city) => ({ value: city.id, name: city.name })), [cities]);
-  const typeOptions = customerTypeList.map((type) => ({ value: type, name: t(customerTypeConfigs[type].pluralKey) }));
+  const typeOptions = customerRoleList.map((type) => ({ value: type, name: t(customerRoleConfigs[type].pluralKey) }));
 
   const onSubmit = async () => {
     if (cardTypeIds.length === 0) {
@@ -112,10 +112,10 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
             ) : (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <Select
-                  name="userType"
+                  name="roleId"
                   label={t("customers.customerType")}
-                  value={userType ?? ""}
-                  onChange={(value) => setUserType(fromNumberValue(value))}
+                  value={roleId ?? ""}
+                  onChange={(value) => setRoleId(fromNumberValue(value))}
                   options={typeOptions}
                   valueKey="value"
                   labelKey="name"

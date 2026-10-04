@@ -1,12 +1,12 @@
 import type { BaseDto, BaseRequest } from "../../../shared/types/base";
 
-export const CustomerType = {
-  Agent: 2,
-  SubAgent: 3,
-  Client: 4,
+export const CustomerRole = {
+  Agent: 4,
+  SubAgent: 5,
+  Client: 6,
 } as const;
 
-export type CustomerTypeValue = typeof CustomerType[keyof typeof CustomerType];
+export type CustomerRoleValue = typeof CustomerRole[keyof typeof CustomerRole];
 
 export const CustomerApp = {
   YanabeeSumer: 1,
@@ -15,31 +15,31 @@ export const CustomerApp = {
 
 export type CustomerAppValue = typeof CustomerApp[keyof typeof CustomerApp];
 
-export interface CustomerTypeConfig {
-  type: CustomerTypeValue;
+export interface CustomerRoleConfig {
+  role: CustomerRoleValue;
   module: "Agents" | "SubAgents" | "Clients";
   route: string;
   labelKey: string;
   pluralKey: string;
 }
 
-export const customerTypeConfigs: Record<CustomerTypeValue, CustomerTypeConfig> = {
-  [CustomerType.Agent]: {
-    type: CustomerType.Agent,
+export const customerRoleConfigs: Record<CustomerRoleValue, CustomerRoleConfig> = {
+  [CustomerRole.Agent]: {
+    role: CustomerRole.Agent,
     module: "Agents",
     route: "/customers/agents",
     labelKey: "customerTypes.agent",
     pluralKey: "customerTypes.agents",
   },
-  [CustomerType.SubAgent]: {
-    type: CustomerType.SubAgent,
+  [CustomerRole.SubAgent]: {
+    role: CustomerRole.SubAgent,
     module: "SubAgents",
     route: "/customers/sub-agents",
     labelKey: "customerTypes.subAgent",
     pluralKey: "customerTypes.subAgents",
   },
-  [CustomerType.Client]: {
-    type: CustomerType.Client,
+  [CustomerRole.Client]: {
+    role: CustomerRole.Client,
     module: "Clients",
     route: "/customers/clients",
     labelKey: "customerTypes.client",
@@ -47,17 +47,17 @@ export const customerTypeConfigs: Record<CustomerTypeValue, CustomerTypeConfig> 
   },
 };
 
-export const customerTypeList: CustomerTypeValue[] = [CustomerType.Agent, CustomerType.SubAgent, CustomerType.Client];
+export const customerRoleList: CustomerRoleValue[] = [CustomerRole.Agent, CustomerRole.SubAgent, CustomerRole.Client];
 
-export const isCustomerType = (value: number): value is CustomerTypeValue =>
-  customerTypeList.includes(value as CustomerTypeValue);
+export const isCustomerRole = (value: number): value is CustomerRoleValue =>
+  customerRoleList.includes(value as CustomerRoleValue);
 
 export interface CustomerFilter {
   name?: string;
   phoneNumber?: string;
   countryId?: number;
   email?: string;
-  userType?: number;
+  roleId?: number;
   cityId?: number;
   parentAgentId?: number;
   parentAgentIsActive?: boolean;
@@ -80,7 +80,7 @@ export interface CustomerFilter {
 export interface CustomerRequest extends BaseRequest, CustomerFilter {}
 
 export interface CustomerListDto extends BaseDto {
-  userType: CustomerTypeValue;
+  roleId: CustomerRoleValue;
   userName: string;
   firstName: string;
   lastName: string;
@@ -133,7 +133,7 @@ export interface UpdateCustomerDto {
   phoneNumber: string;
   email: string | null;
   cityId: number;
-  userType?: CustomerTypeValue;
+  roleId?: CustomerRoleValue;
   parentAgentId?: number | null;
   isUnlimitedTvs?: boolean;
   maxTvCount?: number | null;
@@ -142,7 +142,7 @@ export interface UpdateCustomerDto {
 }
 
 export interface ChangeCustomerTypeDto {
-  userType: CustomerTypeValue;
+  roleId: CustomerRoleValue;
   parentAgentId: number | null;
 }
 
@@ -168,7 +168,7 @@ export const customerPhone = (customer: Pick<CustomerListDto, "phoneCode" | "pho
   customer.phoneNumber ? `${customer.phoneCode ?? ""} ${customer.phoneNumber}`.trim() : "";
 
 export interface CustomerTypeStatsDto {
-  userType: number;
+  roleId: number;
   totalCount: number;
   activeCount: number;
   disabledCount: number;
@@ -177,6 +177,6 @@ export interface CustomerTypeStatsDto {
 
 export interface DailyCustomerCountDto {
   date: string;
-  userType: number;
+  roleId: number;
   count: number;
 }

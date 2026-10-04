@@ -43,7 +43,7 @@ const useCustomerActions = ({ onOpen, onDialog }: CustomerActionOptions) => {
 
   return useCallback(
     (customer: CustomerListDto): ActionItem[] => {
-      const type = customer.userType;
+      const type = customer.roleId;
       const can = (action: Parameters<typeof canCustomer>[1]) => canCustomer(type, action);
 
       if (customer.isDeleted) {

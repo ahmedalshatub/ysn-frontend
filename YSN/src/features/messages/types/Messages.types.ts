@@ -3,8 +3,8 @@ import type { BaseDto, BaseRequest } from "../../../shared/types/base";
 export const MessageTarget = {
   Customer: 1,
   City: 2,
-  UserType: 3,
-  UserTypeInCity: 4,
+  Role: 3,
+  RoleInCity: 4,
   All: 5,
 } as const;
 
@@ -13,8 +13,8 @@ export type MessageTargetValue = typeof MessageTarget[keyof typeof MessageTarget
 export const messageTargetKeys: Record<MessageTargetValue, string> = {
   [MessageTarget.Customer]: "messageTargets.customer",
   [MessageTarget.City]: "messageTargets.city",
-  [MessageTarget.UserType]: "messageTargets.userType",
-  [MessageTarget.UserTypeInCity]: "messageTargets.userTypeInCity",
+  [MessageTarget.Role]: "messageTargets.role",
+  [MessageTarget.RoleInCity]: "messageTargets.roleInCity",
   [MessageTarget.All]: "messageTargets.all",
 };
 
@@ -24,7 +24,7 @@ export interface MessageFilter {
   userId?: number;
   name?: string;
   phoneNumber?: string;
-  userType?: number;
+  roleId?: number;
   cityId?: number;
   isRead?: boolean;
   isDeleted?: boolean;
@@ -40,7 +40,7 @@ export interface MessageRequest extends BaseRequest, MessageFilter {}
 export interface MessageListDto extends BaseDto {
   userId: number;
   fullName: string;
-  userType: number;
+  roleId: number;
   phoneCode: string | null;
   phoneNumber: string | null;
   cityId: number | null;
@@ -61,7 +61,7 @@ export interface SendMessageDto {
   targetType: MessageTargetValue;
   userId?: number;
   cityId?: number;
-  userType?: number;
+  roleId?: number;
 }
 
 export interface SendMessageResultDto {

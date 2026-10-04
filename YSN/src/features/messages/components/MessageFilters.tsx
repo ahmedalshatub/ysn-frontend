@@ -6,7 +6,7 @@ import Select from "../../../shared/components/inputs/Select";
 import DatePicker from "../../../shared/components/inputs/DatePicker";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import { getStatusFilterOptions } from "../../../shared/utils/constants";
-import { customerTypeConfigs, customerTypeList } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, customerRoleList } from "../../customers/types/Customers.types";
 import type { MessageRequest } from "../types/Messages.types";
 
 interface MessageFiltersProps {
@@ -25,7 +25,7 @@ const MessageFilters = ({ values, forRecipient, onChange, onSearch, onClear }: M
   const { t } = useTranslation();
   const { cities } = useMyCities();
 
-  const typeOptions = customerTypeList.map((type) => ({ value: type, name: t(customerTypeConfigs[type].pluralKey) }));
+  const typeOptions = customerRoleList.map((type) => ({ value: type, name: t(customerRoleConfigs[type].pluralKey) }));
   const cityOptions = useMemo(() => cities.map((city) => ({ value: city.id, name: city.name })), [cities]);
   const readOptions = [
     { value: "true", name: t("messages.read") },
@@ -66,10 +66,10 @@ const MessageFilters = ({ values, forRecipient, onChange, onSearch, onClear }: M
               size="md"
             />
             <Select
-              name="userType"
+              name="roleId"
               label={t("messages.customerType")}
-              value={toSelectValue(values.userType)}
-              onChange={(value) => onChange("userType", fromNumberValue(String(value)))}
+              value={toSelectValue(values.roleId)}
+              onChange={(value) => onChange("roleId", fromNumberValue(String(value)))}
               options={typeOptions}
               valueKey="value"
               labelKey="name"

@@ -6,8 +6,8 @@ import { MessageTarget, type MessageTargetValue } from "../types/Messages.types"
 const audiencePermissions: [MessageTargetValue, PermissionCode][] = [
   [MessageTarget.Customer, Permission.MessagesSendToCustomer],
   [MessageTarget.City, Permission.MessagesSendToCity],
-  [MessageTarget.UserType, Permission.MessagesSendToType],
-  [MessageTarget.UserTypeInCity, Permission.MessagesSendToTypeInCity],
+  [MessageTarget.Role, Permission.MessagesSendToRole],
+  [MessageTarget.RoleInCity, Permission.MessagesSendToRoleInCity],
   [MessageTarget.All, Permission.MessagesSendToAll],
 ];
 

@@ -12,7 +12,7 @@ import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import MailIcon from "../../../assets/icons/MailIcon";
 import CustomerSearchSelect from "../../customers/components/CustomerSearchSelect";
-import { customerTypeConfigs, customerTypeList, type CustomerListDto, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, customerRoleList, type CustomerListDto, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import { useSendMessageMutation } from "../api/Messages.api";
 import useMessageAudiences from "../hooks/useMessageAudiences";
 import { sendMessageSchema, type SendMessageFormValues } from "../validation/Messages.validation";
@@ -45,7 +45,7 @@ const SendMessageModal = ({ open, customer, onClose, onSuccess }: SendMessageMod
       target: customer ? MessageTarget.Customer : audiences[0] ?? MessageTarget.Customer,
       userId: customer?.id ?? null,
       cityId: null,
-      userType: null,
+      roleId: null,
       subject: "",
       content: "",
     },
@@ -53,21 +53,21 @@ const SendMessageModal = ({ open, customer, onClose, onSuccess }: SendMessageMod
 
   const target = Number(useWatch({ control, name: "target" })) as MessageTargetValue;
   const cityId = useWatch({ control, name: "cityId" });
-  const userType = useWatch({ control, name: "userType" });
+  const roleId = useWatch({ control, name: "roleId" });
 
   const cityOptions = useMemo(() => cities.map((city) => ({ value: city.id, name: city.name })), [cities]);
   const typeOptions = useMemo(
-    () => customerTypeList.map((type) => ({ value: type, name: t(customerTypeConfigs[type].pluralKey) })),
+    () => customerRoleList.map((type) => ({ value: type, name: t(customerRoleConfigs[type].pluralKey) })),
     [t]
   );
 
   const cityName = cities.find((city) => city.id === Number(cityId))?.name ?? "";
-  const typeName = userType ? t(customerTypeConfigs[Number(userType) as CustomerTypeValue].pluralKey) : "";
+  const typeName = roleId ? t(customerRoleConfigs[Number(roleId) as CustomerRoleValue].pluralKey) : "";
   const summary = {
     [MessageTarget.Customer]: t("messages.summaryCustomer"),
     [MessageTarget.City]: cityName ? t("messages.summaryCity", { city: cityName }) : "",
-    [MessageTarget.UserType]: typeName ? t("messages.summaryType", { type: typeName }) : "",
-    [MessageTarget.UserTypeInCity]:
+    [MessageTarget.Role]: typeName ? t("messages.summaryType", { type: typeName }) : "",
+    [MessageTarget.RoleInCity]:
       typeName && cityName ? t("messages.summaryTypeInCity", { type: typeName, city: cityName }) : "",
     [MessageTarget.All]: t("messages.summaryAll"),
   }[target];
@@ -80,10 +80,10 @@ const SendMessageModal = ({ open, customer, onClose, onSuccess }: SendMessageMod
         targetType: target,
         userId: target === MessageTarget.Customer ? Number(values.userId) : undefined,
         cityId:
-          target === MessageTarget.City || target === MessageTarget.UserTypeInCity ? Number(values.cityId) : undefined,
-        userType:
-          target === MessageTarget.UserType || target === MessageTarget.UserTypeInCity
-            ? Number(values.userType)
+          target === MessageTarget.City || target === MessageTarget.RoleInCity ? Number(values.cityId) : undefined,
+        roleId:
+          target === MessageTarget.Role || target === MessageTarget.RoleInCity
+            ? Number(values.roleId)
             : undefined,
       }).unwrap();
       showSuccess(t("messages.successSend", { count: result.messagesCount }));
@@ -95,8 +95,8 @@ const SendMessageModal = ({ open, customer, onClose, onSuccess }: SendMessageMod
   };
 
   const fieldError = (message?: string) => (message ? t(message) : "");
-  const needsCity = target === MessageTarget.City || target === MessageTarget.UserTypeInCity;
-  const needsType = target === MessageTarget.UserType || target === MessageTarget.UserTypeInCity;
+  const needsCity = target === MessageTarget.City || target === MessageTarget.RoleInCity;
+  const needsType = target === MessageTarget.Role || target === MessageTarget.RoleInCity;
 
   return (
     <FormModal
@@ -129,14 +129,14 @@ const SendMessageModal = ({ open, customer, onClose, onSuccess }: SendMessageMod
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {needsType && (
                 <FormSelect<SendMessageFormValues>
-                  name="userType"
+                  name="roleId"
                   control={control}
                   label={`${t("messages.customerType")} *`}
                   options={typeOptions}
                   valueKey="value"
                   labelKey="name"
-                  error={!!errors.userType}
-                  errorMessage={fieldError(errors.userType?.message)}
+                  error={!!errors.roleId}
+                  errorMessage={fieldError(errors.roleId?.message)}
                 />
               )}
               {needsCity && (

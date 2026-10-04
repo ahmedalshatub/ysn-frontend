@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import Checkbox from "../../../shared/components/inputs/Checkbox";
-import { customerTypeConfigs, customerTypeList } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, customerRoleList } from "../../customers/types/Customers.types";
 
 interface CardTypeTargetsFieldProps<T extends FieldValues> {
   name: Path<T>;
@@ -24,7 +24,7 @@ const CardTypeTargetsField = <T extends FieldValues>({ name, control, errorMessa
           const value: number[] = field.value ?? [];
           return (
             <div className="flex flex-wrap gap-5">
-              {customerTypeList.map((type) => (
+              {customerRoleList.map((type) => (
                 <Checkbox
                   key={type}
                   checked={value.includes(type)}
@@ -33,7 +33,7 @@ const CardTypeTargetsField = <T extends FieldValues>({ name, control, errorMessa
                     field.onChange(next);
                     onChanged(next);
                   }}
-                  label={t(customerTypeConfigs[type].pluralKey)}
+                  label={t(customerRoleConfigs[type].pluralKey)}
                 />
               ))}
             </div>

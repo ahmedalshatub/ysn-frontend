@@ -16,7 +16,7 @@ interface CustomerCardCategoryAccessTabProps {
 const CustomerCardCategoryAccessTab = ({ customer, onChanged }: CustomerCardCategoryAccessTabProps) => {
   const { t } = useTranslation();
   const canCustomer = useCustomerPermission();
-  const canChange = canCustomer(customer.userType, "ChangeCategoryAccess") && !customer.isDeleted;
+  const canChange = canCustomer(customer.roleId, "ChangeCategoryAccess") && !customer.isDeleted;
   const [refreshKey, setRefreshKey] = useState(0);
   const [setViewAll, { isLoading }] = useSetCustomerViewAllCategoriesMutation();
 

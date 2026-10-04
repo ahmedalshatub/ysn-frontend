@@ -4,14 +4,14 @@ import type { Control, FieldValues, Path } from "react-hook-form";
 import Input from "../../../shared/components/inputs/Input";
 import FormSelect from "../../../shared/components/inputs/FormSelect";
 import { useGetCustomersQuery } from "../api/Customers.api";
-import { customerFullName, customerPhone, customerTypeConfigs, type CustomerListDto } from "../types/Customers.types";
+import { customerFullName, customerPhone, customerRoleConfigs, type CustomerListDto } from "../types/Customers.types";
 
 interface CustomerSearchSelectProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   label: string;
   initialCustomer?: CustomerListDto | null;
-  userType?: number;
+  roleId?: number;
   error?: boolean;
   errorMessage?: string;
 }
@@ -23,7 +23,7 @@ const CustomerSearchSelect = <T extends FieldValues>({
   control,
   label,
   initialCustomer,
-  userType,
+  roleId,
   error,
   errorMessage,
 }: CustomerSearchSelectProps<T>) => {
@@ -41,7 +41,7 @@ const CustomerSearchSelect = <T extends FieldValues>({
     {
       name: isPhone ? undefined : debouncedTerm,
       phoneNumber: isPhone ? debouncedTerm.replace(/^\+?964|^0/, "") : undefined,
-      userType,
+      roleId,
       isActive: true,
       isDeleted: false,
       sortBy: "firstName",
@@ -55,7 +55,7 @@ const CustomerSearchSelect = <T extends FieldValues>({
     if (initialCustomer && !customers.some((customer) => customer.id === initialCustomer.id)) customers.unshift(initialCustomer);
     return customers.map((customer) => ({
       value: customer.id,
-      name: `${customerFullName(customer)} - ${t(customerTypeConfigs[customer.userType].labelKey)} (${customerPhone(customer)})`,
+      name: `${customerFullName(customer)} - ${t(customerRoleConfigs[customer.roleId].labelKey)} (${customerPhone(customer)})`,
     }));
   }, [data, initialCustomer, t]);
 

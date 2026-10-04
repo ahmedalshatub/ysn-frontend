@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import usePermission from "../../../shared/hooks/usePermission";
 import type { PermissionCode } from "../../../shared/types/Permissions.types";
-import { customerTypeConfigs, type CustomerTypeValue } from "../types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../types/Customers.types";
 
 export type CustomerAction =
   | "View"
@@ -21,8 +21,8 @@ const useCustomerPermission = () => {
   const { can } = usePermission();
 
   return useCallback(
-    (customerType: CustomerTypeValue, action: CustomerAction) =>
-      can(`${customerTypeConfigs[customerType].module}.${action}` as PermissionCode),
+    (customerType: CustomerRoleValue, action: CustomerAction) =>
+      can(`${customerRoleConfigs[customerType].module}.${action}` as PermissionCode),
     [can]
   );
 };

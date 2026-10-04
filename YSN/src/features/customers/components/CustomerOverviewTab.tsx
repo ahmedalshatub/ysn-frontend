@@ -4,7 +4,7 @@ import Badge from "../../../shared/components/badges/Badge";
 import InfoItem from "../../../shared/components/cards/InfoItem";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
-import { CustomerApp, CustomerType, customerPhone, type CustomerDto } from "../types/Customers.types";
+import { CustomerApp, CustomerRole, customerPhone, type CustomerDto } from "../types/Customers.types";
 
 interface CustomerOverviewTabProps {
   customer: CustomerDto;
@@ -27,7 +27,7 @@ const CustomerOverviewTab = ({ customer }: CustomerOverviewTabProps) => {
       <InfoItem title={t("customers.phoneNumber")} value={<span dir="ltr">{customerPhone(customer) || "-"}</span>} />
       <InfoItem title={t("customers.email")} value={customer.email || "-"} />
       <InfoItem title={t("customers.city")} value={customer.cityName ?? "-"} />
-      {customer.userType === CustomerType.SubAgent && (
+      {customer.roleId === CustomerRole.SubAgent && (
         <InfoItem
           title={t("customers.parentAgent")}
           value={
@@ -44,7 +44,7 @@ const CustomerOverviewTab = ({ customer }: CustomerOverviewTabProps) => {
           }
         />
       )}
-      {customer.userType === CustomerType.Agent && (
+      {customer.roleId === CustomerRole.Agent && (
         <InfoItem title={t("customers.subAgentsCount")} value={customer.subAgentsCount} />
       )}
       <InfoItem title={t("customers.balance")} value={formatCurrency(customer.balance)} />

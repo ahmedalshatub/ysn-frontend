@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,7 +24,7 @@ import XIcon from "../../../assets/icons/XIcon";
 import { useAddRoleMutation, useGetPermissionsQuery, useGetRoleQuery, useUpdateRoleMutation } from "../api/Roles.api";
 import PermissionsMatrix from "../components/PermissionsMatrix";
 import { roleSchema, type RoleFormValues } from "../validation/Roles.validation";
-import { isLockedRole, type AddRoleDto } from "../types/Roles.types";
+import { isCustomerRoleId, isLockedRole, PermissionScope, type AddRoleDto } from "../types/Roles.types";
 
 const emptyValues: RoleFormValues = {
   isActive: true,
@@ -79,6 +79,8 @@ const RoleFormPage = () => {
   }, [isEdit, role, reset]);
 
   const isLocked = !!role && isLockedRole(role);
+  const scope = role && isCustomerRoleId(role.id) ? PermissionScope.App : PermissionScope.Dashboard;
+  const visiblePermissions = useMemo(() => (permissions ?? []).filter((permission) => permission.scope === scope), [permissions, scope]);
 
   const onSubmit = async (values: RoleFormValues) => {
     const data: AddRoleDto = {
@@ -193,8 +195,8 @@ const RoleFormPage = () => {
               control={control}
               render={({ field }) => (
                 <PermissionsMatrix
-                  permissions={permissions ?? []}
-                  value={role?.isSystem ? (permissions ?? []).map((permission) => permission.id) : field.value ?? []}
+                  permissions={visiblePermissions}
+                  value={role?.isSystem ? visiblePermissions.map((permission) => permission.id) : field.value ?? []}
                   onChange={field.onChange}
                   disabled={isLocked}
                   error={fieldError(errors.permissionIds?.message)}

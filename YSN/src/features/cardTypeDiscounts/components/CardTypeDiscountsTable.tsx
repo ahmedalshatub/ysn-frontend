@@ -8,7 +8,7 @@ import { formatCurrency } from "../../../shared/utils/formatCurrency";
 import { Permission } from "../../../shared/types/Permissions.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import TrashIcon from "../../../assets/icons/TrashIcon";
-import { CustomerType, customerTypeConfigs, type CustomerTypeValue } from "../../customers/types/Customers.types";
+import { CustomerRole, customerRoleConfigs, type CustomerRoleValue } from "../../customers/types/Customers.types";
 import { discountText, type CardTypeDiscountListDto, type CardTypeDiscountRequest } from "../types/CardTypeDiscounts.types";
 
 interface CardTypeDiscountsTableProps {
@@ -53,7 +53,7 @@ const CardTypeDiscountsTable = ({
               <div className="flex flex-col gap-1">
                 <span className="font-medium">{row.customerName}</span>
                 <span className="text-xs">
-                  {t(customerTypeConfigs[row.customerUserType as CustomerTypeValue].labelKey)}
+                  {t(customerRoleConfigs[row.customerRoleId as CustomerRoleValue].labelKey)}
                   {row.customerCityName ? ` - ${row.customerCityName}` : ""}
                 </span>
               </div>
@@ -75,7 +75,7 @@ const CardTypeDiscountsTable = ({
         header: t("discounts.price"),
         width: "120px",
         render: (row: CardTypeDiscountListDto) => (
-          <span>{formatCurrency(row.customerUserType === CustomerType.Client ? row.clientPrice : row.agentPrice)}</span>
+          <span>{formatCurrency(row.customerRoleId === CustomerRole.Client ? row.clientPrice : row.agentPrice)}</span>
         ),
       },
       {

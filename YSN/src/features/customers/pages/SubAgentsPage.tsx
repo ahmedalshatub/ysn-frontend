@@ -1,6 +1,6 @@
 import CustomerTypePage from "../components/CustomerTypePage";
-import { CustomerType } from "../types/Customers.types";
+import { CustomerRole } from "../types/Customers.types";
 
-const SubAgentsPage = () => <CustomerTypePage customerType={CustomerType.SubAgent} />;
+const SubAgentsPage = () => <CustomerTypePage customerType={CustomerRole.SubAgent} />;
 
 export default SubAgentsPage;

@@ -7,10 +7,10 @@ import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
 import UsersIcon from "../../../assets/icons/UsersIcon";
 import CustomersList from "./CustomersList";
-import { customerTypeConfigs, type CustomerTypeValue } from "../types/Customers.types";
+import { customerRoleConfigs, type CustomerRoleValue } from "../types/Customers.types";
 
 interface CustomerTypePageProps {
-  customerType: CustomerTypeValue;
+  customerType: CustomerRoleValue;
 }
 
 const CustomerTypePage = ({ customerType }: CustomerTypePageProps) => {
@@ -18,7 +18,7 @@ const CustomerTypePage = ({ customerType }: CustomerTypePageProps) => {
   const [actionsTarget, setActionsTarget] = useState<HTMLDivElement | null>(null);
   const location = useLocation();
   const initialFilter = useUrlFilter<CustomerRequest>();
-  const config = customerTypeConfigs[customerType];
+  const config = customerRoleConfigs[customerType];
   useTitle(t(config.pluralKey));
 
   return (

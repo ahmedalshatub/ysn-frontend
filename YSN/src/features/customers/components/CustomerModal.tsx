@@ -22,24 +22,24 @@ import DiscountValueFields from "../../cardTypeDiscounts/components/DiscountValu
 import { DiscountType, type DiscountTypeValue } from "../../cardTypeDiscounts/types/CardTypeDiscounts.types";
 import useCustomerPermission from "../hooks/useCustomerPermission";
 import {
-  CustomerType,
-  customerTypeConfigs,
-  customerTypeList,
-  type CustomerTypeValue,
+  CustomerRole,
+  customerRoleConfigs,
+  customerRoleList,
+  type CustomerRoleValue,
   type UpdateCustomerDto,
 } from "../types/Customers.types";
 
 interface CustomerModalProps {
   open: boolean;
-  customerType: CustomerTypeValue;
+  customerType: CustomerRoleValue;
   customerId: number | null;
   onClose: () => void;
   onSuccess: () => void;
-  onTypeChanged?: (newType: CustomerTypeValue) => void;
+  onTypeChanged?: (newType: CustomerRoleValue) => void;
 }
 
 const emptyValues: CustomerFormValues = {
-  userType: CustomerType.Agent,
+  roleId: CustomerRole.Agent,
   firstName: "",
   lastName: "",
   countryId: 0,
@@ -58,7 +58,7 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
   const { t } = useTranslation();
   const canCustomer = useCustomerPermission();
   const isEdit = customerId !== null;
-  const config = customerTypeConfigs[customerType];
+  const config = customerRoleConfigs[customerType];
   const canChangeType = isEdit && canCustomer(customerType, "ChangeType");
 
   const { data: customer, isLoading: isLoadingCustomer } = useGetCustomerQuery(
@@ -88,7 +88,7 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
   });
 
   const isUnlimitedTvs = useWatch({ control, name: "isUnlimitedTvs" });
-  const selectedType = Number(useWatch({ control, name: "userType" })) as CustomerTypeValue;
+  const selectedType = Number(useWatch({ control, name: "roleId" })) as CustomerRoleValue;
   const typeChanged = isEdit && selectedType !== customerType;
   const canChangeTvs = !isEdit || canCustomer(selectedType, "ChangeMaxTvs");
   const canChangeDiscount = isEdit && canCustomer(selectedType, "ChangeDiscount");
@@ -96,13 +96,13 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
   const [discountValue, setDiscountValue] = useState<number | undefined>(undefined);
   const [discountError, setDiscountError] = useState("");
   const showAgent =
-    selectedType === CustomerType.SubAgent && (!isEdit || typeChanged || canCustomer(CustomerType.SubAgent, "ChangeType"));
+    selectedType === CustomerRole.SubAgent && (!isEdit || typeChanged || canCustomer(CustomerRole.SubAgent, "ChangeType"));
 
   const typeOptions = useMemo(
     () =>
-      customerTypeList
+      customerRoleList
         .filter((type) => type === customerType || canCustomer(type, "Create"))
-        .map((type) => ({ value: type, name: t(customerTypeConfigs[type].labelKey) })),
+        .map((type) => ({ value: type, name: t(customerRoleConfigs[type].labelKey) })),
     [customerType, canCustomer, t]
   );
   const defaultCountryId = countries?.find((country) => country.isDefault)?.id ?? 0;
@@ -114,7 +114,7 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
       setDiscountValue(customer.discountValue || undefined);
       reset({
         ...emptyValues,
-        userType: customer.userType,
+        roleId: customer.roleId,
         parentAgentId: customer.parentAgentId,
         isUnlimitedTvs: customer.isUnlimitedTvs,
         maxTvCount: customer.maxTvCount,
@@ -128,11 +128,11 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
     } else if (!isEdit) {
       reset({
         ...emptyValues,
-        userType: customerType,
+        roleId: customerType,
         countryId: defaultCountryId,
         cityId: singleCityId ?? 0,
-        isUnlimitedTvs: customerType !== CustomerType.Client,
-        maxTvCount: customerType === CustomerType.Client ? 1 : null,
+        isUnlimitedTvs: customerType !== CustomerRole.Client,
+        maxTvCount: customerType === CustomerRole.Client ? 1 : null,
       });
     }
   }, [open, isEdit, customer, defaultCountryId, singleCityId, customerType, reset]);
@@ -162,7 +162,7 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
       if (isEdit && customerId !== null) {
         const data: UpdateCustomerDto = {
           ...base,
-          userType: typeChanged ? selectedType : undefined,
+          roleId: typeChanged ? selectedType : undefined,
           parentAgentId: showAgent ? Number(values.parentAgentId) : undefined,
           isUnlimitedTvs: canChangeTvs ? values.isUnlimitedTvs : undefined,
           maxTvCount: canChangeTvs && !values.isUnlimitedTvs ? values.maxTvCount ?? null : undefined,
@@ -174,7 +174,7 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
         if (typeChanged) onTypeChanged?.(selectedType);
       } else {
         await addCustomer({
-          userType: config.type,
+          roleId: config.role,
           data: {
             ...base,
             parentAgentId: showAgent ? Number(values.parentAgentId) : null,
@@ -277,7 +277,7 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
             />
             {canChangeType && (
               <FormSelect<CustomerFormValues>
-                name="userType"
+                name="roleId"
                 control={control}
                 label={t("customers.customerType")}
                 options={typeOptions}

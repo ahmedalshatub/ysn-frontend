@@ -6,7 +6,7 @@ import Select from "../../../shared/components/inputs/Select";
 import DatePicker from "../../../shared/components/inputs/DatePicker";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import { getStatusFilterOptions } from "../../../shared/utils/constants";
-import { customerTypeConfigs, customerTypeList } from "../../customers/types/Customers.types";
+import { customerRoleConfigs, customerRoleList } from "../../customers/types/Customers.types";
 import {
   TransactionStatus,
   TransactionType,
@@ -36,7 +36,7 @@ const TransactionFilters = ({ values, forCustomer, onChange, onSearch, onClear }
     value: status,
     name: t(transactionStatusKeys[status]),
   }));
-  const customerTypeOptions = customerTypeList.map((type) => ({ value: type, name: t(customerTypeConfigs[type].pluralKey) }));
+  const customerTypeOptions = customerRoleList.map((type) => ({ value: type, name: t(customerRoleConfigs[type].pluralKey) }));
   const cityOptions = useMemo(() => cities.map((city) => ({ value: city.id, name: city.name })), [cities]);
 
   return (
@@ -81,10 +81,10 @@ const TransactionFilters = ({ values, forCustomer, onChange, onSearch, onClear }
               size="md"
             />
             <Select
-              name="customerUserType"
+              name="customerRoleId"
               label={t("customers.customerType")}
-              value={toSelectValue(values.customerUserType)}
-              onChange={(value) => onChange("customerUserType", fromNumberValue(String(value)))}
+              value={toSelectValue(values.customerRoleId)}
+              onChange={(value) => onChange("customerRoleId", fromNumberValue(String(value)))}
               options={customerTypeOptions}
               valueKey="value"
               labelKey="name"

@@ -7,16 +7,16 @@ import type {
   CustomerFilter,
   CustomerListDto,
   CustomerRequest,
-  CustomerTypeValue,
+  CustomerRoleValue,
   SetCustomerPasswordDto,
   UpdateCustomerDto,
   CustomerTypeStatsDto,
   DailyCustomerCountDto,
 } from "../types/Customers.types";
 
-const toCustomerFormData = (data: AddCustomerDto | UpdateCustomerDto, userType?: CustomerTypeValue) => {
+const toCustomerFormData = (data: AddCustomerDto | UpdateCustomerDto, roleId?: CustomerRoleValue) => {
   const formData = new FormData();
-  if (userType) formData.append("userType", String(userType));
+  if (roleId) formData.append("roleId", String(roleId));
   Object.entries(data).forEach(([key, value]) => {
     if (value !== null && value !== undefined && value !== "") formData.append(key, String(value));
   });
@@ -34,11 +34,11 @@ export const customersApi = instanceApi.injectEndpoints({
     getCustomer: builder.query<CustomerDto, number>({
       query: (id) => `Users/${id}`,
     }),
-    addCustomer: builder.mutation<CustomerDto, { userType: CustomerTypeValue; data: AddCustomerDto }>({
-      query: ({ userType, data }) => ({
+    addCustomer: builder.mutation<CustomerDto, { roleId: CustomerRoleValue; data: AddCustomerDto }>({
+      query: ({ roleId, data }) => ({
         url: "Users",
         method: "POST",
-        body: toCustomerFormData(data, userType),
+        body: toCustomerFormData(data, roleId),
       }),
     }),
     updateCustomer: builder.mutation<CustomerDto, { id: number; data: UpdateCustomerDto }>({

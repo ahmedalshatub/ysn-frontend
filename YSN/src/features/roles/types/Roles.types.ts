@@ -5,7 +5,7 @@ export interface RoleFilter {
   name?: string;
   permissionId?: number;
   isSystem?: boolean;
-  userType?: number;
+  isCustomerRole?: boolean;
   isActive?: boolean;
   isDeleted?: boolean;
   createdBy?: number;
@@ -19,7 +19,6 @@ export interface RoleListDto extends BaseDto {
   name: string;
   description: string | null;
   isSystem: boolean;
-  userType: number;
   isActive: boolean;
   permissionsCount: number;
   usersCount: number;
@@ -34,7 +33,6 @@ export interface RoleTranslationDto {
 
 export interface RoleDto extends BaseDto {
   isSystem: boolean;
-  userType: number;
   isActive: boolean;
   translations: RoleTranslationDto[];
   permissionIds: number[];
@@ -60,6 +58,7 @@ export interface PermissionDto {
   module: string;
   action: string;
   sortOrder: number;
+  scope: number;
 }
 
 export interface PermissionModuleGroup {
@@ -67,6 +66,15 @@ export interface PermissionModuleGroup {
   permissions: PermissionDto[];
 }
 
-export const EMPLOYEE_ROLE_TYPE = 1;
+export const PermissionScope = {
+  Dashboard: 1,
+  App: 2,
+} as const;
 
-export const isLockedRole = (role: { isSystem: boolean; userType: number }) => role.isSystem || role.userType !== EMPLOYEE_ROLE_TYPE;
+export const SUPER_ADMIN_ROLE_ID = 1;
+
+export const CUSTOMER_ROLE_IDS = [4, 5, 6];
+
+export const isCustomerRoleId = (roleId: number) => CUSTOMER_ROLE_IDS.includes(roleId);
+
+export const isLockedRole = (role: { id: number; isSystem: boolean }) => role.isSystem || isCustomerRoleId(role.id);

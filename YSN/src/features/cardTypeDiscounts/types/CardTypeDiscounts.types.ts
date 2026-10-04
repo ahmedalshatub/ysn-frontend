@@ -17,7 +17,7 @@ export interface CardTypeDiscountFilter {
   userId?: number;
   customerName?: string;
   customerPhone?: string;
-  customerUserType?: number;
+  customerRoleId?: number;
   cityId?: number;
   cardCategoryId?: number;
   cardTypeId?: number;
@@ -32,7 +32,7 @@ export interface CardTypeDiscountRequest extends BaseRequest, CardTypeDiscountFi
 export interface CardTypeDiscountListDto extends BaseDto {
   userId: number;
   customerName: string | null;
-  customerUserType: number;
+  customerRoleId: number;
   customerPhone: string | null;
   customerCityName: string | null;
   cardTypeId: number;

@@ -8,10 +8,10 @@ import useMyCities from "../../../shared/hooks/useMyCities";
 import { getStatusFilterOptions, getYesNoFilterOptions } from "../../../shared/utils/constants";
 import { useGetCountriesQuery } from "../../countries/api/Countries.api";
 import { useGetCustomersQuery } from "../api/Customers.api";
-import { CustomerApp, CustomerType, customerFullName, type CustomerRequest, type CustomerTypeValue } from "../types/Customers.types";
+import { CustomerApp, CustomerRole, customerFullName, type CustomerRequest, type CustomerRoleValue } from "../types/Customers.types";
 
 interface CustomerFiltersProps {
-  customerType: CustomerTypeValue;
+  customerType: CustomerRoleValue;
   values: CustomerRequest;
   fixedParentAgent?: boolean;
   onChange: (name: keyof CustomerRequest, value: unknown) => void;
@@ -31,10 +31,10 @@ const CustomerFilters = ({ customerType, values, fixedParentAgent, onChange, onS
     { refetchOnMountOrArgChange: true }
   );
   const countries = countryList?.items;
-  const isSubAgents = customerType === CustomerType.SubAgent;
+  const isSubAgents = customerType === CustomerRole.SubAgent;
   const showAgentFilter = isSubAgents && !fixedParentAgent;
   const { data: agents } = useGetCustomersQuery(
-    { userType: CustomerType.Agent, isDeleted: false, sortBy: "firstName", isAscending: true },
+    { roleId: CustomerRole.Agent, isDeleted: false, sortBy: "firstName", isAscending: true },
     { skip: !showAgentFilter, refetchOnMountOrArgChange: true }
   );
 
