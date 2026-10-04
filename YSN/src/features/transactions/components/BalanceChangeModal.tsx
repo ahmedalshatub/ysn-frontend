@@ -61,7 +61,7 @@ const BalanceChangeModal = ({ open, initialType, customer, onClose, onSuccess }:
         type,
         customerId: Number(values.customerId),
         amount: Number(values.amount),
-        description: values.description.trim(),
+        description: values.description?.trim() ?? "",
       }).unwrap();
       showSuccess(t(isWithdraw ? "transactions.successWithdraw" : "transactions.successDeposit"));
       onSuccess();
@@ -125,7 +125,7 @@ const BalanceChangeModal = ({ open, initialType, customer, onClose, onSuccess }:
           <FormTextArea<BalanceChangeFormValues>
             name="description"
             control={control}
-            label={`${t("transactions.description")} *`}
+            label={t("transactions.description")}
             rows={3}
             error={!!errors.description}
             errorMessage={fieldError(errors.description?.message)}

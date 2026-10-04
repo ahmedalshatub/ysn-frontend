@@ -2,7 +2,16 @@ import { useTranslation } from "react-i18next";
 import Modal from "../../../shared/components/modals/Modal";
 import Loader from "../../../shared/components/feedback/Loader";
 import Badge from "../../../shared/components/badges/Badge";
-import InfoItem from "../../../shared/components/cards/InfoItem";
+import DetailItem from "../../../shared/components/cards/DetailItem";
+import CalendarIcon from "../../../assets/icons/CalendarIcon";
+import UserIcon from "../../../assets/icons/UserIcon";
+import PackageIcon from "../../../assets/icons/PackageIcon";
+import ListOrderedIcon from "../../../assets/icons/ListOrderedIcon";
+import WalletIcon from "../../../assets/icons/WalletIcon";
+import TrendDownIcon from "../../../assets/icons/TrendDownIcon";
+import ShoppingCartIcon from "../../../assets/icons/ShoppingCartIcon";
+import TrashIcon from "../../../assets/icons/TrashIcon";
+import AlertCircleIcon from "../../../assets/icons/AlertCircleIcon";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
 import { useGetInvoiceQuery } from "../api/Invoices.api";
@@ -29,28 +38,28 @@ const InvoiceDetailsModal = ({ open, invoiceId, onClose }: InvoiceDetailsModalPr
         ) : (
           <div className="space-y-6">
             {invoice.isDeleted && <Badge label={t("common.deleted")} variant="danger" size="sm" />}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <InfoItem title={t("invoices.date")} value={date(invoice.createdAt)} />
-              <InfoItem title={t("invoices.customer")} value={invoice.customerName ?? "-"} />
-              <InfoItem title={t("cards.cardType")} value={`${invoice.cardTypeName ?? "-"} - ${invoice.cardCategoryName ?? ""}`} />
-              <InfoItem title={t("invoices.quantity")} value={invoice.quantity} />
-              <InfoItem title={t("invoices.basePrice")} value={formatCurrency(invoice.basePrice)} />
-              <InfoItem title={t("invoices.discount")} value={formatCurrency(invoice.discountAmount)} />
-              <InfoItem title={t("invoices.unitPrice")} value={formatCurrency(invoice.unitPrice)} />
-              <InfoItem title={t("invoices.total")} value={formatCurrency(invoice.totalPrice)} />
-              <InfoItem title={t("invoices.balance")} value={`${formatCurrency(invoice.balanceBefore)} → ${formatCurrency(invoice.balanceAfter)}`} />
+            <div className="detail-grid detail-grid-compact">
+              <DetailItem icon={<CalendarIcon />} label={t("invoices.date")} value={date(invoice.createdAt)} />
+              <DetailItem icon={<UserIcon />} label={t("invoices.customer")} value={invoice.customerName ?? "-"} />
+              <DetailItem icon={<PackageIcon />} label={t("cards.cardType")} value={`${invoice.cardTypeName ?? "-"} - ${invoice.cardCategoryName ?? ""}`} />
+              <DetailItem icon={<ListOrderedIcon />} label={t("invoices.quantity")} value={invoice.quantity} />
+              <DetailItem icon={<WalletIcon />} label={t("invoices.basePrice")} value={formatCurrency(invoice.basePrice)} />
+              <DetailItem icon={<TrendDownIcon />} label={t("invoices.discount")} value={formatCurrency(invoice.discountAmount)} />
+              <DetailItem icon={<WalletIcon />} label={t("invoices.unitPrice")} value={formatCurrency(invoice.unitPrice)} />
+              <DetailItem icon={<ShoppingCartIcon />} label={t("invoices.total")} value={formatCurrency(invoice.totalPrice)} />
+              <DetailItem icon={<WalletIcon />} label={t("invoices.balance")} value={`${formatCurrency(invoice.balanceBefore)} → ${formatCurrency(invoice.balanceAfter)}`} />
               {invoice.isDeleted && (
                 <>
-                  <InfoItem title={t("invoices.deletedBy")} value={`${invoice.deletedByName ?? "-"} - ${date(invoice.deletedAt)}`} />
-                  <InfoItem title={t("invoices.deleteReason")} value={invoice.deleteReason ?? "-"} />
+                  <DetailItem icon={<TrashIcon />} label={t("invoices.deletedBy")} value={`${invoice.deletedByName ?? "-"} - ${date(invoice.deletedAt)}`} />
+                  <DetailItem icon={<AlertCircleIcon />} label={t("invoices.deleteReason")} value={invoice.deleteReason ?? "-"} />
                 </>
               )}
             </div>
             <div>
               <h4 className="list-header-title mb-3">{t("invoices.cards")}</h4>
-              <div className="space-y-2">
+              <div>
                 {invoice.items.map((item) => (
-                  <div key={item.cardId} className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
+                  <div key={item.cardId} className="invoice-card-row">
                     <span className="font-mono">{item.serialNumber}</span>
                     <span className="text-sm">{formatCurrency(item.unitPrice)}</span>
                   </div>

@@ -20,9 +20,8 @@ export const balanceChangeSchema = (maxAmount?: number) =>
     description: yup
       .string()
       .trim()
-      .required("errors.Transaction.DescriptionRequired")
-      .min(2, "errors.Transaction.DescriptionInvalidLength")
-      .max(500, "errors.Transaction.DescriptionInvalidLength"),
+      .max(500, "errors.Transaction.DescriptionInvalidLength")
+      .default(""),
   });
 
 export type BalanceChangeFormValues = yup.InferType<ReturnType<typeof balanceChangeSchema>>;
