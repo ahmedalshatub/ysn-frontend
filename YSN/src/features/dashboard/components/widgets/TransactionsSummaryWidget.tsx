@@ -25,7 +25,7 @@ const TransactionsSummaryWidget = ({ range }: DashboardWidgetProps) => {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <DashboardStat icon={<TrendUpIcon />} label={t("transactionTypes.deposit")} value={withCount(data.depositsTotal, data.depositsCount)} variant="success" onClick={() => open(TransactionType.Deposit)} />
           <DashboardStat icon={<TrendDownIcon />} label={t("transactionTypes.withdraw")} value={withCount(data.withdrawsTotal, data.withdrawsCount)} variant="danger" onClick={() => open(TransactionType.Withdraw)} />
-          <DashboardStat icon={<ArrowUpDownIcon />} label={t("transactionTypes.agentDeposit")} value={withCount(data.agentDepositsTotal, data.agentDepositsCount)} variant="info" onClick={() => open(TransactionType.AgentDeposit)} />
+          <DashboardStat icon={<ArrowUpDownIcon />} label={t("transactionTypes.agentTransfer")} value={withCount(data.agentTransfersTotal, data.agentTransfersCount)} variant="info" onClick={() => open(TransactionType.AgentTransfer)} />
           <DashboardStat icon={<WalletIcon />} label={t("transactionTypes.ePayment")} value={withCount(data.ePaymentsTotal, data.ePaymentsCount)} variant="primary" onClick={() => open(TransactionType.EPayment)} />
         </div>
       )}

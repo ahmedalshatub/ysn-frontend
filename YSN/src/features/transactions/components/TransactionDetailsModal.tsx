@@ -18,7 +18,7 @@ import AlertCircleIcon from "../../../assets/icons/AlertCircleIcon";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
 import { useGetTransactionQuery } from "../api/Transactions.api";
-import { transactionStatusKeys, transactionStatusVariants, transactionTypeKeys, transactionTypeVariants } from "../types/Transactions.types";
+import { TransactionType, transactionStatusKeys, transactionStatusVariants, transactionTypeKeys, transactionTypeVariants } from "../types/Transactions.types";
 
 interface TransactionDetailsModalProps {
   open: boolean;
@@ -62,13 +62,11 @@ const TransactionDetailsModal = ({ open, transactionId, onClose }: TransactionDe
               <DetailItem icon={<CalendarIcon />} label={t("transactions.createdAt")} value={date(transaction.createdAt)} />
               <DetailItem icon={<CheckCircleIcon />} label={t("transactions.completedAt")} value={date(transaction.completedAt)} />
               <DetailItem icon={<UserIcon />} label={t("transactions.createdBy")} value={transaction.creator || "-"} />
-              {transaction.relatedTransactionId && (
-                <DetailItem icon={<LinkIcon />} label={t("transactions.related")} value={`#${transaction.relatedTransactionId}`} />
-              )}
-              {transaction.paymentTransactionId && (
+              {transaction.type === TransactionType.EPayment && (
                 <>
-                  <DetailItem icon={<KeyIcon />} label={t("transactions.card")} value={transaction.maskedPan ?? "-"} />
-                  <DetailItem icon={<InfoIcon />} label={t("transactions.gatewayStatus")} value={transaction.gatewayStatus ?? "-"} />
+                  <DetailItem icon={<KeyIcon />} label={t("transactions.card")} value={transaction.maskedPan || "-"} />
+                  <DetailItem icon={<InfoIcon />} label={t("transactions.requestId")} value={transaction.requestId ?? "-"} />
+                  <DetailItem icon={<LinkIcon />} label={t("transactions.referenceId")} value={transaction.referenceId ?? "-"} />
                 </>
               )}
               {transaction.latitude !== null && transaction.longitude !== null && (

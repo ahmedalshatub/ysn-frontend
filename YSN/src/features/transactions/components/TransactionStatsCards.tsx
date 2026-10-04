@@ -28,7 +28,7 @@ const TransactionStatsCards = ({ filter, refreshKey }: TransactionStatsCardsProp
       )}
       <MiniStatCard icon={<TrendUpIcon />} label={t("transactionTypes.deposit")} value={withCount(data.depositsTotal, data.depositsCount)} variant="success" />
       <MiniStatCard icon={<TrendDownIcon />} label={t("transactionTypes.withdraw")} value={withCount(data.withdrawsTotal, data.withdrawsCount)} variant="danger" />
-      <MiniStatCard icon={<ArrowUpDownIcon />} label={t("transactionTypes.agentDeposit")} value={withCount(data.agentDepositsTotal, data.agentDepositsCount)} variant="info" />
+      <MiniStatCard icon={<ArrowUpDownIcon />} label={t("transactionTypes.agentTransfer")} value={withCount(data.agentTransfersTotal, data.agentTransfersCount)} variant="info" />
       <MiniStatCard icon={<WalletIcon />} label={t("transactionTypes.ePayment")} value={withCount(data.ePaymentsTotal, data.ePaymentsCount)} variant="primary" />
       <MiniStatCard icon={<WalletIcon />} label={t("transactions.pendingEPayments")} value={data.pendingEPaymentsCount} variant="warning" />
       <MiniStatCard icon={<WalletIcon />} label={t("transactions.failedEPayments")} value={data.failedEPaymentsCount} variant="danger" />

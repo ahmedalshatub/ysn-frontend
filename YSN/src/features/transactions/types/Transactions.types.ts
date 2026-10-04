@@ -3,11 +3,8 @@ import type { BaseDto, BaseRequest } from "../../../shared/types/base";
 export const TransactionType = {
   Deposit: 1,
   Withdraw: 2,
-  AgentDeposit: 3,
-  EPayment: 4,
-  CardPurchase: 5,
-  Reversal: 6,
-  Restore: 7,
+  EPayment: 3,
+  AgentTransfer: 4,
 } as const;
 
 export type TransactionTypeValue = typeof TransactionType[keyof typeof TransactionType];
@@ -24,11 +21,8 @@ export type TransactionStatusValue = typeof TransactionStatus[keyof typeof Trans
 export const transactionTypeKeys: Record<TransactionTypeValue, string> = {
   [TransactionType.Deposit]: "transactionTypes.deposit",
   [TransactionType.Withdraw]: "transactionTypes.withdraw",
-  [TransactionType.AgentDeposit]: "transactionTypes.agentDeposit",
   [TransactionType.EPayment]: "transactionTypes.ePayment",
-  [TransactionType.CardPurchase]: "transactionTypes.cardPurchase",
-  [TransactionType.Reversal]: "transactionTypes.reversal",
-  [TransactionType.Restore]: "transactionTypes.restore",
+  [TransactionType.AgentTransfer]: "transactionTypes.agentTransfer",
 };
 
 export const transactionStatusKeys: Record<TransactionStatusValue, string> = {
@@ -45,22 +39,12 @@ export const transactionStatusVariants: Record<TransactionStatusValue, "warning"
   [TransactionStatus.Cancelled]: "secondary",
 };
 
-export const transactionTypeVariants: Record<TransactionTypeValue, "success" | "danger" | "info" | "primary" | "warning" | "secondary" | "dark"> = {
+export const transactionTypeVariants: Record<TransactionTypeValue, "success" | "danger" | "info" | "primary"> = {
   [TransactionType.Deposit]: "success",
   [TransactionType.Withdraw]: "danger",
-  [TransactionType.AgentDeposit]: "info",
   [TransactionType.EPayment]: "primary",
-  [TransactionType.CardPurchase]: "warning",
-  [TransactionType.Reversal]: "dark",
-  [TransactionType.Restore]: "secondary",
+  [TransactionType.AgentTransfer]: "info",
 };
-
-export const reversibleTypes: TransactionTypeValue[] = [
-  TransactionType.Deposit,
-  TransactionType.Withdraw,
-  TransactionType.AgentDeposit,
-  TransactionType.EPayment,
-];
 
 export interface TransactionFilter {
   type?: number;
@@ -96,17 +80,15 @@ export interface TransactionListDto extends BaseDto {
   sourceCustomerName: string | null;
   sourceBalanceBefore: number | null;
   sourceBalanceAfter: number | null;
-  relatedTransactionId: number | null;
-  invoiceId: number | null;
+  requestId: string | null;
+  referenceId: string | null;
+  maskedPan: string | null;
   completedAt: string | null;
 }
 
 export interface TransactionDto extends TransactionListDto {
   longitude: number | null;
   latitude: number | null;
-  paymentTransactionId: number | null;
-  maskedPan: string | null;
-  gatewayStatus: string | null;
   deletedBy: number | null;
   deletedByName: string | null;
   deleteReason: string | null;
@@ -118,12 +100,10 @@ export interface TransactionStatsDto {
   depositsCount: number;
   withdrawsTotal: number;
   withdrawsCount: number;
-  agentDepositsTotal: number;
-  agentDepositsCount: number;
   ePaymentsTotal: number;
   ePaymentsCount: number;
-  cardPurchasesTotal: number;
-  cardPurchasesCount: number;
+  agentTransfersTotal: number;
+  agentTransfersCount: number;
   pendingEPaymentsCount: number;
   failedEPaymentsCount: number;
   netTotal: number;

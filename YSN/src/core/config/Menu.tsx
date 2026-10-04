@@ -34,13 +34,6 @@ const Menu: MenuItem[] = [
     path: "/dashboard",
   },
   {
-    name: "Payments",
-    title: "sidebar.payments",
-    icon: <FileTextIcon width={iconSize} height={iconSize} />,
-    path: "/payments",
-    permission: Permission.PaymentsManage,
-  },
-  {
     name: "Customers",
     title: "sidebar.customers",
     icon: <Users2Icon width={iconSize} height={iconSize} />,

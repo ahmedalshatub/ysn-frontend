@@ -40,7 +40,6 @@ export interface InvoiceListDto extends BaseDto {
   totalPrice: number;
   balanceBefore: number;
   balanceAfter: number;
-  transactionId: number | null;
   deletedBy: number | null;
   deletedByName: string | null;
   deleteReason: string | null;

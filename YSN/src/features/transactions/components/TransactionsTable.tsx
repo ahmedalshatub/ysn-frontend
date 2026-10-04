@@ -14,7 +14,6 @@ import Undo2Icon from "../../../assets/icons/Undo2Icon";
 import {
   TransactionStatus,
   TransactionType,
-  reversibleTypes,
   transactionStatusKeys,
   transactionStatusVariants,
   transactionTypeVariants,
@@ -38,10 +37,9 @@ interface TransactionsTableProps {
 }
 
 const isMoneyIn = (row: TransactionListDto, customerId?: number) => {
-  const after = customerId === row.sourceCustomerId ? row.sourceBalanceAfter : row.customerBalanceAfter;
-  const before = customerId === row.sourceCustomerId ? row.sourceBalanceBefore : row.customerBalanceBefore;
-  if (after !== null && before !== null) return after >= before;
-  return row.type === TransactionType.Deposit || row.type === TransactionType.EPayment || row.type === TransactionType.AgentDeposit;
+  if (row.type === TransactionType.Withdraw) return false;
+  if (row.type === TransactionType.AgentTransfer) return customerId !== row.sourceCustomerId;
+  return true;
 };
 
 const TransactionsTable = ({
@@ -138,8 +136,7 @@ const TransactionsTable = ({
         render: (row: TransactionListDto) => (
           <div className="flex flex-col gap-1">
             <span className="truncate">{row.description || "-"}</span>
-            {row.relatedTransactionId && <span className="text-xs ce-muted">{t("transactions.related")}: #{row.relatedTransactionId}</span>}
-            {row.invoiceId && <span className="text-xs ce-muted">{t("invoices.invoice")}: #{row.invoiceId}</span>}
+            {row.maskedPan && <span className="text-xs ce-muted">{t("transactions.card")}: {row.maskedPan}</span>}
           </div>
         ),
       },
@@ -178,7 +175,7 @@ const TransactionsTable = ({
         align: "center" as const,
         width: "80px",
         render: (row: TransactionListDto) => {
-          const reversible = reversibleTypes.includes(row.type) && row.status === TransactionStatus.Completed;
+          const reversible = row.status !== TransactionStatus.Pending;
           const actions = [
             { label: t("transactions.view"), icon: <EyeIcon />, onClick: () => onView(row) },
             ...(reversible && row.isDeleted && can(Permission.TransactionsRestore)

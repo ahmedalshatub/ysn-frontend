@@ -26,7 +26,6 @@ const Cards = lazy(() => import("../../features/cards/pages/CardsPage"));
 const Roles = lazy(() => import("../../features/roles/pages/RolesPage"));
 const RoleForm = lazy(() => import("../../features/roles/pages/RoleFormPage"));
 const AuditLogs = lazy(() => import("../../features/auditLogs/pages/AuditLogsPage"));
-const Payments = lazy(() => import("../../features/payments/pages/PaymentsPage"));
 const Countries = lazy(() => import("../../features/countries/pages/CountriesPage"));
 const Cities = lazy(() => import("../../features/cities/pages/CitiesPage"));
 
@@ -150,12 +149,6 @@ const dashboardRoutes: any = [
     name: "Audit Logs",
     element: <AuditLogs />,
     permission: Permission.AuditLogsView,
-  },
-  {
-    path: "/payments",
-    name: "Payments",
-    element: <Payments />,
-    permission: Permission.PaymentsManage,
   },
   {
     path: "/profile",

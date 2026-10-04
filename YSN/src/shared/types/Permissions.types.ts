@@ -136,7 +136,6 @@ export const Permission = {
   CountriesExport: "Countries.Export",
   AuditLogsView: "AuditLogs.View",
   NotificationsSend: "Notifications.Send",
-  PaymentsManage: "Payments.Manage",
 } as const;
 
 export type PermissionCode = typeof Permission[keyof typeof Permission];
