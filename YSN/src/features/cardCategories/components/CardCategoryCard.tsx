@@ -29,7 +29,7 @@ const CardCategoryCard = ({ category, actions, onOpen }: CardCategoryCardProps) 
         <FileImage
           path={category.imageUrl}
           alt={category.name}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain p-3"
           fallback={<ImageIcon className="h-10 w-10" />}
         />
       </div>

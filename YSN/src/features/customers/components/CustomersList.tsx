@@ -26,6 +26,8 @@ import {
   type CustomerRequest,
   type CustomerRoleValue,
 } from "../types/Customers.types";
+import SortControl from "../../../shared/components/navigation/SortControl";
+import PageSizeSelect from "../../../shared/components/navigation/PageSizeSelect";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -71,6 +73,14 @@ const toQueryFilter = (values: CustomerRequest): CustomerFilter => ({
 
 const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, initialFilter }: CustomersListProps) => {
   const { t } = useTranslation();
+  const sortOptions = [
+    { value: "firstName", label: t("customers.name") },
+    { value: "cityName", label: t("customers.city") },
+    { value: "balance", label: t("customers.balance") },
+    { value: "subAgentsCount", label: t("customers.subAgentsCount") },
+    { value: "lastLoginAt", label: t("customers.lastLogin") },
+    { value: "createdAt", label: t("common.createdAt") },
+  ];
   const navigate = useNavigate();
   const canCustomer = useCustomerPermission();
   const config = customerRoleConfigs[customerType];
@@ -161,6 +171,20 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
               />
             )}
             </PageActions>
+            {viewMode === ViewMode.Cards && (
+              <>
+                <SortControl
+                  options={sortOptions}
+                  sortBy={filterValues.sortBy ?? ""}
+                  isAscending={!!filterValues.isAscending}
+                  onChange={(sortBy, isAscending) => setFilterValues((previous) => ({ ...previous, sortBy, isAscending, pageNumber: 1 }))}
+                />
+                <PageSizeSelect
+                  value={filterValues.pageSize || CARD_PAGE_SIZE}
+                  onChange={(size) => setFilterValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
+                />
+              </>
+            )}
             <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
           </div>
         </div>
@@ -173,7 +197,6 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
             pageNumber={filterValues.pageNumber || 1}
             pageSize={filterValues.pageSize || CARD_PAGE_SIZE}
             onPageChange={(page) => setFilterValues((previous) => ({ ...previous, pageNumber: page }))}
-            onPageSizeChange={(size) => setFilterValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
             rowKey={(customer) => customer.id}
             renderItem={(customer) => <CustomerCard customer={customer} actions={getActions(customer)} onOpen={openDetails} />}
           />

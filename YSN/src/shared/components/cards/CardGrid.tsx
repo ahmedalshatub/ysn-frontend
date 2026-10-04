@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import Loader from "../feedback/Loader";
 import Pagination from "../navigation/Pagination";
-import Select from "../inputs/Select";
 
 interface CardGridProps<T> {
   items: T[];
@@ -10,28 +9,11 @@ interface CardGridProps<T> {
   pageNumber: number;
   pageSize: number;
   onPageChange: (page: number) => void;
-  onPageSizeChange: (size: number) => void;
   rowKey: (item: T) => string | number;
   renderItem: (item: T) => React.ReactNode;
 }
 
-const pageSizeOptions = [
-  { value: 12, name: "12" },
-  { value: 24, name: "24" },
-  { value: 48, name: "48" },
-];
-
-const CardGrid = <T,>({
-  items,
-  totalCount,
-  loading,
-  pageNumber,
-  pageSize,
-  onPageChange,
-  onPageSizeChange,
-  rowKey,
-  renderItem,
-}: CardGridProps<T>) => {
+const CardGrid = <T,>({ items, totalCount, loading, pageNumber, pageSize, onPageChange, rowKey, renderItem }: CardGridProps<T>) => {
   const { t } = useTranslation();
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
@@ -54,22 +36,9 @@ const CardGrid = <T,>({
           <div key={rowKey(item)}>{renderItem(item)}</div>
         ))}
       </div>
-      <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-        <div className="flex items-center gap-2">
-          <span className="card-grid-total">{t("common.totalItems", { count: totalCount })}</span>
-          <div className="w-24">
-            <Select
-              name="pageSize"
-              value={pageSize}
-              onChange={(value) => onPageSizeChange(Number(value))}
-              options={pageSizeOptions}
-              valueKey="value"
-              labelKey="name"
-              size="sm"
-            />
-          </div>
-        </div>
+      <div className="flex flex-col items-center gap-2">
         {totalPages > 1 && <Pagination currentPage={pageNumber} totalPages={totalPages} onPageChange={onPageChange} size="sm" />}
+        <span className="card-grid-total">{t("common.totalItems", { count: totalCount })}</span>
       </div>
     </div>
   );

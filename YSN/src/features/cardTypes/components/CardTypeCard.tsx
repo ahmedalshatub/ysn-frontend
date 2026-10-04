@@ -21,7 +21,7 @@ const CardTypeCard = ({ cardType, actions }: CardTypeCardProps) => {
   return (
     <div className="entity-card">
       <div className="entity-card-image">
-        <FileImage path={cardType.imageUrl} alt={cardType.name} className="h-full w-full object-cover" fallback={<ImageIcon className="h-10 w-10" />} />
+        <FileImage path={cardType.imageUrl} alt={cardType.name} className="h-full w-full object-contain p-3" fallback={<ImageIcon className="h-10 w-10" />} />
       </div>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">

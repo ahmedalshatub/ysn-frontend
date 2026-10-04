@@ -26,6 +26,8 @@ import CardsModal from "../../cards/components/CardsModal";
 import DeleteCardCategoryAlert from "../components/DeleteCardCategoryAlert";
 import RestoreCardCategoryAlert from "../components/RestoreCardCategoryAlert";
 import type { CardCategoryFilter, CardCategoryListDto, CardCategoryRequest } from "../types/CardCategories.types";
+import SortControl from "../../../shared/components/navigation/SortControl";
+import PageSizeSelect from "../../../shared/components/navigation/PageSizeSelect";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -49,6 +51,13 @@ const toQueryFilter = (values: CardCategoryRequest): CardCategoryFilter => ({
 
 const CardCategoriesPage = () => {
   const { t } = useTranslation();
+  const sortOptions = [
+    { value: "name", label: t("cardCategories.name") },
+    { value: "cityName", label: t("cardCategories.city") },
+    { value: "cardTypesCount", label: t("cardCategories.cardTypes") },
+    { value: "sortOrder", label: t("cardCategories.sortOrder") },
+    { value: "createdAt", label: t("common.createdAt") },
+  ];
   useTitle(t("cardCategories.pageTitle"));
   const navigate = useNavigate();
   const { can } = usePermission();
@@ -132,7 +141,23 @@ const CardCategoriesPage = () => {
           <h3 className="list-header-title">
             {t("cardCategories.pageTitle")} <span className="list-header-count">({totalCount})</span>
           </h3>
-          <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
+          <div className="flex flex-wrap items-center gap-2">
+            {viewMode === ViewMode.Cards && (
+              <>
+                <SortControl
+                  options={sortOptions}
+                  sortBy={values.sortBy ?? ""}
+                  isAscending={!!values.isAscending}
+                  onChange={(sortBy, isAscending) => setValues((previous) => ({ ...previous, sortBy, isAscending, pageNumber: 1 }))}
+                />
+                <PageSizeSelect
+                  value={values.pageSize || CARD_PAGE_SIZE}
+                  onChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
+                />
+              </>
+            )}
+            <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
+          </div>
         </div>
         {viewMode === ViewMode.Cards ? (
           <CardGrid
@@ -142,7 +167,6 @@ const CardCategoriesPage = () => {
             pageNumber={values.pageNumber || 1}
             pageSize={values.pageSize || CARD_PAGE_SIZE}
             onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
-            onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
             rowKey={(category) => category.id}
             renderItem={(category) => <CardCategoryCard category={category} actions={getActions(category)} onOpen={openTypes} />}
           />

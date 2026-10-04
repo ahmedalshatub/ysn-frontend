@@ -29,7 +29,6 @@ const TvSmsServersList = ({ viewMode, items, totalCount, loading, values, onChan
         pageNumber={values.pageNumber || 1}
         pageSize={values.pageSize || 24}
         onPageChange={onPageChange}
-        onPageSizeChange={onPageSizeChange}
         rowKey={(server) => server.id}
         renderItem={(server) => <TvSmsServerCard server={server} actions={getActions(server)} />}
       />

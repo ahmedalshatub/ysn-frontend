@@ -26,6 +26,8 @@ import ResetUserPasswordAlert from "../components/ResetUserPasswordAlert";
 import DeleteUserAlert from "../components/DeleteUserAlert";
 import RestoreUserAlert from "../components/RestoreUserAlert";
 import type { UserFilter, UserListDto, UserRequest } from "../types/Users.types";
+import SortControl from "../../../shared/components/navigation/SortControl";
+import PageSizeSelect from "../../../shared/components/navigation/PageSizeSelect";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -68,6 +70,13 @@ const toQueryFilter = (values: UserRequest): UserFilter => ({
 
 const UsersPage = () => {
   const { t } = useTranslation();
+  const sortOptions = [
+    { value: "firstName", label: t("users.name") },
+    { value: "email", label: t("users.email") },
+    { value: "roleName", label: t("users.role") },
+    { value: "lastLoginAt", label: t("users.lastLogin") },
+    { value: "createdAt", label: t("common.createdAt") },
+  ];
   useTitle(t("users.pageTitle"));
   const { can } = usePermission();
 
@@ -179,7 +188,23 @@ const UsersPage = () => {
 
       <ListContainer plain={viewMode === ViewMode.Cards}>
         <div className="mb-4 flex justify-end">
-          <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
+          <div className="flex flex-wrap items-center gap-2">
+            {viewMode === ViewMode.Cards && (
+              <>
+                <SortControl
+                  options={sortOptions}
+                  sortBy={filterValues.sortBy ?? ""}
+                  isAscending={!!filterValues.isAscending}
+                  onChange={(sortBy, isAscending) => setFilterValues((previous) => ({ ...previous, sortBy, isAscending, pageNumber: 1 }))}
+                />
+                <PageSizeSelect
+                  value={filterValues.pageSize || CARD_PAGE_SIZE}
+                  onChange={(size) => setFilterValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
+                />
+              </>
+            )}
+            <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
+          </div>
         </div>
         {viewMode === ViewMode.Cards ? (
           <CardGrid
@@ -189,7 +214,6 @@ const UsersPage = () => {
             pageNumber={filterValues.pageNumber || 1}
             pageSize={filterValues.pageSize || CARD_PAGE_SIZE}
             onPageChange={(page) => setFilterValues((previous) => ({ ...previous, pageNumber: page }))}
-            onPageSizeChange={(size) => setFilterValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
             rowKey={(user) => user.id}
             renderItem={(user) => <UserCard user={user} actions={getActions(user)} />}
           />
