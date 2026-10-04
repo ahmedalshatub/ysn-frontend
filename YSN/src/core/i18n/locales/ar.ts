@@ -520,6 +520,7 @@ export default {
       restoreMessage: "هل أنت متأكد من استعادة هذه الدولة؟",
     },
     cities: {
+      successReorder: "تم حفظ ترتيب المدن",
       tvSmsDefaultCustomerTypeId: "معرف نوع العميل الافتراضي",
       tvSmsDefaultRegionId: "معرف المنطقة الافتراضي",
       tvSmsDefaultDepartmentId: "معرف القسم الافتراضي",
@@ -560,6 +561,9 @@ export default {
     },
     errors: {
       City: {
+        SortOrderOutOfRange: "اختر ترتيباً من 1 إلى الرقم المعروض",
+        ReorderIdsRequired: "لا يوجد ما يمكن ترتيبه",
+        ReorderIdsInvalid: "قائمة الترتيب غير صالحة",
         TvSmsDefaultValueInvalid: "أدخل عدداً صحيحاً يساوي 1 أو أكثر",
         TvSmsPublicKeyTooLong: "لا يمكن أن يزيد المفتاح العام عن 4000 حرف",
         TvSmsPublicKeyInvalid: "يجب أن يكون المفتاح العام بصيغة Base64 صحيحة",
@@ -583,6 +587,7 @@ export default {
         NameInvalidLength: "يجب أن يكون الاسم بين 2 و 255 حرفاً",
       },
       Cities: {
+        ReorderMismatch: "تغيّرت القائمة. أعد تحميل الصفحة ورتّب مرة أخرى.",
         NotFound: "المدينة غير موجودة",
         NameAlreadyExists: "توجد مدينة بنفس الاسم",
         InUse: "لهذه المدينة عملاء ولا يمكن حذفها",

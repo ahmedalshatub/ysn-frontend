@@ -520,6 +520,7 @@ export default {
       restoreMessage: "دڵنیایت لە گەڕاندنەوەی ئەم وڵاتە؟",
     },
     cities: {
+      successReorder: "ڕیزبەندی شارەکان پاشەکەوت کرا",
       tvSmsDefaultCustomerTypeId: "ناسنامەی جۆری کڕیاری بنەڕەتی",
       tvSmsDefaultRegionId: "ناسنامەی ناوچەی بنەڕەتی",
       tvSmsDefaultDepartmentId: "ناسنامەی بەشی بنەڕەتی",
@@ -560,6 +561,9 @@ export default {
     },
     errors: {
       City: {
+        SortOrderOutOfRange: "ڕیزێک لە 1 تا ئەو ژمارەیەی پیشان دراوە هەڵبژێرە",
+        ReorderIdsRequired: "هیچ شتێک نییە بۆ ڕیزکردن",
+        ReorderIdsInvalid: "لیستی ڕیزبەندی دروست نییە",
         TvSmsDefaultValueInvalid: "ژمارەیەکی تەواو بنووسە کە 1 یان زیاتر بێت",
         TvSmsPublicKeyTooLong: "کلیلی گشتی ناتوانێت لە 4000 پیت زیاتر بێت",
         TvSmsPublicKeyInvalid: "کلیلی گشتی دەبێت Base64ی دروست بێت",
@@ -583,6 +587,7 @@ export default {
         NameInvalidLength: "ناو دەبێت لە نێوان ٢ و ٢٥٥ پیت بێت",
       },
       Cities: {
+        ReorderMismatch: "لیستەکە گۆڕا. پەڕەکە نوێ بکەرەوە و دووبارە ڕیز بکە.",
         NotFound: "شار نەدۆزرایەوە",
         NameAlreadyExists: "شارێک بەم ناوە هەیە",
         InUse: "ئەم شارە کڕیاری هەیە و ناسڕدرێتەوە",

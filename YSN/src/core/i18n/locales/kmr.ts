@@ -520,6 +520,7 @@ export default {
       restoreMessage: "تو پشتڕاستی دێ ڤی وەلاتی ڤەگەڕینی؟",
     },
     cities: {
+      successReorder: "ڕیزکرنا باژێران هاتە پاراستن",
       tvSmsDefaultCustomerTypeId: "ناسناما جۆرێ کڕیارێ بنەڕەتی",
       tvSmsDefaultRegionId: "ناسناما دەڤەرا بنەڕەتی",
       tvSmsDefaultDepartmentId: "ناسناما پشکا بنەڕەتی",
@@ -560,6 +561,9 @@ export default {
     },
     errors: {
       City: {
+        SortOrderOutOfRange: "ڕیزەکێ ژ 1 هەتا وێ ژمارێ یا هاتییە نیشاندان هەلبژێرە",
+        ReorderIdsRequired: "تشتەک نینە بۆ ڕیزکرنێ",
+        ReorderIdsInvalid: "لیستا ڕیزکرنێ نە دروستە",
         TvSmsDefaultValueInvalid: "ژمارەکا تەمام بنڤیسە کو 1 یان پتر بیت",
         TvSmsPublicKeyTooLong: "کلیلا گشتی نابیت ژ 4000 پیتان پتر بیت",
         TvSmsPublicKeyInvalid: "دڤێت کلیلا گشتی Base64 یا دروست بیت",
@@ -583,6 +587,7 @@ export default {
         NameInvalidLength: "پێدڤییە ناڤ د ناڤبەرا ٢ و ٢٥٥ پیتان دا بیت",
       },
       Cities: {
+        ReorderMismatch: "لیست هاتە گوهۆڕین. پەڕێ نوی بکە و دوبارە ڕیز بکە.",
         NotFound: "باژێر نەهاتە دیتن",
         NameAlreadyExists: "باژێرەکێ ب ڤی ناڤی هەیە",
         InUse: "ئەڤ باژێرە کڕیار هەنە و نائێتە ژێبرن",

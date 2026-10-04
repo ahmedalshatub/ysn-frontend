@@ -34,6 +34,13 @@ export const citiesApi = instanceApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    reorderCities: builder.mutation<boolean, { ids: number[] }>({
+      query: (body) => ({
+        url: "Cities/reorder",
+        method: "PUT",
+        body,
+      }),
+    }),
     restoreCity: builder.mutation<boolean, number>({
       query: (id) => ({
         url: `Cities/${id}/restore`,
@@ -53,6 +60,8 @@ export const citiesApi = instanceApi.injectEndpoints({
 
 export const {
   useGetCitiesQuery,
+  useLazyGetCitiesQuery,
+  useReorderCitiesMutation,
   useGetCityQuery,
   useAddCityMutation,
   useUpdateCityMutation,

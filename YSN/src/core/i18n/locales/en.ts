@@ -520,6 +520,7 @@ export default {
       restoreMessage: "Are you sure you want to restore this country?",
     },
     cities: {
+      successReorder: "City order saved",
       tvSmsDefaultCustomerTypeId: "Default customer type id",
       tvSmsDefaultRegionId: "Default region id",
       tvSmsDefaultDepartmentId: "Default department id",
@@ -560,6 +561,9 @@ export default {
     },
     errors: {
       City: {
+        SortOrderOutOfRange: "Choose an order from 1 to the number shown",
+        ReorderIdsRequired: "There is nothing to order",
+        ReorderIdsInvalid: "The order list is not valid",
         TvSmsDefaultValueInvalid: "Enter a whole number of 1 or more",
         TvSmsPublicKeyTooLong: "Public key cannot be more than 4000 characters",
         TvSmsPublicKeyInvalid: "Public key must be valid Base64",
@@ -583,6 +587,7 @@ export default {
         NameInvalidLength: "Name must be between 2 and 255 characters",
       },
       Cities: {
+        ReorderMismatch: "The list changed. Reload the page and order again.",
         NotFound: "City not found",
         NameAlreadyExists: "A city with this name already exists",
         InUse: "This city has customers and cannot be deleted",

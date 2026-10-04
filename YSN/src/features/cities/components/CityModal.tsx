@@ -15,7 +15,7 @@ import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
 import CityTvSmsApiFields from "./CityTvSmsApiFields";
 import { DataLanguage } from "../../../shared/types/DataLanguage.types";
-import { useAddCityMutation, useGetCityQuery, useUpdateCityMutation } from "../api/Cities.api";
+import { useAddCityMutation, useGetCityQuery, useUpdateCityMutation, useGetCitiesQuery } from "../api/Cities.api";
 import { citySchema, noStoredSecrets, type CityFormValues, type CityStoredSecrets } from "../validation/Cities.validation";
 import { TvSmsDefaultValues, type AddCityDto } from "../types/Cities.types";
 
@@ -27,7 +27,7 @@ interface CityModalProps {
 }
 
 const emptyValues: CityFormValues = {
-  sortOrder: 0,
+  sortOrder: 1,
   isActive: true,
   hasTvSmsApi: false,
   tvSmsBaseUrl: "",
@@ -72,6 +72,8 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
     control,
     handleSubmit,
     reset,
+    setValue,
+    setError,
     formState: { errors },
   } = useForm<CityFormValues>({
     resolver: yupResolver(schema) as never,
@@ -105,7 +107,19 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
     }
   }, [open, isEdit, city, reset]);
 
+  const { data: activeCities } = useGetCitiesQuery({ isDeleted: false, pageNumber: 1, pageSize: 1 }, { skip: !open, refetchOnMountOrArgChange: true });
+  const activeCount = activeCities?.totalCount ?? 0;
+  const maxSortOrder = isEdit ? activeCount : activeCount + 1;
+
+  useEffect(() => {
+    if (open && !isEdit && activeCities) setValue("sortOrder", activeCount + 1);
+  }, [open, isEdit, activeCities, activeCount, setValue]);
+
   const handleFormSubmit = async (values: CityFormValues) => {
+    if (values.sortOrder < 1 || values.sortOrder > maxSortOrder) {
+      setError("sortOrder", { message: "errors.City.SortOrderOutOfRange" });
+      return;
+    }
     const hasTvSmsApi = values.hasTvSmsApi;
     const data: AddCityDto = {
       sortOrder: values.sortOrder,
@@ -181,7 +195,7 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
             name="sortOrder"
             control={control}
             type="number"
-            label={`${t("cities.sortOrder")} *`}
+            label={`${t("cities.sortOrder")} * (1 - ${maxSortOrder})`}
             error={!!errors.sortOrder}
             errorMessage={fieldError(errors.sortOrder?.message)}
           />

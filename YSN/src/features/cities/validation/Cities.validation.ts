@@ -54,7 +54,7 @@ export const citySchema = (storedSecrets: CityStoredSecrets) =>
       .number()
       .typeError("errors.City.SortOrderInvalid")
       .required("errors.City.SortOrderInvalid")
-      .min(0, "errors.City.SortOrderInvalid"),
+      .min(1, "errors.City.SortOrderInvalid"),
     isActive: yup.boolean().required(),
     hasTvSmsApi: yup.boolean().required(),
     tvSmsBaseUrl: whenTvSmsApi(yup.string().trim(), (schema) =>
