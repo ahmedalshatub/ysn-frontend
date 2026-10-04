@@ -11,6 +11,7 @@ import WelcomeCard from "../components/WelcomeCard";
 import { dashboardWidgets } from "../types/dashboardWidgets.types";
 import { toRange } from "../utils/dashboardDates";
 import { DashboardPeriod, type DashboardFilterValues } from "../types/Dashboard.types";
+import DashboardStatCards from "../components/DashboardStatCards";
 
 const initialValues: DashboardFilterValues = { period: DashboardPeriod.Month };
 
@@ -50,6 +51,8 @@ const DashboardPage = () => {
               <DashboardFilters values={draft} onChange={setDraft} />
             </FilterAccordion>
           </Card>
+
+          <DashboardStatCards range={range} />
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {widgets.map(({ key, wide, component: Widget }) => (

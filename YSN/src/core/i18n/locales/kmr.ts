@@ -1016,6 +1016,8 @@ export default {
       ticketExample: "داشبۆرد / نموونە / نموونا تکتێ",
     },
     dashboard: {
+      moneyIn: "پارەیێ هاتی",
+      cardsAvailable: "کارتێن بەردەست",
       period: "ماوە",
       fromDate: "ژ",
       toDate: "هەتا",

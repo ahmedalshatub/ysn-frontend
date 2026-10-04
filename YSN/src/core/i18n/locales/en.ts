@@ -1016,6 +1016,8 @@ export default {
       ticketExample: "Dashboard / Examples / Ticket Example",
     },
     dashboard: {
+      moneyIn: "Money in",
+      cardsAvailable: "Cards available",
       period: "Period",
       fromDate: "From",
       toDate: "To",

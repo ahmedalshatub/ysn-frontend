@@ -1016,6 +1016,8 @@ export default {
       ticketExample: "لوحة التحكم / أمثلة / مثال التذكرة",
     },
     dashboard: {
+      moneyIn: "الأموال الواردة",
+      cardsAvailable: "البطاقات المتوفرة",
       period: "الفترة",
       fromDate: "من",
       toDate: "إلى",
