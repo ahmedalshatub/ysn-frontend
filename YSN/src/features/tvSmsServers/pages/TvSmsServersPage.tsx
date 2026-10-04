@@ -6,6 +6,7 @@ import useViewMode from "../../../shared/hooks/useViewMode";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
 import ViewModeSwitch from "../../../shared/components/navigation/ViewModeSwitch";
 import Card from "../../../shared/components/cards/Card";
+import ListContainer from "../../../shared/components/cards/ListContainer";
 import Button from "../../../shared/components/buttons/Button";
 import ExportButton from "../../../shared/components/buttons/ExportButton";
 import { Permission } from "../../../shared/types/Permissions.types";
@@ -115,7 +116,7 @@ const TvSmsServersPage = () => {
         />
       </Card>
 
-      <Card variant="elevated" padding="md">
+      <ListContainer plain={viewMode === ViewMode.Cards}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="list-header-title">
             {t("tvSmsServers.pageTitle")} <span className="list-header-count">({totalCount})</span>
@@ -131,7 +132,7 @@ const TvSmsServersPage = () => {
           onChange={(changes) => setValues((previous) => ({ ...previous, ...changes }))}
           getActions={getActions}
         />
-      </Card>
+      </ListContainer>
 
       {dialog === "form" && <TvSmsServerModal open serverId={selected?.id ?? null} onClose={closeDialog} onSuccess={refetch} />}
       {dialog === "delete" && selected && <DeleteTvSmsServerAlert open server={selected} onClose={closeDialog} onSuccess={refetch} />}

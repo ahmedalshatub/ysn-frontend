@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Card from "../../../shared/components/cards/Card";
+import ListContainer from "../../../shared/components/cards/ListContainer";
 import CardGrid from "../../../shared/components/cards/CardGrid";
 import Button from "../../../shared/components/buttons/Button";
 import ExportButton from "../../../shared/components/buttons/ExportButton";
@@ -134,7 +135,7 @@ const CustomersList = ({ customerType, viewKey, fixedFilter, initialFilter }: Cu
         />
       </Card>
 
-      <Card variant="elevated" padding="md">
+      <ListContainer plain={viewMode === ViewMode.Cards}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="list-header-title">
             {t(config.pluralKey)} <span className="list-header-count">({totalCount})</span>
@@ -186,7 +187,7 @@ const CustomersList = ({ customerType, viewKey, fixedFilter, initialFilter }: Cu
             getActions={getActions}
           />
         )}
-      </Card>
+      </ListContainer>
 
       <CustomerDialogs
         dialog={dialog}

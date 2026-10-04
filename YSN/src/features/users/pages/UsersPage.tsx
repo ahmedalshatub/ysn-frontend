@@ -5,6 +5,7 @@ import usePermission from "../../../shared/hooks/usePermission";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
 import ViewModeSwitch from "../../../shared/components/navigation/ViewModeSwitch";
 import Card from "../../../shared/components/cards/Card";
+import ListContainer from "../../../shared/components/cards/ListContainer";
 import CardGrid from "../../../shared/components/cards/CardGrid";
 import Button from "../../../shared/components/buttons/Button";
 import ExportButton from "../../../shared/components/buttons/ExportButton";
@@ -176,7 +177,7 @@ const UsersPage = () => {
         />
       </Card>
 
-      <Card variant="elevated" padding="md">
+      <ListContainer plain={viewMode === ViewMode.Cards}>
         <div className="mb-4 flex justify-end">
           <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
         </div>
@@ -204,7 +205,7 @@ const UsersPage = () => {
             getActions={getActions}
           />
         )}
-      </Card>
+      </ListContainer>
 
       {dialog === "form" && (
         <UserModal open userId={selectedUser?.id ?? null} onClose={closeDialog} onSuccess={refetch} />

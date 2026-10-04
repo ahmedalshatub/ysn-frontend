@@ -7,6 +7,7 @@ import useViewMode from "../../../shared/hooks/useViewMode";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
 import ViewModeSwitch from "../../../shared/components/navigation/ViewModeSwitch";
 import Card from "../../../shared/components/cards/Card";
+import ListContainer from "../../../shared/components/cards/ListContainer";
 import CardGrid from "../../../shared/components/cards/CardGrid";
 import Button from "../../../shared/components/buttons/Button";
 import ExportButton from "../../../shared/components/buttons/ExportButton";
@@ -126,7 +127,7 @@ const CardCategoriesPage = () => {
         />
       </Card>
 
-      <Card variant="elevated" padding="md">
+      <ListContainer plain={viewMode === ViewMode.Cards}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="list-header-title">
             {t("cardCategories.pageTitle")} <span className="list-header-count">({totalCount})</span>
@@ -160,7 +161,7 @@ const CardCategoriesPage = () => {
             getActions={getActions}
           />
         )}
-      </Card>
+      </ListContainer>
 
       {dialog === "form" && <CardCategoryModal open categoryId={selected?.id ?? null} onClose={closeDialog} onSuccess={refetch} />}
       {dialog === "cards" && selected && (
