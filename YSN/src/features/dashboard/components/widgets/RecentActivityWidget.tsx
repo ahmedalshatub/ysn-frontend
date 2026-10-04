@@ -13,7 +13,7 @@ const RecentActivityWidget = (_props: DashboardWidgetProps) => {
   const items = data?.items ?? [];
 
   return (
-    <DashboardWidget title={t("dashboard.recentActivity")} loading={isFetching && !data} empty={!items.length} onOpen={() => navigate("/audit-logs")}>
+    <DashboardWidget title={t("dashboard.recentActivity")} loading={isFetching && !data} empty={!items.length}>
       <div className="divide-y ce-divider">
         {items.map((item) => (
           <DashboardRow

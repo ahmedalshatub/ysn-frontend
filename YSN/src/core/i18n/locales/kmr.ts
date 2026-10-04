@@ -1002,7 +1002,6 @@ export default {
       fromDate: "ژ",
       toDate: "هەتا",
       city: "باژێر",
-      open: "ڤەکرن",
       noData: "چ تشت د ڤێ ماوێ دا نینە",
       periods: {
         today: "ئەڤرۆ",

@@ -7,11 +7,10 @@ interface DashboardWidgetProps {
   title: string;
   loading?: boolean;
   empty?: boolean;
-  onOpen?: () => void;
   children: ReactNode;
 }
 
-const DashboardWidget = ({ title, loading, empty, onOpen, children }: DashboardWidgetProps) => {
+const DashboardWidget = ({ title, loading, empty, children }: DashboardWidgetProps) => {
   const { t } = useTranslation();
 
   const body = () => {
@@ -28,14 +27,7 @@ const DashboardWidget = ({ title, loading, empty, onOpen, children }: DashboardW
 
   return (
     <Card variant="elevated" padding="md">
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <h3 className="text-base font-semibold ce-heading">{title}</h3>
-        {onOpen && (
-          <button type="button" onClick={onOpen} className="text-xs font-medium ce-primary-text hover:underline">
-            {t("dashboard.open")}
-          </button>
-        )}
-      </div>
+      <h3 className="mb-4 text-base font-semibold ce-heading">{title}</h3>
       {body()}
     </Card>
   );

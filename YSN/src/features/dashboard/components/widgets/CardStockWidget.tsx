@@ -16,7 +16,6 @@ const CardStockWidget = ({ range }: DashboardWidgetProps) => {
       title={t("dashboard.cardStock")}
       loading={isFetching && !data.length}
       empty={!data.length}
-      onOpen={() => navigate(withQuery("/cards", { cityId: range.cityId }))}
     >
       <div className="divide-y ce-divider">
         {data.slice(0, 10).map((row) => (

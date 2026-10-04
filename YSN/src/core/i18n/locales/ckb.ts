@@ -1002,7 +1002,6 @@ export default {
       fromDate: "لە",
       toDate: "تا",
       city: "شار",
-      open: "کردنەوە",
       noData: "هیچ شتێک لەم ماوەیەدا نییە",
       periods: {
         today: "ئەمڕۆ",

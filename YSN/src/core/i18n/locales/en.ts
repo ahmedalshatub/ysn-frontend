@@ -1002,7 +1002,6 @@ export default {
       fromDate: "From",
       toDate: "To",
       city: "City",
-      open: "Open",
       noData: "Nothing in this period",
       periods: {
         today: "Today",

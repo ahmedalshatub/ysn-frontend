@@ -1002,7 +1002,6 @@ export default {
       fromDate: "من",
       toDate: "إلى",
       city: "المدينة",
-      open: "فتح",
       noData: "لا يوجد شيء في هذه الفترة",
       periods: {
         today: "اليوم",
