@@ -352,6 +352,12 @@ export default {
       otpMustBe6Digits: "The code must be 6 digits",
     },
     fileUpload: {
+      dropHere: "Drop files here",
+      notAccepted: "File type not accepted",
+      clickToUpload: "Click to upload",
+      orDrag: "or drag and drop",
+      max: "Max {{size}}",
+      upTo: "Up to {{count}} files",
       dragDrop: "Drag & drop files here, or click to select",
       dropFiles: "Drop files here...",
       maxSize: "Max size",

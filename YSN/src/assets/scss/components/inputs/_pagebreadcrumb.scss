@@ -92,3 +92,7 @@
     text-align: right;
   }
 }
+
+.page-breadcrumb-gradient {
+  background: linear-gradient(to right, $color-primary, $color-primary-active);
+}

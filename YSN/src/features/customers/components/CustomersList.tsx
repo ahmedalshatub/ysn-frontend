@@ -1,3 +1,4 @@
+import PageActions from "../../../shared/components/navigation/PageActions";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -30,6 +31,7 @@ const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
 
 interface CustomersListProps {
+  actionsTarget?: HTMLElement | null;
   customerType: CustomerTypeValue;
   viewKey: string;
   fixedFilter?: Partial<CustomerFilter>;
@@ -67,7 +69,7 @@ const toQueryFilter = (values: CustomerRequest): CustomerFilter => ({
   lastLoginTo: values.lastLoginTo,
 });
 
-const CustomersList = ({ customerType, viewKey, fixedFilter, initialFilter }: CustomersListProps) => {
+const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, initialFilter }: CustomersListProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const canCustomer = useCustomerPermission();
@@ -141,6 +143,7 @@ const CustomersList = ({ customerType, viewKey, fixedFilter, initialFilter }: Cu
             {t(config.pluralKey)} <span className="list-header-count">({totalCount})</span>
           </h3>
           <div className="flex flex-wrap items-center gap-2">
+            <PageActions target={actionsTarget}>
             {canCustomer(customerType, "Export") && (
               <ExportButton
                 loading={isExporting}
@@ -157,6 +160,7 @@ const CustomersList = ({ customerType, viewKey, fixedFilter, initialFilter }: Cu
                 iconPosition="left"
               />
             )}
+            </PageActions>
             <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
           </div>
         </div>

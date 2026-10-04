@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import useUrlFilter from "../../../shared/hooks/useUrlFilter";
 import type { InvoiceRequest } from "../types/Invoices.types";
@@ -10,6 +11,7 @@ import InvoicesView from "../components/InvoicesView";
 
 const InvoicesPage = () => {
   const { t } = useTranslation();
+  const [actionsTarget, setActionsTarget] = useState<HTMLDivElement | null>(null);
   const location = useLocation();
   const initialFilter = useUrlFilter<InvoiceRequest>();
   useTitle(t("invoices.pageTitle"));
@@ -19,13 +21,14 @@ const InvoicesPage = () => {
       <PageBreadcrumb
         title={t("invoices.pageTitle")}
         items={[{ label: t("sidebar.homePage") }, { label: t("invoices.pageTitle") }]}
+        actions={<div ref={setActionsTarget} className="flex flex-wrap items-center gap-2" />}
         variant="gradient"
         icon={<FileTextIcon />}
         showDate
         animated
       />
       <Card variant="elevated" padding="md">
-        <InvoicesView key={location.search} initialFilter={initialFilter} />
+        <InvoicesView actionsTarget={actionsTarget} key={location.search} initialFilter={initialFilter} />
       </Card>
     </div>
   );

@@ -1,8 +1,12 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { useDropzone, type Accept } from "react-dropzone";
 import UploadIcon from "../../../assets/icons/UploadIcon";
 import AlertCircleIcon from "../../../assets/icons/AlertCircleIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
+import ImageIcon from "../../../assets/icons/ImageIcon";
+import FileTextIcon from "../../../assets/icons/FileTextIcon";
+import FileImage from "../media/FileImage";
 
 type FileUploadVariant = "default" | "minimal" | "bordered" | "filled";
 type FileUploadSize = "sm" | "md" | "lg";
@@ -31,6 +35,7 @@ interface FileUploadProps {
   onChange?: (files: File[]) => void;
   onRemove?: (file: File) => void;
   className?: string;
+  currentImage?: string | null;
 }
 
 const generateId = () => Math.random().toString(36).substring(2, 10);
@@ -43,16 +48,8 @@ const formatFileSize = (bytes: number): string => {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
 };
 
-const getFileIcon = (type: string): string => {
-  if (type.startsWith("image/")) return "🖼️";
-  if (type.startsWith("video/")) return "🎬";
-  if (type.startsWith("audio/")) return "🎵";
-  if (type.includes("pdf")) return "📄";
-  if (type.includes("spreadsheet") || type.includes("excel") || type.includes("csv")) return "📊";
-  if (type.includes("document") || type.includes("word")) return "📝";
-  if (type.includes("zip") || type.includes("rar") || type.includes("tar")) return "📦";
-  return "📎";
-};
+const getFileIcon = (type: string): ReactNode =>
+  type.startsWith("image/") ? <ImageIcon className="h-5 w-5" /> : <FileTextIcon className="h-5 w-5" />;
 
 const FileUpload = ({
   variant = "default",
@@ -71,7 +68,9 @@ const FileUpload = ({
   onChange,
   onRemove,
   className = "",
+  currentImage,
 }: FileUploadProps) => {
+  const { t } = useTranslation();
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 
   const currentFiles = useMemo(() => {
@@ -184,7 +183,7 @@ const FileUpload = ({
         {...getRootProps()}
         className={`file-upload-zone ${variantClasses[variant]} ${sizeClasses[size]} ${disabled ? "file-upload-disabled" : ""}`}
       >
-        <input {...getInputProps()} style={{ display: "none" }} />
+        <input {...getInputProps()} className="hidden" />
 
         <div className="flex flex-col items-center text-center gap-2">
           <div className={`file-upload-icon ${iconSizes[size]}`}>
@@ -201,12 +200,12 @@ const FileUpload = ({
 
           {isDragActive && !isDragReject && (
             <p className={`font-medium file-upload-text-active ${textSizes[size].title}`}>
-              Drop files here
+              {t("fileUpload.dropHere")}
             </p>
           )}
           {isDragReject && (
             <p className={`font-medium file-upload-text-reject ${textSizes[size].title}`}>
-              File type not accepted
+              {t("fileUpload.notAccepted")}
             </p>
           )}
           {!isDragActive && (
@@ -214,16 +213,16 @@ const FileUpload = ({
               <p className={`font-medium file-upload-text-default ${textSizes[size].title}`}>
                 {description || (
                   <>
-                    <span className="file-upload-link">Click to upload</span>
-                    {" "}or drag and drop
+                    <span className="file-upload-link">{t("fileUpload.clickToUpload")}</span>{" "}
+                    {t("fileUpload.orDrag")}
                   </>
                 )}
               </p>
               <p className={`file-upload-text-muted ${textSizes[size].desc}`}>
                 {acceptedFormats && <span>{acceptedFormats}</span>}
                 {acceptedFormats && maxSize && <span> • </span>}
-                {maxSize && <span>Max {formatFileSize(maxSize)}</span>}
-                {maxFiles > 0 && <span> • Up to {maxFiles} files</span>}
+                {maxSize && <span>{t("fileUpload.max", { size: formatFileSize(maxSize) })}</span>}
+                {maxFiles > 0 && <span> • {t("fileUpload.upTo", { count: maxFiles })}</span>}
               </p>
             </>
           )}
@@ -239,6 +238,15 @@ const FileUpload = ({
       )}
 
       {error && <p className="mt-1.5 text-sm input-error-text">{error}</p>}
+
+      {currentImage && currentFiles.length === 0 && (
+        <div className="file-upload-list mt-4">
+          <div className="file-upload-item">
+            <FileImage path={currentImage} className="file-upload-preview" />
+            <p className="flex-1 text-sm font-medium file-upload-filename">{t("common.currentImage")}</p>
+          </div>
+        </div>
+      )}
 
       {showFileList && currentFiles.length > 0 && (
         <div className="file-upload-list mt-4 space-y-2">

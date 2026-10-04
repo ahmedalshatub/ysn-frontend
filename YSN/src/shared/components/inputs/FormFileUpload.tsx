@@ -20,6 +20,7 @@ interface FormFileUploadProps<T extends FieldValues> {
   description?: string;
   className?: string;
   errorMessage?: string;
+  currentImage?: string | null;
 }
 
 const FormFileUpload = <T extends FieldValues>({
@@ -38,6 +39,7 @@ const FormFileUpload = <T extends FieldValues>({
   description,
   className,
   errorMessage,
+  currentImage,
 }: FormFileUploadProps<T>) => {
   const { t } = useTranslation();
   return (
@@ -61,6 +63,7 @@ const FormFileUpload = <T extends FieldValues>({
           value={field.value || []}
           onChange={(files) => field.onChange(files)}
           className={className}
+          currentImage={currentImage}
         />
       )}
     />

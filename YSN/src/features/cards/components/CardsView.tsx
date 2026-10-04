@@ -24,8 +24,10 @@ import RestoreCardAlert from "./RestoreCardAlert";
 import BulkCardActionModal from "./BulkCardActionModal";
 import SelectCardsByTypeModal from "./SelectCardsByTypeModal";
 import type { BulkCardActionValue, CardFilter, CardListDto, CardRequest, CardSelection } from "../types/Cards.types";
+import PageActions from "../../../shared/components/navigation/PageActions";
 
 interface CardsViewProps {
+  actionsTarget?: HTMLElement | null;
   fixedFilter?: CardFilter;
   initialFilter?: CardFilter;
 }
@@ -47,7 +49,7 @@ const toQueryFilter = (values: CardRequest, fixedFilter?: CardFilter): CardFilte
   ...fixedFilter,
 });
 
-const CardsView = ({ fixedFilter, initialFilter }: CardsViewProps) => {
+const CardsView = ({ actionsTarget, fixedFilter, initialFilter }: CardsViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const [values, setValues] = useState<CardRequest>(() => ({ ...initialValues, ...initialFilter }));
@@ -120,6 +122,7 @@ const CardsView = ({ fixedFilter, initialFilter }: CardsViewProps) => {
           {t("cards.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
         </h3>
         <div className="flex flex-wrap items-center gap-2">
+          <PageActions target={actionsTarget}>
           {can(Permission.CardsExport) && <ExportButton loading={isExporting} onExport={() => exportCards(queryFilter).unwrap()} />}
           {can(Permission.CardsCreate) && fixedFilter?.takenBy === undefined && (
             <Button
@@ -131,6 +134,7 @@ const CardsView = ({ fixedFilter, initialFilter }: CardsViewProps) => {
               onClick={() => open("add", null)}
             />
           )}
+          </PageActions>
         </div>
       </div>
       {canBulk && (

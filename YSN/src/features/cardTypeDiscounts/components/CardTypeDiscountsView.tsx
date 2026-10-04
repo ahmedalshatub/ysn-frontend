@@ -20,8 +20,10 @@ import CardTypeDiscountFilters from "./CardTypeDiscountFilters";
 import CardTypeDiscountsTable from "./CardTypeDiscountsTable";
 import AddCardTypeDiscountsModal from "./AddCardTypeDiscountsModal";
 import type { CardTypeDiscountFilter, CardTypeDiscountListDto, CardTypeDiscountRequest } from "../types/CardTypeDiscounts.types";
+import PageActions from "../../../shared/components/navigation/PageActions";
 
 interface CardTypeDiscountsViewProps {
+  actionsTarget?: HTMLElement | null;
   customer?: CustomerListDto | null;
 }
 
@@ -29,7 +31,7 @@ type Selection = { mode: "ids"; ids: Set<string | number> } | { mode: "all" };
 
 const initialValues: CardTypeDiscountRequest = { pageNumber: 1, pageSize: 25, sortBy: "createdAt", isAscending: false, isDeleted: false };
 
-const CardTypeDiscountsView = ({ customer }: CardTypeDiscountsViewProps) => {
+const CardTypeDiscountsView = ({ actionsTarget, customer }: CardTypeDiscountsViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const [values, setValues] = useState<CardTypeDiscountRequest>(initialValues);
@@ -93,6 +95,7 @@ const CardTypeDiscountsView = ({ customer }: CardTypeDiscountsViewProps) => {
           {t("discounts.cardTypeDiscounts")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
         </h3>
         <div className="flex flex-wrap items-center gap-2">
+          <PageActions target={actionsTarget}>
           {can(Permission.CardTypeDiscountsExport) && <ExportButton loading={isExporting} onExport={() => exportDiscounts(filter).unwrap()} />}
           {can(Permission.CardTypeDiscountsCreate) && (
             <Button
@@ -104,6 +107,7 @@ const CardTypeDiscountsView = ({ customer }: CardTypeDiscountsViewProps) => {
               onClick={() => setAdding(true)}
             />
           )}
+          </PageActions>
         </div>
       </div>
       {canDelete && selectedCount > 0 && (

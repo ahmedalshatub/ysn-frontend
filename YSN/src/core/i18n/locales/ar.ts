@@ -352,6 +352,12 @@ export default {
       otpMustBe6Digits: "يجب أن يكون الرمز 6 أرقام",
     },
     fileUpload: {
+      dropHere: "أفلت الملفات هنا",
+      notAccepted: "نوع الملف غير مقبول",
+      clickToUpload: "انقر للرفع",
+      orDrag: "أو اسحب وأفلت",
+      max: "الحد الأقصى {{size}}",
+      upTo: "حتى {{count}} ملفات",
       dragDrop: "اسحب وأفلت الملفات هنا، أو انقر للاختيار",
       dropFiles: "أفلت الملفات هنا...",
       maxSize: "الحجم الأقصى",

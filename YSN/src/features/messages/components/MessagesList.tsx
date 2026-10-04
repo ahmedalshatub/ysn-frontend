@@ -1,3 +1,4 @@
+import PageActions from "../../../shared/components/navigation/PageActions";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../../../shared/components/buttons/Button";
@@ -23,6 +24,7 @@ import {
 } from "../types/Messages.types";
 
 interface MessagesListProps {
+  actionsTarget?: HTMLElement | null;
   recipient?: CustomerListDto | null;
   initialFilter?: Partial<MessageRequest>;
 }
@@ -51,7 +53,7 @@ const toQueryFilter = (values: MessageRequest, userId?: number): MessageFilter =
   toDate: values.toDate,
 });
 
-const MessagesList = ({ recipient, initialFilter }: MessagesListProps) => {
+const MessagesList = ({ actionsTarget, recipient, initialFilter }: MessagesListProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const audiences = useMessageAudiences();
@@ -95,6 +97,7 @@ const MessagesList = ({ recipient, initialFilter }: MessagesListProps) => {
           {t("messages.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
         </h3>
         <div className="flex flex-wrap items-center gap-2">
+          <PageActions target={actionsTarget}>
           {can(Permission.MessagesExport) && (
             <ExportButton loading={isExporting} onExport={() => exportMessages(queryFilter).unwrap()} />
           )}
@@ -108,6 +111,7 @@ const MessagesList = ({ recipient, initialFilter }: MessagesListProps) => {
               onClick={() => openDialog("send", null)}
             />
           )}
+          </PageActions>
         </div>
       </div>
       <MessagesTable

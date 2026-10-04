@@ -14,11 +14,11 @@ const FloatingGlassSidebar = ({
           collapsed ? "w-[72px]" : "w-60"
         }`}
       >
-        <div className="flex h-20 flex-shrink-0 items-center justify-center px-4">
+        <div className="flex flex-shrink-0 items-center justify-center px-6 pt-6 pb-5">
           {collapsed ? collapsedLogoElement : logoElement}
         </div>
 
-        <div className="mx-4 border-b border-white/10" />
+        <div className="mx-4 mb-2 border-b border-white/10" />
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
           {menu.map((item) => (

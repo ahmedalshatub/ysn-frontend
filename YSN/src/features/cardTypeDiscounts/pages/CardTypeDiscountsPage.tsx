@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
@@ -7,6 +8,7 @@ import CardTypeDiscountsView from "../components/CardTypeDiscountsView";
 
 const CardTypeDiscountsPage = () => {
   const { t } = useTranslation();
+  const [actionsTarget, setActionsTarget] = useState<HTMLDivElement | null>(null);
   useTitle(t("discounts.cardTypeDiscounts"));
 
   return (
@@ -14,13 +16,14 @@ const CardTypeDiscountsPage = () => {
       <PageBreadcrumb
         title={t("discounts.cardTypeDiscounts")}
         items={[{ label: t("sidebar.homePage") }, { label: t("sidebar.customers") }, { label: t("discounts.cardTypeDiscounts") }]}
+        actions={<div ref={setActionsTarget} className="flex flex-wrap items-center gap-2" />}
         variant="gradient"
         icon={<WalletIcon />}
         showDate
         animated
       />
       <Card variant="elevated" padding="md">
-        <CardTypeDiscountsView />
+        <CardTypeDiscountsView actionsTarget={actionsTarget} />
       </Card>
     </div>
   );

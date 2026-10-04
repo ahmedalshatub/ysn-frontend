@@ -74,7 +74,7 @@ const PageBreadcrumb: React.FC<PageBreadcrumbProps> = ({
 
   if (variant === "gradient") {
     return (
-      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-700 to-cyan-800 p-6 shadow-lg ${animated ? "page-breadcrumb-animate" : ""}`}>
+      <div className={`relative overflow-hidden rounded-2xl page-breadcrumb-gradient p-6 shadow-lg ${animated ? "page-breadcrumb-animate" : ""}`}>
         <div className="absolute top-0 right-0 w-64 h-64 -mr-20 -mt-20 rounded-full bg-white/12" />
         <div className="absolute bottom-0 left-0 w-40 h-40 -ml-10 -mb-10 rounded-full bg-white/12" />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">

@@ -17,8 +17,10 @@ import BalanceChangeModal from "./BalanceChangeModal";
 import DeleteTransactionAlert from "./DeleteTransactionAlert";
 import RestoreTransactionAlert from "./RestoreTransactionAlert";
 import { TransactionType, type TransactionFilter, type TransactionListDto, type TransactionRequest } from "../types/Transactions.types";
+import PageActions from "../../../shared/components/navigation/PageActions";
 
 interface TransactionsViewProps {
+  actionsTarget?: HTMLElement | null;
   customer?: CustomerListDto | null;
   onChanged?: () => void;
   initialFilter?: Partial<TransactionRequest>;
@@ -49,7 +51,7 @@ const toQueryFilter = (values: TransactionRequest, customerId?: number): Transac
   toDate: values.toDate,
 });
 
-const TransactionsView = ({ customer, onChanged, initialFilter }: TransactionsViewProps) => {
+const TransactionsView = ({ actionsTarget, customer, onChanged, initialFilter }: TransactionsViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const [values, setValues] = useState<TransactionRequest>(() => ({ ...initialValues, ...initialFilter }));
@@ -97,6 +99,7 @@ const TransactionsView = ({ customer, onChanged, initialFilter }: TransactionsVi
           {t("transactions.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
         </h3>
         <div className="flex flex-wrap items-center gap-2">
+          <PageActions target={actionsTarget}>
           {can(Permission.TransactionsExport) && (
             <ExportButton loading={isExporting} onExport={() => exportTransactions(queryFilter).unwrap()} />
           )}
@@ -120,6 +123,7 @@ const TransactionsView = ({ customer, onChanged, initialFilter }: TransactionsVi
               onClick={() => openDialog("deposit", null)}
             />
           )}
+          </PageActions>
         </div>
       </div>
       <TransactionsTable

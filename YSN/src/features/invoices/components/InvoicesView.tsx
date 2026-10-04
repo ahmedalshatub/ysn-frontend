@@ -11,8 +11,10 @@ import InvoicesTable from "./InvoicesTable";
 import InvoiceDetailsModal from "./InvoiceDetailsModal";
 import DeleteInvoiceAlert from "./DeleteInvoiceAlert";
 import type { InvoiceFilter, InvoiceListDto, InvoiceRequest } from "../types/Invoices.types";
+import PageActions from "../../../shared/components/navigation/PageActions";
 
 interface InvoicesViewProps {
+  actionsTarget?: HTMLElement | null;
   customerId?: number;
   onChanged?: () => void;
   initialFilter?: Partial<InvoiceRequest>;
@@ -37,7 +39,7 @@ const toQueryFilter = (values: InvoiceRequest, customerId?: number): InvoiceFilt
   toDate: values.toDate,
 });
 
-const InvoicesView = ({ customerId, onChanged, initialFilter }: InvoicesViewProps) => {
+const InvoicesView = ({ actionsTarget, customerId, onChanged, initialFilter }: InvoicesViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const [values, setValues] = useState<InvoiceRequest>(() => ({ ...initialValues, ...initialFilter }));
@@ -82,7 +84,9 @@ const InvoicesView = ({ customerId, onChanged, initialFilter }: InvoicesViewProp
         <h3 className="list-header-title">
           {t("invoices.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
         </h3>
-        {can(Permission.InvoicesExport) && <ExportButton loading={isExporting} onExport={() => exportInvoices(queryFilter).unwrap()} />}
+        <PageActions target={actionsTarget}>
+          {can(Permission.InvoicesExport) && <ExportButton loading={isExporting} onExport={() => exportInvoices(queryFilter).unwrap()} />}
+        </PageActions>
       </div>
       <InvoicesTable
         items={data?.items || []}

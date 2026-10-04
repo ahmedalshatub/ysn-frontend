@@ -37,7 +37,7 @@ const SidebarWrapper = () => {
     <Logo
       orientation="landscape"
       theme={USES_DARK_LOGO ? "dark" : isDark ? "dark" : "light"}
-      width={200}
+      width={180}
     />
   );
 

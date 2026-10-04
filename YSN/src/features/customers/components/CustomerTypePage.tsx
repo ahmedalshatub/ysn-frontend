@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import useUrlFilter from "../../../shared/hooks/useUrlFilter";
 import type { CustomerRequest } from "../types/Customers.types";
@@ -14,6 +15,7 @@ interface CustomerTypePageProps {
 
 const CustomerTypePage = ({ customerType }: CustomerTypePageProps) => {
   const { t } = useTranslation();
+  const [actionsTarget, setActionsTarget] = useState<HTMLDivElement | null>(null);
   const location = useLocation();
   const initialFilter = useUrlFilter<CustomerRequest>();
   const config = customerTypeConfigs[customerType];
@@ -24,12 +26,13 @@ const CustomerTypePage = ({ customerType }: CustomerTypePageProps) => {
       <PageBreadcrumb
         title={t(config.pluralKey)}
         items={[{ label: t("sidebar.homePage") }, { label: t("sidebar.customers") }, { label: t(config.pluralKey) }]}
+        actions={<div ref={setActionsTarget} className="flex flex-wrap items-center gap-2" />}
         variant="gradient"
         icon={<UsersIcon />}
         showDate
         animated
       />
-      <CustomersList customerType={customerType} viewKey={config.module} key={location.search} initialFilter={initialFilter} />
+      <CustomersList actionsTarget={actionsTarget} customerType={customerType} viewKey={config.module} key={location.search} initialFilter={initialFilter} />
     </div>
   );
 };

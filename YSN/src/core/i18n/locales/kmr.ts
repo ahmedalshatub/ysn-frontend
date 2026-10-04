@@ -352,6 +352,12 @@ export default {
       otpMustBe6Digits: "دڤێت کۆد 6 ژمارە بن",
     },
     fileUpload: {
+      dropHere: "فایلان ل ڤێرە دانە",
+      notAccepted: "جورێ فایلی نائێتە وەرگرتن",
+      clickToUpload: "کلیک بکە بۆ بارکرنێ",
+      orDrag: "یان راکێشە و دانە",
+      max: "زێدەترین {{size}}",
+      upTo: "هەتا {{count}} فایلان",
       dragDrop: "فایلان بکێشە و ل ڤێرە دانێ، یان کلیک بکە بۆ هەلبژارتنێ",
       dropFiles: "فایلان ل ڤێرە دانێ...",
       maxSize: "مەزنترین قەبارە",
