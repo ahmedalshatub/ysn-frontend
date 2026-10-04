@@ -4,9 +4,6 @@ import Input from "../../../shared/components/inputs/Input";
 import Select from "../../../shared/components/inputs/Select";
 import DatePicker from "../../../shared/components/inputs/DatePicker";
 import { getStatusFilterOptions, getYesNoFilterOptions } from "../../../shared/utils/constants";
-import usePermission from "../../../shared/hooks/usePermission";
-import { Permission } from "../../../shared/types/Permissions.types";
-import { useGetTvSmsServersQuery } from "../../tvSmsServers/api/TvSmsServers.api";
 import type { CityRequest } from "../types/Cities.types";
 
 interface CityFiltersProps {
@@ -21,9 +18,6 @@ const fromSelectValue = (value: string) => (value === "" ? undefined : value ===
 
 const CityFilters = ({ values, onChange, onSearch, onClear }: CityFiltersProps) => {
   const { t } = useTranslation();
-  const { can } = usePermission();
-  const canViewServers = can(Permission.TvSmsServersView);
-  const { data: servers } = useGetTvSmsServersQuery({ isDeleted: false }, { skip: !canViewServers });
 
   return (
     <FilterAccordion onSearch={onSearch} onClear={onClear}>
@@ -69,20 +63,6 @@ const CityFilters = ({ values, onChange, onSearch, onClear }: CityFiltersProps) 
           placeholder={t("common.all")}
           size="md"
         />
-        {canViewServers && (
-          <Select
-            name="tvSmsServerId"
-            label={t("cities.tvSmsServer")}
-            value={values.tvSmsServerId ?? ""}
-            onChange={(value) => onChange("tvSmsServerId", value === "" ? undefined : Number(value))}
-            options={servers?.items ?? []}
-            valueKey="id"
-            labelKey="name"
-            placeholder={t("common.all")}
-            searchable
-            size="md"
-          />
-        )}
         <DatePicker
           label={t("cities.createdFrom")}
           value={values.fromDate || ""}

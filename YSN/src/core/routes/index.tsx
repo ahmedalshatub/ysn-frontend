@@ -18,7 +18,6 @@ const CustomerDetails = lazy(() => import("../../features/customers/pages/Custom
 const Messages = lazy(() => import("../../features/messages/pages/MessagesPage"));
 const SendMessage = lazy(() => import("../../features/messages/pages/SendMessagePage"));
 const CardTypeDiscounts = lazy(() => import("../../features/cardTypeDiscounts/pages/CardTypeDiscountsPage"));
-const TvSmsServers = lazy(() => import("../../features/tvSmsServers/pages/TvSmsServersPage"));
 const Invoices = lazy(() => import("../../features/invoices/pages/InvoicesPage"));
 const Transactions = lazy(() => import("../../features/transactions/pages/TransactionsPage"));
 const CardCategories = lazy(() => import("../../features/cardCategories/pages/CardCategoriesPage"));
@@ -87,12 +86,6 @@ const dashboardRoutes: any = [
     name: "Card type discounts",
     element: <CardTypeDiscounts />,
     permission: Permission.CardTypeDiscountsView,
-  },
-  {
-    path: "/tv-sms-servers",
-    name: "TV SMS servers",
-    element: <TvSmsServers />,
-    permission: Permission.TvSmsServersView,
   },
   {
     path: "/invoices",

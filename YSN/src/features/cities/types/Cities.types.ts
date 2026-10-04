@@ -4,7 +4,6 @@ import type { DataLanguageType } from "../../../shared/types/DataLanguage.types"
 export interface CityFilter {
   name?: string;
   hasTvSmsApi?: boolean;
-  tvSmsServerId?: number;
   isActive?: boolean;
   isDeleted?: boolean;
   createdBy?: number;
@@ -19,8 +18,6 @@ export interface CityListDto extends BaseDto {
   isActive: boolean;
   customersCount: number;
   hasTvSmsApi: boolean;
-  tvSmsServerId: number | null;
-  tvSmsServerName: string | null;
   name: string;
 }
 
@@ -34,8 +31,15 @@ export interface CityDto extends BaseDto {
   sortOrder: number;
   isActive: boolean;
   hasTvSmsApi: boolean;
-  tvSmsServerId: number | null;
-  tvSmsServerName: string | null;
+  tvSmsBaseUrl: string | null;
+  tvSmsUserId: string | null;
+  tvSmsDefaultLanguage: number | null;
+  tvSmsDefaultDepartmentId: number | null;
+  tvSmsDefaultRegionId: number | null;
+  tvSmsDefaultCustomerTypeId: number | null;
+  hasTvSmsPassword: boolean;
+  hasTvSmsAuthKey: boolean;
+  hasTvSmsPublicKey: boolean;
   translations: CityTranslationDto[];
 }
 
@@ -48,8 +52,30 @@ export interface AddCityDto {
   sortOrder: number;
   isActive: boolean;
   hasTvSmsApi: boolean;
-  tvSmsServerId: number | null;
+  tvSmsBaseUrl?: string;
+  tvSmsUserId?: string;
+  tvSmsPassword?: string;
+  tvSmsAuthKey?: string;
+  tvSmsPublicKey?: string;
+  tvSmsDefaultLanguage: number;
+  tvSmsDefaultDepartmentId: number;
+  tvSmsDefaultRegionId: number;
+  tvSmsDefaultCustomerTypeId: number;
   translations: AddCityTranslationDto[];
 }
 
 export type UpdateCityDto = AddCityDto;
+
+export const TvSmsDefaultValues = {
+  language: 4,
+  departmentId: 1,
+  regionId: 1,
+  customerTypeId: 1,
+} as const;
+
+export const TvSmsDefaultFields = [
+  "tvSmsDefaultLanguage",
+  "tvSmsDefaultDepartmentId",
+  "tvSmsDefaultRegionId",
+  "tvSmsDefaultCustomerTypeId",
+] as const;

@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import FormModal from "../../../shared/components/modals/FormModal";
+import FormSection from "../../../shared/components/forms/FormSection";
 import FormInput from "../../../shared/components/inputs/FormInput";
 import FormCheckbox from "../../../shared/components/inputs/FormCheckbox";
 import { showSuccess, showError } from "../../../shared/components/feedback/Toast";
@@ -10,14 +11,13 @@ import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import GlobeIcon from "../../../assets/icons/GlobeIcon";
 import InfoIcon from "../../../assets/icons/InfoIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
-import ServerIcon from "../../../assets/icons/ServerIcon";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
 import CityTvSmsApiFields from "./CityTvSmsApiFields";
 import { DataLanguage } from "../../../shared/types/DataLanguage.types";
 import { useAddCityMutation, useGetCityQuery, useUpdateCityMutation } from "../api/Cities.api";
-import { addCitySchema, type CityFormValues } from "../validation/Cities.validation";
-import type { AddCityDto } from "../types/Cities.types";
+import { citySchema, noStoredSecrets, type CityFormValues, type CityStoredSecrets } from "../validation/Cities.validation";
+import { TvSmsDefaultValues, type AddCityDto } from "../types/Cities.types";
 
 interface CityModalProps {
   open: boolean;
@@ -30,7 +30,15 @@ const emptyValues: CityFormValues = {
   sortOrder: 0,
   isActive: true,
   hasTvSmsApi: false,
-  tvSmsServerId: null,
+  tvSmsBaseUrl: "",
+  tvSmsUserId: "",
+  tvSmsPassword: "",
+  tvSmsAuthKey: "",
+  tvSmsPublicKey: "",
+  tvSmsDefaultLanguage: TvSmsDefaultValues.language,
+  tvSmsDefaultDepartmentId: TvSmsDefaultValues.departmentId,
+  tvSmsDefaultRegionId: TvSmsDefaultValues.regionId,
+  tvSmsDefaultCustomerTypeId: TvSmsDefaultValues.customerTypeId,
   translations: [
     { languageCode: DataLanguage.Arabic, name: "" },
     { languageCode: DataLanguage.English, name: "" },
@@ -41,7 +49,7 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const isEdit = !!cityId;
-  const canChooseServer = can(Permission.TvSmsServersView);
+  const canSetTvSmsApi = can(isEdit ? Permission.CitiesUpdate : Permission.CitiesCreate);
 
   const { data: city, isLoading: isLoadingCity } = useGetCityQuery(cityId as number, {
     skip: !isEdit || !open,
@@ -51,13 +59,22 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
   const [addCity, { isLoading: isAdding }] = useAddCityMutation();
   const [updateCity, { isLoading: isUpdating }] = useUpdateCityMutation();
 
+  const storedSecrets: CityStoredSecrets = useMemo(
+    () =>
+      isEdit && city
+        ? { hasTvSmsPassword: city.hasTvSmsPassword, hasTvSmsAuthKey: city.hasTvSmsAuthKey, hasTvSmsPublicKey: city.hasTvSmsPublicKey }
+        : noStoredSecrets,
+    [isEdit, city]
+  );
+  const schema = useMemo(() => citySchema(storedSecrets), [storedSecrets]);
+
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<CityFormValues>({
-    resolver: yupResolver(addCitySchema) as never,
+    resolver: yupResolver(schema) as never,
     mode: "onBlur",
     defaultValues: emptyValues,
   });
@@ -68,10 +85,16 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
       const arabic = city.translations.find((translation) => translation.languageCode === DataLanguage.Arabic);
       const english = city.translations.find((translation) => translation.languageCode === DataLanguage.English);
       reset({
+        ...emptyValues,
         sortOrder: city.sortOrder,
         isActive: city.isActive,
         hasTvSmsApi: city.hasTvSmsApi,
-        tvSmsServerId: city.tvSmsServerId,
+        tvSmsBaseUrl: city.tvSmsBaseUrl ?? "",
+        tvSmsUserId: city.tvSmsUserId ?? "",
+        tvSmsDefaultLanguage: city.tvSmsDefaultLanguage ?? TvSmsDefaultValues.language,
+        tvSmsDefaultDepartmentId: city.tvSmsDefaultDepartmentId ?? TvSmsDefaultValues.departmentId,
+        tvSmsDefaultRegionId: city.tvSmsDefaultRegionId ?? TvSmsDefaultValues.regionId,
+        tvSmsDefaultCustomerTypeId: city.tvSmsDefaultCustomerTypeId ?? TvSmsDefaultValues.customerTypeId,
         translations: [
           { languageCode: DataLanguage.Arabic, name: arabic?.name || "" },
           { languageCode: DataLanguage.English, name: english?.name || "" },
@@ -83,11 +106,20 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
   }, [open, isEdit, city, reset]);
 
   const handleFormSubmit = async (values: CityFormValues) => {
+    const hasTvSmsApi = values.hasTvSmsApi;
     const data: AddCityDto = {
       sortOrder: values.sortOrder,
       isActive: values.isActive,
-      hasTvSmsApi: values.hasTvSmsApi,
-      tvSmsServerId: values.hasTvSmsApi ? (values.tvSmsServerId ?? null) : null,
+      hasTvSmsApi,
+      tvSmsBaseUrl: hasTvSmsApi ? values.tvSmsBaseUrl || undefined : undefined,
+      tvSmsUserId: hasTvSmsApi ? values.tvSmsUserId || undefined : undefined,
+      tvSmsPassword: hasTvSmsApi ? values.tvSmsPassword || undefined : undefined,
+      tvSmsAuthKey: hasTvSmsApi ? values.tvSmsAuthKey || undefined : undefined,
+      tvSmsPublicKey: hasTvSmsApi ? values.tvSmsPublicKey || undefined : undefined,
+      tvSmsDefaultLanguage: values.tvSmsDefaultLanguage ?? TvSmsDefaultValues.language,
+      tvSmsDefaultDepartmentId: values.tvSmsDefaultDepartmentId ?? TvSmsDefaultValues.departmentId,
+      tvSmsDefaultRegionId: values.tvSmsDefaultRegionId ?? TvSmsDefaultValues.regionId,
+      tvSmsDefaultCustomerTypeId: values.tvSmsDefaultCustomerTypeId ?? TvSmsDefaultValues.customerTypeId,
       translations: (values.translations ?? []).map((translation) => ({
         languageCode: translation.languageCode as AddCityDto["translations"][number]["languageCode"],
         name: translation.name,
@@ -124,69 +156,45 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
       icon={<MapPinIcon className="w-6 h-6" />}
     >
       <div className="space-y-8">
-        <div>
-          <div className="form-section-title mb-4">
-            <GlobeIcon className="w-4 h-4 text-primary" />
-            <h3>{t("common.arabicTranslation")}</h3>
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            <FormInput
-              name="translations.0.name"
-              control={control}
-              label={`${t("cities.nameArabic")} *`}
-              error={!!errors.translations?.[0]?.name}
-              errorMessage={fieldError(errors.translations?.[0]?.name?.message)}
-            />
-          </div>
-        </div>
+        <FormSection icon={<GlobeIcon />} title={t("common.arabicTranslation")}>
+          <FormInput
+            name="translations.0.name"
+            control={control}
+            label={`${t("cities.nameArabic")} *`}
+            error={!!errors.translations?.[0]?.name}
+            errorMessage={fieldError(errors.translations?.[0]?.name?.message)}
+          />
+        </FormSection>
 
-        <div>
-          <div className="form-section-title mb-4">
-            <GlobeIcon className="w-4 h-4 text-primary" />
-            <h3>{t("common.englishTranslation")}</h3>
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            <FormInput
-              name="translations.1.name"
-              control={control}
-              label={`${t("cities.nameEnglish")} *`}
-              error={!!errors.translations?.[1]?.name}
-              errorMessage={fieldError(errors.translations?.[1]?.name?.message)}
-            />
-          </div>
-        </div>
+        <FormSection icon={<GlobeIcon />} title={t("common.englishTranslation")}>
+          <FormInput
+            name="translations.1.name"
+            control={control}
+            label={`${t("cities.nameEnglish")} *`}
+            error={!!errors.translations?.[1]?.name}
+            errorMessage={fieldError(errors.translations?.[1]?.name?.message)}
+          />
+        </FormSection>
 
-        <div>
-          <div className="form-section-title mb-4">
-            <InfoIcon className="w-4 h-4 text-primary" />
-            <h3>{t("cities.details")}</h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormInput
-              name="sortOrder"
-              control={control}
-              type="number"
-              label={`${t("cities.sortOrder")} *`}
-              error={!!errors.sortOrder}
-              errorMessage={fieldError(errors.sortOrder?.message)}
-            />
-            <FormCheckbox
-              name="isActive"
-              control={control}
-              label={t("cities.isActive")}
-              description={t("cities.isActiveHint")}
-            />
-          </div>
-        </div>
+        <FormSection icon={<InfoIcon />} title={t("cities.details")} columns={2}>
+          <FormInput
+            name="sortOrder"
+            control={control}
+            type="number"
+            label={`${t("cities.sortOrder")} *`}
+            error={!!errors.sortOrder}
+            errorMessage={fieldError(errors.sortOrder?.message)}
+          />
+          <FormCheckbox
+            name="isActive"
+            control={control}
+            label={t("cities.isActive")}
+            description={t("cities.isActiveHint")}
+          />
+        </FormSection>
 
-        {canChooseServer && (
-          <div>
-            <div className="form-section-title mb-4">
-              <ServerIcon className="w-4 h-4 text-primary" />
-              <h3>{t("cities.tvSmsApi")}</h3>
-            </div>
-            <CityTvSmsApiFields control={control} errors={errors} />
-          </div>
+        {canSetTvSmsApi && (
+          <CityTvSmsApiFields control={control} errors={errors} isEdit={isEdit} storedSecrets={storedSecrets} />
         )}
       </div>
     </FormModal>

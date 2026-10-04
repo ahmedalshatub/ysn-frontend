@@ -1,42 +1,63 @@
 import { useWatch, type Control, type FieldErrors } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import FormSection from "../../../shared/components/forms/FormSection";
 import FormCheckbox from "../../../shared/components/inputs/FormCheckbox";
-import FormSelect from "../../../shared/components/inputs/FormSelect";
-import { useGetTvSmsServersQuery } from "../../tvSmsServers/api/TvSmsServers.api";
-import type { CityFormValues } from "../validation/Cities.validation";
+import FormInput from "../../../shared/components/inputs/FormInput";
+import ServerIcon from "../../../assets/icons/ServerIcon";
+import CityTvSmsSecretsFields from "./CityTvSmsSecretsFields";
+import CityTvSmsDefaultsFields from "./CityTvSmsDefaultsFields";
+import type { CityFormValues, CityStoredSecrets } from "../validation/Cities.validation";
 
 interface CityTvSmsApiFieldsProps {
   control: Control<CityFormValues>;
   errors: FieldErrors<CityFormValues>;
+  isEdit: boolean;
+  storedSecrets: CityStoredSecrets;
 }
 
-const CityTvSmsApiFields = ({ control, errors }: CityTvSmsApiFieldsProps) => {
+const CityTvSmsApiFields = ({ control, errors, isEdit, storedSecrets }: CityTvSmsApiFieldsProps) => {
   const { t } = useTranslation();
   const hasTvSmsApi = useWatch({ control, name: "hasTvSmsApi" });
-  const { data: servers } = useGetTvSmsServersQuery({ isActive: true, isDeleted: false }, { skip: !hasTvSmsApi });
+  const fieldError = (message?: string) => (message ? t(message) : "");
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <FormCheckbox<CityFormValues>
-        name="hasTvSmsApi"
-        control={control}
-        label={t("cities.hasTvSmsApi")}
-        description={t("cities.hasTvSmsApiHint")}
-      />
-      {hasTvSmsApi && (
-        <FormSelect<CityFormValues>
-          name="tvSmsServerId"
+    <>
+      <FormSection icon={<ServerIcon />} title={t("cities.tvSmsApi")} columns={2}>
+        <FormCheckbox<CityFormValues>
+          name="hasTvSmsApi"
           control={control}
-          label={`${t("cities.tvSmsServer")} *`}
-          options={servers?.items ?? []}
-          valueKey="id"
-          labelKey="name"
-          searchable
-          error={!!errors.tvSmsServerId}
-          errorMessage={errors.tvSmsServerId?.message ? t(errors.tvSmsServerId.message) : ""}
+          label={t("cities.hasTvSmsApi")}
+          description={t("cities.hasTvSmsApiHint")}
+          containerClass="md:col-span-2"
         />
+        {hasTvSmsApi && (
+          <>
+            <FormInput<CityFormValues>
+              name="tvSmsBaseUrl"
+              control={control}
+              label={`${t("cities.tvSmsBaseUrl")} *`}
+              placeholder="https://"
+              containerClass="md:col-span-2"
+              error={!!errors.tvSmsBaseUrl}
+              errorMessage={fieldError(errors.tvSmsBaseUrl?.message)}
+            />
+            <FormInput<CityFormValues>
+              name="tvSmsUserId"
+              control={control}
+              label={`${t("cities.tvSmsUserId")} *`}
+              error={!!errors.tvSmsUserId}
+              errorMessage={fieldError(errors.tvSmsUserId?.message)}
+            />
+          </>
+        )}
+      </FormSection>
+      {hasTvSmsApi && (
+        <>
+          <CityTvSmsSecretsFields control={control} errors={errors} isEdit={isEdit} storedSecrets={storedSecrets} />
+          <CityTvSmsDefaultsFields control={control} errors={errors} />
+        </>
       )}
-    </div>
+    </>
   );
 };
 
