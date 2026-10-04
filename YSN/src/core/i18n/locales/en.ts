@@ -4,9 +4,6 @@ export default {
       order: "Order",
       saveOrder: "Save order",
       dragToReorder: "Drag to reorder",
-      dragToReorderHint: "Drag the items into the order you want, or use the arrows, then save.",
-      moveUp: "Move up",
-      moveDown: "Move down",
       inactive: "Inactive",
       requiredField: "This field is required",
       appName: "Yanabee Sumer",
@@ -1980,7 +1977,7 @@ export default {
       tvRenewal: "TV renewal",
     },
     cardCategories: {
-      orderTitle: "Order categories",
+      chooseCityToOrder: "Choose a city in the filters first, then order its categories.",
       successReorder: "Category order saved",
       pageTitle: "Card categories",
       addCategory: "Add category",
@@ -2019,7 +2016,7 @@ export default {
       successAccess: "Access saved",
     },
     cardTypes: {
-      orderTitle: "Order card types",
+      chooseCategoryToOrder: "Choose a category in the filters first, then order its card types.",
       successReorder: "Card type order saved",
       pageTitle: "Card types",
       pricing: "Customers and prices",

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -17,7 +16,7 @@ import { ViewMode, type ViewModeType } from "../../../shared/types/ViewMode.type
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import PlusIcon from "../../../assets/icons/PlusIcon";
 import PackageIcon from "../../../assets/icons/PackageIcon";
-import { useExportCardTypesMutation, useGetCardTypesQuery } from "../api/CardTypes.api";
+import { useExportCardTypesMutation, useGetCardTypesQuery, useLazyGetCardTypesQuery, useReorderCardTypesMutation } from "../api/CardTypes.api";
 import CardsModal from "../../cards/components/CardsModal";
 import useCardTypeActions, { type CardTypeDialogName } from "../hooks/useCardTypeActions";
 import CardTypeFilters from "../components/CardTypeFilters";
@@ -30,6 +29,11 @@ import type { CardTypeFilter, CardTypeListDto, CardTypeRequest } from "../types/
 import SortControl from "../../../shared/components/navigation/SortControl";
 import PageSizeSelect from "../../../shared/components/navigation/PageSizeSelect";
 import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
+import useOrderMode from "../../../shared/hooks/useOrderMode";
+import { showSuccess, showError } from "../../../shared/components/feedback/Toast";
+import { getErrorMessage } from "../../../shared/utils/errorHandler";
+import CheckIcon from "../../../assets/icons/CheckIcon";
+import XIcon from "../../../assets/icons/XIcon";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -56,7 +60,6 @@ const toQueryFilter = (values: CardTypeRequest): CardTypeFilter => ({
 
 const CardTypesPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const sortOptions = [
     { value: "name", label: t("cardTypes.name") },
     { value: "cardCategoryName", label: t("cardTypes.category") },
@@ -87,6 +90,36 @@ const CardTypesPage = () => {
   const [selected, setSelected] = useState<CardTypeListDto | null>(null);
 
   const queryFilter = toQueryFilter(values);
+  const order = useOrderMode<CardTypeListDto>();
+  const [loadOrder, { isFetching: loadingOrder }] = useLazyGetCardTypesQuery();
+  const [saveOrder, { isLoading: savingOrder }] = useReorderCardTypesMutation();
+
+  const startOrdering = async () => {
+    const scopeId = values.cardCategoryId;
+    if (!scopeId) {
+      showError(t("cardTypes.chooseCategoryToOrder"));
+      return;
+    }
+    try {
+      const result = await loadOrder({ cardCategoryId: scopeId, isDeleted: false, sortBy: "SortOrder", isAscending: true, pageNumber: 1, pageSize: 100 }).unwrap();
+      order.start(scopeId, result.items);
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
+
+  const submitOrder = async () => {
+    if (!order.scopeId) return;
+    try {
+      await saveOrder({ cardCategoryId: order.scopeId, ids: order.items.map((item) => item.id) }).unwrap();
+      showSuccess(t("cardTypes.successReorder"));
+      order.stop();
+      refetch();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
+
   const { data, isLoading, isFetching, refetch } = useGetCardTypesQuery(
     { ...queryFilter, pageNumber: values.pageNumber, pageSize: values.pageSize, sortBy: values.sortBy, isAscending: values.isAscending },
     { refetchOnMountOrArgChange: true }
@@ -123,12 +156,12 @@ const CardTypesPage = () => {
         animated
         actions={
           <div className="flex items-center gap-2">
-            {can(Permission.CardTypesUpdate) && (
+            {can(Permission.CardTypesUpdate) && !order.ordering && (
               <Button
                 variant="light"
                 size="md"
                 label={t("common.order")}
-                onClick={() => navigate(`/card-types/order${values.cardCategoryId ? `?cardCategoryId=${values.cardCategoryId}` : ""}`)}
+                onClick={startOrdering}
                 icon={<ArrowUpDownIcon className="h-4 w-4" />}
                 iconPosition="left"
               />
@@ -159,11 +192,18 @@ const CardTypesPage = () => {
         />
       </Card>
 
-      <ListContainer plain={viewMode === ViewMode.Cards}>
+      <ListContainer plain={viewMode === ViewMode.Cards && !order.ordering}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="list-header-title">
             {t("cardTypes.pageTitle")} <span className="list-header-count">({totalCount})</span>
           </h3>
+          {order.ordering ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm ce-muted">{t("common.dragToReorder")}</span>
+              <Button variant="secondary" outline size="md" label={t("common.cancel")} icon={<XIcon className="h-4 w-4" />} iconPosition="left" onClick={order.stop} />
+              <Button variant="primary" size="md" label={t("common.saveOrder")} icon={<CheckIcon className="h-4 w-4" />} iconPosition="left" loading={savingOrder} onClick={submitOrder} />
+            </div>
+          ) : (
           <div className="flex flex-wrap items-center gap-2">
             {viewMode === ViewMode.Cards && (
               <>
@@ -181,8 +221,21 @@ const CardTypesPage = () => {
             )}
             <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
           </div>
+          )}
         </div>
-        {viewMode === ViewMode.Cards ? (
+        {order.ordering ? (
+          <CardTypesTable
+            items={order.items}
+            totalCount={order.items.length}
+            loading={loadingOrder}
+            filterValues={{ ...values, pageNumber: 1, pageSize: 100 }}
+            onPageChange={() => undefined}
+            onPageSizeChange={() => undefined}
+            onSort={() => undefined}
+            getActions={() => []}
+            onRowReorder={order.move}
+          />
+        ) : viewMode === ViewMode.Cards ? (
           <CardGrid
             items={items}
             totalCount={totalCount}

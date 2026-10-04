@@ -21,11 +21,12 @@ interface CardTypesTableProps {
   onPageSizeChange: (size: number) => void;
   onSort: (column: string, direction: SortDirection) => void;
   getActions: (cardType: CardTypeListDto) => ActionItem[];
+  onRowReorder?: (fromIndex: number, toIndex: number) => void;
 }
 
 const formatPrice = (value: number | null) => (value === null ? "-" : formatAmount(value));
 
-const CardTypesTable = ({ items, totalCount, loading, filterValues, onPageChange, onPageSizeChange, onSort, getActions }: CardTypesTableProps) => {
+const CardTypesTable = ({ items, totalCount, loading, filterValues, onPageChange, onPageSizeChange, onSort, getActions, onRowReorder }: CardTypesTableProps) => {
   const { t, i18n } = useTranslation();
 
   const columns = useMemo(
@@ -130,11 +131,12 @@ const CardTypesTable = ({ items, totalCount, loading, filterValues, onPageChange
       currentPage={filterValues.pageNumber || 1}
       pageSize={filterValues.pageSize || 25}
       totalItems={totalCount}
-      onPageChange={onPageChange}
-      onPageSizeChange={onPageSizeChange}
+      onPageChange={onRowReorder ? undefined : onPageChange}
+      onPageSizeChange={onRowReorder ? undefined : onPageSizeChange}
+      onRowReorder={onRowReorder}
       sortColumn={filterValues.sortBy || "sortOrder"}
       sortDirection={filterValues.isAscending ? "asc" : "desc"}
-      onSort={onSort}
+      onSort={onRowReorder ? undefined : onSort}
       pageSizeOptions={[
         { label: "25", value: 25 },
         { label: "50", value: 50 },

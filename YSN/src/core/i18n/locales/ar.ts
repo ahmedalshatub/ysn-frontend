@@ -4,9 +4,6 @@ export default {
       order: "الترتيب",
       saveOrder: "حفظ الترتيب",
       dragToReorder: "اسحب لإعادة الترتيب",
-      dragToReorderHint: "اسحب العناصر إلى الترتيب الذي تريده، أو استخدم الأسهم، ثم احفظ.",
-      moveUp: "نقل للأعلى",
-      moveDown: "نقل للأسفل",
       appName: "ينابيع سومر",
       welcome: "مرحبا",
       loading: "جاري التحميل...",
@@ -1980,7 +1977,7 @@ export default {
       tvRenewal: "تجديد تلفزيون",
     },
     cardCategories: {
-      orderTitle: "ترتيب الفئات",
+      chooseCityToOrder: "اختر مدينة من الفلاتر أولاً، ثم رتّب أصنافها.",
       successReorder: "تم حفظ ترتيب الفئات",
       pageTitle: "أصناف البطاقات",
       addCategory: "إضافة صنف",
@@ -2019,7 +2016,7 @@ export default {
       successAccess: "تم حفظ الوصول",
     },
     cardTypes: {
-      orderTitle: "ترتيب أنواع البطاقات",
+      chooseCategoryToOrder: "اختر صنفاً من الفلاتر أولاً، ثم رتّب أنواع بطاقاته.",
       successReorder: "تم حفظ ترتيب أنواع البطاقات",
       pageTitle: "أنواع البطاقات",
       pricing: "العملاء والأسعار",

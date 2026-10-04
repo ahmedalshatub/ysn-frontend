@@ -106,6 +106,7 @@ export const cardCategoriesApi = instanceApi.injectEndpoints({
 
 export const {
   useGetCardCategoriesQuery,
+  useLazyGetCardCategoriesQuery,
   useGetCardCategoryQuery,
   useAddCardCategoryMutation,
   useUpdateCardCategoryMutation,

@@ -4,9 +4,6 @@ export default {
       order: "ڕیزکرن",
       saveOrder: "پاراستنا ڕیزکرنێ",
       dragToReorder: "ڕاکێشە بۆ ڕیزکرنا نوی",
-      dragToReorderHint: "بڕگان ڕاکێشە بۆ وێ ڕیزکرنێ یا تە دڤێت، یان تیران بکاربینە، پاشان بپارێزە.",
-      moveUp: "برن بۆ سەری",
-      moveDown: "برن بۆ خواری",
       appName: "کانیێن سۆمەرێ",
       welcome: "ب خێر بێی",
       loading: "دهێتە بارکرن...",
@@ -1980,7 +1977,7 @@ export default {
       tvRenewal: "نووکرنا تەلەفزیۆنێ",
     },
     cardCategories: {
-      orderTitle: "ڕیزکرنا پۆلان",
+      chooseCityToOrder: "پێشی باژێرەکی ژ فلتەران هەلبژێرە، پاشان پۆلێن وێ ڕیز بکە.",
       successReorder: "ڕیزکرنا پۆلان هاتە پاراستن",
       pageTitle: "پۆلێن کارتان",
       addCategory: "زێدەکرنا پۆلی",
@@ -2019,7 +2016,7 @@ export default {
       successAccess: "دەستگەهشتن هاتە پاشەکەفتکرن",
     },
     cardTypes: {
-      orderTitle: "ڕیزکرنا جورێن کارتان",
+      chooseCategoryToOrder: "پێشی پۆلەکی ژ فلتەران هەلبژێرە، پاشان جورێن کارتێن وێ ڕیز بکە.",
       successReorder: "ڕیزکرنا جورێن کارتان هاتە پاراستن",
       pageTitle: "جۆرێن کارتان",
       pricing: "کڕیار و بها",

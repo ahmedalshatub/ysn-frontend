@@ -8,6 +8,7 @@ import ChevronUpIcon from "../../../assets/icons/ChevronUpIcon";
 import ChevronDownIcon from "../../../assets/icons/ChevronDownIcon";
 import SpinnerIcon from "../../../assets/icons/SpinnerIcon";
 import FolderIcon from "../../../assets/icons/FolderIcon";
+import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
 import SimplePagination from "../navigation/SimplePagination";
 
 type ColumnAlign = "left" | "center" | "right";
@@ -56,6 +57,7 @@ interface DataTableProps<T> {
   paginationSize?: "sm" | "md" | "lg";
   clientSidePagination?: boolean;
   clientSideSorting?: boolean;
+  onRowReorder?: (fromIndex: number, toIndex: number) => void;
 }
 
 const alignClasses: Record<ColumnAlign, string> = {
@@ -102,8 +104,12 @@ function DataTable<T>({
   paginationSize = "md",
   clientSidePagination = false,
   clientSideSorting = false,
+  onRowReorder,
 }: DataTableProps<T>) {
   const [internalPage, setInternalPage] = React.useState(1);
+  const [dragIndex, setDragIndex] = React.useState<number | null>(null);
+  const [dropIndex, setDropIndex] = React.useState<number | null>(null);
+  const extraColumns = (selectable ? 1 : 0) + (onRowReorder ? 1 : 0);
   const [internalPageSize, setInternalPageSize] = React.useState(pageSize);
   const [internalSortCol, setInternalSortCol] = React.useState(sortColumn || "");
   const [internalSortDir, setInternalSortDir] = React.useState<SortDirection>(sortDirection || "asc");
@@ -230,6 +236,7 @@ function DataTable<T>({
         <table className="datatable-table w-full min-w-0">
           <thead>
             <tr className="datatable-thead">
+              {onRowReorder && <th className={`${headerPadding} w-10`} />}
               {selectable && (
                 <th className={`${headerPadding} w-10 md:w-12`}>
                   <TableCheckbox
@@ -281,7 +288,7 @@ function DataTable<T>({
             {loading ? (
               <tr>
                 <td
-                  colSpan={visibleColumns.length + (selectable ? 1 : 0)}
+                  colSpan={visibleColumns.length + extraColumns}
                   className="px-4 py-16 text-center"
                 >
                   <div className="inline-flex flex-col items-center gap-3">
@@ -293,7 +300,7 @@ function DataTable<T>({
             ) : processedData.length === 0 ? (
               <tr>
                 <td
-                  colSpan={visibleColumns.length + (selectable ? 1 : 0)}
+                  colSpan={visibleColumns.length + extraColumns}
                   className="px-4 py-16 text-center"
                 >
                   <div className="inline-flex flex-col items-center gap-2">
@@ -313,6 +320,9 @@ function DataTable<T>({
                   !isSelected && striped && rowIdx % 2 === 1 ? "datatable-row-striped" : "",
                   hoverable && !isSelected ? "datatable-row-hover" : "",
                   onRowClick ? "cursor-pointer" : "",
+                  onRowReorder ? "datatable-row-draggable" : "",
+                  dragIndex === rowIdx ? "datatable-row-dragging" : "",
+                  dropIndex === rowIdx && dragIndex !== rowIdx ? "datatable-row-drop-target" : "",
                 ].join(" ");
 
                 return (
@@ -320,7 +330,39 @@ function DataTable<T>({
                     key={key}
                     className={rowClass}
                     onClick={onRowClick ? () => onRowClick(row, rowIdx) : undefined}
+                    draggable={!!onRowReorder}
+                    onDragStart={onRowReorder ? () => setDragIndex(rowIdx) : undefined}
+                    onDragOver={
+                      onRowReorder
+                        ? (event) => {
+                            event.preventDefault();
+                            setDropIndex(rowIdx);
+                          }
+                        : undefined
+                    }
+                    onDrop={
+                      onRowReorder
+                        ? () => {
+                            if (dragIndex !== null && dragIndex !== rowIdx) onRowReorder(dragIndex, rowIdx);
+                            setDragIndex(null);
+                            setDropIndex(null);
+                          }
+                        : undefined
+                    }
+                    onDragEnd={
+                      onRowReorder
+                        ? () => {
+                            setDragIndex(null);
+                            setDropIndex(null);
+                          }
+                        : undefined
+                    }
                   >
+                    {onRowReorder && (
+                      <td className={`${cellPadding} w-10 datatable-drag-handle`}>
+                        <ArrowUpDownIcon className="h-4 w-4" />
+                      </td>
+                    )}
                     {selectable && (
                       <td
                         className={`${cellPadding} w-10 md:w-12`}

@@ -4,9 +4,6 @@ export default {
       order: "ڕیزبەندی",
       saveOrder: "پاشەکەوتکردنی ڕیزبەندی",
       dragToReorder: "ڕابکێشە بۆ ڕیزکردنەوە",
-      dragToReorderHint: "بڕگەکان ڕابکێشە بۆ ئەو ڕیزبەندییەی دەتەوێت، یان تیرەکان بەکاربهێنە، پاشان پاشەکەوت بکە.",
-      moveUp: "بردن بۆ سەرەوە",
-      moveDown: "بردن بۆ خوارەوە",
       appName: "کانیاوەکانی سۆمەر",
       welcome: "بەخێربێیت",
       loading: "بارکردن...",
@@ -1980,7 +1977,7 @@ export default {
       tvRenewal: "نوێکردنەوەی تەلەفزیۆن",
     },
     cardCategories: {
-      orderTitle: "ڕیزکردنی پۆلەکان",
+      chooseCityToOrder: "سەرەتا شارێک لە فلتەرەکان هەڵبژێرە، پاشان پۆلەکانی ڕیز بکە.",
       successReorder: "ڕیزبەندی پۆلەکان پاشەکەوت کرا",
       pageTitle: "پۆلەکانی کارت",
       addCategory: "زیادکردنی پۆل",
@@ -2019,7 +2016,7 @@ export default {
       successAccess: "دەستگەیشتن پاشەکەوتکرا",
     },
     cardTypes: {
-      orderTitle: "ڕیزکردنی جۆرەکانی کارت",
+      chooseCategoryToOrder: "سەرەتا پۆلێک لە فلتەرەکان هەڵبژێرە، پاشان جۆرەکانی کارتی ڕیز بکە.",
       successReorder: "ڕیزبەندی جۆرەکانی کارت پاشەکەوت کرا",
       pageTitle: "جۆرەکانی کارت",
       pricing: "کڕیاران و نرخەکان",

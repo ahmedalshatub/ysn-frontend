@@ -257,3 +257,19 @@
   .table-image-fallback { background-color: $dark-surface-tertiary; color: $dark-text-muted; }
   .table-checkbox-unchecked { background-color: $dark-card-bg; border-color: $dark-border-color; }
 }
+
+.datatable-row-draggable {
+  cursor: grab;
+}
+
+.datatable-row-dragging {
+  opacity: 0.45;
+}
+
+.datatable-row-drop-target td {
+  box-shadow: inset 0 2px 0 $color-primary;
+}
+
+.datatable-drag-handle {
+  color: $text-muted;
+}

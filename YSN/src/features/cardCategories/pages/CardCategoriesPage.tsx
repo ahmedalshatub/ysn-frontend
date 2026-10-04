@@ -16,7 +16,7 @@ import { ViewMode, type ViewModeType } from "../../../shared/types/ViewMode.type
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import PlusIcon from "../../../assets/icons/PlusIcon";
 import LayersIcon from "../../../assets/icons/LayersIcon";
-import { useExportCardCategoriesMutation, useGetCardCategoriesQuery } from "../api/CardCategories.api";
+import { useExportCardCategoriesMutation, useGetCardCategoriesQuery, useLazyGetCardCategoriesQuery, useReorderCardCategoriesMutation } from "../api/CardCategories.api";
 import useCardCategoryActions, { type CardCategoryDialogName } from "../hooks/useCardCategoryActions";
 import CardCategoryFilters from "../components/CardCategoryFilters";
 import CardCategoryCard from "../components/CardCategoryCard";
@@ -29,6 +29,12 @@ import type { CardCategoryFilter, CardCategoryListDto, CardCategoryRequest } fro
 import SortControl from "../../../shared/components/navigation/SortControl";
 import PageSizeSelect from "../../../shared/components/navigation/PageSizeSelect";
 import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
+import useOrderMode from "../../../shared/hooks/useOrderMode";
+import { showSuccess, showError } from "../../../shared/components/feedback/Toast";
+import { getErrorMessage } from "../../../shared/utils/errorHandler";
+import CheckIcon from "../../../assets/icons/CheckIcon";
+import XIcon from "../../../assets/icons/XIcon";
+import useMyCities from "../../../shared/hooks/useMyCities";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -70,6 +76,37 @@ const CardCategoriesPage = () => {
   const [selected, setSelected] = useState<CardCategoryListDto | null>(null);
 
   const queryFilter = toQueryFilter(values);
+  const order = useOrderMode<CardCategoryListDto>();
+  const { singleCityId } = useMyCities();
+  const [loadOrder, { isFetching: loadingOrder }] = useLazyGetCardCategoriesQuery();
+  const [saveOrder, { isLoading: savingOrder }] = useReorderCardCategoriesMutation();
+
+  const startOrdering = async () => {
+    const scopeId = values.cityId || singleCityId;
+    if (!scopeId) {
+      showError(t("cardCategories.chooseCityToOrder"));
+      return;
+    }
+    try {
+      const result = await loadOrder({ cityId: scopeId, isDeleted: false, sortBy: "SortOrder", isAscending: true, pageNumber: 1, pageSize: 100 }).unwrap();
+      order.start(scopeId, result.items);
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
+
+  const submitOrder = async () => {
+    if (!order.scopeId) return;
+    try {
+      await saveOrder({ cityId: order.scopeId, ids: order.items.map((item) => item.id) }).unwrap();
+      showSuccess(t("cardCategories.successReorder"));
+      order.stop();
+      refetch();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
+
   const { data, isLoading, isFetching, refetch } = useGetCardCategoriesQuery(
     { ...queryFilter, pageNumber: values.pageNumber, pageSize: values.pageSize, sortBy: values.sortBy, isAscending: values.isAscending },
     { refetchOnMountOrArgChange: true }
@@ -111,12 +148,12 @@ const CardCategoriesPage = () => {
         animated
         actions={
           <div className="flex items-center gap-2">
-            {can(Permission.CardCategoriesUpdate) && (
+            {can(Permission.CardCategoriesUpdate) && !order.ordering && (
               <Button
                 variant="light"
                 size="md"
                 label={t("common.order")}
-                onClick={() => navigate(`/card-categories/order${values.cityId ? `?cityId=${values.cityId}` : ""}`)}
+                onClick={startOrdering}
                 icon={<ArrowUpDownIcon className="h-4 w-4" />}
                 iconPosition="left"
               />
@@ -147,11 +184,18 @@ const CardCategoriesPage = () => {
         />
       </Card>
 
-      <ListContainer plain={viewMode === ViewMode.Cards}>
+      <ListContainer plain={viewMode === ViewMode.Cards && !order.ordering}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="list-header-title">
             {t("cardCategories.pageTitle")} <span className="list-header-count">({totalCount})</span>
           </h3>
+          {order.ordering ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm ce-muted">{t("common.dragToReorder")}</span>
+              <Button variant="secondary" outline size="md" label={t("common.cancel")} icon={<XIcon className="h-4 w-4" />} iconPosition="left" onClick={order.stop} />
+              <Button variant="primary" size="md" label={t("common.saveOrder")} icon={<CheckIcon className="h-4 w-4" />} iconPosition="left" loading={savingOrder} onClick={submitOrder} />
+            </div>
+          ) : (
           <div className="flex flex-wrap items-center gap-2">
             {viewMode === ViewMode.Cards && (
               <>
@@ -169,8 +213,22 @@ const CardCategoriesPage = () => {
             )}
             <ViewModeSwitch value={viewMode} onChange={handleViewModeChange} />
           </div>
+          )}
         </div>
-        {viewMode === ViewMode.Cards ? (
+        {order.ordering ? (
+          <CardCategoriesTable
+            items={order.items}
+            totalCount={order.items.length}
+            loading={loadingOrder}
+            filterValues={{ ...values, pageNumber: 1, pageSize: 100 }}
+            onPageChange={() => undefined}
+            onPageSizeChange={() => undefined}
+            onSort={() => undefined}
+            onOpen={openTypes}
+            getActions={() => []}
+            onRowReorder={order.move}
+          />
+        ) : viewMode === ViewMode.Cards ? (
           <CardGrid
             items={items}
             totalCount={totalCount}

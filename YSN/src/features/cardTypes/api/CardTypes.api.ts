@@ -80,6 +80,7 @@ export const cardTypesApi = instanceApi.injectEndpoints({
 
 export const {
   useGetCardTypesQuery,
+  useLazyGetCardTypesQuery,
   useGetCardTypeQuery,
   useAddCardTypeMutation,
   useUpdateCardTypeMutation,
