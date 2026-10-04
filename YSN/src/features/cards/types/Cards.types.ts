@@ -55,7 +55,10 @@ export interface CardFilter {
   cardCategoryId?: number;
   cityId?: number;
   status?: number;
+  isTaken?: boolean;
   takenBy?: number;
+  takenFrom?: string;
+  takenTo?: string;
   source?: number;
   importBatchId?: string;
   isDeleted?: boolean;

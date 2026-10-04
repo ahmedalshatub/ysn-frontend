@@ -2111,6 +2111,9 @@ export default {
       cancelled: "هەڵوەشاوە",
     },
     cards: {
+      isTaken: "وەرگیراوە",
+      takenFrom: "وەرگیراوە لە",
+      takenTo: "وەرگیراوە تا",
       id: "ژمارە",
       pageTitle: "کارتەکان",
       serials: "ژمارە زنجیرەییەکان",

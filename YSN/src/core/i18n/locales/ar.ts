@@ -2111,6 +2111,9 @@ export default {
       cancelled: "ملغاة",
     },
     cards: {
+      isTaken: "مأخوذة",
+      takenFrom: "أُخذت من تاريخ",
+      takenTo: "أُخذت حتى تاريخ",
       id: "الرقم",
       pageTitle: "البطاقات",
       serials: "الأرقام التسلسلية",

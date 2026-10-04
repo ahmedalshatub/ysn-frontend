@@ -42,6 +42,13 @@ const CardsTable = ({
     const date = (value: string | null) => (value ? formatDate(value, { locale: i18n.language }) : "-");
     return [
       {
+        key: "id",
+        header: t("cards.id"),
+        sortable: true,
+        width: "80px",
+        render: (row: CardListDto) => <span className="font-semibold">#{row.id}</span>,
+      },
+      {
         key: "serialNumber",
         header: t("cards.serialNumber"),
         sortable: true,

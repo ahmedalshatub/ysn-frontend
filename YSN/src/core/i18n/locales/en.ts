@@ -2111,6 +2111,9 @@ export default {
       cancelled: "Cancelled",
     },
     cards: {
+      isTaken: "Taken",
+      takenFrom: "Taken from",
+      takenTo: "Taken to",
       id: "ID",
       pageTitle: "Cards",
       serials: "Serial numbers",

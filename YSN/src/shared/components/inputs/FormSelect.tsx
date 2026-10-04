@@ -39,6 +39,7 @@ interface FormSelectProps<T extends FieldValues> {
   valueKey?: string;
   labelKey?: string;
   translateOptions?: boolean;
+  onValueChange?: (value: string | number) => void;
 }
 
 const focusRingStyles: Record<SelectVariant, string> = {
@@ -113,6 +114,7 @@ const FormSelect = <T extends FieldValues>({
   valueKey,
   labelKey,
   translateOptions = false,
+  onValueChange,
 }: FormSelectProps<T>) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(false);
@@ -248,6 +250,7 @@ const FormSelect = <T extends FieldValues>({
           const handleSelect = (opt: SelectOption) => {
             if (opt.disabled) return;
             field.onChange(opt.value);
+            onValueChange?.(opt.value);
             setIsOpen(false);
             setSearch("");
             setHighlightIndex(-1);

@@ -7,7 +7,6 @@ import { Permission } from "../../../shared/types/Permissions.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import PlusIcon from "../../../assets/icons/PlusIcon";
-import EditIcon from "../../../assets/icons/EditIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
 import Undo2Icon from "../../../assets/icons/Undo2Icon";
 import RefreshCwIcon from "../../../assets/icons/RefreshCwIcon";
@@ -17,7 +16,6 @@ import CardStatsCards from "./CardStatsCards";
 import CardsTable from "./CardsTable";
 import CardsSelectionBar from "./CardsSelectionBar";
 import AddCardsModal from "./AddCardsModal";
-import CardModal from "./CardModal";
 import ChangeCardStatusAlert from "./ChangeCardStatusAlert";
 import DeleteCardAlert from "./DeleteCardAlert";
 import RestoreCardAlert from "./RestoreCardAlert";
@@ -37,7 +35,7 @@ interface CardsViewProps {
   initialFilter?: CardFilter;
 }
 
-type DialogName = "add" | "edit" | "status" | "delete" | "restore" | "bulk" | "byType" | "byCategory";
+type DialogName = "add" | "status" | "delete" | "restore" | "bulk" | "byType" | "byCategory";
 
 const initialValues: CardRequest = { pageNumber: 1, pageSize: 25, sortBy: "createdAt", isAscending: false, isDeleted: false };
 
@@ -47,6 +45,10 @@ const toQueryFilter = (values: CardRequest, fixedFilter?: CardFilter): CardFilte
   cardCategoryId: values.cardCategoryId,
   status: values.status,
   source: values.source,
+  isTaken: values.isTaken,
+  takenBy: values.takenBy,
+  takenFrom: values.takenFrom,
+  takenTo: values.takenTo,
   importBatchId: values.importBatchId,
   isDeleted: values.isDeleted,
   fromDate: values.fromDate,
@@ -101,7 +103,6 @@ const CardsView = ({ framed, actionsTarget, fixedFilter, initialFilter }: CardsV
         return can(Permission.CardsRestore) ? [{ label: t("common.restore"), icon: <Undo2Icon />, onClick: () => open("restore", card) }] : [];
 
       return [
-        ...(can(Permission.CardsUpdate) ? [{ label: t("common.edit"), icon: <EditIcon />, onClick: () => open("edit", card) }] : []),
         ...(can(Permission.CardsChangeStatus)
           ? [{ label: card.isDisabled ? t("cards.enable") : t("cards.disable"), icon: <RefreshCwIcon />, onClick: () => open("status", card) }]
           : []),
@@ -180,7 +181,6 @@ const CardsView = ({ framed, actionsTarget, fixedFilter, initialFilter }: CardsV
       <CardStatsCards filter={queryFilter} refreshKey={refreshKey} />
 
       {dialog === "add" && <AddCardsModal open method={addMethod} fixedFilter={fixedFilter} onClose={close} onSuccess={reload} />}
-      {dialog === "edit" && selected && <CardModal open card={selected} onClose={close} onSuccess={reload} />}
       {dialog === "status" && selected && <ChangeCardStatusAlert open card={selected} onClose={close} onSuccess={reload} />}
       {dialog === "delete" && selected && <DeleteCardAlert open card={selected} onClose={close} onSuccess={reload} />}
       {dialog === "restore" && selected && <RestoreCardAlert open card={selected} onClose={close} onSuccess={reload} />}

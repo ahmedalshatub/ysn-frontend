@@ -5,6 +5,7 @@ import Select from "../../../shared/components/inputs/Select";
 import DatePicker from "../../../shared/components/inputs/DatePicker";
 import { getStatusFilterOptions } from "../../../shared/utils/constants";
 import CardCategoryTypeSelects from "./CardCategoryTypeSelects";
+import CardTakenByFilter from "./CardTakenByFilter";
 import { CardSource, CardStatus, cardSourceKeys, cardStatusKeys, type CardFilter, type CardRequest } from "../types/Cards.types";
 
 interface CardFiltersProps {
@@ -62,6 +63,35 @@ const CardFilters = ({ values, fixedFilter, onChange, onSearch, onClear }: CardF
           valueKey="value"
           labelKey="name"
           placeholder={t("common.all")}
+          size="md"
+        />
+        <Select
+          name="isTaken"
+          label={t("cards.isTaken")}
+          value={toSelectValue(values.isTaken)}
+          onChange={(value) => onChange({ isTaken: fromBooleanValue(String(value)) })}
+          options={[
+            { value: "true", name: t("common.yes") },
+            { value: "false", name: t("common.no") },
+          ]}
+          valueKey="value"
+          labelKey="name"
+          placeholder={t("common.all")}
+          size="md"
+        />
+        {fixedFilter?.takenBy === undefined && (
+          <CardTakenByFilter key={values.takenBy === undefined ? "empty" : "chosen"} value={values.takenBy} onChange={(takenBy) => onChange({ takenBy })} />
+        )}
+        <DatePicker
+          label={t("cards.takenFrom")}
+          value={values.takenFrom || ""}
+          onChange={(date) => onChange({ takenFrom: date || undefined })}
+          size="md"
+        />
+        <DatePicker
+          label={t("cards.takenTo")}
+          value={values.takenTo || ""}
+          onChange={(date) => onChange({ takenTo: date || undefined })}
           size="md"
         />
         <Input

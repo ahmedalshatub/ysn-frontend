@@ -14,6 +14,7 @@ interface CustomerSearchSelectProps<T extends FieldValues> {
   roleId?: number;
   error?: boolean;
   errorMessage?: string;
+  onValueChange?: (value: number) => void;
 }
 
 const MIN_SEARCH_LENGTH = 2;
@@ -26,6 +27,7 @@ const CustomerSearchSelect = <T extends FieldValues>({
   roleId,
   error,
   errorMessage,
+  onValueChange,
 }: CustomerSearchSelectProps<T>) => {
   const { t } = useTranslation();
   const [term, setTerm] = useState("");
@@ -82,6 +84,7 @@ const CustomerSearchSelect = <T extends FieldValues>({
         disabledStatus={!!initialCustomer}
         error={error}
         errorMessage={errorMessage}
+        onValueChange={onValueChange ? (value) => onValueChange(Number(value)) : undefined}
       />
     </div>
   );
