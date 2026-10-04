@@ -194,7 +194,7 @@ const RoleFormPage = () => {
               render={({ field }) => (
                 <PermissionsMatrix
                   permissions={permissions ?? []}
-                  value={isLocked ? (permissions ?? []).map((permission) => permission.id) : field.value ?? []}
+                  value={role?.isSystem ? (permissions ?? []).map((permission) => permission.id) : field.value ?? []}
                   onChange={field.onChange}
                   disabled={isLocked}
                   error={fieldError(errors.permissionIds?.message)}
