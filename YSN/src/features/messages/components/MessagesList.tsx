@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import PageActions from "../../../shared/components/navigation/PageActions";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -57,6 +58,7 @@ const toQueryFilter = (values: MessageRequest, userId?: number): MessageFilter =
 
 const MessagesList = ({ framed, actionsTarget, recipient, initialFilter }: MessagesListProps) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { can } = usePermission();
   const audiences = useMessageAudiences();
   const [values, setValues] = useState<MessageRequest>(() => ({ ...initialValues, ...initialFilter }));
@@ -113,7 +115,7 @@ const MessagesList = ({ framed, actionsTarget, recipient, initialFilter }: Messa
                 label={t("messages.sendMessage")}
                 icon={<MailIcon className="h-4 w-4" />}
                 iconPosition="left"
-                onClick={() => openDialog("send", null)}
+                onClick={() => (recipient ? openDialog("send", null) : navigate("/messages/send"))}
               />
             )}
             </PageActions>

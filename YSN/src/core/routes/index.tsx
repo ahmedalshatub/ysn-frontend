@@ -16,6 +16,7 @@ const SubAgents = lazy(() => import("../../features/customers/pages/SubAgentsPag
 const Clients = lazy(() => import("../../features/customers/pages/ClientsPage"));
 const CustomerDetails = lazy(() => import("../../features/customers/pages/CustomerDetailsPage"));
 const Messages = lazy(() => import("../../features/messages/pages/MessagesPage"));
+const SendMessage = lazy(() => import("../../features/messages/pages/SendMessagePage"));
 const CardTypeDiscounts = lazy(() => import("../../features/cardTypeDiscounts/pages/CardTypeDiscountsPage"));
 const TvSmsServers = lazy(() => import("../../features/tvSmsServers/pages/TvSmsServersPage"));
 const Invoices = lazy(() => import("../../features/invoices/pages/InvoicesPage"));
@@ -96,6 +97,18 @@ const dashboardRoutes: any = [
     name: "Messages",
     element: <Messages />,
     permission: Permission.MessagesView,
+  },
+  {
+    path: "/messages/send",
+    name: "Send Message",
+    element: <SendMessage />,
+    anyPermission: [
+      Permission.MessagesSendToCustomer,
+      Permission.MessagesSendToCity,
+      Permission.MessagesSendToRole,
+      Permission.MessagesSendToRoleInCity,
+      Permission.MessagesSendToAll,
+    ],
   },
   {
     path: "/customers/:id",
