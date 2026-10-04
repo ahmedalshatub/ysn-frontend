@@ -5,7 +5,6 @@ import type { TransactionRequest } from "../types/Transactions.types";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
-import Card from "../../../shared/components/cards/Card";
 import WalletIcon from "../../../assets/icons/WalletIcon";
 import TransactionsView from "../components/TransactionsView";
 
@@ -27,9 +26,7 @@ const TransactionsPage = () => {
         showDate
         animated
       />
-      <Card variant="elevated" padding="md">
-        <TransactionsView actionsTarget={actionsTarget} key={location.search} initialFilter={initialFilter} />
-      </Card>
+      <TransactionsView framed actionsTarget={actionsTarget} key={location.search} initialFilter={initialFilter} />
     </div>
   );
 };

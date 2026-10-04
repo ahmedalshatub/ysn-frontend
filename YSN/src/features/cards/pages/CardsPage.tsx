@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
-import Card from "../../../shared/components/cards/Card";
 import LayersIcon from "../../../assets/icons/LayersIcon";
 import CardsView from "../components/CardsView";
 
@@ -29,9 +28,7 @@ const CardsPage = () => {
         showDate
         animated
       />
-      <Card variant="elevated" padding="md">
-        <CardsView actionsTarget={actionsTarget} key={searchParams.toString()} initialFilter={initialFilter} />
-      </Card>
+      <CardsView framed actionsTarget={actionsTarget} key={searchParams.toString()} initialFilter={initialFilter} />
     </div>
   );
 };

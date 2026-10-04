@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
-import Card from "../../../shared/components/cards/Card";
 import WalletIcon from "../../../assets/icons/WalletIcon";
 import CardTypeDiscountsView from "../components/CardTypeDiscountsView";
 
@@ -22,9 +21,7 @@ const CardTypeDiscountsPage = () => {
         showDate
         animated
       />
-      <Card variant="elevated" padding="md">
-        <CardTypeDiscountsView actionsTarget={actionsTarget} />
-      </Card>
+      <CardTypeDiscountsView framed actionsTarget={actionsTarget} />
     </div>
   );
 };

@@ -25,8 +25,10 @@ import BulkCardActionModal from "./BulkCardActionModal";
 import SelectCardsByTypeModal from "./SelectCardsByTypeModal";
 import type { BulkCardActionValue, CardFilter, CardListDto, CardRequest, CardSelection } from "../types/Cards.types";
 import PageActions from "../../../shared/components/navigation/PageActions";
+import ListContainer from "../../../shared/components/cards/ListContainer";
 
 interface CardsViewProps {
+  framed?: boolean;
   actionsTarget?: HTMLElement | null;
   fixedFilter?: CardFilter;
   initialFilter?: CardFilter;
@@ -49,7 +51,7 @@ const toQueryFilter = (values: CardRequest, fixedFilter?: CardFilter): CardFilte
   ...fixedFilter,
 });
 
-const CardsView = ({ actionsTarget, fixedFilter, initialFilter }: CardsViewProps) => {
+const CardsView = ({ framed, actionsTarget, fixedFilter, initialFilter }: CardsViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const [values, setValues] = useState<CardRequest>(() => ({ ...initialValues, ...initialFilter }));
@@ -108,65 +110,69 @@ const CardsView = ({ actionsTarget, fixedFilter, initialFilter }: CardsViewProps
   );
 
   return (
-    <div className="space-y-4">
-      <CardFilters
-        values={values}
-        fixedFilter={fixedFilter}
-        onChange={(changes) => setValues((previous) => ({ ...previous, pageNumber: 1, ...changes }))}
-        onSearch={reload}
-        onClear={() => setValues(initialValues)}
-      />
-      <CardStatsCards filter={queryFilter} refreshKey={refreshKey} />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="list-header-title">
-          {t("cards.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
-        </h3>
-        <div className="flex flex-wrap items-center gap-2">
-          <PageActions target={actionsTarget}>
-          {can(Permission.CardsExport) && <ExportButton loading={isExporting} onExport={() => exportCards(queryFilter).unwrap()} />}
-          {can(Permission.CardsCreate) && fixedFilter?.takenBy === undefined && (
-            <Button
-              variant="dark"
-              size="md"
-              label={t("cards.addCards")}
-              icon={<PlusIcon className="h-4 w-4" />}
-              iconPosition="left"
-              onClick={() => open("add", null)}
-            />
-          )}
-          </PageActions>
-        </div>
-      </div>
-      {canBulk && (
-        <CardsSelectionBar
-          selectedCount={selectedCount}
-          totalCount={data?.totalCount ?? 0}
-          allSelected={selection.mode === "filter"}
-          onSelectAll={() => selectByFilter(queryFilter)}
-          onSelectByType={() => open("byType", null)}
-          onSelectByCategory={() => open("byCategory", null)}
-          onClear={() => setSelection({ mode: "ids", ids: new Set() })}
-          onAction={(action) => {
-            setBulkAction(action);
-            open("bulk", null);
-          }}
+    <div className={framed ? "space-y-6" : "space-y-4"}>
+      <ListContainer plain={!framed}>
+        <CardFilters
+          values={values}
+          fixedFilter={fixedFilter}
+          onChange={(changes) => setValues((previous) => ({ ...previous, pageNumber: 1, ...changes }))}
+          onSearch={reload}
+          onClear={() => setValues(initialValues)}
         />
-      )}
-      <CardsTable
-        items={data?.items || []}
-        totalCount={data?.totalCount || 0}
-        loading={isLoading || isFetching}
-        filterValues={values}
-        selectable={canBulk && selection.mode === "ids"}
-        selectedRows={selection.mode === "ids" ? selection.ids : new Set()}
-        onSelectionChange={(ids) => setSelection({ mode: "ids", ids })}
-        onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
-        onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
-        onSort={(column: string, direction: SortDirection) =>
-          setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
-        }
-        getActions={getActions}
-      />
+      </ListContainer>
+      <ListContainer plain={!framed}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="list-header-title">
+            {t("cards.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
+          </h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <PageActions target={actionsTarget}>
+            {can(Permission.CardsExport) && <ExportButton loading={isExporting} onExport={() => exportCards(queryFilter).unwrap()} />}
+            {can(Permission.CardsCreate) && fixedFilter?.takenBy === undefined && (
+              <Button
+                variant="dark"
+                size="md"
+                label={t("cards.addCards")}
+                icon={<PlusIcon className="h-4 w-4" />}
+                iconPosition="left"
+                onClick={() => open("add", null)}
+              />
+            )}
+            </PageActions>
+          </div>
+        </div>
+        {canBulk && (
+          <CardsSelectionBar
+            selectedCount={selectedCount}
+            totalCount={data?.totalCount ?? 0}
+            allSelected={selection.mode === "filter"}
+            onSelectAll={() => selectByFilter(queryFilter)}
+            onSelectByType={() => open("byType", null)}
+            onSelectByCategory={() => open("byCategory", null)}
+            onClear={() => setSelection({ mode: "ids", ids: new Set() })}
+            onAction={(action) => {
+              setBulkAction(action);
+              open("bulk", null);
+            }}
+          />
+        )}
+        <CardsTable
+          items={data?.items || []}
+          totalCount={data?.totalCount || 0}
+          loading={isLoading || isFetching}
+          filterValues={values}
+          selectable={canBulk && selection.mode === "ids"}
+          selectedRows={selection.mode === "ids" ? selection.ids : new Set()}
+          onSelectionChange={(ids) => setSelection({ mode: "ids", ids })}
+          onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
+          onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
+          onSort={(column: string, direction: SortDirection) =>
+            setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
+          }
+          getActions={getActions}
+        />
+      </ListContainer>
+      <CardStatsCards filter={queryFilter} refreshKey={refreshKey} />
 
       {dialog === "add" && <AddCardsModal open fixedFilter={fixedFilter} onClose={close} onSuccess={reload} />}
       {dialog === "edit" && selected && <CardModal open card={selected} onClose={close} onSuccess={reload} />}

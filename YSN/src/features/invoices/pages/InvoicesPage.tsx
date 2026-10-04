@@ -5,7 +5,6 @@ import type { InvoiceRequest } from "../types/Invoices.types";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
-import Card from "../../../shared/components/cards/Card";
 import FileTextIcon from "../../../assets/icons/FileTextIcon";
 import InvoicesView from "../components/InvoicesView";
 
@@ -27,9 +26,7 @@ const InvoicesPage = () => {
         showDate
         animated
       />
-      <Card variant="elevated" padding="md">
-        <InvoicesView actionsTarget={actionsTarget} key={location.search} initialFilter={initialFilter} />
-      </Card>
+      <InvoicesView framed actionsTarget={actionsTarget} key={location.search} initialFilter={initialFilter} />
     </div>
   );
 };

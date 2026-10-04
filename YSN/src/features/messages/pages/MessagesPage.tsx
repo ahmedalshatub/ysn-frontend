@@ -5,7 +5,6 @@ import type { MessageRequest } from "../types/Messages.types";
 import { useTranslation } from "react-i18next";
 import useTitle from "../../../shared/hooks/useTitle";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
-import Card from "../../../shared/components/cards/Card";
 import MailIcon from "../../../assets/icons/MailIcon";
 import MessagesList from "../components/MessagesList";
 
@@ -27,9 +26,7 @@ const MessagesPage = () => {
         showDate
         animated
       />
-      <Card variant="elevated" padding="md">
-        <MessagesList actionsTarget={actionsTarget} key={location.search} initialFilter={initialFilter} />
-      </Card>
+      <MessagesList framed actionsTarget={actionsTarget} key={location.search} initialFilter={initialFilter} />
     </div>
   );
 };

@@ -8,10 +8,10 @@ interface ListContainerProps {
 
 const ListContainer = ({ plain, children }: ListContainerProps) =>
   plain ? (
-    <div>{children}</div>
+    <div className="space-y-4">{children}</div>
   ) : (
     <Card variant="elevated" padding="md">
-      {children}
+      <div className="space-y-4">{children}</div>
     </Card>
   );
 

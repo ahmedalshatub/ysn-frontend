@@ -12,8 +12,10 @@ import InvoiceDetailsModal from "./InvoiceDetailsModal";
 import DeleteInvoiceAlert from "./DeleteInvoiceAlert";
 import type { InvoiceFilter, InvoiceListDto, InvoiceRequest } from "../types/Invoices.types";
 import PageActions from "../../../shared/components/navigation/PageActions";
+import ListContainer from "../../../shared/components/cards/ListContainer";
 
 interface InvoicesViewProps {
+  framed?: boolean;
   actionsTarget?: HTMLElement | null;
   customerId?: number;
   onChanged?: () => void;
@@ -39,7 +41,7 @@ const toQueryFilter = (values: InvoiceRequest, customerId?: number): InvoiceFilt
   toDate: values.toDate,
 });
 
-const InvoicesView = ({ actionsTarget, customerId, onChanged, initialFilter }: InvoicesViewProps) => {
+const InvoicesView = ({ framed, actionsTarget, customerId, onChanged, initialFilter }: InvoicesViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const [values, setValues] = useState<InvoiceRequest>(() => ({ ...initialValues, ...initialFilter }));
@@ -71,37 +73,41 @@ const InvoicesView = ({ actionsTarget, customerId, onChanged, initialFilter }: I
   };
 
   return (
-    <div className="space-y-4">
-      <InvoiceFilters
-        values={values}
-        forCustomer={!!customerId}
-        onChange={(changes) => setValues((previous) => ({ ...previous, pageNumber: 1, ...changes }))}
-        onSearch={reload}
-        onClear={() => setValues(initialValues)}
-      />
+    <div className={framed ? "space-y-6" : "space-y-4"}>
+      <ListContainer plain={!framed}>
+        <InvoiceFilters
+          values={values}
+          forCustomer={!!customerId}
+          onChange={(changes) => setValues((previous) => ({ ...previous, pageNumber: 1, ...changes }))}
+          onSearch={reload}
+          onClear={() => setValues(initialValues)}
+        />
+      </ListContainer>
+      <ListContainer plain={!framed}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="list-header-title">
+            {t("invoices.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
+          </h3>
+          <PageActions target={actionsTarget}>
+            {can(Permission.InvoicesExport) && <ExportButton loading={isExporting} onExport={() => exportInvoices(queryFilter).unwrap()} />}
+          </PageActions>
+        </div>
+        <InvoicesTable
+          items={data?.items || []}
+          totalCount={data?.totalCount || 0}
+          loading={isLoading || isFetching}
+          filterValues={values}
+          showCustomer={!customerId}
+          onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
+          onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
+          onSort={(column: string, direction: SortDirection) =>
+            setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
+          }
+          onView={handleView}
+          onDelete={handleDelete}
+        />
+      </ListContainer>
       <InvoiceStatsCards filter={queryFilter} refreshKey={refreshKey} />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="list-header-title">
-          {t("invoices.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
-        </h3>
-        <PageActions target={actionsTarget}>
-          {can(Permission.InvoicesExport) && <ExportButton loading={isExporting} onExport={() => exportInvoices(queryFilter).unwrap()} />}
-        </PageActions>
-      </div>
-      <InvoicesTable
-        items={data?.items || []}
-        totalCount={data?.totalCount || 0}
-        loading={isLoading || isFetching}
-        filterValues={values}
-        showCustomer={!customerId}
-        onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
-        onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
-        onSort={(column: string, direction: SortDirection) =>
-          setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
-        }
-        onView={handleView}
-        onDelete={handleDelete}
-      />
 
       {dialog === "view" && selected && <InvoiceDetailsModal open invoiceId={selected.id} onClose={close} />}
       {dialog === "delete" && selected && <DeleteInvoiceAlert open invoice={selected} onClose={close} onSuccess={reload} />}

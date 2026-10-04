@@ -22,8 +22,10 @@ import {
   type MessageListDto,
   type MessageRequest,
 } from "../types/Messages.types";
+import ListContainer from "../../../shared/components/cards/ListContainer";
 
 interface MessagesListProps {
+  framed?: boolean;
   actionsTarget?: HTMLElement | null;
   recipient?: CustomerListDto | null;
   initialFilter?: Partial<MessageRequest>;
@@ -53,7 +55,7 @@ const toQueryFilter = (values: MessageRequest, userId?: number): MessageFilter =
   toDate: values.toDate,
 });
 
-const MessagesList = ({ actionsTarget, recipient, initialFilter }: MessagesListProps) => {
+const MessagesList = ({ framed, actionsTarget, recipient, initialFilter }: MessagesListProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const audiences = useMessageAudiences();
@@ -84,51 +86,55 @@ const MessagesList = ({ actionsTarget, recipient, initialFilter }: MessagesListP
   const canSend = recipient ? audiences.includes(MessageTarget.Customer) : audiences.length > 0;
 
   return (
-    <div className="space-y-4">
-      <MessageFilters
-        values={values}
-        forRecipient={!!recipient}
-        onChange={(name, value) => setValues((previous) => ({ ...previous, pageNumber: 1, [name]: value }))}
-        onSearch={refetch}
-        onClear={() => setValues(initialValues)}
-      />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="list-header-title">
-          {t("messages.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
-        </h3>
-        <div className="flex flex-wrap items-center gap-2">
-          <PageActions target={actionsTarget}>
-          {can(Permission.MessagesExport) && (
-            <ExportButton loading={isExporting} onExport={() => exportMessages(queryFilter).unwrap()} />
-          )}
-          {canSend && (
-            <Button
-              variant="dark"
-              size="md"
-              label={t("messages.sendMessage")}
-              icon={<MailIcon className="h-4 w-4" />}
-              iconPosition="left"
-              onClick={() => openDialog("send", null)}
-            />
-          )}
-          </PageActions>
+    <div className={framed ? "space-y-6" : "space-y-4"}>
+      <ListContainer plain={!framed}>
+        <MessageFilters
+          values={values}
+          forRecipient={!!recipient}
+          onChange={(name, value) => setValues((previous) => ({ ...previous, pageNumber: 1, [name]: value }))}
+          onSearch={refetch}
+          onClear={() => setValues(initialValues)}
+        />
+      </ListContainer>
+      <ListContainer plain={!framed}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="list-header-title">
+            {t("messages.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
+          </h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <PageActions target={actionsTarget}>
+            {can(Permission.MessagesExport) && (
+              <ExportButton loading={isExporting} onExport={() => exportMessages(queryFilter).unwrap()} />
+            )}
+            {canSend && (
+              <Button
+                variant="dark"
+                size="md"
+                label={t("messages.sendMessage")}
+                icon={<MailIcon className="h-4 w-4" />}
+                iconPosition="left"
+                onClick={() => openDialog("send", null)}
+              />
+            )}
+            </PageActions>
+          </div>
         </div>
-      </div>
-      <MessagesTable
-        items={data?.items || []}
-        totalCount={data?.totalCount || 0}
-        loading={isLoading || isFetching}
-        filterValues={values}
-        showCustomer={!recipient}
-        onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
-        onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
-        onSort={(column: string, direction: SortDirection) =>
-          setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
-        }
-        onView={handleView}
-        onDelete={handleDelete}
-        onRestore={handleRestore}
-      />
+        <MessagesTable
+          items={data?.items || []}
+          totalCount={data?.totalCount || 0}
+          loading={isLoading || isFetching}
+          filterValues={values}
+          showCustomer={!recipient}
+          onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
+          onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
+          onSort={(column: string, direction: SortDirection) =>
+            setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
+          }
+          onView={handleView}
+          onDelete={handleDelete}
+          onRestore={handleRestore}
+        />
+      </ListContainer>
 
       {dialog === "view" && selected && <MessageDetailsModal open messageId={selected.id} onClose={closeDialog} />}
       {dialog === "send" && <SendMessageModal open customer={recipient} onClose={closeDialog} onSuccess={refetch} />}

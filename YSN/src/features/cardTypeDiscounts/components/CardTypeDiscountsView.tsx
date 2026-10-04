@@ -21,8 +21,16 @@ import CardTypeDiscountsTable from "./CardTypeDiscountsTable";
 import AddCardTypeDiscountsModal from "./AddCardTypeDiscountsModal";
 import type { CardTypeDiscountFilter, CardTypeDiscountListDto, CardTypeDiscountRequest } from "../types/CardTypeDiscounts.types";
 import PageActions from "../../../shared/components/navigation/PageActions";
+import ListContainer from "../../../shared/components/cards/ListContainer";
+import Badge from "../../../shared/components/badges/Badge";
+import Dropdown from "../../../shared/components/navigation/Dropdown";
+import ChevronDownIcon from "../../../assets/icons/ChevronDownIcon";
+import FilterIcon from "../../../assets/icons/FilterIcon";
+import XIcon from "../../../assets/icons/XIcon";
+import TrashIcon from "../../../assets/icons/TrashIcon";
 
 interface CardTypeDiscountsViewProps {
+  framed?: boolean;
   actionsTarget?: HTMLElement | null;
   customer?: CustomerListDto | null;
 }
@@ -31,7 +39,7 @@ type Selection = { mode: "ids"; ids: Set<string | number> } | { mode: "all" };
 
 const initialValues: CardTypeDiscountRequest = { pageNumber: 1, pageSize: 25, sortBy: "createdAt", isAscending: false, isDeleted: false };
 
-const CardTypeDiscountsView = ({ actionsTarget, customer }: CardTypeDiscountsViewProps) => {
+const CardTypeDiscountsView = ({ framed, actionsTarget, customer }: CardTypeDiscountsViewProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const [values, setValues] = useState<CardTypeDiscountRequest>(initialValues);
@@ -82,62 +90,70 @@ const CardTypeDiscountsView = ({ actionsTarget, customer }: CardTypeDiscountsVie
   };
 
   return (
-    <div className="space-y-4">
-      <CardTypeDiscountFilters
-        values={values}
-        forCustomer={!!customer}
-        onChange={(changes) => setValues((previous) => ({ ...previous, pageNumber: 1, ...changes }))}
-        onSearch={reload}
-        onClear={() => setValues(initialValues)}
-      />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="list-header-title">
-          {t("discounts.cardTypeDiscounts")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
-        </h3>
-        <div className="flex flex-wrap items-center gap-2">
-          <PageActions target={actionsTarget}>
-          {can(Permission.CardTypeDiscountsExport) && <ExportButton loading={isExporting} onExport={() => exportDiscounts(filter).unwrap()} />}
-          {can(Permission.CardTypeDiscountsCreate) && (
-            <Button
-              variant="dark"
-              size="md"
-              label={t("discounts.addCardTypeDiscounts")}
-              icon={<PlusIcon className="h-4 w-4" />}
-              iconPosition="left"
-              onClick={() => setAdding(true)}
-            />
-          )}
-          </PageActions>
-        </div>
-      </div>
-      {canDelete && selectedCount > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3">
+    <div className={framed ? "space-y-6" : "space-y-4"}>
+      <ListContainer plain={!framed}>
+        <CardTypeDiscountFilters
+          values={values}
+          forCustomer={!!customer}
+          onChange={(changes) => setValues((previous) => ({ ...previous, pageNumber: 1, ...changes }))}
+          onSearch={reload}
+          onClear={() => setValues(initialValues)}
+        />
+      </ListContainer>
+      <ListContainer plain={!framed}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="list-header-title">
+            {t("discounts.cardTypeDiscounts")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
+          </h3>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold">{t("cards.selectedCount", { count: selectedCount })}</span>
-            {selection.mode === "ids" && (data?.totalCount ?? 0) > selection.ids.size && (
-              <Button variant="link" size="sm" label={t("cards.selectAllMatching", { count: data?.totalCount ?? 0 })} onClick={() => setSelection({ mode: "all" })} />
+            <PageActions target={actionsTarget}>
+            {can(Permission.CardTypeDiscountsExport) && <ExportButton loading={isExporting} onExport={() => exportDiscounts(filter).unwrap()} />}
+            {can(Permission.CardTypeDiscountsCreate) && (
+              <Button
+                variant="dark"
+                size="md"
+                label={t("discounts.addCardTypeDiscounts")}
+                icon={<PlusIcon className="h-4 w-4" />}
+                iconPosition="left"
+                onClick={() => setAdding(true)}
+              />
             )}
-            <Button variant="link" size="sm" label={t("cards.clearSelection")} onClick={() => setSelection({ mode: "ids", ids: new Set() })} />
+            </PageActions>
           </div>
-          <Button variant="danger" size="sm" label={t("discounts.removeSelected")} onClick={() => setDeleting("selection")} />
         </div>
-      )}
-      <CardTypeDiscountsTable
-        items={data?.items || []}
-        totalCount={data?.totalCount || 0}
-        loading={isLoading || isFetching}
-        filterValues={values}
-        showCustomer={!customer}
-        selectable={canDelete && selection.mode === "ids"}
-        selectedRows={selection.mode === "ids" ? selection.ids : new Set()}
-        onSelectionChange={(ids) => setSelection({ mode: "ids", ids })}
-        onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
-        onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
-        onSort={(column: string, direction: SortDirection) =>
-          setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
-        }
-        onDelete={handleDelete}
-      />
+        {canDelete && selectedCount > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge label={t("cards.selectedCount", { count: selectedCount })} variant="primary" size="sm" pill />
+            <Dropdown
+              trigger={<Button variant="secondary" outline size="sm" label={t("cards.select")} icon={<ChevronDownIcon className="h-4 w-4" />} iconPosition="right" />}
+              items={[
+                ...(selection.mode === "ids" && (data?.totalCount ?? 0) > selection.ids.size
+                  ? [{ key: "all", label: t("cards.selectAllMatching", { count: data?.totalCount ?? 0 }), icon: <FilterIcon /> }]
+                  : []),
+                { key: "clear", label: t("cards.clearSelection"), icon: <XIcon /> },
+              ]}
+              onSelect={(key) => setSelection(key === "all" ? { mode: "all" } : { mode: "ids", ids: new Set() })}
+            />
+            <Button variant="danger" size="sm" label={t("discounts.removeSelected")} icon={<TrashIcon className="h-4 w-4" />} iconPosition="left" onClick={() => setDeleting("selection")} />
+          </div>
+        )}
+        <CardTypeDiscountsTable
+          items={data?.items || []}
+          totalCount={data?.totalCount || 0}
+          loading={isLoading || isFetching}
+          filterValues={values}
+          showCustomer={!customer}
+          selectable={canDelete && selection.mode === "ids"}
+          selectedRows={selection.mode === "ids" ? selection.ids : new Set()}
+          onSelectionChange={(ids) => setSelection({ mode: "ids", ids })}
+          onPageChange={(page) => setValues((previous) => ({ ...previous, pageNumber: page }))}
+          onPageSizeChange={(size) => setValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
+          onSort={(column: string, direction: SortDirection) =>
+            setValues((previous) => ({ ...previous, sortBy: column, isAscending: direction === "asc", pageNumber: 1 }))
+          }
+          onDelete={handleDelete}
+        />
+      </ListContainer>
 
       {adding && <AddCardTypeDiscountsModal open customer={customer} onClose={() => setAdding(false)} onSuccess={reload} />}
       {deleting && (
