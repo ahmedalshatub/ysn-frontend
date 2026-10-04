@@ -2,12 +2,6 @@ import { useState } from "react";
 
 const useOrderMode = <T>() => {
   const [items, setItems] = useState<T[] | null>(null);
-  const [scopeId, setScopeId] = useState<number | null>(null);
-
-  const start = (nextScopeId: number, nextItems: T[]) => {
-    setScopeId(nextScopeId);
-    setItems(nextItems);
-  };
 
   const move = (fromIndex: number, toIndex: number) =>
     setItems((current) => {
@@ -18,12 +12,7 @@ const useOrderMode = <T>() => {
       return next;
     });
 
-  const stop = () => {
-    setItems(null);
-    setScopeId(null);
-  };
-
-  return { ordering: items !== null, items: items ?? [], scopeId, start, move, stop };
+  return { ordering: items !== null, items: items ?? [], start: setItems, move, stop: () => setItems(null) };
 };
 
 export default useOrderMode;

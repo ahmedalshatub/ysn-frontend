@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import FormModal from "../../../shared/components/modals/FormModal";
@@ -89,13 +89,12 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
     }
   }, [open, isEdit, category, singleCityId, reset]);
 
-  const watchedCityId = Number(useWatch({ control, name: "cityId" }));
   const { data: siblings } = useGetCardCategoriesQuery(
-    { cityId: watchedCityId, isDeleted: false, pageNumber: 1, pageSize: 1 },
-    { skip: !open || !watchedCityId, refetchOnMountOrArgChange: true }
+    { isDeleted: false, pageNumber: 1, pageSize: 1 },
+    { skip: !open, refetchOnMountOrArgChange: true }
   );
   const siblingCount = siblings?.totalCount ?? 0;
-  const maxSortOrder = isEdit && category?.cityId === watchedCityId ? siblingCount : siblingCount + 1;
+  const maxSortOrder = isEdit ? siblingCount : siblingCount + 1;
 
   useEffect(() => {
     if (open && !isEdit && siblings) setValue("sortOrder", siblingCount + 1);

@@ -20,7 +20,6 @@ interface CardCategoriesTableProps {
   onSort: (column: string, direction: SortDirection) => void;
   onOpen: (category: CardCategoryListDto) => void;
   getActions: (category: CardCategoryListDto) => ActionItem[];
-  onRowReorder?: (fromIndex: number, toIndex: number) => void;
 }
 
 const CardCategoriesTable = ({
@@ -33,7 +32,6 @@ const CardCategoriesTable = ({
   onSort,
   onOpen,
   getActions,
-  onRowReorder,
 }: CardCategoriesTableProps) => {
   const { t, i18n } = useTranslation();
 
@@ -141,13 +139,12 @@ const CardCategoriesTable = ({
       currentPage={filterValues.pageNumber || 1}
       pageSize={filterValues.pageSize || 25}
       totalItems={totalCount}
-      onPageChange={onRowReorder ? undefined : onPageChange}
-      onPageSizeChange={onRowReorder ? undefined : onPageSizeChange}
-      onRowReorder={onRowReorder}
+      onPageChange={onPageChange}
+      onPageSizeChange={onPageSizeChange}
       sortColumn={filterValues.sortBy || "sortOrder"}
       sortDirection={filterValues.isAscending ? "asc" : "desc"}
-      onSort={onRowReorder ? undefined : onSort}
-      onRowClick={onRowReorder ? undefined : (row) => onOpen(row)}
+      onSort={onSort}
+      onRowClick={(row) => onOpen(row)}
       pageSizeOptions={[
         { label: "25", value: 25 },
         { label: "50", value: 50 },

@@ -1977,7 +1977,6 @@ export default {
       tvRenewal: "نوێکردنەوەی تەلەفزیۆن",
     },
     cardCategories: {
-      chooseCityToOrder: "سەرەتا شارێک لە فلتەرەکان هەڵبژێرە، پاشان پۆلەکانی ڕیز بکە.",
       successReorder: "ڕیزبەندی پۆلەکان پاشەکەوت کرا",
       pageTitle: "پۆلەکانی کارت",
       addCategory: "زیادکردنی پۆل",
@@ -2016,7 +2015,6 @@ export default {
       successAccess: "دەستگەیشتن پاشەکەوتکرا",
     },
     cardTypes: {
-      chooseCategoryToOrder: "سەرەتا پۆلێک لە فلتەرەکان هەڵبژێرە، پاشان جۆرەکانی کارتی ڕیز بکە.",
       successReorder: "ڕیزبەندی جۆرەکانی کارت پاشەکەوت کرا",
       pageTitle: "جۆرەکانی کارت",
       pricing: "کڕیاران و نرخەکان",

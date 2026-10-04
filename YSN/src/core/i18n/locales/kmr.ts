@@ -1977,7 +1977,6 @@ export default {
       tvRenewal: "نووکرنا تەلەفزیۆنێ",
     },
     cardCategories: {
-      chooseCityToOrder: "پێشی باژێرەکی ژ فلتەران هەلبژێرە، پاشان پۆلێن وێ ڕیز بکە.",
       successReorder: "ڕیزکرنا پۆلان هاتە پاراستن",
       pageTitle: "پۆلێن کارتان",
       addCategory: "زێدەکرنا پۆلی",
@@ -2016,7 +2015,6 @@ export default {
       successAccess: "دەستگەهشتن هاتە پاشەکەفتکرن",
     },
     cardTypes: {
-      chooseCategoryToOrder: "پێشی پۆلەکی ژ فلتەران هەلبژێرە، پاشان جورێن کارتێن وێ ڕیز بکە.",
       successReorder: "ڕیزکرنا جورێن کارتان هاتە پاراستن",
       pageTitle: "جۆرێن کارتان",
       pricing: "کڕیار و بها",

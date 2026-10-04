@@ -57,7 +57,7 @@ export const cardCategoriesApi = instanceApi.injectEndpoints({
         params: moveCardTypesToCategoryId ? { moveCardTypesToCategoryId } : undefined,
       }),
     }),
-    reorderCardCategories: builder.mutation<boolean, { cityId: number; ids: number[] }>({
+    reorderCardCategories: builder.mutation<boolean, { ids: number[] }>({
       query: (body) => ({
         url: "CardCategories/reorder",
         method: "PUT",

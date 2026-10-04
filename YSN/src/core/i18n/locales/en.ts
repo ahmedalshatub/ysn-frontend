@@ -1977,7 +1977,6 @@ export default {
       tvRenewal: "TV renewal",
     },
     cardCategories: {
-      chooseCityToOrder: "Choose a city in the filters first, then order its categories.",
       successReorder: "Category order saved",
       pageTitle: "Card categories",
       addCategory: "Add category",
@@ -2016,7 +2015,6 @@ export default {
       successAccess: "Access saved",
     },
     cardTypes: {
-      chooseCategoryToOrder: "Choose a category in the filters first, then order its card types.",
       successReorder: "Card type order saved",
       pageTitle: "Card types",
       pricing: "Customers and prices",

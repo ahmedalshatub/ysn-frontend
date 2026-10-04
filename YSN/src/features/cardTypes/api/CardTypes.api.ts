@@ -54,7 +54,7 @@ export const cardTypesApi = instanceApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    reorderCardTypes: builder.mutation<boolean, { cardCategoryId: number; ids: number[] }>({
+    reorderCardTypes: builder.mutation<boolean, { ids: number[] }>({
       query: (body) => ({
         url: "CardTypes/reorder",
         method: "PUT",

@@ -84,13 +84,12 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
   });
 
   const kind = Number(useWatch({ control, name: "kind" }));
-  const watchedCategoryId = Number(useWatch({ control, name: "cardCategoryId" }));
   const { data: siblings } = useGetCardTypesQuery(
-    { cardCategoryId: watchedCategoryId, isDeleted: false, pageNumber: 1, pageSize: 1 },
-    { skip: !open || !watchedCategoryId, refetchOnMountOrArgChange: true }
+    { isDeleted: false, pageNumber: 1, pageSize: 1 },
+    { skip: !open, refetchOnMountOrArgChange: true }
   );
   const siblingCount = siblings?.totalCount ?? 0;
-  const maxSortOrder = isEdit && cardType?.cardCategoryId === watchedCategoryId ? siblingCount : siblingCount + 1;
+  const maxSortOrder = isEdit ? siblingCount : siblingCount + 1;
 
   useEffect(() => {
     if (open && !isEdit && siblings) setValue("sortOrder", siblingCount + 1);

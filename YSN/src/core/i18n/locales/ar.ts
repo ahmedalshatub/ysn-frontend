@@ -1977,7 +1977,6 @@ export default {
       tvRenewal: "تجديد تلفزيون",
     },
     cardCategories: {
-      chooseCityToOrder: "اختر مدينة من الفلاتر أولاً، ثم رتّب أصنافها.",
       successReorder: "تم حفظ ترتيب الفئات",
       pageTitle: "أصناف البطاقات",
       addCategory: "إضافة صنف",
@@ -2016,7 +2015,6 @@ export default {
       successAccess: "تم حفظ الوصول",
     },
     cardTypes: {
-      chooseCategoryToOrder: "اختر صنفاً من الفلاتر أولاً، ثم رتّب أنواع بطاقاته.",
       successReorder: "تم حفظ ترتيب أنواع البطاقات",
       pageTitle: "أنواع البطاقات",
       pricing: "العملاء والأسعار",

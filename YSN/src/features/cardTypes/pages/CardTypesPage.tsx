@@ -34,6 +34,7 @@ import { showSuccess, showError } from "../../../shared/components/feedback/Toas
 import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import CheckIcon from "../../../assets/icons/CheckIcon";
 import XIcon from "../../../assets/icons/XIcon";
+import SortableCardGrid from "../../../shared/components/cards/SortableCardGrid";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -95,23 +96,17 @@ const CardTypesPage = () => {
   const [saveOrder, { isLoading: savingOrder }] = useReorderCardTypesMutation();
 
   const startOrdering = async () => {
-    const scopeId = values.cardCategoryId;
-    if (!scopeId) {
-      showError(t("cardTypes.chooseCategoryToOrder"));
-      return;
-    }
     try {
-      const result = await loadOrder({ cardCategoryId: scopeId, isDeleted: false, sortBy: "SortOrder", isAscending: true, pageNumber: 1, pageSize: 100 }).unwrap();
-      order.start(scopeId, result.items);
+      const result = await loadOrder({ isDeleted: false, sortBy: "SortOrder", isAscending: true, pageNumber: 1, pageSize: 100 }).unwrap();
+      order.start(result.items);
     } catch (error) {
       showError(getErrorMessage(error));
     }
   };
 
   const submitOrder = async () => {
-    if (!order.scopeId) return;
     try {
-      await saveOrder({ cardCategoryId: order.scopeId, ids: order.items.map((item) => item.id) }).unwrap();
+      await saveOrder({ ids: order.items.map((item) => item.id) }).unwrap();
       showSuccess(t("cardTypes.successReorder"));
       order.stop();
       refetch();
@@ -192,7 +187,7 @@ const CardTypesPage = () => {
         />
       </Card>
 
-      <ListContainer plain={viewMode === ViewMode.Cards && !order.ordering}>
+      <ListContainer plain={viewMode === ViewMode.Cards || order.ordering}>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <h3 className="list-header-title">
             {t("cardTypes.pageTitle")} <span className="list-header-count">({totalCount})</span>
@@ -224,16 +219,12 @@ const CardTypesPage = () => {
           )}
         </div>
         {order.ordering ? (
-          <CardTypesTable
+          <SortableCardGrid
             items={order.items}
-            totalCount={order.items.length}
             loading={loadingOrder}
-            filterValues={{ ...values, pageNumber: 1, pageSize: 100 }}
-            onPageChange={() => undefined}
-            onPageSizeChange={() => undefined}
-            onSort={() => undefined}
-            getActions={() => []}
-            onRowReorder={order.move}
+            rowKey={(item) => item.id}
+            renderItem={(cardType) => <CardTypeCard cardType={cardType} actions={[]} />}
+            onMove={order.move}
           />
         ) : viewMode === ViewMode.Cards ? (
           <CardGrid

@@ -286,3 +286,37 @@
 [data-theme="dark"] .invoice-card-row {
   border-bottom-color: $dark-border-color-light;
 }
+
+.sortable-card {
+  position: relative;
+  height: 100%;
+  cursor: grab;
+  border-radius: 14px;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sortable-card-dragging {
+  opacity: 0.45;
+}
+
+.sortable-card-drop-target {
+  box-shadow: 0 0 0 2px $color-primary;
+}
+
+.sortable-card-position {
+  position: absolute;
+  top: 10px;
+  inset-inline-start: 10px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 8px;
+  background-color: $color-primary;
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
