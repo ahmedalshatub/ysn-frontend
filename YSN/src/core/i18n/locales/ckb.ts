@@ -486,6 +486,11 @@ export default {
       allTypes: "هەموو جۆرەکان",
     },
     countries: {
+      makeDefault: "کردن بە بنەڕەتی",
+      activate: "چالاککردن",
+      deactivate: "ناچالاککردن",
+      successDefault: "وڵاتەکە بوو بە بنەڕەتی",
+      successStatus: "دۆخی وڵات گۆڕا",
       pageTitle: "وڵاتان",
       addCountry: "زیادکردنی وڵات",
       editCountry: "دەستکاریکردنی وڵات",

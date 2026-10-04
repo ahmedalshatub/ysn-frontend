@@ -10,7 +10,9 @@ import PlusIcon from "../../../assets/icons/PlusIcon";
 import GlobeIcon from "../../../assets/icons/GlobeIcon";
 import { Permission } from "../../../shared/types/Permissions.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
-import { useExportCountriesMutation, useGetCountriesQuery } from "../api/Countries.api";
+import { showSuccess, showError } from "../../../shared/components/feedback/Toast";
+import { getErrorMessage } from "../../../shared/utils/errorHandler";
+import { useExportCountriesMutation, useGetCountriesQuery, useSetDefaultCountryMutation, useChangeCountryStatusMutation } from "../api/Countries.api";
 import CountryFilters from "../components/CountryFilters";
 import CountriesTable from "../components/CountriesTable";
 import CountryModal from "../components/CountryModal";
@@ -55,6 +57,8 @@ const CountriesPage = () => {
   const [dialog, setDialog] = useState<DialogName | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
+  const [setDefaultCountry] = useSetDefaultCountryMutation();
+  const [changeCountryStatus] = useChangeCountryStatusMutation();
   const { data, isLoading, isFetching, refetch } = useGetCountriesQuery(
     {
       ...toQueryFilter(filterValues),
@@ -84,6 +88,26 @@ const CountriesPage = () => {
   const closeDialog = () => {
     setDialog(null);
     setSelectedId(null);
+  };
+
+  const handleSetDefault = async (country: CountryListDto) => {
+    try {
+      await setDefaultCountry(country.id).unwrap();
+      showSuccess(t("countries.successDefault"));
+      refetch();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
+
+  const handleToggleStatus = async (country: CountryListDto) => {
+    try {
+      await changeCountryStatus({ id: country.id, isActive: !country.isActive }).unwrap();
+      showSuccess(t("countries.successStatus"));
+      refetch();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
   };
 
   const handleEdit = useCallback((country: CountryListDto) => openDialog("form", country), [openDialog]);
@@ -140,6 +164,8 @@ const CountriesPage = () => {
           onPageSizeChange={(size) => setFilterValues((previous) => ({ ...previous, pageSize: size, pageNumber: 1 }))}
           onSort={handleSort}
           onEdit={handleEdit}
+          onSetDefault={handleSetDefault}
+          onToggleStatus={handleToggleStatus}
           onDelete={handleDelete}
           onRestore={handleRestore}
         />

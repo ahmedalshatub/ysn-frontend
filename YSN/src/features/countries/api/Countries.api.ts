@@ -35,6 +35,19 @@ export const countriesApi = instanceApi.injectEndpoints({
         body: data,
       }),
     }),
+    setDefaultCountry: builder.mutation<CountryDto, number>({
+      query: (id) => ({
+        url: `Countries/${id}/default`,
+        method: "PUT",
+      }),
+    }),
+    changeCountryStatus: builder.mutation<CountryDto, { id: number; isActive: boolean }>({
+      query: ({ id, isActive }) => ({
+        url: `Countries/${id}/status`,
+        method: "PUT",
+        body: { isActive },
+      }),
+    }),
     deleteCountry: builder.mutation<boolean, number>({
       query: (id) => ({
         url: `Countries/${id}`,
@@ -59,6 +72,8 @@ export const countriesApi = instanceApi.injectEndpoints({
 });
 
 export const {
+  useSetDefaultCountryMutation,
+  useChangeCountryStatusMutation,
   useGetCountriesQuery,
   useGetCountryQuery,
   useAddCountryMutation,

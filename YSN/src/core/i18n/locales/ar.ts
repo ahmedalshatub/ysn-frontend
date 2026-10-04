@@ -486,6 +486,11 @@ export default {
       allTypes: "كل الأنواع",
     },
     countries: {
+      makeDefault: "تعيين كافتراضي",
+      activate: "تفعيل",
+      deactivate: "تعطيل",
+      successDefault: "أصبح البلد هو الافتراضي",
+      successStatus: "تم تغيير حالة البلد",
       pageTitle: "الدول",
       addCountry: "إضافة دولة",
       editCountry: "تعديل الدولة",

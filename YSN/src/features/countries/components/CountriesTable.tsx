@@ -2,6 +2,9 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import DataTable from "../../../shared/components/table/DataTable";
 import TableActionDropdown from "../../../shared/components/table/TableActionDropdown";
+import StarIcon from "../../../assets/icons/StarIcon";
+import CheckCircleIcon from "../../../assets/icons/CheckCircleIcon";
+import XCircleIcon from "../../../assets/icons/XCircleIcon";
 import Badge from "../../../shared/components/badges/Badge";
 import EditIcon from "../../../assets/icons/EditIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
@@ -21,6 +24,8 @@ interface CountriesTableProps {
   onPageSizeChange: (size: number) => void;
   onSort: (column: string, direction: SortDirection) => void;
   onEdit: (country: CountryListDto) => void;
+  onSetDefault: (country: CountryListDto) => void;
+  onToggleStatus: (country: CountryListDto) => void;
   onDelete: (country: CountryListDto) => void;
   onRestore: (country: CountryListDto) => void;
 }
@@ -34,6 +39,8 @@ const CountriesTable = ({
   onPageSizeChange,
   onSort,
   onEdit,
+  onSetDefault,
+  onToggleStatus,
   onDelete,
   onRestore,
 }: CountriesTableProps) => {
@@ -131,6 +138,16 @@ const CountriesTable = ({
                 ...(can(Permission.CountriesUpdate)
                   ? [{ label: t("common.edit"), icon: <EditIcon />, onClick: () => onEdit(row) }]
                   : []),
+                ...(can(Permission.CountriesUpdate) && !row.isDefault
+                  ? [{ label: t("countries.makeDefault"), icon: <StarIcon />, onClick: () => onSetDefault(row) }]
+                  : []),
+                ...(can(Permission.CountriesUpdate) && !(row.isDefault && row.isActive)
+                  ? [{
+                      label: row.isActive ? t("countries.deactivate") : t("countries.activate"),
+                      icon: row.isActive ? <XCircleIcon /> : <CheckCircleIcon />,
+                      onClick: () => onToggleStatus(row),
+                    }]
+                  : []),
                 ...(can(Permission.CountriesDelete) && !row.isDefault
                   ? [{ label: t("common.delete"), icon: <TrashIcon />, variant: "danger" as const, onClick: () => onDelete(row) }]
                   : []),
@@ -139,7 +156,7 @@ const CountriesTable = ({
         },
       },
     ],
-    [t, i18n.language, can, onEdit, onDelete, onRestore]
+    [t, i18n.language, can, onEdit, onSetDefault, onToggleStatus, onDelete, onRestore]
   );
 
   return (

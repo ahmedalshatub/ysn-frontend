@@ -486,6 +486,11 @@ export default {
       allTypes: "All types",
     },
     countries: {
+      makeDefault: "Make default",
+      activate: "Activate",
+      deactivate: "Deactivate",
+      successDefault: "The country is now the default",
+      successStatus: "Country status changed",
       pageTitle: "Countries",
       addCountry: "Add Country",
       editCountry: "Edit Country",

@@ -486,6 +486,11 @@ export default {
       allTypes: "هەمی جۆر",
     },
     countries: {
+      makeDefault: "کرن ب بنەڕەتی",
+      activate: "چالاککرن",
+      deactivate: "ناچالاککرن",
+      successDefault: "وەلات بوو بنەڕەتی",
+      successStatus: "دۆخێ وەلاتی هاتە گوهۆڕین",
       pageTitle: "وەلات",
       addCountry: "زێدەکرنا وەلاتی",
       editCountry: "دەستکاریکرنا وەلاتی",
