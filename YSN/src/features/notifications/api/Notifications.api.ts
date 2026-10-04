@@ -17,6 +17,21 @@ export const notificationApi = instanceApi.injectEndpoints({
       }),
       providesTags: ["Notification"],
     }),
+    getNotificationsFeed: builder.query<BaseListResponse<NotificationDto>, NotificationRequest>({
+      query: (params) => ({
+        url: "Notifications",
+        params,
+      }),
+      serializeQueryArgs: ({ queryArgs }) => ({ isRead: queryArgs.isRead, pageSize: queryArgs.pageSize }),
+      merge: (current, incoming, { arg }) => {
+        if ((arg.pageNumber ?? 1) === 1) return incoming;
+        const byId = new Map(current.items.map((item) => [item.id, item]));
+        incoming.items.forEach((item) => byId.set(item.id, item));
+        return { ...incoming, items: [...byId.values()] };
+      },
+      forceRefetch: ({ currentArg, previousArg }) => currentArg?.pageNumber !== previousArg?.pageNumber || currentArg?.isRead !== previousArg?.isRead,
+      providesTags: ["Notification"],
+    }),
     getNotificationById: builder.query<NotificationDto, number>({
       query: (id) => `Notifications/${id}`,
       providesTags: ["Notification"],
@@ -55,6 +70,7 @@ export const notificationApi = instanceApi.injectEndpoints({
 
 export const {
   useGetAllNotificationsQuery,
+  useGetNotificationsFeedQuery,
   useGetNotificationByIdQuery,
   useGetUnreadCountQuery,
   useMarkAsReadMutation,

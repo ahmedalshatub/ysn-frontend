@@ -56,7 +56,11 @@ const NotificationBell = () => {
         }
       >
         {items.length > 0 ? (
-          items.map((item) => <NotificationItem key={item.id} notification={item} onOpen={open} />)
+          <div className="flex flex-col gap-2 p-3">
+            {items.map((item) => (
+              <NotificationItem key={item.id} notification={item} onOpen={open} />
+            ))}
+          </div>
         ) : (
           <p className="px-4 py-8 text-center text-sm ce-muted">{t("notifications.noNotifications")}</p>
         )}

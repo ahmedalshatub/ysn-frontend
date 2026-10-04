@@ -357,11 +357,11 @@ function DataTable<T>({
       </div>
 
       {(onPageChange || clientSidePagination) && (
-        <div className={`flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 ${!borderless ? "datatable-footer" : "datatable-footer-borderless"} ${rounded ? "rounded-b-xl" : ""}`}>
-          <span className="text-sm datatable-showing order-2 sm:order-1">
+        <div className={`grid grid-cols-1 items-center gap-3 px-4 py-3 sm:grid-cols-3 ${!borderless ? "datatable-footer" : "datatable-footer-borderless"} ${rounded ? "rounded-b-xl" : ""}`}>
+          <span className="text-center text-sm datatable-showing order-2 sm:order-1 sm:text-start">
             {t("pagination.showing", { from: Math.min((activePage - 1) * activePageSize + 1, total), to: Math.min(activePage * activePageSize, total), total })}
           </span>
-          <div className="order-1 sm:order-2">
+          <div className="order-1 flex justify-center sm:order-2">
             {paginationMode === "simple" ? (
               <SimplePagination
                 currentPage={activePage}

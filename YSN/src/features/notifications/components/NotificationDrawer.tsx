@@ -1,16 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import type { RootState } from "../../../app/store";
 import Drawer from "../../../shared/components/navigation/Drawer";
 import Tabs from "../../../shared/components/navigation/Tabs";
 import Button from "../../../shared/components/buttons/Button";
-import Select from "../../../shared/components/inputs/Select";
 import Loader from "../../../shared/components/feedback/Loader";
 import { showError } from "../../../shared/components/feedback/Toast";
 import { getErrorMessage } from "../../../shared/utils/errorHandler";
-import { useGetAllNotificationsQuery, useMarkAllAsReadMutation } from "../api/Notifications.api";
-import { NotificationType, internalNotificationTypes, notificationTypeNames } from "../types/NotificationTypes.types";
+import { useGetNotificationsFeedQuery, useMarkAllAsReadMutation } from "../api/Notifications.api";
 import NotificationItem from "./NotificationItem";
 import NotificationSettings from "./NotificationSettings";
 import type { NotificationDto } from "../types/Notifications.types";
@@ -24,22 +22,20 @@ interface NotificationDrawerProps {
 }
 
 const PAGE_SIZE = 20;
-const filterTypes = [NotificationType.General, ...internalNotificationTypes];
 
 const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationDrawerProps) => {
   const { t } = useTranslation();
   const isEmployee = useSelector((state: RootState) => state.auth.roleId != null);
   const [activeTab, setActiveTab] = useState<DrawerTab>("all");
-  const [type, setType] = useState<number | undefined>();
   const [page, setPage] = useState(1);
+  const sentinel = useRef<HTMLDivElement | null>(null);
 
-  const { data, isFetching, error } = useGetAllNotificationsQuery(
+  const { data, isFetching, error } = useGetNotificationsFeedQuery(
     {
       sortBy: "createdAt",
       isAscending: false,
       pageNumber: page,
       pageSize: PAGE_SIZE,
-      type,
       isRead: activeTab === "unread" ? false : undefined,
     },
     { skip: !open || activeTab === "settings" }
@@ -47,8 +43,17 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
   const [markAllAsRead, { isLoading: isMarking }] = useMarkAllAsReadMutation();
 
   const items = data?.items ?? [];
-  const totalPages = data?.totalPages ?? 0;
-  const typeOptions = filterTypes.map((value) => ({ value, name: t(`notificationTypes.${notificationTypeNames[value]}.setting`) }));
+  const hasMore = page < (data?.totalPages ?? 0);
+
+  useEffect(() => {
+    const target = sentinel.current;
+    if (!target || !hasMore || isFetching) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) setPage((previous) => previous + 1);
+    });
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [hasMore, isFetching, items.length]);
 
   const changeTab = (tab: DrawerTab) => {
     setActiveTab(tab);
@@ -82,47 +87,22 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
       );
     }
     return (
-      <div className="divide-y ce-divider">
+      <div className="flex flex-col gap-2 px-4 pb-4">
         {items.map((item) => (
           <NotificationItem key={item.id} notification={item} onOpen={onOpenNotification} />
         ))}
+        <div ref={sentinel} className="h-1" />
+        {isFetching && (
+          <div className="flex justify-center py-3">
+            <Loader variant="spinner" size="sm" />
+          </div>
+        )}
       </div>
     );
   };
 
   return (
-    <Drawer
-      open={open}
-      onClose={onClose}
-      position="right"
-      size="md"
-      title={t("notifications.title")}
-      footer={
-        activeTab === "settings" ? undefined : (
-          <div className="flex items-center justify-between gap-3">
-            <Button
-              variant="secondary"
-              outline
-              size="sm"
-              label={t("common.previous")}
-              disabled={page <= 1 || isFetching}
-              onClick={() => setPage((previous) => Math.max(1, previous - 1))}
-            />
-            <span className="text-xs ce-muted">
-              {page} / {Math.max(totalPages, 1)}
-            </span>
-            <Button
-              variant="secondary"
-              outline
-              size="sm"
-              label={t("common.next")}
-              disabled={page >= totalPages || isFetching}
-              onClick={() => setPage((previous) => previous + 1)}
-            />
-          </div>
-        )
-      }
-    >
+    <Drawer open={open} onClose={onClose} position="right" size="md" title={t("notifications.title")}>
       <div className="flex flex-col gap-3">
         <Tabs
           tabs={[
@@ -140,29 +120,8 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
           <NotificationSettings />
         ) : (
           <>
-            <div className="flex items-end gap-2 px-4">
-              <Select
-                name="type"
-                options={typeOptions}
-                value={type ?? ""}
-                onChange={(value) => {
-                  setType(value === "" ? undefined : Number(value));
-                  setPage(1);
-                }}
-                valueKey="value"
-                labelKey="name"
-                placeholder={t("notifications.allTypes")}
-                containerClass="flex-1"
-                size="sm"
-              />
-              <Button
-                variant="primary"
-                outline
-                size="sm"
-                loading={isMarking}
-                label={t("notifications.markAllAsRead")}
-                onClick={handleMarkAll}
-              />
+            <div className="flex justify-end px-4">
+              <Button variant="primary" outline size="sm" loading={isMarking} label={t("notifications.markAllAsRead")} onClick={handleMarkAll} />
             </div>
             {renderList()}
           </>

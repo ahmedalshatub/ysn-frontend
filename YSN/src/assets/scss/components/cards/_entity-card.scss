@@ -320,3 +320,57 @@
   font-size: 0.8125rem;
   font-weight: 700;
 }
+
+.notification-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $border-color-light;
+  border-radius: 12px;
+  background-color: $surface-bg;
+  cursor: default;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.notification-card-unread {
+  border-color: rgba($color-primary, 0.35);
+  background-color: rgba($color-primary, 0.04);
+}
+
+.notification-card-clickable {
+  cursor: pointer;
+
+  &:hover {
+    border-color: $color-primary-light;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  }
+}
+
+.notification-card-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background-color: $color-primary-lighter;
+  color: $color-primary;
+}
+
+[data-theme="dark"] {
+  .notification-card {
+    border-color: $dark-border-color;
+    background-color: $dark-surface-bg;
+  }
+
+  .notification-card-unread {
+    background-color: rgba($color-primary, 0.08);
+  }
+
+  .notification-card-icon {
+    background-color: rgba($color-primary, 0.15);
+  }
+}

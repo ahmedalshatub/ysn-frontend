@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "../../../shared/components/buttons/Button";
+import Pagination from "../../../shared/components/navigation/Pagination";
 import Loader from "../../../shared/components/feedback/Loader";
 import { useGetAllNotificationsQuery, useMarkAllAsReadMutation } from "../../notifications/api/Notifications.api";
 import useNotificationOpener from "../../notifications/hooks/useNotificationOpener";
@@ -42,33 +43,15 @@ const ProfileNotificationsTab = () => {
         <Button variant="primary" outline size="sm" loading={isMarking} label={t("notifications.markAllAsRead")} onClick={() => markAllAsRead()} />
       )}
 
-      <div className="divide-y ce-divider">
+      <div className="flex flex-col gap-2">
         {items.map((item) => (
           <NotificationItem key={item.id} notification={item} onOpen={open} />
         ))}
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between gap-3">
-          <Button
-            variant="secondary"
-            outline
-            size="sm"
-            label={t("common.previous")}
-            disabled={page <= 1 || isFetching}
-            onClick={() => setPage((previous) => Math.max(1, previous - 1))}
-          />
-          <span className="text-xs ce-muted">
-            {page} / {totalPages}
-          </span>
-          <Button
-            variant="secondary"
-            outline
-            size="sm"
-            label={t("common.next")}
-            disabled={page >= totalPages || isFetching}
-            onClick={() => setPage((previous) => previous + 1)}
-          />
+        <div className="flex justify-center">
+          <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} size="sm" />
         </div>
       )}
       {modal}
