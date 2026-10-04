@@ -1663,6 +1663,7 @@ export default {
     },
     cards: {
       pageTitle: "Cards",
+      serials: "Serial numbers",
       takenCards: "Cards taken",
       total: "Total",
       category: "Card category",

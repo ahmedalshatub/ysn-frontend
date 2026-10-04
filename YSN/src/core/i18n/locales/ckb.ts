@@ -1663,6 +1663,7 @@ export default {
     },
     cards: {
       pageTitle: "کارتەکان",
+      serials: "ژمارە زنجیرەییەکان",
       takenCards: "کارتە وەرگیراوەکان",
       total: "کۆ",
       category: "پۆلی کارت",

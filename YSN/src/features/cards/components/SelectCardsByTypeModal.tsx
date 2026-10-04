@@ -4,6 +4,7 @@ import FormModal from "../../../shared/components/modals/FormModal";
 import LayersIcon from "../../../assets/icons/LayersIcon";
 import CardCategoryTypeSelects from "./CardCategoryTypeSelects";
 import type { CardFilter } from "../types/Cards.types";
+import FormSection from "../../../shared/components/forms/FormSection";
 
 interface SelectCardsByTypeModalProps {
   open: boolean;
@@ -33,17 +34,19 @@ const SelectCardsByTypeModal = ({ open, byCategory, onClose, onSelect }: SelectC
       size="md"
       icon={<LayersIcon className="h-6 w-6" />}
     >
-      <div className="space-y-4">
-        <CardCategoryTypeSelects
-          categoryId={categoryId}
-          cardTypeId={cardTypeId}
-          hideType={byCategory}
-          required
-          onChange={(nextCategory, nextType) => {
-            setCategoryId(nextCategory);
-            setCardTypeId(nextType);
-          }}
-        />
+      <div className="space-y-8">
+        <FormSection icon={<LayersIcon />} title={t(byCategory ? "cards.category" : "cards.cardType")}>
+          <CardCategoryTypeSelects
+            categoryId={categoryId}
+            cardTypeId={cardTypeId}
+            hideType={byCategory}
+            required
+            onChange={(nextCategory, nextType) => {
+              setCategoryId(nextCategory);
+              setCardTypeId(nextType);
+            }}
+          />
+        </FormSection>
       </div>
     </FormModal>
   );

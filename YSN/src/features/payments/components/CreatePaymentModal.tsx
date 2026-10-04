@@ -10,6 +10,7 @@ import { showSuccess, showError } from "../../../shared/components/feedback/Toas
 import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import { useCreatePaymentMutation } from "../api/Payments.api";
 import FileTextIcon from "../../../assets/icons/FileTextIcon";
+import FormSection from "../../../shared/components/forms/FormSection";
 
 interface PaymentForm {
   amount: number;
@@ -83,23 +84,25 @@ const CreatePaymentModal = ({ open, onClose, onCreated }: CreatePaymentModalProp
       size="md"
       icon={<FileTextIcon className="h-6 w-6" />}
     >
-      <div className="space-y-4">
-        <FormInput<PaymentForm>
-          name="amount"
-          control={control}
-          type="number"
-          label={t("paymentsPage.amount")}
-          error={!!errors.amount}
-          errorMessage={errors.amount?.message}
-        />
-        <FormTextArea<PaymentForm>
-          name="description"
-          control={control}
-          label={t("paymentsPage.description")}
-          placeholder={t("paymentsPage.descriptionPlaceholder")}
-          error={!!errors.description}
-          errorMessage={errors.description?.message}
-        />
+      <div className="space-y-8">
+        <FormSection icon={<FileTextIcon />} title={t("common.basicInfo")}>
+          <FormInput<PaymentForm>
+            name="amount"
+            control={control}
+            type="number"
+            label={t("paymentsPage.amount")}
+            error={!!errors.amount}
+            errorMessage={errors.amount?.message}
+          />
+          <FormTextArea<PaymentForm>
+            name="description"
+            control={control}
+            label={t("paymentsPage.description")}
+            placeholder={t("paymentsPage.descriptionPlaceholder")}
+            error={!!errors.description}
+            errorMessage={errors.description?.message}
+          />
+        </FormSection>
       </div>
     </FormModal>
   );

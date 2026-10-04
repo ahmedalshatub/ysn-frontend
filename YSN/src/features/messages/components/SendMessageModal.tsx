@@ -18,6 +18,8 @@ import useMessageAudiences from "../hooks/useMessageAudiences";
 import { sendMessageSchema, type SendMessageFormValues } from "../validation/Messages.validation";
 import MessageAudienceSelect from "./MessageAudienceSelect";
 import { MessageTarget, type MessageTargetValue } from "../types/Messages.types";
+import FormSection from "../../../shared/components/forms/FormSection";
+import UsersIcon from "../../../assets/icons/UsersIcon";
 
 interface SendMessageModalProps {
   open: boolean;
@@ -108,64 +110,68 @@ const SendMessageModal = ({ open, customer, onClose, onSuccess }: SendMessageMod
       size="lg"
       icon={<MailIcon className="h-6 w-6" />}
     >
-      <div className="space-y-4">
-        {!customer && (
-          <MessageAudienceSelect<SendMessageFormValues> name="target" control={control} audiences={audiences} />
-        )}
-        {target === MessageTarget.Customer && (
-          <CustomerSearchSelect<SendMessageFormValues>
-            name="userId"
+      <div className="space-y-8">
+        <FormSection icon={<UsersIcon />} title={t("messages.audience")}>
+          {!customer && (
+            <MessageAudienceSelect<SendMessageFormValues> name="target" control={control} audiences={audiences} />
+          )}
+          {target === MessageTarget.Customer && (
+            <CustomerSearchSelect<SendMessageFormValues>
+              name="userId"
+              control={control}
+              label={`${t("messages.customer")} *`}
+              initialCustomer={customer}
+              error={!!errors.userId}
+              errorMessage={fieldError(errors.userId?.message)}
+            />
+          )}
+          {(needsCity || needsType) && (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {needsType && (
+                <FormSelect<SendMessageFormValues>
+                  name="userType"
+                  control={control}
+                  label={`${t("messages.customerType")} *`}
+                  options={typeOptions}
+                  valueKey="value"
+                  labelKey="name"
+                  error={!!errors.userType}
+                  errorMessage={fieldError(errors.userType?.message)}
+                />
+              )}
+              {needsCity && (
+                <FormSelect<SendMessageFormValues>
+                  name="cityId"
+                  control={control}
+                  label={`${t("messages.city")} *`}
+                  options={cityOptions}
+                  valueKey="value"
+                  labelKey="name"
+                  searchable
+                  error={!!errors.cityId}
+                  errorMessage={fieldError(errors.cityId?.message)}
+                />
+              )}
+            </div>
+          )}
+        </FormSection>
+        <FormSection icon={<MailIcon />} title={t("messages.message")}>
+          <FormInput<SendMessageFormValues>
+            name="subject"
             control={control}
-            label={`${t("messages.customer")} *`}
-            initialCustomer={customer}
-            error={!!errors.userId}
-            errorMessage={fieldError(errors.userId?.message)}
+            label={`${t("messages.subject")} *`}
+            error={!!errors.subject}
+            errorMessage={fieldError(errors.subject?.message)}
           />
-        )}
-        {(needsCity || needsType) && (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {needsType && (
-              <FormSelect<SendMessageFormValues>
-                name="userType"
-                control={control}
-                label={`${t("messages.customerType")} *`}
-                options={typeOptions}
-                valueKey="value"
-                labelKey="name"
-                error={!!errors.userType}
-                errorMessage={fieldError(errors.userType?.message)}
-              />
-            )}
-            {needsCity && (
-              <FormSelect<SendMessageFormValues>
-                name="cityId"
-                control={control}
-                label={`${t("messages.city")} *`}
-                options={cityOptions}
-                valueKey="value"
-                labelKey="name"
-                searchable
-                error={!!errors.cityId}
-                errorMessage={fieldError(errors.cityId?.message)}
-              />
-            )}
-          </div>
-        )}
-        <FormInput<SendMessageFormValues>
-          name="subject"
-          control={control}
-          label={`${t("messages.subject")} *`}
-          error={!!errors.subject}
-          errorMessage={fieldError(errors.subject?.message)}
-        />
-        <FormTextArea<SendMessageFormValues>
-          name="content"
-          control={control}
-          label={`${t("messages.content")} *`}
-          rows={7}
-          error={!!errors.content}
-          errorMessage={fieldError(errors.content?.message)}
-        />
+          <FormTextArea<SendMessageFormValues>
+            name="content"
+            control={control}
+            label={`${t("messages.content")} *`}
+            rows={7}
+            error={!!errors.content}
+            errorMessage={fieldError(errors.content?.message)}
+          />
+        </FormSection>
         {summary && <Message variant="info">{summary}</Message>}
       </div>
     </FormModal>

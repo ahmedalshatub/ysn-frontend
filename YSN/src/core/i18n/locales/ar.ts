@@ -1663,6 +1663,7 @@ export default {
     },
     cards: {
       pageTitle: "البطاقات",
+      serials: "الأرقام التسلسلية",
       takenCards: "البطاقات المأخوذة",
       total: "الإجمالي",
       category: "فئة البطاقات",

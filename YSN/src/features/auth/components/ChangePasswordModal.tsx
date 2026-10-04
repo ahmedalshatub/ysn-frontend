@@ -13,6 +13,8 @@ import { useChangePasswordMutation } from "../api/Auth.api";
 import { clearForcePasswordChange } from "../slices/Auth.slice";
 import type { ChangePasswordDto } from "../types/Auth.types";
 import LockIcon from "../../../assets/icons/LockIcon";
+import FormSection from "../../../shared/components/forms/FormSection";
+import KeyIcon from "../../../assets/icons/KeyIcon";
 
 interface ChangePasswordModalProps {
   open: boolean;
@@ -85,34 +87,38 @@ const ChangePasswordModal = ({ open, onClose, onSuccess, forced }: ChangePasswor
       icon={<LockIcon className="w-6 h-6" />}
       closable={!forced}
     >
-      <div className="space-y-4">
+      <div className="space-y-8">
         {forced && (
           <Message variant="warning">{t("changePassword.forcedMessage")}</Message>
         )}
-        <FormPasswordInput<ChangePasswordDto>
-          name="currentPassword"
-          control={control}
-          label={t("changePassword.currentPassword")}
-          placeholder={t("changePassword.currentPasswordPlaceholder")}
-          error={!!errors.currentPassword}
-          errorMessage={errors.currentPassword?.message}
-        />
-        <FormPasswordInput<ChangePasswordDto>
-          name="newPassword"
-          control={control}
-          label={t("changePassword.newPassword")}
-          placeholder={t("changePassword.newPasswordPlaceholder")}
-          error={!!errors.newPassword}
-          errorMessage={errors.newPassword?.message}
-        />
-        <FormPasswordInput<ChangePasswordDto>
-          name="confirmPassword"
-          control={control}
-          label={t("changePassword.confirmPassword")}
-          placeholder={t("changePassword.confirmPasswordPlaceholder")}
-          error={!!errors.confirmPassword}
-          errorMessage={errors.confirmPassword?.message}
-        />
+        <FormSection icon={<LockIcon />} title={t("changePassword.currentPassword")}>
+          <FormPasswordInput<ChangePasswordDto>
+            name="currentPassword"
+            control={control}
+            label={t("changePassword.currentPassword")}
+            placeholder={t("changePassword.currentPasswordPlaceholder")}
+            error={!!errors.currentPassword}
+            errorMessage={errors.currentPassword?.message}
+          />
+        </FormSection>
+        <FormSection icon={<KeyIcon />} title={t("changePassword.newPassword")}>
+          <FormPasswordInput<ChangePasswordDto>
+            name="newPassword"
+            control={control}
+            label={t("changePassword.newPassword")}
+            placeholder={t("changePassword.newPasswordPlaceholder")}
+            error={!!errors.newPassword}
+            errorMessage={errors.newPassword?.message}
+          />
+          <FormPasswordInput<ChangePasswordDto>
+            name="confirmPassword"
+            control={control}
+            label={t("changePassword.confirmPassword")}
+            placeholder={t("changePassword.confirmPasswordPlaceholder")}
+            error={!!errors.confirmPassword}
+            errorMessage={errors.confirmPassword?.message}
+          />
+        </FormSection>
       </div>
     </FormModal>
   );

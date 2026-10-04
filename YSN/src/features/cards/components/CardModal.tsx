@@ -10,6 +10,8 @@ import EditIcon from "../../../assets/icons/EditIcon";
 import { useUpdateCardMutation } from "../api/Cards.api";
 import CardCategoryTypeSelects from "./CardCategoryTypeSelects";
 import type { CardListDto } from "../types/Cards.types";
+import FormSection from "../../../shared/components/forms/FormSection";
+import LayersIcon from "../../../assets/icons/LayersIcon";
 
 interface CardModalProps {
   open: boolean;
@@ -66,29 +68,33 @@ const CardModal = ({ open, card, onClose, onSuccess }: CardModalProps) => {
       size="md"
       icon={<EditIcon className="h-6 w-6" />}
     >
-      <div className="space-y-4">
-        <CardCategoryTypeSelects
-          categoryId={categoryId}
-          cardTypeId={cardTypeId}
-          required
-          onChange={(nextCategory, nextType) => {
-            setCategoryId(nextCategory);
-            setCardTypeId(nextType);
-          }}
-        />
-        <Input
-          name="serialNumber"
-          label={`${t("cards.serialNumber")} *`}
-          value={serial}
-          onChange={(event) => {
-            setSerial(event.target.value);
-            setSerialError("");
-          }}
-          disabled={!canViewSerial}
-          error={!!serialError}
-          errorMessage={serialError}
-          size="md"
-        />
+      <div className="space-y-8">
+        <FormSection icon={<LayersIcon />} title={t("cards.cardType")}>
+          <CardCategoryTypeSelects
+            categoryId={categoryId}
+            cardTypeId={cardTypeId}
+            required
+            onChange={(nextCategory, nextType) => {
+              setCategoryId(nextCategory);
+              setCardTypeId(nextType);
+            }}
+          />
+        </FormSection>
+        <FormSection icon={<EditIcon />} title={t("cards.serialNumber")}>
+          <Input
+            name="serialNumber"
+            label={`${t("cards.serialNumber")} *`}
+            value={serial}
+            onChange={(event) => {
+              setSerial(event.target.value);
+              setSerialError("");
+            }}
+            disabled={!canViewSerial}
+            error={!!serialError}
+            errorMessage={serialError}
+            size="md"
+          />
+        </FormSection>
       </div>
     </FormModal>
   );

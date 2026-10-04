@@ -16,6 +16,9 @@ import { useSaveCardTypeDiscountsMutation } from "../api/CardTypeDiscounts.api";
 import CardTypesPicker from "./CardTypesPicker";
 import DiscountValueFields from "./DiscountValueFields";
 import { DiscountType, type DiscountTypeValue } from "../types/CardTypeDiscounts.types";
+import FormSection from "../../../shared/components/forms/FormSection";
+import LayersIcon from "../../../assets/icons/LayersIcon";
+import UsersIcon from "../../../assets/icons/UsersIcon";
 
 interface AddCardTypeDiscountsModalProps {
   open: boolean;
@@ -90,14 +93,12 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
       size="lg"
       icon={<WalletIcon className="h-6 w-6" />}
     >
-      <div className="space-y-6">
-        <div>
-          <h4 className="list-header-title mb-3">{t("discounts.cardTypes")}</h4>
+      <div className="space-y-8">
+        <FormSection icon={<LayersIcon />} title={t("discounts.cardTypes")}>
           <CardTypesPicker selected={cardTypeIds} onChange={setCardTypeIds} />
-        </div>
+        </FormSection>
         {!customer && (
-          <div className="space-y-3">
-            <h4 className="list-header-title">{t("discounts.customers")}</h4>
+          <FormSection icon={<UsersIcon />} title={t("discounts.customers")}>
             <Tabs
               tabs={[
                 { id: "one", label: t("discounts.oneCustomer") },
@@ -138,9 +139,9 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
                 </div>
               </div>
             )}
-          </div>
+          </FormSection>
         )}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <FormSection icon={<WalletIcon />} title={t("discounts.discount")} columns={2}>
           <DiscountValueFields
             type={discountType}
             value={discountValue}
@@ -152,7 +153,7 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
               setValueError("");
             }}
           />
-        </div>
+        </FormSection>
         <Message variant="info">{t("discounts.replaceHint")}</Message>
       </div>
     </FormModal>

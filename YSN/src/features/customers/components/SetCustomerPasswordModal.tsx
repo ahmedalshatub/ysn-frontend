@@ -9,6 +9,7 @@ import KeyIcon from "../../../assets/icons/KeyIcon";
 import { useSetCustomerPasswordMutation } from "../api/Customers.api";
 import { setPasswordSchema, type SetPasswordFormValues } from "../validation/Customers.validation";
 import { customerFullName, type CustomerListDto } from "../types/Customers.types";
+import FormSection from "../../../shared/components/forms/FormSection";
 
 interface SetCustomerPasswordModalProps {
   open: boolean;
@@ -57,22 +58,24 @@ const SetCustomerPasswordModal = ({ open, customer, onClose, onSuccess }: SetCus
       size="md"
       icon={<KeyIcon className="h-6 w-6" />}
     >
-      <div className="space-y-4">
-        <FormPasswordInput<SetPasswordFormValues>
-          name="newPassword"
-          control={control}
-          label={`${t("customers.newPassword")} *`}
-          error={!!errors.newPassword}
-          errorMessage={fieldError(errors.newPassword?.message)}
-        />
-        <FormPasswordInput<SetPasswordFormValues>
-          name="confirmPassword"
-          control={control}
-          label={`${t("customers.confirmPassword")} *`}
-          error={!!errors.confirmPassword}
-          errorMessage={fieldError(errors.confirmPassword?.message)}
-        />
-        <p className="form-hint">{t("customers.passwordHandedOver")}</p>
+      <div className="space-y-8">
+        <FormSection icon={<KeyIcon />} title={t("customers.newPassword")}>
+          <FormPasswordInput<SetPasswordFormValues>
+            name="newPassword"
+            control={control}
+            label={`${t("customers.newPassword")} *`}
+            error={!!errors.newPassword}
+            errorMessage={fieldError(errors.newPassword?.message)}
+          />
+          <FormPasswordInput<SetPasswordFormValues>
+            name="confirmPassword"
+            control={control}
+            label={`${t("customers.confirmPassword")} *`}
+            error={!!errors.confirmPassword}
+            errorMessage={fieldError(errors.confirmPassword?.message)}
+          />
+          <p className="form-hint">{t("customers.passwordHandedOver")}</p>
+        </FormSection>
       </div>
     </FormModal>
   );

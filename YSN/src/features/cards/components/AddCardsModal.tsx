@@ -15,6 +15,8 @@ import CardsTextFileInput from "./CardsTextFileInput";
 import CardsExcelInput from "./CardsExcelInput";
 import CardProblemsReviewModal from "./CardProblemsReviewModal";
 import { bulkCardProblemKeys, type AddCardsResultDto, type CardFilter } from "../types/Cards.types";
+import FormSection from "../../../shared/components/forms/FormSection";
+import ListBulletIcon from "../../../assets/icons/ListBulletIcon";
 
 interface AddCardsModalProps {
   open: boolean;
@@ -91,37 +93,41 @@ const AddCardsModal = ({ open, fixedFilter, onClose, onSuccess }: AddCardsModalP
         size="lg"
         icon={<LayersIcon className="h-6 w-6" />}
       >
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <CardCategoryTypeSelects
-              categoryId={categoryId}
-              cardTypeId={cardTypeId}
-              required
-              typeErrorMessage={typeError}
-              onChange={(nextCategory, nextType) => {
-                setCategoryId(nextCategory);
-                setCardTypeId(nextType);
-                setTypeError("");
-              }}
-            />
-          </div>
-          <Tabs tabs={tabs} activeTab={method} onChange={(id) => setMethod(id as Method)} />
-          {method === "single" && (
-            <Input name="serialNumber" label={`${t("cards.serialNumber")} *`} value={single} onChange={(event) => setSingle(event.target.value)} size="md" />
-          )}
-          {method === "multiple" && <MultipleCardsInput rows={rows} onChange={setRows} />}
-          {method === "textArea" && (
-            <TextArea
-              name="serials"
-              label={t("cards.onePerLine")}
-              value={text}
-              onChange={(event) => setText(event.target.value)}
-              rows={10}
-            />
-          )}
-          {method === "textFile" && <CardsTextFileInput onRead={setFileSerials} />}
-          {method === "excel" && <CardsExcelInput onRead={setFileSerials} />}
-          {method !== "single" && <Message variant="info">{t("cards.serialsRead", { count: serials.length })}</Message>}
+        <div className="space-y-8">
+          <FormSection icon={<LayersIcon />} title={t("cards.cardType")}>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <CardCategoryTypeSelects
+                categoryId={categoryId}
+                cardTypeId={cardTypeId}
+                required
+                typeErrorMessage={typeError}
+                onChange={(nextCategory, nextType) => {
+                  setCategoryId(nextCategory);
+                  setCardTypeId(nextType);
+                  setTypeError("");
+                }}
+              />
+            </div>
+          </FormSection>
+          <FormSection icon={<ListBulletIcon />} title={t("cards.serials")}>
+            <Tabs tabs={tabs} activeTab={method} onChange={(id) => setMethod(id as Method)} />
+            {method === "single" && (
+              <Input name="serialNumber" label={`${t("cards.serialNumber")} *`} value={single} onChange={(event) => setSingle(event.target.value)} size="md" />
+            )}
+            {method === "multiple" && <MultipleCardsInput rows={rows} onChange={setRows} />}
+            {method === "textArea" && (
+              <TextArea
+                name="serials"
+                label={t("cards.onePerLine")}
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+                rows={10}
+              />
+            )}
+            {method === "textFile" && <CardsTextFileInput onRead={setFileSerials} />}
+            {method === "excel" && <CardsExcelInput onRead={setFileSerials} />}
+            {method !== "single" && <Message variant="info">{t("cards.serialsRead", { count: serials.length })}</Message>}
+          </FormSection>
         </div>
       </FormModal>
 

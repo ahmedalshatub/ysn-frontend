@@ -16,6 +16,7 @@ import {
   type CardSelection,
   type CardsBulkActionResultDto,
 } from "../types/Cards.types";
+import FormSection from "../../../shared/components/forms/FormSection";
 
 interface BulkCardActionModalProps {
   open: boolean;
@@ -79,22 +80,24 @@ const BulkCardActionModal = ({ open, action, selection, selectedCount, onClose, 
         size="md"
         icon={<LayersIcon className="h-6 w-6" />}
       >
-        <div className="space-y-4">
+        <div className="space-y-8">
           <Message variant={action === BulkCardAction.Delete ? "warning" : "info"}>
             {t("cards.bulkConfirm", { action: t(bulkCardActionKeys[action]), count: selectedCount })}
           </Message>
           {isChangeType && (
-            <CardCategoryTypeSelects
-              categoryId={categoryId}
-              cardTypeId={targetId}
-              required
-              typeErrorMessage={typeError}
-              onChange={(nextCategory, nextType) => {
-                setCategoryId(nextCategory);
-                setTargetId(nextType);
-                setTypeError("");
-              }}
-            />
+            <FormSection icon={<LayersIcon />} title={t("cards.cardType")}>
+              <CardCategoryTypeSelects
+                categoryId={categoryId}
+                cardTypeId={targetId}
+                required
+                typeErrorMessage={typeError}
+                onChange={(nextCategory, nextType) => {
+                  setCategoryId(nextCategory);
+                  setTargetId(nextType);
+                  setTypeError("");
+                }}
+              />
+            </FormSection>
           )}
         </div>
       </FormModal>

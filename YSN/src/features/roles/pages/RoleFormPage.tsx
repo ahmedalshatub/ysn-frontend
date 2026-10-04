@@ -17,6 +17,8 @@ import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import { DataLanguage } from "../../../shared/types/DataLanguage.types";
 import ShieldIcon from "../../../assets/icons/ShieldIcon";
 import InfoIcon from "../../../assets/icons/InfoIcon";
+import GlobeIcon from "../../../assets/icons/GlobeIcon";
+import FormSection from "../../../shared/components/forms/FormSection";
 import CheckIcon from "../../../assets/icons/CheckIcon";
 import XIcon from "../../../assets/icons/XIcon";
 import { useAddRoleMutation, useGetPermissionsQuery, useGetRoleQuery, useUpdateRoleMutation } from "../api/Roles.api";
@@ -132,50 +134,52 @@ const RoleFormPage = () => {
           {isLocked && <Message variant="warning">{t("roles.systemRoleLocked")}</Message>}
 
           <Card variant="elevated" padding="lg">
-            <div className="form-section-title mb-4">
-              <InfoIcon className="h-4 w-4 text-primary" />
-              <h3>{t("roles.details")}</h3>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <FormInput<RoleFormValues>
-                name="translations.0.name"
-                control={control}
-                label={`${t("roles.nameArabic")} *`}
-                disabledStatus={isLocked}
-                error={!!errors.translations?.[0]?.name}
-                errorMessage={fieldError(errors.translations?.[0]?.name?.message)}
-              />
-              <FormInput<RoleFormValues>
-                name="translations.1.name"
-                control={control}
-                label={`${t("roles.nameEnglish")} *`}
-                disabledStatus={isLocked}
-                error={!!errors.translations?.[1]?.name}
-                errorMessage={fieldError(errors.translations?.[1]?.name?.message)}
-              />
-              <FormTextArea<RoleFormValues>
-                name="translations.0.description"
-                control={control}
-                label={t("roles.descriptionArabic")}
-                rows={3}
-                error={!!errors.translations?.[0]?.description}
-                errorMessage={fieldError(errors.translations?.[0]?.description?.message)}
-              />
-              <FormTextArea<RoleFormValues>
-                name="translations.1.description"
-                control={control}
-                label={t("roles.descriptionEnglish")}
-                rows={3}
-                error={!!errors.translations?.[1]?.description}
-                errorMessage={fieldError(errors.translations?.[1]?.description?.message)}
-              />
-              <FormCheckbox<RoleFormValues>
-                name="isActive"
-                control={control}
-                label={t("roles.isActive")}
-                description={t("roles.isActiveHint")}
-                disabledStatus={isLocked}
-              />
+            <div className="space-y-8">
+              <FormSection icon={<GlobeIcon />} title={t("common.arabicTranslation")}>
+                <FormInput<RoleFormValues>
+                  name="translations.0.name"
+                  control={control}
+                  label={`${t("roles.nameArabic")} *`}
+                  disabledStatus={isLocked}
+                  error={!!errors.translations?.[0]?.name}
+                  errorMessage={fieldError(errors.translations?.[0]?.name?.message)}
+                />
+                <FormTextArea<RoleFormValues>
+                  name="translations.0.description"
+                  control={control}
+                  label={t("roles.descriptionArabic")}
+                  rows={3}
+                  error={!!errors.translations?.[0]?.description}
+                  errorMessage={fieldError(errors.translations?.[0]?.description?.message)}
+                />
+              </FormSection>
+              <FormSection icon={<GlobeIcon />} title={t("common.englishTranslation")}>
+                <FormInput<RoleFormValues>
+                  name="translations.1.name"
+                  control={control}
+                  label={`${t("roles.nameEnglish")} *`}
+                  disabledStatus={isLocked}
+                  error={!!errors.translations?.[1]?.name}
+                  errorMessage={fieldError(errors.translations?.[1]?.name?.message)}
+                />
+                <FormTextArea<RoleFormValues>
+                  name="translations.1.description"
+                  control={control}
+                  label={t("roles.descriptionEnglish")}
+                  rows={3}
+                  error={!!errors.translations?.[1]?.description}
+                  errorMessage={fieldError(errors.translations?.[1]?.description?.message)}
+                />
+              </FormSection>
+              <FormSection icon={<InfoIcon />} title={t("roles.details")}>
+                <FormCheckbox<RoleFormValues>
+                  name="isActive"
+                  control={control}
+                  label={t("roles.isActive")}
+                  description={t("roles.isActiveHint")}
+                  disabledStatus={isLocked}
+                />
+              </FormSection>
             </div>
           </Card>
 

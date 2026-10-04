@@ -15,6 +15,8 @@ import type { CustomerListDto } from "../../customers/types/Customers.types";
 import { useAddTransactionMutation } from "../api/Transactions.api";
 import { balanceChangeSchema, type BalanceChangeFormValues } from "../validation/Transactions.validation";
 import { TransactionType } from "../types/Transactions.types";
+import FormSection from "../../../shared/components/forms/FormSection";
+import UserIcon from "../../../assets/icons/UserIcon";
 
 interface BalanceChangeModalProps {
   open: boolean;
@@ -71,36 +73,40 @@ const BalanceChangeModal = ({ open, type, customer, onClose, onSuccess }: Balanc
       size="md"
       icon={<WalletIcon className="h-6 w-6" />}
     >
-      <div className="space-y-4">
-        <CustomerSearchSelect<BalanceChangeFormValues>
-          name="customerId"
-          control={control}
-          label={`${t("transactions.customer")} *`}
-          initialCustomer={customer}
-          error={!!errors.customerId}
-          errorMessage={fieldError(errors.customerId?.message)}
-        />
-        {customer && (
-          <Message variant="info">
-            {t(isWithdraw ? "transactions.maxWithdraw" : "transactions.currentBalanceIs", { amount: formatCurrency(customer.balance) })}
-          </Message>
-        )}
-        <FormInput<BalanceChangeFormValues>
-          name="amount"
-          type="number"
-          control={control}
-          label={`${t("transactions.amount")} *`}
-          error={!!errors.amount}
-          errorMessage={fieldError(errors.amount?.message)}
-        />
-        <FormTextArea<BalanceChangeFormValues>
-          name="description"
-          control={control}
-          label={`${t("transactions.description")} *`}
-          rows={3}
-          error={!!errors.description}
-          errorMessage={fieldError(errors.description?.message)}
-        />
+      <div className="space-y-8">
+        <FormSection icon={<UserIcon />} title={t("transactions.customer")}>
+          <CustomerSearchSelect<BalanceChangeFormValues>
+            name="customerId"
+            control={control}
+            label={`${t("transactions.customer")} *`}
+            initialCustomer={customer}
+            error={!!errors.customerId}
+            errorMessage={fieldError(errors.customerId?.message)}
+          />
+          {customer && (
+            <Message variant="info">
+              {t(isWithdraw ? "transactions.maxWithdraw" : "transactions.currentBalanceIs", { amount: formatCurrency(customer.balance) })}
+            </Message>
+          )}
+        </FormSection>
+        <FormSection icon={<WalletIcon />} title={t("transactions.amount")}>
+          <FormInput<BalanceChangeFormValues>
+            name="amount"
+            type="number"
+            control={control}
+            label={`${t("transactions.amount")} *`}
+            error={!!errors.amount}
+            errorMessage={fieldError(errors.amount?.message)}
+          />
+          <FormTextArea<BalanceChangeFormValues>
+            name="description"
+            control={control}
+            label={`${t("transactions.description")} *`}
+            rows={3}
+            error={!!errors.description}
+            errorMessage={fieldError(errors.description?.message)}
+          />
+        </FormSection>
       </div>
     </FormModal>
   );
