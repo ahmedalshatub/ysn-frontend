@@ -2052,6 +2052,7 @@ export default {
       successRestore: "جۆرێ کارتێ هاتە ڤەگەڕاندن",
     },
     transactions: {
+      id: "ژمارە",
       addTransaction: "زێدەکرنا مامەلێ",
       pageTitle: "مامەلە",
       transaction: "مامەلە",
@@ -2110,6 +2111,7 @@ export default {
       cancelled: "هاتە هەلوەشاندن",
     },
     cards: {
+      id: "ژمارە",
       pageTitle: "کارت",
       serials: "ژمارێن زنجیرەیی",
       takenCards: "کارتێن هاتینە وەرگرتن",

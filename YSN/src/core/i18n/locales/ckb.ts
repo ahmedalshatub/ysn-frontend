@@ -2052,6 +2052,7 @@ export default {
       successRestore: "جۆری کارت گەڕێندرایەوە",
     },
     transactions: {
+      id: "ژمارە",
       addTransaction: "زیادکردنی مامەڵە",
       pageTitle: "مامەڵەکان",
       transaction: "مامەڵە",
@@ -2110,6 +2111,7 @@ export default {
       cancelled: "هەڵوەشاوە",
     },
     cards: {
+      id: "ژمارە",
       pageTitle: "کارتەکان",
       serials: "ژمارە زنجیرەییەکان",
       takenCards: "کارتە وەرگیراوەکان",

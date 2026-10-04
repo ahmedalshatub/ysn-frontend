@@ -2052,6 +2052,7 @@ export default {
       successRestore: "تمت استعادة نوع البطاقة",
     },
     transactions: {
+      id: "الرقم",
       addTransaction: "إضافة عملية",
       pageTitle: "العمليات",
       transaction: "عملية",
@@ -2110,6 +2111,7 @@ export default {
       cancelled: "ملغاة",
     },
     cards: {
+      id: "الرقم",
       pageTitle: "البطاقات",
       serials: "الأرقام التسلسلية",
       takenCards: "البطاقات المأخوذة",

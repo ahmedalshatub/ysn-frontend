@@ -45,6 +45,16 @@ export const transactionStatusVariants: Record<TransactionStatusValue, "warning"
   [TransactionStatus.Cancelled]: "secondary",
 };
 
+export const transactionTypeVariants: Record<TransactionTypeValue, "success" | "danger" | "info" | "primary" | "warning" | "secondary" | "dark"> = {
+  [TransactionType.Deposit]: "success",
+  [TransactionType.Withdraw]: "danger",
+  [TransactionType.AgentDeposit]: "info",
+  [TransactionType.EPayment]: "primary",
+  [TransactionType.CardPurchase]: "warning",
+  [TransactionType.Reversal]: "dark",
+  [TransactionType.Restore]: "secondary",
+};
+
 export const reversibleTypes: TransactionTypeValue[] = [
   TransactionType.Deposit,
   TransactionType.Withdraw,

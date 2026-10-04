@@ -17,6 +17,7 @@ import {
   reversibleTypes,
   transactionStatusKeys,
   transactionStatusVariants,
+  transactionTypeVariants,
   transactionTypeKeys,
   type TransactionListDto,
   type TransactionRequest,
@@ -62,16 +63,25 @@ const TransactionsTable = ({
   const columns = useMemo(
     () => [
       {
+        key: "id",
+        header: t("transactions.id"),
+        sortable: true,
+        width: "80px",
+        render: (row: TransactionListDto) => <span className="font-semibold">#{row.id}</span>,
+      },
+      {
         key: "type",
         header: t("transactions.type"),
         sortable: true,
-        width: "150px",
-        render: (row: TransactionListDto) => (
-          <div className="flex flex-col gap-1">
-            <Badge label={t(transactionTypeKeys[row.type])} variant="info" size="sm" />
-            <Badge label={t(transactionStatusKeys[row.status])} variant={transactionStatusVariants[row.status]} size="sm" />
-          </div>
-        ),
+        width: "140px",
+        render: (row: TransactionListDto) => <Badge label={t(transactionTypeKeys[row.type])} variant={transactionTypeVariants[row.type]} size="sm" />,
+      },
+      {
+        key: "status",
+        header: t("transactions.status"),
+        sortable: true,
+        width: "120px",
+        render: (row: TransactionListDto) => <Badge label={t(transactionStatusKeys[row.status])} variant={transactionStatusVariants[row.status]} size="sm" />,
       },
       {
         key: "amount",
@@ -90,6 +100,13 @@ const TransactionsTable = ({
         render: (row: TransactionListDto) => (
           <div className="flex flex-col gap-1">
             <span className="font-medium">{row.customerName ?? "-"}</span>
+            {(row.customerPhone || row.customerCityName) && (
+              <span className="text-xs ce-muted">
+                <span dir="ltr">{row.customerPhone ?? ""}</span>
+                {row.customerPhone && row.customerCityName ? " - " : ""}
+                {row.customerCityName ?? ""}
+              </span>
+            )}
             {row.customerBalanceAfter !== null && (
               <span className="text-xs">
                 {formatCurrency(row.customerBalanceBefore)} → {formatCurrency(row.customerBalanceAfter)}
@@ -118,7 +135,13 @@ const TransactionsTable = ({
       {
         key: "description",
         header: t("transactions.description"),
-        render: (row: TransactionListDto) => <span className="truncate">{row.description}</span>,
+        render: (row: TransactionListDto) => (
+          <div className="flex flex-col gap-1">
+            <span className="truncate">{row.description || "-"}</span>
+            {row.relatedTransactionId && <span className="text-xs ce-muted">{t("transactions.related")}: #{row.relatedTransactionId}</span>}
+            {row.invoiceId && <span className="text-xs ce-muted">{t("invoices.invoice")}: #{row.invoiceId}</span>}
+          </div>
+        ),
       },
       {
         key: "createdAt",
@@ -129,6 +152,11 @@ const TransactionsTable = ({
           <div className="flex flex-col gap-1">
             <span>{formatDate(row.createdAt, { locale: i18n.language })}</span>
             {row.creator && <span className="text-xs">{row.creator}</span>}
+            {row.completedAt && row.completedAt !== row.createdAt && (
+              <span className="text-xs ce-muted">
+                {t("transactions.completedAt")}: {formatDate(row.completedAt, { locale: i18n.language })}
+              </span>
+            )}
           </div>
         ),
       },

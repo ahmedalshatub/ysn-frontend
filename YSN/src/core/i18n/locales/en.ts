@@ -2052,6 +2052,7 @@ export default {
       successRestore: "Card type restored",
     },
     transactions: {
+      id: "ID",
       addTransaction: "Add transaction",
       pageTitle: "Transactions",
       transaction: "Transaction",
@@ -2110,6 +2111,7 @@ export default {
       cancelled: "Cancelled",
     },
     cards: {
+      id: "ID",
       pageTitle: "Cards",
       serials: "Serial numbers",
       takenCards: "Cards taken",

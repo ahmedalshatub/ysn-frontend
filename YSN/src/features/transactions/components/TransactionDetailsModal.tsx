@@ -18,7 +18,7 @@ import AlertCircleIcon from "../../../assets/icons/AlertCircleIcon";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
 import { useGetTransactionQuery } from "../api/Transactions.api";
-import { transactionStatusKeys, transactionStatusVariants, transactionTypeKeys } from "../types/Transactions.types";
+import { transactionStatusKeys, transactionStatusVariants, transactionTypeKeys, transactionTypeVariants } from "../types/Transactions.types";
 
 interface TransactionDetailsModalProps {
   open: boolean;
@@ -44,7 +44,7 @@ const TransactionDetailsModal = ({ open, transactionId, onClose }: TransactionDe
         ) : (
           <div className="space-y-6">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge label={t(transactionTypeKeys[transaction.type])} variant="info" size="sm" />
+              <Badge label={t(transactionTypeKeys[transaction.type])} variant={transactionTypeVariants[transaction.type]} size="sm" />
               <Badge label={t(transactionStatusKeys[transaction.status])} variant={transactionStatusVariants[transaction.status]} size="sm" />
               {transaction.isDeleted && <Badge label={t("common.deleted")} variant="danger" size="sm" />}
             </div>
