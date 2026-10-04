@@ -127,9 +127,9 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
         <div>
           <div className="form-section-title mb-4">
             <GlobeIcon className="w-4 h-4 text-primary" />
-            <h3>{t("cities.names")}</h3>
+            <h3>{t("common.arabicTranslation")}</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <FormInput
               name="translations.0.name"
               control={control}
@@ -137,6 +137,15 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
               error={!!errors.translations?.[0]?.name}
               errorMessage={fieldError(errors.translations?.[0]?.name?.message)}
             />
+          </div>
+        </div>
+
+        <div>
+          <div className="form-section-title mb-4">
+            <GlobeIcon className="w-4 h-4 text-primary" />
+            <h3>{t("common.englishTranslation")}</h3>
+          </div>
+          <div className="grid grid-cols-1 gap-4">
             <FormInput
               name="translations.1.name"
               control={control}

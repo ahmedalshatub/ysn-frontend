@@ -97,6 +97,8 @@ export default {
       requiredField: "هذا الحقل مطلوب",
       filters: "عوامل التصفية",
       basicInfo: "المعلومات الأساسية",
+      arabicTranslation: "الترجمة العربية",
+      englishTranslation: "الترجمة الإنجليزية",
       cardView: "بطاقات",
       tableView: "جدول",
       totalItems: "{{count}} عنصر",
@@ -1568,6 +1570,7 @@ export default {
     },
     cardTypes: {
       pageTitle: "أنواع البطاقات",
+      pricing: "العملاء والأسعار",
       addCardType: "إضافة نوع بطاقة",
       editCardType: "تعديل نوع البطاقة",
       name: "الاسم",

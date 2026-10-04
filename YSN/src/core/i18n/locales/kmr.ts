@@ -97,6 +97,8 @@ export default {
       requiredField: "ئەڤ خانە پێدڤییە",
       filters: "فلتەر",
       basicInfo: "زانیاریێن سەرەکی",
+      arabicTranslation: "وەرگێرانا عەرەبی",
+      englishTranslation: "وەرگێرانا ئینگلیزی",
       cardView: "کارت",
       tableView: "خشتە",
       totalItems: "{{count}} دانە",
@@ -1568,6 +1570,7 @@ export default {
     },
     cardTypes: {
       pageTitle: "جۆرێن کارتان",
+      pricing: "کڕیار و بها",
       addCardType: "زێدەکرنا جۆرێ کارتێ",
       editCardType: "دەستکاریکرنا جۆرێ کارتێ",
       name: "ناڤ",

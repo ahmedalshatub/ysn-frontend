@@ -97,6 +97,8 @@ export default {
       requiredField: "ئەم خانەیە پێویستە",
       filters: "فلتەرەکان",
       basicInfo: "زانیاریی بنەڕەتی",
+      arabicTranslation: "وەرگێڕانی عەرەبی",
+      englishTranslation: "وەرگێڕانی ئینگلیزی",
       cardView: "کارتەکان",
       tableView: "خشتە",
       totalItems: "{{count}} دانە",
@@ -1568,6 +1570,7 @@ export default {
     },
     cardTypes: {
       pageTitle: "جۆرەکانی کارت",
+      pricing: "کڕیاران و نرخەکان",
       addCardType: "زیادکردنی جۆری کارت",
       editCardType: "دەستکاریکردنی جۆری کارت",
       name: "ناو",

@@ -6,13 +6,16 @@ import FormModal from "../../../shared/components/modals/FormModal";
 import FormInput from "../../../shared/components/inputs/FormInput";
 import FormSelect from "../../../shared/components/inputs/FormSelect";
 import FormCheckbox from "../../../shared/components/inputs/FormCheckbox";
-import AvatarUpload from "../../../shared/components/media/AvatarUpload";
-import { useFileSrc } from "../../../shared/components/media/FileImage";
+import FileUpload from "../../../shared/components/inputs/FileUpload";
+import FormSection from "../../../shared/components/forms/FormSection";
 import { showSuccess, showError } from "../../../shared/components/feedback/Toast";
 import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import useMyCities from "../../../shared/hooks/useMyCities";
 import { DataLanguage } from "../../../shared/types/DataLanguage.types";
 import LayersIcon from "../../../assets/icons/LayersIcon";
+import GlobeIcon from "../../../assets/icons/GlobeIcon";
+import InfoIcon from "../../../assets/icons/InfoIcon";
+import ImageIcon from "../../../assets/icons/ImageIcon";
 import { useAddCardCategoryMutation, useGetCardCategoryQuery, useUpdateCardCategoryMutation } from "../api/CardCategories.api";
 import { cardCategorySchema, type CardCategoryFormValues } from "../validation/CardCategories.validation";
 
@@ -23,7 +26,8 @@ interface CardCategoryModalProps {
   onSuccess: () => void;
 }
 
-const MAX_IMAGE_MB = 5;
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const IMAGE_ACCEPT = { "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"] };
 
 const emptyValues: CardCategoryFormValues = {
   cityId: 0,
@@ -47,9 +51,8 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
   const [addCategory, { isLoading: isAdding }] = useAddCardCategoryMutation();
   const [updateCategory, { isLoading: isUpdating }] = useUpdateCardCategoryMutation();
 
-  const currentImage = useFileSrc(category?.imageUrl);
   const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState("");
+  const imageFiles = useMemo(() => (image ? [image] : []), [image]);
   const [imageError, setImageError] = useState("");
 
   const {
@@ -66,7 +69,6 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
   useEffect(() => {
     if (!open) return;
     setImage(null);
-    setPreview("");
     setImageError("");
     if (isEdit && category) {
       const arabic = category.translations.find((translation) => translation.languageCode === DataLanguage.Arabic);
@@ -133,25 +135,8 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
       size="xl"
       icon={<LayersIcon className="h-6 w-6" />}
     >
-      <div className="space-y-6">
-        <div className="flex flex-col items-center gap-2">
-          <AvatarUpload
-            size={120}
-            shape="square"
-            accept="image/*"
-            maxSizeMB={MAX_IMAGE_MB}
-            value={preview || currentImage}
-            onChange={(file, next) => {
-              setImage(file);
-              setPreview(next);
-              setImageError("");
-            }}
-            onError={(message) => showError(message)}
-          />
-          <span className="form-hint">{t("cardCategories.imageHint")}</span>
-          {imageError && <span className="permissions-matrix-error">{imageError}</span>}
-        </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="space-y-8">
+        <FormSection icon={<GlobeIcon />} title={t("common.arabicTranslation")}>
           <FormInput<CardCategoryFormValues>
             name="translations.0.name"
             control={control}
@@ -159,6 +144,8 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
             error={!!errors.translations?.[0]?.name}
             errorMessage={fieldError(errors.translations?.[0]?.name?.message)}
           />
+        </FormSection>
+        <FormSection icon={<GlobeIcon />} title={t("common.englishTranslation")}>
           <FormInput<CardCategoryFormValues>
             name="translations.1.name"
             control={control}
@@ -166,6 +153,8 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
             error={!!errors.translations?.[1]?.name}
             errorMessage={fieldError(errors.translations?.[1]?.name?.message)}
           />
+        </FormSection>
+        <FormSection icon={<InfoIcon />} title={t("common.basicInfo")} columns={2}>
           <FormSelect<CardCategoryFormValues>
             name="cityId"
             control={control}
@@ -192,7 +181,24 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
             label={t("cardCategories.isActive")}
             description={t("cardCategories.isActiveHint")}
           />
-        </div>
+        </FormSection>
+        <FormSection icon={<ImageIcon />} title={t("common.image")}>
+          <FileUpload
+            accept={IMAGE_ACCEPT}
+            multiple={false}
+            maxFiles={1}
+            maxSize={MAX_IMAGE_BYTES}
+            label={`${t("common.image")}${isEdit ? "" : " *"}`}
+            description={t("cardCategories.imageHint")}
+            value={imageFiles}
+            currentImage={category?.imageUrl}
+            error={imageError}
+            onChange={(files) => {
+              setImage(files[files.length - 1] ?? null);
+              setImageError("");
+            }}
+          />
+        </FormSection>
       </div>
     </FormModal>
   );

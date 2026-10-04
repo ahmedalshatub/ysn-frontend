@@ -97,6 +97,8 @@ export default {
       from: "From",
       to: "To",
       basicInfo: "Basic Information",
+      arabicTranslation: "Arabic translation",
+      englishTranslation: "English translation",
       cardView: "Cards",
       tableView: "Table",
       totalItems: "{{count}} items",
@@ -1568,6 +1570,7 @@ export default {
     },
     cardTypes: {
       pageTitle: "Card types",
+      pricing: "Customers and prices",
       addCardType: "Add card type",
       editCardType: "Edit card type",
       name: "Name",
