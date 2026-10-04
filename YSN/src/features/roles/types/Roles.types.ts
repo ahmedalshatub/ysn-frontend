@@ -59,6 +59,7 @@ export interface PermissionDto {
   action: string;
   sortOrder: number;
   scope: number;
+  endpoints?: string[];
 }
 
 export interface PermissionModuleGroup {

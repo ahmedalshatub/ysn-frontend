@@ -16,54 +16,146 @@
   color: $color-danger;
 }
 
-.permissions-matrix {
+.permissions-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.permission-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.permission-group {
   border: 1px solid $border-color;
-  border-radius: 12px;
+  border-radius: 14px;
+  background-color: $surface-bg;
   overflow: hidden;
 }
 
-.permissions-matrix-row {
-  display: grid;
-  grid-template-columns: minmax(180px, 220px) 1fr;
-  gap: 16px;
+.permission-group-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   padding: 14px 16px;
-  border-bottom: 1px solid $border-color-light;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
 }
 
-.permissions-matrix-module {
-  font-weight: 600;
+.permission-group-toggle {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.permission-group-title {
+  font-size: 0.95rem;
+  font-weight: 700;
   color: $heading-color;
 }
 
-.permissions-matrix-actions {
+.permission-group-description {
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  color: $text-muted;
+}
+
+.permission-group-chevron {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: $text-muted;
+  transition: transform 0.2s ease;
+}
+
+.permission-group-chevron-open {
+  transform: rotate(180deg);
+}
+
+.permission-group-body {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px 16px 16px;
+  border-top: 1px solid $border-color-light;
+  background-color: rgba($color-primary, 0.02);
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.permission-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid $border-color-light;
+  border-radius: 12px;
+  background-color: $surface-bg;
+  transition: border-color 0.15s ease;
+}
+
+.permission-item-checked {
+  border-color: rgba($color-primary, 0.45);
+}
+
+.permission-item-description {
+  font-size: 0.8125rem;
+  color: $text-muted;
+  padding-inline-start: 28px;
+}
+
+.permission-item-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 20px;
+  gap: 6px;
+  padding-inline-start: 28px;
+}
+
+.permission-item-code,
+.permission-item-endpoint {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+}
+
+.permission-item-code {
+  background-color: $color-primary-lighter;
+  color: $color-primary;
+}
+
+.permission-item-endpoint {
+  background-color: rgba(15, 23, 42, 0.06);
+  color: $text-muted;
 }
 
 [data-theme="dark"] {
-  .permissions-matrix {
+  .permission-group,
+  .permission-item {
     border-color: $dark-border-color;
+    background-color: $dark-surface-bg;
   }
 
-  .permissions-matrix-row {
-    border-bottom-color: $dark-border-color-light;
-  }
-
-  .permissions-matrix-module {
+  .permission-group-title {
     color: $dark-heading-color;
   }
 
-  .permissions-matrix-count {
-    color: $dark-text-muted;
+  .permission-group-body {
+    border-top-color: $dark-border-color;
+  }
+
+  .permission-item-code {
+    background-color: rgba($color-primary, 0.15);
+  }
+
+  .permission-item-endpoint {
+    background-color: rgba(255, 255, 255, 0.06);
   }
 }
