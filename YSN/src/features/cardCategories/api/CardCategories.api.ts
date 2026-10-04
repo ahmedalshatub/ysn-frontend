@@ -57,6 +57,13 @@ export const cardCategoriesApi = instanceApi.injectEndpoints({
         params: moveCardTypesToCategoryId ? { moveCardTypesToCategoryId } : undefined,
       }),
     }),
+    reorderCardCategories: builder.mutation<boolean, { cityId: number; ids: number[] }>({
+      query: (body) => ({
+        url: "CardCategories/reorder",
+        method: "PUT",
+        body,
+      }),
+    }),
     restoreCardCategory: builder.mutation<boolean, number>({
       query: (id) => ({
         url: `CardCategories/${id}/restore`,
@@ -104,6 +111,7 @@ export const {
   useUpdateCardCategoryMutation,
   useDeleteCardCategoryMutation,
   useRestoreCardCategoryMutation,
+  useReorderCardCategoriesMutation,
   useExportCardCategoriesMutation,
   useGetCustomerCardCategoryAccessQuery,
   useSetCustomerViewAllCategoriesMutation,

@@ -1,6 +1,12 @@
 export default {
   translation: {
     common: {
+      order: "ڕیزبەندی",
+      saveOrder: "پاشەکەوتکردنی ڕیزبەندی",
+      dragToReorder: "ڕابکێشە بۆ ڕیزکردنەوە",
+      dragToReorderHint: "بڕگەکان ڕابکێشە بۆ ئەو ڕیزبەندییەی دەتەوێت، یان تیرەکان بەکاربهێنە، پاشان پاشەکەوت بکە.",
+      moveUp: "بردن بۆ سەرەوە",
+      moveDown: "بردن بۆ خوارەوە",
       appName: "کانیاوەکانی سۆمەر",
       welcome: "بەخێربێیت",
       loading: "بارکردن...",
@@ -833,6 +839,7 @@ export default {
         NotFound: "نامەکە نەدۆزرایەوە",
       },
       CardCategories: {
+        ReorderMismatch: "لیستەکە گۆڕا. پەڕەکە نوێ بکەرەوە و دووبارە ڕیز بکە.",
         HasCardTypes: "ئەم پۆلە جۆری کارتی هەیە. سەرەتا بیانگوازەرەوە بۆ پۆلێکی تری هەمان شار.",
         InvalidMoveTarget: "پۆلێکی چالاکی هەمان شار هەڵبژێرە",
         MoveNameConflict: "هەندێک ناوی جۆری کارت لە پۆلە هەڵبژێردراوەکەدا هەن",
@@ -840,6 +847,9 @@ export default {
         NotFound: "پۆلەکە نەدۆزرایەوە",
       },
       CardCategory: {
+        SortOrderOutOfRange: "ڕیزێک لە 1 تا ئەو ژمارەیەی پیشان دراوە هەڵبژێرە",
+        ReorderIdsRequired: "هیچ شتێک نییە بۆ ڕیزکردن",
+        ReorderIdsInvalid: "لیستی ڕیزبەندی دروست نییە",
         AccessInvalid: "بنەڕەت یان ڕێگەدان یان بلۆک هەڵبژێرە",
         CityRequired: "شارێک هەڵبژێرە",
         ImageInvalid: "فایلی وێنە هەڵبژێرە",
@@ -854,6 +864,9 @@ export default {
         TwoTranslationsAreRequired: "ناوی عەرەبی و ئینگلیزی هەردووکیان پێویستن",
       },
       CardType: {
+        SortOrderOutOfRange: "ڕیزێک لە 1 تا ئەو ژمارەیەی پیشان دراوە هەڵبژێرە",
+        ReorderIdsRequired: "هیچ شتێک نییە بۆ ڕیزکردن",
+        ReorderIdsInvalid: "لیستی ڕیزبەندی دروست نییە",
         AgentPriceRequired: "نرخی بریکار بنووسە",
         AmountInvalid: "بڕ دەبێت لە 0 زیاتر بێت",
         AmountRequired: "بڕ بنووسە",
@@ -879,6 +892,7 @@ export default {
         TwoTranslationsAreRequired: "ناوی عەرەبی و ئینگلیزی هەردووکیان پێویستن",
       },
       CardTypes: {
+        ReorderMismatch: "لیستەکە گۆڕا. پەڕەکە نوێ بکەرەوە و دووبارە ڕیز بکە.",
         CategoryDeleted: "سەرەتا پۆلەکەی بگەڕێنەرەوە",
         NameAlreadyExists: "جۆرێکی تری کارتی ئەم پۆلە هەمان ناوی هەیە",
         NotFound: "جۆری کارتەکە نەدۆزرایەوە",
@@ -1548,6 +1562,8 @@ export default {
       tvRenewal: "نوێکردنەوەی تەلەفزیۆن",
     },
     cardCategories: {
+      orderTitle: "ڕیزکردنی پۆلەکان",
+      successReorder: "ڕیزبەندی پۆلەکان پاشەکەوت کرا",
       pageTitle: "پۆلەکانی کارت",
       addCategory: "زیادکردنی پۆل",
       editCategory: "دەستکاریکردنی پۆل",
@@ -1585,6 +1601,8 @@ export default {
       successAccess: "دەستگەیشتن پاشەکەوتکرا",
     },
     cardTypes: {
+      orderTitle: "ڕیزکردنی جۆرەکانی کارت",
+      successReorder: "ڕیزبەندی جۆرەکانی کارت پاشەکەوت کرا",
       pageTitle: "جۆرەکانی کارت",
       pricing: "کڕیاران و نرخەکان",
       addCardType: "زیادکردنی جۆری کارت",

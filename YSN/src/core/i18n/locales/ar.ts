@@ -1,6 +1,12 @@
 export default {
   translation: {
     common: {
+      order: "الترتيب",
+      saveOrder: "حفظ الترتيب",
+      dragToReorder: "اسحب لإعادة الترتيب",
+      dragToReorderHint: "اسحب العناصر إلى الترتيب الذي تريده، أو استخدم الأسهم، ثم احفظ.",
+      moveUp: "نقل للأعلى",
+      moveDown: "نقل للأسفل",
       appName: "ينابيع سومر",
       welcome: "مرحبا",
       loading: "جاري التحميل...",
@@ -833,6 +839,7 @@ export default {
         NotFound: "الرسالة غير موجودة",
       },
       CardCategories: {
+        ReorderMismatch: "تغيّرت القائمة. أعد تحميل الصفحة ورتّب مرة أخرى.",
         HasCardTypes: "لهذا الصنف أنواع بطاقات. انقلها إلى صنف آخر من المدينة نفسها أولاً.",
         InvalidMoveTarget: "اختر صنفاً مفعّلاً من المدينة نفسها",
         MoveNameConflict: "بعض أسماء أنواع البطاقات موجودة في الصنف المختار",
@@ -840,6 +847,9 @@ export default {
         NotFound: "الصنف غير موجود",
       },
       CardCategory: {
+        SortOrderOutOfRange: "اختر ترتيباً من 1 إلى الرقم المعروض",
+        ReorderIdsRequired: "لا يوجد ما يمكن ترتيبه",
+        ReorderIdsInvalid: "قائمة الترتيب غير صالحة",
         AccessInvalid: "اختر افتراضي أو سماح أو حجب",
         CityRequired: "اختر مدينة",
         ImageInvalid: "اختر ملف صورة",
@@ -854,6 +864,9 @@ export default {
         TwoTranslationsAreRequired: "الاسمان العربي والإنجليزي مطلوبان",
       },
       CardType: {
+        SortOrderOutOfRange: "اختر ترتيباً من 1 إلى الرقم المعروض",
+        ReorderIdsRequired: "لا يوجد ما يمكن ترتيبه",
+        ReorderIdsInvalid: "قائمة الترتيب غير صالحة",
         AgentPriceRequired: "أدخل سعر الوكيل",
         AmountInvalid: "يجب أن تكون القيمة أكبر من 0",
         AmountRequired: "أدخل القيمة",
@@ -879,6 +892,7 @@ export default {
         TwoTranslationsAreRequired: "الاسمان العربي والإنجليزي مطلوبان",
       },
       CardTypes: {
+        ReorderMismatch: "تغيّرت القائمة. أعد تحميل الصفحة ورتّب مرة أخرى.",
         CategoryDeleted: "استعد صنفه أولاً",
         NameAlreadyExists: "يوجد نوع بطاقة آخر في هذا الصنف بهذا الاسم",
         NotFound: "نوع البطاقة غير موجود",
@@ -1548,6 +1562,8 @@ export default {
       tvRenewal: "تجديد تلفزيون",
     },
     cardCategories: {
+      orderTitle: "ترتيب الفئات",
+      successReorder: "تم حفظ ترتيب الفئات",
       pageTitle: "أصناف البطاقات",
       addCategory: "إضافة صنف",
       editCategory: "تعديل الصنف",
@@ -1585,6 +1601,8 @@ export default {
       successAccess: "تم حفظ الوصول",
     },
     cardTypes: {
+      orderTitle: "ترتيب أنواع البطاقات",
+      successReorder: "تم حفظ ترتيب أنواع البطاقات",
       pageTitle: "أنواع البطاقات",
       pricing: "العملاء والأسعار",
       addCardType: "إضافة نوع بطاقة",

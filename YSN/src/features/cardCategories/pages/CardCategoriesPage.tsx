@@ -28,6 +28,7 @@ import RestoreCardCategoryAlert from "../components/RestoreCardCategoryAlert";
 import type { CardCategoryFilter, CardCategoryListDto, CardCategoryRequest } from "../types/CardCategories.types";
 import SortControl from "../../../shared/components/navigation/SortControl";
 import PageSizeSelect from "../../../shared/components/navigation/PageSizeSelect";
+import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -110,6 +111,16 @@ const CardCategoriesPage = () => {
         animated
         actions={
           <div className="flex items-center gap-2">
+            {can(Permission.CardCategoriesUpdate) && (
+              <Button
+                variant="light"
+                size="md"
+                label={t("common.order")}
+                onClick={() => navigate(`/card-categories/order${values.cityId ? `?cityId=${values.cityId}` : ""}`)}
+                icon={<ArrowUpDownIcon className="h-4 w-4" />}
+                iconPosition="left"
+              />
+            )}
             {can(Permission.CardCategoriesExport) && (
               <ExportButton loading={isExporting} onExport={() => exportCategories(queryFilter).unwrap()} />
             )}

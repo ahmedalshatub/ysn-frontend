@@ -48,7 +48,7 @@ export const cardTypeSchema = yup.object({
   sortOrder: yup
     .number()
     .transform((value, original) => (original === "" || Number.isNaN(value) ? 0 : value))
-    .min(0, "errors.CardType.SortOrderInvalid")
+    .min(1, "errors.CardType.SortOrderInvalid")
     .required(),
   isActive: yup.boolean().required(),
   translations: yup.array().of(translationSchema).length(2, "errors.CardType.TwoTranslationsAreRequired").required(),

@@ -54,6 +54,13 @@ export const cardTypesApi = instanceApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    reorderCardTypes: builder.mutation<boolean, { cardCategoryId: number; ids: number[] }>({
+      query: (body) => ({
+        url: "CardTypes/reorder",
+        method: "PUT",
+        body,
+      }),
+    }),
     restoreCardType: builder.mutation<boolean, number>({
       query: (id) => ({
         url: `CardTypes/${id}/restore`,
@@ -78,5 +85,6 @@ export const {
   useUpdateCardTypeMutation,
   useDeleteCardTypeMutation,
   useRestoreCardTypeMutation,
+  useReorderCardTypesMutation,
   useExportCardTypesMutation,
 } = cardTypesApi;

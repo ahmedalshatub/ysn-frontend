@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import FormModal from "../../../shared/components/modals/FormModal";
@@ -16,7 +16,7 @@ import LayersIcon from "../../../assets/icons/LayersIcon";
 import GlobeIcon from "../../../assets/icons/GlobeIcon";
 import InfoIcon from "../../../assets/icons/InfoIcon";
 import ImageIcon from "../../../assets/icons/ImageIcon";
-import { useAddCardCategoryMutation, useGetCardCategoryQuery, useUpdateCardCategoryMutation } from "../api/CardCategories.api";
+import { useAddCardCategoryMutation, useGetCardCategoriesQuery, useGetCardCategoryQuery, useUpdateCardCategoryMutation } from "../api/CardCategories.api";
 import { cardCategorySchema, type CardCategoryFormValues } from "../validation/CardCategories.validation";
 
 interface CardCategoryModalProps {
@@ -31,7 +31,7 @@ const IMAGE_ACCEPT = { "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"] };
 
 const emptyValues: CardCategoryFormValues = {
   cityId: 0,
-  sortOrder: 0,
+  sortOrder: 1,
   isActive: true,
   translations: [
     { languageCode: DataLanguage.Arabic, name: "" },
@@ -59,6 +59,8 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
     control,
     handleSubmit,
     reset,
+    setValue,
+    setError,
     formState: { errors },
   } = useForm<CardCategoryFormValues>({
     resolver: yupResolver(cardCategorySchema) as never,
@@ -87,9 +89,25 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
     }
   }, [open, isEdit, category, singleCityId, reset]);
 
+  const watchedCityId = Number(useWatch({ control, name: "cityId" }));
+  const { data: siblings } = useGetCardCategoriesQuery(
+    { cityId: watchedCityId, isDeleted: false, pageNumber: 1, pageSize: 1 },
+    { skip: !open || !watchedCityId, refetchOnMountOrArgChange: true }
+  );
+  const siblingCount = siblings?.totalCount ?? 0;
+  const maxSortOrder = isEdit && category?.cityId === watchedCityId ? siblingCount : siblingCount + 1;
+
+  useEffect(() => {
+    if (open && !isEdit && siblings) setValue("sortOrder", siblingCount + 1);
+  }, [open, isEdit, siblings, siblingCount, setValue]);
+
   const cityOptions = useMemo(() => cities.map((city) => ({ value: city.id, name: city.name })), [cities]);
 
   const onSubmit = async (values: CardCategoryFormValues) => {
+    if (values.sortOrder < 1 || values.sortOrder > maxSortOrder) {
+      setError("sortOrder", { message: "errors.CardCategory.SortOrderOutOfRange" });
+      return;
+    }
     if (!isEdit && !image) {
       setImageError(t("errors.CardCategory.ImageRequired"));
       return;
@@ -171,7 +189,7 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
             name="sortOrder"
             type="number"
             control={control}
-            label={`${t("cardCategories.sortOrder")} *`}
+            label={`${t("cardCategories.sortOrder")} * (1 - ${maxSortOrder})`}
             error={!!errors.sortOrder}
             errorMessage={fieldError(errors.sortOrder?.message)}
           />

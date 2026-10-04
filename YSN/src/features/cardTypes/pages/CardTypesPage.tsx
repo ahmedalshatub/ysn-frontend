@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -28,6 +29,7 @@ import RestoreCardTypeAlert from "../components/RestoreCardTypeAlert";
 import type { CardTypeFilter, CardTypeListDto, CardTypeRequest } from "../types/CardTypes.types";
 import SortControl from "../../../shared/components/navigation/SortControl";
 import PageSizeSelect from "../../../shared/components/navigation/PageSizeSelect";
+import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
 
 const CARD_PAGE_SIZE = 24;
 const TABLE_PAGE_SIZE = 25;
@@ -54,6 +56,7 @@ const toQueryFilter = (values: CardTypeRequest): CardTypeFilter => ({
 
 const CardTypesPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const sortOptions = [
     { value: "name", label: t("cardTypes.name") },
     { value: "cardCategoryName", label: t("cardTypes.category") },
@@ -120,6 +123,16 @@ const CardTypesPage = () => {
         animated
         actions={
           <div className="flex items-center gap-2">
+            {can(Permission.CardTypesUpdate) && (
+              <Button
+                variant="light"
+                size="md"
+                label={t("common.order")}
+                onClick={() => navigate(`/card-types/order${values.cardCategoryId ? `?cardCategoryId=${values.cardCategoryId}` : ""}`)}
+                icon={<ArrowUpDownIcon className="h-4 w-4" />}
+                iconPosition="left"
+              />
+            )}
             {can(Permission.CardTypesExport) && (
               <ExportButton loading={isExporting} onExport={() => exportCardTypes(queryFilter).unwrap()} />
             )}

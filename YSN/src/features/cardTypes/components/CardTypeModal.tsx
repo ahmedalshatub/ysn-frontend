@@ -19,7 +19,7 @@ import InfoIcon from "../../../assets/icons/InfoIcon";
 import ImageIcon from "../../../assets/icons/ImageIcon";
 import WalletIcon from "../../../assets/icons/WalletIcon";
 import { useGetCardCategoriesQuery } from "../../cardCategories/api/CardCategories.api";
-import { useAddCardTypeMutation, useGetCardTypeQuery, useUpdateCardTypeMutation } from "../api/CardTypes.api";
+import { useAddCardTypeMutation, useGetCardTypeQuery, useGetCardTypesQuery, useUpdateCardTypeMutation } from "../api/CardTypes.api";
 import { cardTypeSchema, type CardTypeFormValues } from "../validation/CardTypes.validation";
 import CardTypeTargetsField from "./CardTypeTargetsField";
 import { CardKind, cardKindKeys, isTvKind } from "../types/CardTypes.types";
@@ -43,7 +43,7 @@ const emptyValues: CardTypeFormValues = {
   agentPrice: null,
   clientPrice: null,
   amount: null as unknown as number,
-  sortOrder: 0,
+  sortOrder: 1,
   isActive: true,
   translations: [
     { languageCode: DataLanguage.Arabic, name: "", description: "" },
@@ -75,6 +75,7 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
     handleSubmit,
     reset,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<CardTypeFormValues>({
     resolver: yupResolver(cardTypeSchema) as never,
@@ -83,6 +84,17 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
   });
 
   const kind = Number(useWatch({ control, name: "kind" }));
+  const watchedCategoryId = Number(useWatch({ control, name: "cardCategoryId" }));
+  const { data: siblings } = useGetCardTypesQuery(
+    { cardCategoryId: watchedCategoryId, isDeleted: false, pageNumber: 1, pageSize: 1 },
+    { skip: !open || !watchedCategoryId, refetchOnMountOrArgChange: true }
+  );
+  const siblingCount = siblings?.totalCount ?? 0;
+  const maxSortOrder = isEdit && cardType?.cardCategoryId === watchedCategoryId ? siblingCount : siblingCount + 1;
+
+  useEffect(() => {
+    if (open && !isEdit && siblings) setValue("sortOrder", siblingCount + 1);
+  }, [open, isEdit, siblings, siblingCount, setValue]);
   const targets = useWatch({ control, name: "targetRoleIds" }) ?? [];
   const showAgentPrice = targets.some((target) => target === 2 || target === 3);
   const showClientPrice = targets.includes(4);
@@ -130,6 +142,10 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
   const kindOptions = Object.values(CardKind).map((value) => ({ value, name: t(cardKindKeys[value]) }));
 
   const onSubmit = async (values: CardTypeFormValues) => {
+    if (values.sortOrder < 1 || values.sortOrder > maxSortOrder) {
+      setError("sortOrder", { message: "errors.CardType.SortOrderOutOfRange" });
+      return;
+    }
     if (!isEdit && !image) {
       setImageError(t("errors.CardType.ImageRequired"));
       return;
@@ -289,7 +305,7 @@ const CardTypeModal = ({ open, cardTypeId, defaultCategoryId, onClose, onSuccess
               name="sortOrder"
               type="number"
               control={control}
-              label={`${t("cardTypes.sortOrder")} *`}
+              label={`${t("cardTypes.sortOrder")} * (1 - ${maxSortOrder})`}
               error={!!errors.sortOrder}
               errorMessage={fieldError(errors.sortOrder?.message)}
             />

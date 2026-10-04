@@ -1,6 +1,12 @@
 export default {
   translation: {
     common: {
+      order: "ڕیزکرن",
+      saveOrder: "پاراستنا ڕیزکرنێ",
+      dragToReorder: "ڕاکێشە بۆ ڕیزکرنا نوی",
+      dragToReorderHint: "بڕگان ڕاکێشە بۆ وێ ڕیزکرنێ یا تە دڤێت، یان تیران بکاربینە، پاشان بپارێزە.",
+      moveUp: "برن بۆ سەری",
+      moveDown: "برن بۆ خواری",
       appName: "کانیێن سۆمەرێ",
       welcome: "ب خێر بێی",
       loading: "دهێتە بارکرن...",
@@ -833,6 +839,7 @@ export default {
         NotFound: "نامە نەهاتە دیتن",
       },
       CardCategories: {
+        ReorderMismatch: "لیست هاتە گوهۆڕین. پەڕێ نوی بکە و دوبارە ڕیز بکە.",
         HasCardTypes: "ئەڤ پۆلە جۆرێن کارتان هەنە. ب ڕێکا ئێکێ وان بگوهێزە بۆ پۆلەکێ دی یێ هەمان باژێری.",
         InvalidMoveTarget: "پۆلەکێ چالاک یێ هەمان باژێری هەلبژێرە",
         MoveNameConflict: "هندەک ناڤێن جۆرێن کارتان د پۆلێ هەلبژارتی دا هەنە",
@@ -840,6 +847,9 @@ export default {
         NotFound: "پۆل نەهاتە دیتن",
       },
       CardCategory: {
+        SortOrderOutOfRange: "ڕیزەکێ ژ 1 هەتا وێ ژمارێ یا هاتییە نیشاندان هەلبژێرە",
+        ReorderIdsRequired: "تشتەک نینە بۆ ڕیزکرنێ",
+        ReorderIdsInvalid: "لیستا ڕیزکرنێ نە دروستە",
         AccessInvalid: "بنەڕەت یان ڕێدان یان گرتن هەلبژێرە",
         CityRequired: "باژێرەکی هەلبژێرە",
         ImageInvalid: "فایلەکێ وێنەی هەلبژێرە",
@@ -854,6 +864,9 @@ export default {
         TwoTranslationsAreRequired: "ناڤێ عەرەبی و ئینگلیزی هەردوو پێدڤینە",
       },
       CardType: {
+        SortOrderOutOfRange: "ڕیزەکێ ژ 1 هەتا وێ ژمارێ یا هاتییە نیشاندان هەلبژێرە",
+        ReorderIdsRequired: "تشتەک نینە بۆ ڕیزکرنێ",
+        ReorderIdsInvalid: "لیستا ڕیزکرنێ نە دروستە",
         AgentPriceRequired: "بهایێ بریکاری بنڤیسە",
         AmountInvalid: "دڤێت بڕ ژ 0 پتر بیت",
         AmountRequired: "بڕی بنڤیسە",
@@ -879,6 +892,7 @@ export default {
         TwoTranslationsAreRequired: "ناڤێ عەرەبی و ئینگلیزی هەردوو پێدڤینە",
       },
       CardTypes: {
+        ReorderMismatch: "لیست هاتە گوهۆڕین. پەڕێ نوی بکە و دوبارە ڕیز بکە.",
         CategoryDeleted: "ب ڕێکا ئێکێ پۆلێ وی ڤەگەڕینە",
         NameAlreadyExists: "جۆرەکێ دی یێ کارتا ڤی پۆلی هەمان ناڤ هەیە",
         NotFound: "جۆرێ کارتێ نەهاتە دیتن",
@@ -1548,6 +1562,8 @@ export default {
       tvRenewal: "نووکرنا تەلەفزیۆنێ",
     },
     cardCategories: {
+      orderTitle: "ڕیزکرنا پۆلان",
+      successReorder: "ڕیزکرنا پۆلان هاتە پاراستن",
       pageTitle: "پۆلێن کارتان",
       addCategory: "زێدەکرنا پۆلی",
       editCategory: "دەستکاریکرنا پۆلی",
@@ -1585,6 +1601,8 @@ export default {
       successAccess: "دەستگەهشتن هاتە پاشەکەفتکرن",
     },
     cardTypes: {
+      orderTitle: "ڕیزکرنا جورێن کارتان",
+      successReorder: "ڕیزکرنا جورێن کارتان هاتە پاراستن",
       pageTitle: "جۆرێن کارتان",
       pricing: "کڕیار و بها",
       addCardType: "زێدەکرنا جۆرێ کارتێ",

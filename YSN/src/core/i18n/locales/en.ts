@@ -1,6 +1,12 @@
 export default {
   translation: {
     common: {
+      order: "Order",
+      saveOrder: "Save order",
+      dragToReorder: "Drag to reorder",
+      dragToReorderHint: "Drag the items into the order you want, or use the arrows, then save.",
+      moveUp: "Move up",
+      moveDown: "Move down",
       inactive: "Inactive",
       requiredField: "This field is required",
       appName: "Yanabee Sumer",
@@ -833,6 +839,7 @@ export default {
         NotFound: "Message not found",
       },
       CardCategories: {
+        ReorderMismatch: "The list changed. Reload the page and order again.",
         HasCardTypes: "This category has card types. Move them to another category of the same city first.",
         InvalidMoveTarget: "Choose an active category of the same city",
         MoveNameConflict: "Some card type names already exist in the chosen category",
@@ -840,6 +847,9 @@ export default {
         NotFound: "Category not found",
       },
       CardCategory: {
+        SortOrderOutOfRange: "Choose an order from 1 to the number shown",
+        ReorderIdsRequired: "There is nothing to order",
+        ReorderIdsInvalid: "The order list is not valid",
         AccessInvalid: "Choose default, allow or block",
         CityRequired: "Select a city",
         ImageInvalid: "Choose an image file",
@@ -854,6 +864,9 @@ export default {
         TwoTranslationsAreRequired: "Both the Arabic and the English names are required",
       },
       CardType: {
+        SortOrderOutOfRange: "Choose an order from 1 to the number shown",
+        ReorderIdsRequired: "There is nothing to order",
+        ReorderIdsInvalid: "The order list is not valid",
         AgentPriceRequired: "Enter the Agent price",
         AmountInvalid: "The amount must be greater than 0",
         AmountRequired: "Enter the amount",
@@ -879,6 +892,7 @@ export default {
         TwoTranslationsAreRequired: "Both the Arabic and the English names are required",
       },
       CardTypes: {
+        ReorderMismatch: "The list changed. Reload the page and order again.",
         CategoryDeleted: "Restore its category first",
         NameAlreadyExists: "Another card type of this category has this name",
         NotFound: "Card type not found",
@@ -1548,6 +1562,8 @@ export default {
       tvRenewal: "TV renewal",
     },
     cardCategories: {
+      orderTitle: "Order categories",
+      successReorder: "Category order saved",
       pageTitle: "Card categories",
       addCategory: "Add category",
       editCategory: "Edit category",
@@ -1585,6 +1601,8 @@ export default {
       successAccess: "Access saved",
     },
     cardTypes: {
+      orderTitle: "Order card types",
+      successReorder: "Card type order saved",
       pageTitle: "Card types",
       pricing: "Customers and prices",
       addCardType: "Add card type",

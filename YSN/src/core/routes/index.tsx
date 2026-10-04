@@ -22,6 +22,8 @@ const TvSmsServers = lazy(() => import("../../features/tvSmsServers/pages/TvSmsS
 const Invoices = lazy(() => import("../../features/invoices/pages/InvoicesPage"));
 const Transactions = lazy(() => import("../../features/transactions/pages/TransactionsPage"));
 const CardCategories = lazy(() => import("../../features/cardCategories/pages/CardCategoriesPage"));
+const CardCategoriesOrder = lazy(() => import("../../features/cardCategories/pages/CardCategoriesOrderPage"));
+const CardTypesOrder = lazy(() => import("../../features/cardTypes/pages/CardTypesOrderPage"));
 const CardTypes = lazy(() => import("../../features/cardTypes/pages/CardTypesPage"));
 const Cards = lazy(() => import("../../features/cards/pages/CardsPage"));
 const Roles = lazy(() => import("../../features/roles/pages/RolesPage"));
@@ -49,6 +51,18 @@ const dashboardRoutes: any = [
     name: "Clients",
     element: <Clients />,
     permission: Permission.ClientsView,
+  },
+  {
+    path: "/card-categories/order",
+    name: "Card Categories Order",
+    element: <CardCategoriesOrder />,
+    permission: Permission.CardCategoriesUpdate,
+  },
+  {
+    path: "/card-types/order",
+    name: "Card Types Order",
+    element: <CardTypesOrder />,
+    permission: Permission.CardTypesUpdate,
   },
   {
     path: "/card-categories",
