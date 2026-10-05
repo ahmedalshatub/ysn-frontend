@@ -156,18 +156,11 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             }
           >
             <span className="table-header-btn-label">{sortLabel || t("table.sortBy")}</span>
-            <div className="flex flex-col items-center gap-0 leading-none">
-              <SortAscIcon
-                className={`w-3 h-3 transition-colors duration-150 ${
-                  sortDirection === "asc" ? "datatable-sort-active" : "datatable-sort-inactive"
-                }`}
-              />
-              <SortDescIcon
-                className={`w-3 h-3 -mt-1 transition-colors duration-150 ${
-                  sortDirection === "desc" ? "datatable-sort-active" : "datatable-sort-inactive"
-                }`}
-              />
-            </div>
+            {sortDirection === "asc" ? (
+              <SortAscIcon className="h-4 w-4 datatable-sort-active" />
+            ) : (
+              <SortDescIcon className="h-4 w-4 datatable-sort-active" />
+            )}
           </button>
         )}
       </div>

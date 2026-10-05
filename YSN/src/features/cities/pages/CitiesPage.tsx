@@ -5,7 +5,9 @@ import usePermission from "../../../shared/hooks/usePermission";
 import PageBreadcrumb from "../../../shared/components/navigation/PageBreadcrumb";
 import Card from "../../../shared/components/cards/Card";
 import Button from "../../../shared/components/buttons/Button";
-import ExportButton from "../../../shared/components/buttons/ExportButton";
+import Dropdown from "../../../shared/components/navigation/Dropdown";
+import ChevronDownIcon from "../../../assets/icons/ChevronDownIcon";
+import DownloadIcon from "../../../assets/icons/DownloadIcon";
 import PlusIcon from "../../../assets/icons/PlusIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
 import { Permission } from "../../../shared/types/Permissions.types";
@@ -126,6 +128,37 @@ const CitiesPage = () => {
   const handleEPayment = useCallback((city: CityListDto) => openDialog("ePayment", city), [openDialog]);
   const handlePermanentDelete = useCallback((city: CityListDto) => openDialog("permanentDelete", city), [openDialog]);
 
+  const actionItems = [
+    ...(can(Permission.CitiesUpdate) && !order.ordering
+      ? [{ key: "order", label: t("common.order"), icon: <ArrowUpDownIcon /> }]
+      : []),
+    ...(can(Permission.CitiesManageEPayment) && !order.ordering
+      ? [
+          { key: "ePaymentAllOn", label: t("cities.ePaymentOnForAll"), icon: <WalletIcon /> },
+          { key: "ePaymentAllOff", label: t("cities.ePaymentOffForAll"), icon: <WalletIcon /> },
+        ]
+      : []),
+    ...(can(Permission.CitiesExport) ? [{ key: "export", label: t("common.export"), icon: <DownloadIcon /> }] : []),
+  ];
+
+  const handleAction = async (key: string) => {
+    if (key === "order") {
+      await startOrdering();
+      return;
+    }
+    if (key === "ePaymentAllOn" || key === "ePaymentAllOff") {
+      openDialog(key);
+      return;
+    }
+    if (key === "export") {
+      try {
+        await exportCities(toQueryFilter(filterValues)).unwrap();
+      } catch (error) {
+        showError(getErrorMessage(error));
+      }
+    }
+  };
+
   return (
     <div className="space-y-6">
       <PageBreadcrumb
@@ -137,38 +170,22 @@ const CitiesPage = () => {
         animated
         actions={
           <div className="flex items-center gap-2">
-            {can(Permission.CitiesUpdate) && !order.ordering && (
-              <Button
-                variant="light"
-                size="md"
-                label={t("common.order")}
-                onClick={startOrdering}
-                icon={<ArrowUpDownIcon className="h-4 w-4" />}
-                iconPosition="left"
+            {actionItems.length > 0 && (
+              <Dropdown
+                placement="bottom-end"
+                trigger={
+                  <Button
+                    variant="light"
+                    size="md"
+                    label={t("common.actions")}
+                    loading={isExporting}
+                    icon={<ChevronDownIcon className="h-4 w-4" />}
+                    iconPosition="right"
+                  />
+                }
+                items={actionItems}
+                onSelect={handleAction}
               />
-            )}
-            {can(Permission.CitiesManageEPayment) && !order.ordering && (
-              <>
-                <Button
-                  variant="light"
-                  size="md"
-                  label={t("cities.ePaymentOnForAll")}
-                  onClick={() => openDialog("ePaymentAllOn")}
-                  icon={<WalletIcon className="h-4 w-4" />}
-                  iconPosition="left"
-                />
-                <Button
-                  variant="light"
-                  size="md"
-                  label={t("cities.ePaymentOffForAll")}
-                  onClick={() => openDialog("ePaymentAllOff")}
-                  icon={<WalletIcon className="h-4 w-4" />}
-                  iconPosition="left"
-                />
-              </>
-            )}
-            {can(Permission.CitiesExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportCities(toQueryFilter(filterValues)).unwrap()} />
             )}
             {can(Permission.CitiesCreate) && (
               <Button
