@@ -10,6 +10,25 @@ const ServerError = lazy(() => import("../../features/exceptions/pages/ServerErr
 
 const Dashboard = lazy(() => import("../../features/dashboard/pages/DashboardPage"));
 const Profile = lazy(() => import("../../features/profile/pages/ProfilePage"));
+const AccountStatementReport = lazy(() => import("../../features/reports/accountStatement/pages/AccountStatementReportPage"));
+const CustomerBalancesReport = lazy(() => import("../../features/reports/customerBalances/pages/CustomerBalancesReportPage"));
+const DailyFinanceReport = lazy(() => import("../../features/reports/dailyFinance/pages/DailyFinanceReportPage"));
+const EPaymentsReport = lazy(() => import("../../features/reports/ePayments/pages/EPaymentsReportPage"));
+const SalesByCardTypeReport = lazy(() => import("../../features/reports/salesByCardType/pages/SalesByCardTypeReportPage"));
+const SalesByCustomerReport = lazy(() => import("../../features/reports/salesByCustomer/pages/SalesByCustomerReportPage"));
+const SalesByCityReport = lazy(() => import("../../features/reports/salesByCity/pages/SalesByCityReportPage"));
+const AgentPerformanceReport = lazy(() => import("../../features/reports/agentPerformance/pages/AgentPerformanceReportPage"));
+const SubAgentsByAgentReport = lazy(() => import("../../features/reports/subAgentsByAgent/pages/SubAgentsByAgentReportPage"));
+const DiscountsReport = lazy(() => import("../../features/reports/discounts/pages/DiscountsReportPage"));
+const CardStockReport = lazy(() => import("../../features/reports/cardStock/pages/CardStockReportPage"));
+const CardsSoldReport = lazy(() => import("../../features/reports/cardsSold/pages/CardsSoldReportPage"));
+const CardImportsReport = lazy(() => import("../../features/reports/cardImports/pages/CardImportsReportPage"));
+const PriceListReport = lazy(() => import("../../features/reports/priceList/pages/PriceListReportPage"));
+const RegistrationsReport = lazy(() => import("../../features/reports/registrations/pages/RegistrationsReportPage"));
+const InactiveCustomersReport = lazy(() => import("../../features/reports/inactiveCustomers/pages/InactiveCustomersReportPage"));
+const InvoiceDeletionsReport = lazy(() => import("../../features/reports/invoiceDeletions/pages/InvoiceDeletionsReportPage"));
+const TransactionReversalsReport = lazy(() => import("../../features/reports/transactionReversals/pages/TransactionReversalsReportPage"));
+const MessagesReport = lazy(() => import("../../features/reports/messages/pages/MessagesReportPage"));
 const Users = lazy(() => import("../../features/users/pages/UsersPage"));
 const Agents = lazy(() => import("../../features/customers/pages/AgentsPage"));
 const SubAgents = lazy(() => import("../../features/customers/pages/SubAgentsPage"));
@@ -162,7 +181,122 @@ const dashboardRoutes: any = [
   },
 ];
 
-const reportsRoutes: any = [];
+const reportsRoutes: any = [
+  {
+    path: "/reports/account-statement",
+    name: "AccountStatementReport",
+    element: <AccountStatementReport />,
+    permission: Permission.ReportsAccountStatement,
+  },
+  {
+    path: "/reports/customer-balances",
+    name: "CustomerBalancesReport",
+    element: <CustomerBalancesReport />,
+    permission: Permission.ReportsCustomerBalances,
+  },
+  {
+    path: "/reports/daily-finance",
+    name: "DailyFinanceReport",
+    element: <DailyFinanceReport />,
+    permission: Permission.ReportsDailyFinance,
+  },
+  {
+    path: "/reports/e-payments",
+    name: "EPaymentsReport",
+    element: <EPaymentsReport />,
+    permission: Permission.ReportsEPayments,
+  },
+  {
+    path: "/reports/sales-by-card-type",
+    name: "SalesByCardTypeReport",
+    element: <SalesByCardTypeReport />,
+    permission: Permission.ReportsSalesByCardType,
+  },
+  {
+    path: "/reports/sales-by-customer",
+    name: "SalesByCustomerReport",
+    element: <SalesByCustomerReport />,
+    permission: Permission.ReportsSalesByCustomer,
+  },
+  {
+    path: "/reports/sales-by-city",
+    name: "SalesByCityReport",
+    element: <SalesByCityReport />,
+    permission: Permission.ReportsSalesByCity,
+  },
+  {
+    path: "/reports/agent-performance",
+    name: "AgentPerformanceReport",
+    element: <AgentPerformanceReport />,
+    permission: Permission.ReportsAgentPerformance,
+  },
+  {
+    path: "/reports/sub-agents-by-agent",
+    name: "SubAgentsByAgentReport",
+    element: <SubAgentsByAgentReport />,
+    permission: Permission.ReportsSubAgentsByAgent,
+  },
+  {
+    path: "/reports/discounts",
+    name: "DiscountsReport",
+    element: <DiscountsReport />,
+    permission: Permission.ReportsDiscounts,
+  },
+  {
+    path: "/reports/card-stock",
+    name: "CardStockReport",
+    element: <CardStockReport />,
+    permission: Permission.ReportsCardStock,
+  },
+  {
+    path: "/reports/cards-sold",
+    name: "CardsSoldReport",
+    element: <CardsSoldReport />,
+    permission: Permission.ReportsCardsSold,
+  },
+  {
+    path: "/reports/card-imports",
+    name: "CardImportsReport",
+    element: <CardImportsReport />,
+    permission: Permission.ReportsCardImports,
+  },
+  {
+    path: "/reports/price-list",
+    name: "PriceListReport",
+    element: <PriceListReport />,
+    permission: Permission.ReportsPriceList,
+  },
+  {
+    path: "/reports/registrations",
+    name: "RegistrationsReport",
+    element: <RegistrationsReport />,
+    permission: Permission.ReportsRegistrations,
+  },
+  {
+    path: "/reports/inactive-customers",
+    name: "InactiveCustomersReport",
+    element: <InactiveCustomersReport />,
+    permission: Permission.ReportsInactiveCustomers,
+  },
+  {
+    path: "/reports/invoice-deletions",
+    name: "InvoiceDeletionsReport",
+    element: <InvoiceDeletionsReport />,
+    permission: Permission.ReportsInvoiceDeletions,
+  },
+  {
+    path: "/reports/transaction-reversals",
+    name: "TransactionReversalsReport",
+    element: <TransactionReversalsReport />,
+    permission: Permission.ReportsTransactionReversals,
+  },
+  {
+    path: "/reports/messages",
+    name: "MessagesReport",
+    element: <MessagesReport />,
+    permission: Permission.ReportsMessages,
+  },
+];
 
 const authRoutes: any = [
   {

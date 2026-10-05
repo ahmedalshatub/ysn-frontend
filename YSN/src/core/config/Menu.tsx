@@ -6,6 +6,7 @@ import LayersIcon from "../../assets/icons/LayersIcon";
 import FileTextIcon from "../../assets/icons/FileTextIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
 import WalletIcon from "../../assets/icons/WalletIcon";
+import BarChartIcon from "../../assets/icons/BarChartIcon";
 import { Permission, type PermissionCode } from "../../shared/types/Permissions.types";
 
 const iconSize = 20;
@@ -134,6 +135,128 @@ const Menu: MenuItem[] = [
         title: "sidebar.auditLogs",
         path: "/audit-logs",
         permission: Permission.AuditLogsView,
+      },
+    ],
+  },
+  {
+    name: "Reports",
+    title: "sidebar.reports",
+    icon: <BarChartIcon width={iconSize} height={iconSize} />,
+    path: "/reports/account-statement",
+    subMenu: [
+      {
+        name: "account-statement",
+        title: "reports.accountStatement.title",
+        path: "/reports/account-statement",
+        permission: Permission.ReportsAccountStatement,
+      },
+      {
+        name: "customer-balances",
+        title: "reports.customerBalances.title",
+        path: "/reports/customer-balances",
+        permission: Permission.ReportsCustomerBalances,
+      },
+      {
+        name: "daily-finance",
+        title: "reports.dailyFinance.title",
+        path: "/reports/daily-finance",
+        permission: Permission.ReportsDailyFinance,
+      },
+      {
+        name: "e-payments",
+        title: "reports.ePayments.title",
+        path: "/reports/e-payments",
+        permission: Permission.ReportsEPayments,
+      },
+      {
+        name: "sales-by-card-type",
+        title: "reports.salesByCardType.title",
+        path: "/reports/sales-by-card-type",
+        permission: Permission.ReportsSalesByCardType,
+      },
+      {
+        name: "sales-by-customer",
+        title: "reports.salesByCustomer.title",
+        path: "/reports/sales-by-customer",
+        permission: Permission.ReportsSalesByCustomer,
+      },
+      {
+        name: "sales-by-city",
+        title: "reports.salesByCity.title",
+        path: "/reports/sales-by-city",
+        permission: Permission.ReportsSalesByCity,
+      },
+      {
+        name: "agent-performance",
+        title: "reports.agentPerformance.title",
+        path: "/reports/agent-performance",
+        permission: Permission.ReportsAgentPerformance,
+      },
+      {
+        name: "sub-agents-by-agent",
+        title: "reports.subAgentsByAgent.title",
+        path: "/reports/sub-agents-by-agent",
+        permission: Permission.ReportsSubAgentsByAgent,
+      },
+      {
+        name: "discounts",
+        title: "reports.discounts.title",
+        path: "/reports/discounts",
+        permission: Permission.ReportsDiscounts,
+      },
+      {
+        name: "card-stock",
+        title: "reports.cardStock.title",
+        path: "/reports/card-stock",
+        permission: Permission.ReportsCardStock,
+      },
+      {
+        name: "cards-sold",
+        title: "reports.cardsSold.title",
+        path: "/reports/cards-sold",
+        permission: Permission.ReportsCardsSold,
+      },
+      {
+        name: "card-imports",
+        title: "reports.cardImports.title",
+        path: "/reports/card-imports",
+        permission: Permission.ReportsCardImports,
+      },
+      {
+        name: "price-list",
+        title: "reports.priceList.title",
+        path: "/reports/price-list",
+        permission: Permission.ReportsPriceList,
+      },
+      {
+        name: "registrations",
+        title: "reports.registrations.title",
+        path: "/reports/registrations",
+        permission: Permission.ReportsRegistrations,
+      },
+      {
+        name: "inactive-customers",
+        title: "reports.inactiveCustomers.title",
+        path: "/reports/inactive-customers",
+        permission: Permission.ReportsInactiveCustomers,
+      },
+      {
+        name: "invoice-deletions",
+        title: "reports.invoiceDeletions.title",
+        path: "/reports/invoice-deletions",
+        permission: Permission.ReportsInvoiceDeletions,
+      },
+      {
+        name: "transaction-reversals",
+        title: "reports.transactionReversals.title",
+        path: "/reports/transaction-reversals",
+        permission: Permission.ReportsTransactionReversals,
+      },
+      {
+        name: "messages",
+        title: "reports.messages.title",
+        path: "/reports/messages",
+        permission: Permission.ReportsMessages,
       },
     ],
   },
