@@ -136,9 +136,33 @@ const TransactionsTable = ({
         render: (row: TransactionListDto) => (
           <div className="flex flex-col gap-1">
             <span className="truncate">{row.description || "-"}</span>
-            {row.maskedPan && <span className="text-xs ce-muted">{t("transactions.card")}: {row.maskedPan}</span>}
           </div>
         ),
+      },
+      {
+        key: "maskedPan",
+        header: t("transactions.card"),
+        render: (row: TransactionListDto) => <span dir="ltr">{row.maskedPan || "-"}</span>,
+      },
+      {
+        key: "requestId",
+        header: t("transactions.requestId"),
+        render: (row: TransactionListDto) => <span dir="ltr" className="text-xs break-all">{row.requestId || "-"}</span>,
+      },
+      {
+        key: "referenceId",
+        header: t("transactions.referenceId"),
+        render: (row: TransactionListDto) => <span dir="ltr" className="text-xs break-all">{row.referenceId || "-"}</span>,
+      },
+      {
+        key: "longitude",
+        header: t("transactions.longitude"),
+        render: (row: TransactionListDto) => <span dir="ltr">{row.longitude ?? "-"}</span>,
+      },
+      {
+        key: "latitude",
+        header: t("transactions.latitude"),
+        render: (row: TransactionListDto) => <span dir="ltr">{row.latitude ?? "-"}</span>,
       },
       {
         key: "createdAt",

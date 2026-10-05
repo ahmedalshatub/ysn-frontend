@@ -83,12 +83,12 @@ export interface TransactionListDto extends BaseDto {
   requestId: string | null;
   referenceId: string | null;
   maskedPan: string | null;
+  longitude: number | null;
+  latitude: number | null;
   completedAt: string | null;
 }
 
 export interface TransactionDto extends TransactionListDto {
-  longitude: number | null;
-  latitude: number | null;
   deletedBy: number | null;
   deletedByName: string | null;
   deleteReason: string | null;
