@@ -53,6 +53,20 @@ const CityFilters = ({ values, onChange, onSearch, onClear }: CityFiltersProps) 
           size="md"
         />
         <Select
+          name="ePaymentEnabled"
+          label={t("cities.ePayment")}
+          value={toSelectValue(values.ePaymentEnabled)}
+          onChange={(value) => onChange("ePaymentEnabled", fromSelectValue(String(value)))}
+          options={[
+            { value: "true", name: t("cities.ePaymentOn") },
+            { value: "false", name: t("cities.ePaymentOff") },
+          ]}
+          valueKey="value"
+          labelKey="name"
+          placeholder={t("common.all")}
+          size="md"
+        />
+        <Select
           name="hasTvSmsApi"
           label={t("cities.hasTvSmsApi")}
           value={toSelectValue(values.hasTvSmsApi)}

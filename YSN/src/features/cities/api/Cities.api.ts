@@ -34,6 +34,20 @@ export const citiesApi = instanceApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    changeCityEPayment: builder.mutation<CityDto, { id: number; enabled: boolean }>({
+      query: ({ id, enabled }) => ({
+        url: `Cities/${id}/epayment`,
+        method: "PUT",
+        body: { enabled },
+      }),
+    }),
+    changeAllCitiesEPayment: builder.mutation<number, { enabled: boolean }>({
+      query: (body) => ({
+        url: "Cities/epayment",
+        method: "PUT",
+        body,
+      }),
+    }),
     reorderCities: builder.mutation<boolean, { ids: number[] }>({
       query: (body) => ({
         url: "Cities/reorder",
@@ -68,4 +82,6 @@ export const {
   useDeleteCityMutation,
   useRestoreCityMutation,
   useExportCitiesMutation,
+  useChangeCityEPaymentMutation,
+  useChangeAllCitiesEPaymentMutation,
 } = citiesApi;

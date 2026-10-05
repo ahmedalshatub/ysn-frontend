@@ -6,6 +6,7 @@ import Badge from "../../../shared/components/badges/Badge";
 import EditIcon from "../../../assets/icons/EditIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
 import Undo2Icon from "../../../assets/icons/Undo2Icon";
+import WalletIcon from "../../../assets/icons/WalletIcon";
 import usePermission from "../../../shared/hooks/usePermission";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { Permission } from "../../../shared/types/Permissions.types";
@@ -23,6 +24,7 @@ interface CitiesTableProps {
   onEdit: (city: CityListDto) => void;
   onDelete: (city: CityListDto) => void;
   onRestore: (city: CityListDto) => void;
+  onEPayment: (city: CityListDto) => void;
 }
 
 const CitiesTable = ({
@@ -36,6 +38,7 @@ const CitiesTable = ({
   onEdit,
   onDelete,
   onRestore,
+  onEPayment,
 }: CitiesTableProps) => {
   const { t, i18n } = useTranslation();
   const { can } = usePermission();
@@ -71,6 +74,19 @@ const CitiesTable = ({
           <Badge
             label={row.hasTvSmsApi ? t("common.yes") : t("common.no")}
             variant={row.hasTvSmsApi ? "info" : "secondary"}
+            size="sm"
+          />
+        ),
+      },
+      {
+        key: "ePaymentEnabled",
+        header: t("cities.ePayment"),
+        sortable: true,
+        width: "130px",
+        render: (row: CityListDto) => (
+          <Badge
+            label={row.ePaymentEnabled ? t("cities.ePaymentOn") : t("cities.ePaymentOff")}
+            variant={row.ePaymentEnabled ? "success" : "danger"}
             size="sm"
           />
         ),
@@ -124,6 +140,15 @@ const CitiesTable = ({
                 ...(can(Permission.CitiesUpdate)
                   ? [{ label: t("common.edit"), icon: <EditIcon />, onClick: () => onEdit(row) }]
                   : []),
+                ...(can(Permission.CitiesManageEPayment)
+                  ? [
+                      {
+                        label: row.ePaymentEnabled ? t("cities.turnEPaymentOff") : t("cities.turnEPaymentOn"),
+                        icon: <WalletIcon />,
+                        onClick: () => onEPayment(row),
+                      },
+                    ]
+                  : []),
                 ...(can(Permission.CitiesDelete) && row.customersCount === 0
                   ? [{ label: t("common.delete"), icon: <TrashIcon />, variant: "danger" as const, onClick: () => onDelete(row) }]
                   : []),
@@ -132,7 +157,7 @@ const CitiesTable = ({
         },
       },
     ],
-    [t, i18n.language, can, onEdit, onDelete, onRestore]
+    [t, i18n.language, can, onEdit, onDelete, onRestore, onEPayment]
   );
 
   return (

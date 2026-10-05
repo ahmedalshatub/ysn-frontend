@@ -4,6 +4,7 @@ import type { DataLanguageType } from "../../../shared/types/DataLanguage.types"
 export interface CityFilter {
   name?: string;
   hasTvSmsApi?: boolean;
+  ePaymentEnabled?: boolean;
   isActive?: boolean;
   isDeleted?: boolean;
   createdBy?: number;
@@ -16,6 +17,7 @@ export interface CityRequest extends BaseRequest, CityFilter {}
 export interface CityListDto extends BaseDto {
   sortOrder: number;
   isActive: boolean;
+  ePaymentEnabled: boolean;
   customersCount: number;
   hasTvSmsApi: boolean;
   name: string;
@@ -30,6 +32,7 @@ export interface CityTranslationDto {
 export interface CityDto extends BaseDto {
   sortOrder: number;
   isActive: boolean;
+  ePaymentEnabled: boolean;
   hasTvSmsApi: boolean;
   tvSmsBaseUrl: string | null;
   tvSmsUserId: string | null;

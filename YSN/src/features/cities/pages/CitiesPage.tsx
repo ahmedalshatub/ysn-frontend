@@ -25,6 +25,9 @@ import CheckIcon from "../../../assets/icons/CheckIcon";
 import XIcon from "../../../assets/icons/XIcon";
 import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
 import CityOrderCard from "../components/CityOrderCard";
+import CityEPaymentAlert from "../components/CityEPaymentAlert";
+import AllCitiesEPaymentAlert from "../components/AllCitiesEPaymentAlert";
+import WalletIcon from "../../../assets/icons/WalletIcon";
 
 const initialFilterValues: CityRequest = {
   pageSize: 25,
@@ -38,11 +41,12 @@ const initialFilterValues: CityRequest = {
   toDate: undefined,
 };
 
-type DialogName = "form" | "delete" | "restore";
+type DialogName = "form" | "delete" | "restore" | "ePayment" | "ePaymentAllOn" | "ePaymentAllOff";
 
 const toQueryFilter = (values: CityRequest): CityFilter => ({
   name: values.name || undefined,
   hasTvSmsApi: values.hasTvSmsApi,
+  ePaymentEnabled: values.ePaymentEnabled,
   isActive: values.isActive,
   isDeleted: values.isDeleted,
   fromDate: values.fromDate,
@@ -57,6 +61,7 @@ const CitiesPage = () => {
   const [filterValues, setFilterValues] = useState<CityRequest>(initialFilterValues);
   const [dialog, setDialog] = useState<DialogName | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedCity, setSelectedCity] = useState<CityListDto | null>(null);
 
   const { data, isLoading, isFetching, refetch } = useGetCitiesQuery(
     {
@@ -104,17 +109,20 @@ const CitiesPage = () => {
 
   const openDialog = useCallback((name: DialogName, city?: CityListDto) => {
     setSelectedId(city?.id ?? null);
+    setSelectedCity(city ?? null);
     setDialog(name);
   }, []);
 
   const closeDialog = () => {
     setDialog(null);
     setSelectedId(null);
+    setSelectedCity(null);
   };
 
   const handleEdit = useCallback((city: CityListDto) => openDialog("form", city), [openDialog]);
   const handleDelete = useCallback((city: CityListDto) => openDialog("delete", city), [openDialog]);
   const handleRestore = useCallback((city: CityListDto) => openDialog("restore", city), [openDialog]);
+  const handleEPayment = useCallback((city: CityListDto) => openDialog("ePayment", city), [openDialog]);
 
   return (
     <div className="space-y-6">
@@ -136,6 +144,26 @@ const CitiesPage = () => {
                 icon={<ArrowUpDownIcon className="h-4 w-4" />}
                 iconPosition="left"
               />
+            )}
+            {can(Permission.CitiesManageEPayment) && !order.ordering && (
+              <>
+                <Button
+                  variant="light"
+                  size="md"
+                  label={t("cities.ePaymentOnForAll")}
+                  onClick={() => openDialog("ePaymentAllOn")}
+                  icon={<WalletIcon className="h-4 w-4" />}
+                  iconPosition="left"
+                />
+                <Button
+                  variant="light"
+                  size="md"
+                  label={t("cities.ePaymentOffForAll")}
+                  onClick={() => openDialog("ePaymentAllOff")}
+                  icon={<WalletIcon className="h-4 w-4" />}
+                  iconPosition="left"
+                />
+              </>
             )}
             {can(Permission.CitiesExport) && (
               <ExportButton loading={isExporting} onExport={() => exportCities(toQueryFilter(filterValues)).unwrap()} />
@@ -188,6 +216,7 @@ const CitiesPage = () => {
             onEdit={handleEdit}
             onDelete={handleDelete}
             onRestore={handleRestore}
+            onEPayment={handleEPayment}
           />
         </Card>
       )}
@@ -195,6 +224,9 @@ const CitiesPage = () => {
       {dialog === "form" && <CityModal open onClose={closeDialog} onSuccess={refetch} cityId={selectedId} />}
       {dialog === "delete" && <DeleteCityAlert open onClose={closeDialog} onSuccess={refetch} cityId={selectedId} />}
       {dialog === "restore" && <RestoreCityAlert open onClose={closeDialog} onSuccess={refetch} cityId={selectedId} />}
+      {dialog === "ePayment" && <CityEPaymentAlert open onClose={closeDialog} onSuccess={refetch} city={selectedCity} />}
+      {dialog === "ePaymentAllOn" && <AllCitiesEPaymentAlert open enabled onClose={closeDialog} onSuccess={refetch} />}
+      {dialog === "ePaymentAllOff" && <AllCitiesEPaymentAlert open enabled={false} onClose={closeDialog} onSuccess={refetch} />}
     </div>
   );
 };
