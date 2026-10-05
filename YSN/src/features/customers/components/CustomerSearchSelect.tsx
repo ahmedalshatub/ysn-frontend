@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Control, FieldValues, Path } from "react-hook-form";
-import Input from "../../../shared/components/inputs/Input";
 import FormSelect from "../../../shared/components/inputs/FormSelect";
+import FormMultiSelect from "../../../shared/components/inputs/FormMultiSelect";
 import { useGetCustomersQuery } from "../api/Customers.api";
 import { customerFullName, customerPhone, customerRoleConfigs, type CustomerListDto } from "../types/Customers.types";
 
@@ -12,12 +12,14 @@ interface CustomerSearchSelectProps<T extends FieldValues> {
   label: string;
   initialCustomer?: CustomerListDto | null;
   roleId?: number;
+  multiple?: boolean;
   error?: boolean;
   errorMessage?: string;
   onValueChange?: (value: number) => void;
 }
 
 const MIN_SEARCH_LENGTH = 2;
+const PAGE_SIZE = 20;
 
 const CustomerSearchSelect = <T extends FieldValues>({
   name,
@@ -25,6 +27,7 @@ const CustomerSearchSelect = <T extends FieldValues>({
   label,
   initialCustomer,
   roleId,
+  multiple = false,
   error,
   errorMessage,
   onValueChange,
@@ -32,61 +35,87 @@ const CustomerSearchSelect = <T extends FieldValues>({
   const { t } = useTranslation();
   const [term, setTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState("");
+  const [known, setKnown] = useState<CustomerListDto[]>(initialCustomer ? [initialCustomer] : []);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedTerm(term.trim()), 400);
     return () => clearTimeout(timer);
   }, [term]);
 
-  const isPhone = /^[+0-9 ]+$/.test(debouncedTerm);
+  const search = debouncedTerm.length >= MIN_SEARCH_LENGTH ? debouncedTerm : "";
+  const isPhone = /^[+0-9 ]+$/.test(search);
+  const isEmail = search.includes("@");
   const { data, isFetching } = useGetCustomersQuery(
     {
-      name: isPhone ? undefined : debouncedTerm,
-      phoneNumber: isPhone ? debouncedTerm.replace(/^\+?964|^0/, "") : undefined,
+      name: search && !isPhone && !isEmail ? search : undefined,
+      phoneNumber: search && isPhone ? search.replace(/^\+?964|^0/, "") : undefined,
+      email: search && isEmail ? search : undefined,
       roleId,
       isActive: true,
       isDeleted: false,
       sortBy: "firstName",
       isAscending: true,
+      pageSize: PAGE_SIZE,
     },
-    { skip: debouncedTerm.length < MIN_SEARCH_LENGTH, refetchOnMountOrArgChange: true }
+    { skip: !!initialCustomer, refetchOnMountOrArgChange: true }
   );
 
+  useEffect(() => {
+    const items = data?.items;
+    if (!items?.length) return;
+    setKnown((previous) => [...previous, ...items.filter((item) => !previous.some((customer) => customer.id === item.id))]);
+  }, [data]);
+
   const options = useMemo(() => {
-    const customers = [...(data?.items ?? [])];
-    if (initialCustomer && !customers.some((customer) => customer.id === initialCustomer.id)) customers.unshift(initialCustomer);
+    const results = data?.items ?? [];
+    const customers = [...results, ...known.filter((customer) => !results.some((item) => item.id === customer.id))];
     return customers.map((customer) => ({
       value: customer.id,
-      name: `${customerFullName(customer)} - ${t(customerRoleConfigs[customer.roleId].labelKey)} (${customerPhone(customer)})`,
+      name: customerFullName(customer),
+      label: customerFullName(customer),
+      description: [t(customerRoleConfigs[customer.roleId].labelKey), customerPhone(customer), customer.email, customer.cityName]
+        .filter(Boolean)
+        .join(" - "),
     }));
-  }, [data, initialCustomer, t]);
+  }, [data, known, t]);
 
-  return (
-    <div className="grid grid-cols-1 gap-2">
-      {!initialCustomer && (
-        <Input
-          name={`${name}-search`}
-          label={label}
-          value={term}
-          onChange={(event) => setTerm(event.target.value)}
-          placeholder={t("customers.searchCustomer")}
-          size="md"
-        />
-      )}
-      <FormSelect<T>
+  if (multiple) {
+    return (
+      <FormMultiSelect<T>
         name={name}
         control={control}
-        label={initialCustomer ? label : undefined}
+        label={label}
         options={options}
-        valueKey="value"
-        labelKey="name"
-        placeholder={isFetching ? t("common.loading") : t("customers.selectCustomer")}
-        disabledStatus={!!initialCustomer}
+        placeholder={t("customers.selectCustomers")}
+        searchable
         error={error}
         errorMessage={errorMessage}
-        onValueChange={onValueChange ? (value) => onValueChange(Number(value)) : undefined}
+        onSearchChange={setTerm}
+        loading={isFetching}
+        emptyText={t("customers.noCustomersFound")}
       />
-    </div>
+    );
+  }
+
+  return (
+    <FormSelect<T>
+      name={name}
+      control={control}
+      label={label}
+      options={options}
+      valueKey="value"
+      labelKey="name"
+      placeholder={t("customers.selectCustomer")}
+      searchable={!initialCustomer}
+      searchPlaceholder={t("customers.searchCustomer")}
+      disabledStatus={!!initialCustomer}
+      error={error}
+      errorMessage={errorMessage}
+      onSearchChange={setTerm}
+      loading={isFetching}
+      emptyText={t("customers.noCustomersFound")}
+      onValueChange={onValueChange ? (value) => onValueChange(Number(value)) : undefined}
+    />
   );
 };
 

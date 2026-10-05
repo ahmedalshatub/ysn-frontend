@@ -12,6 +12,7 @@ type SelectSize = "sm" | "md" | "lg";
 export interface SelectOption {
   value: string | number;
   label: string;
+  description?: string;
   disabled?: boolean;
 }
 
@@ -40,6 +41,9 @@ interface FormSelectProps<T extends FieldValues> {
   labelKey?: string;
   translateOptions?: boolean;
   onValueChange?: (value: string | number) => void;
+  onSearchChange?: (term: string) => void;
+  loading?: boolean;
+  emptyText?: string;
 }
 
 const focusRingStyles: Record<SelectVariant, string> = {
@@ -115,6 +119,9 @@ const FormSelect = <T extends FieldValues>({
   labelKey,
   translateOptions = false,
   onValueChange,
+  onSearchChange,
+  loading = false,
+  emptyText = "No results",
 }: FormSelectProps<T>) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(false);
@@ -134,6 +141,7 @@ const FormSelect = <T extends FieldValues>({
       return {
         value: valueKey ? opt[valueKey] : opt.value,
         label: translateOptions ? t(rawLabel) : rawLabel,
+        description: opt.description,
         disabled: opt.disabled,
       };
     });
@@ -144,10 +152,10 @@ const FormSelect = <T extends FieldValues>({
   }, [options, addDefaultOption, defaultOptionLabel, valueKey, labelKey, translateOptions, t]);
 
   const filteredOptions = React.useMemo(() => {
-    if (!searchable || !search.trim()) return allOptions;
+    if (!searchable || !search.trim() || onSearchChange) return allOptions;
     const term = search.toLowerCase();
     return allOptions.filter((opt) => opt.label.toLowerCase().includes(term));
-  }, [allOptions, search, searchable]);
+  }, [allOptions, search, searchable, onSearchChange]);
 
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -164,6 +172,10 @@ const FormSelect = <T extends FieldValues>({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  React.useEffect(() => {
+    if (!isOpen) onSearchChange?.("");
+  }, [isOpen, onSearchChange]);
 
   React.useEffect(() => {
     if (isOpen && searchable) {
@@ -366,14 +378,17 @@ const FormSelect = <T extends FieldValues>({
                         className={`form-select-search w-full rounded border focus:outline-none focus:ring-1 ${focusRingStyles[variant]} ${searchSizeStyles[size]}`}
                         placeholder={searchPlaceholder}
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => {
+                          setSearch(e.target.value);
+                          onSearchChange?.(e.target.value);
+                        }}
                         onClick={(e) => e.stopPropagation()}
                       />
                     </div>
                   )}
                   <div className="select-options max-h-60 overflow-y-auto py-1" ref={optionsRef}>
                     {filteredOptions.length === 0 ? (
-                      <div className={`select-empty ${optionSizeStyles[size]}`}>No results</div>
+                      <div className={`select-empty ${optionSizeStyles[size]}`}>{loading ? t("common.loading") : emptyText}</div>
                     ) : (
                       filteredOptions.map((opt, index) => {
                         const isActive = opt.value === selectedValue;
@@ -400,7 +415,10 @@ const FormSelect = <T extends FieldValues>({
                             onClick={() => handleSelect(opt)}
                             onMouseEnter={() => setHighlightIndex(index)}
                           >
-                            <span>{opt.label}</span>
+                            <span className="flex min-w-0 flex-col">
+                              <span>{opt.label}</span>
+                              {opt.description && <span className="truncate text-xs ce-muted">{opt.description}</span>}
+                            </span>
                             {isActive && (
                               <CheckIcon className="flex-shrink-0 w-4 h-4" />
                             )}

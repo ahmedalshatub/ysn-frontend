@@ -1783,6 +1783,8 @@ export default {
       successSetPassword: "پەیڤا نهێنی هاتە دانان",
       searchCustomer: "ناڤەکی یان ژمارا تەلەفۆنێ بنڤیسە بۆ گەڕیانێ",
       selectCustomer: "کڕیارەکی هەلبژێرە",
+      selectCustomers: "کڕیاران هەلبژێرە",
+      noCustomersFound: "چ کڕیار نەهاتنە دیتن",
       customerType: "ڕۆل",
     },
     messageTargets: {
@@ -2214,7 +2216,7 @@ export default {
       cardTypes: "جۆرێن کارتان",
       cardTypesChosen: "{{count}} جۆر هاتنە هەلبژارتن",
       customers: "کڕیار",
-      oneCustomer: "ئێک کڕیار",
+      oneCustomer: "کڕیارێن هەلبژارتی",
       allMatching: "هەمی یێن گونجای",
       matchingCustomers: "{{count}} کڕیار دگونجن",
       replaceHint: "کڕیار و جۆرێ کارتێ یێن بەری نوکە داشکاندن هەی، داشکاندنا نوی وەردگرن.",

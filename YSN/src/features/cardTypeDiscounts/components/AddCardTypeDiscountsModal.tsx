@@ -42,8 +42,8 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
   const [discountValue, setDiscountValue] = useState<number | undefined>(undefined);
   const [valueError, setValueError] = useState("");
   const [save, { isLoading }] = useSaveCardTypeDiscountsMutation();
-  const { control } = useForm<{ customerId: number | null }>({ defaultValues: { customerId: customer?.id ?? null } });
-  const customerId = useWatch({ control, name: "customerId" });
+  const { control } = useForm<{ customerIds: number[] }>({ defaultValues: { customerIds: customer ? [customer.id] : [] } });
+  const customerIds = useWatch({ control, name: "customerIds" });
 
   const customerFilter = useMemo(() => ({ roleId, cityId, isDeleted: false }), [roleId, cityId]);
   const { data: matching } = useGetCustomersQuery({ ...customerFilter, pageSize: 1 }, { skip: !!customer || mode !== "filter" });
@@ -59,7 +59,7 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
       setValueError(t(discountType === DiscountType.Percent && (discountValue ?? 0) > 100 ? "errors.Discount.PercentTooHigh" : "errors.Discount.ValueRequired"));
       return;
     }
-    const userIds = customer ? [customer.id] : mode === "one" && customerId ? [Number(customerId)] : undefined;
+    const userIds = customer ? [customer.id] : mode === "one" && customerIds.length > 0 ? customerIds : undefined;
     if (!userIds && mode === "one") {
       showError(t("errors.Discount.CustomersRequired"));
       return;
@@ -108,7 +108,7 @@ const AddCardTypeDiscountsModal = ({ open, customer, onClose, onSuccess }: AddCa
               onChange={(id) => setMode(id as CustomerMode)}
             />
             {mode === "one" ? (
-              <CustomerSearchSelect<{ customerId: number | null }> name="customerId" control={control} label={t("invoices.customer")} />
+              <CustomerSearchSelect<{ customerIds: number[] }> name="customerIds" control={control} label={t("discounts.customers")} multiple />
             ) : (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <Select

@@ -6,6 +6,7 @@ import CheckIcon from "../../../assets/icons/CheckIcon";
 interface TreeSelectNodeData {
   id: string;
   label: string;
+  description?: string;
   children?: TreeSelectNodeData[];
   disabled?: boolean;
 }
@@ -25,6 +26,9 @@ interface TreeSelectProps {
   searchable?: boolean;
   searchPlaceholder?: string;
   onChange?: (value: string[], labels: string[]) => void;
+  onSearchChange?: (term: string) => void;
+  loading?: boolean;
+  emptyText?: string;
   className?: string;
 }
 
@@ -130,7 +134,10 @@ const TreeSelectNode = ({
           </span>
         )}
 
-        <span className="treeselect-node-label">{node.label}</span>
+        <span className="treeselect-node-label flex min-w-0 flex-col">
+          <span>{node.label}</span>
+          {node.description && <span className="truncate text-xs ce-muted">{node.description}</span>}
+        </span>
       </div>
 
       {hasChildren && isExpanded && (
@@ -166,6 +173,9 @@ const TreeSelect = ({
   searchable = false,
   searchPlaceholder = "Search...",
   onChange,
+  onSearchChange,
+  loading = false,
+  emptyText = "No options found",
   className = "",
 }: TreeSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -177,6 +187,10 @@ const TreeSelect = ({
   useEffect(() => {
     if (controlledValue) setSelected(new Set(controlledValue));
   }, [controlledValue]);
+
+  useEffect(() => {
+    if (!isOpen) onSearchChange?.("");
+  }, [isOpen, onSearchChange]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -241,7 +255,7 @@ const TreeSelect = ({
     });
   };
 
-  const filteredOptions = searchQuery ? filterNodes(options, searchQuery) : options;
+  const filteredOptions = searchQuery && !onSearchChange ? filterNodes(options, searchQuery) : options;
   const selectedLabels = Array.from(selected).map((id) => ({ id, label: findLabelById(options, id) || id }));
 
   return (
@@ -293,14 +307,17 @@ const TreeSelect = ({
                 className="treeselect-search"
                 placeholder={searchPlaceholder}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  onSearchChange?.(e.target.value);
+                }}
                 autoFocus
               />
             </div>
           )}
           <div className="treeselect-options">
             {filteredOptions.length === 0 ? (
-              <div className="treeselect-empty">No options found</div>
+              <div className="treeselect-empty">{loading ? "..." : emptyText}</div>
             ) : (
               filteredOptions.map((node) => (
                 <TreeSelectNode

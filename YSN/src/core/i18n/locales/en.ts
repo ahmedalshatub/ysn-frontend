@@ -1783,6 +1783,8 @@ export default {
       successSetPassword: "Password set",
       searchCustomer: "Type a name or phone to search",
       selectCustomer: "Select a customer",
+      selectCustomers: "Select customers",
+      noCustomersFound: "No customers found",
       customerType: "Role",
     },
     messageTargets: {
@@ -2214,7 +2216,7 @@ export default {
       cardTypes: "Card types",
       cardTypesChosen: "{{count}} card types chosen",
       customers: "Customers",
-      oneCustomer: "One customer",
+      oneCustomer: "Chosen customers",
       allMatching: "All matching",
       matchingCustomers: "{{count}} customers match",
       replaceHint: "A customer and card type that already have a discount get the new one instead.",

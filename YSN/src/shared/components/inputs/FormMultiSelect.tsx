@@ -5,13 +5,17 @@ import TreeSelect from "./TreeSelect";
 interface FormMultiSelectProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
-  options: { value: number; label: string }[];
+  options: { value: number; label: string; description?: string }[];
   label?: string;
   placeholder?: string;
   searchable?: boolean;
   disabled?: boolean;
   error?: boolean;
   errorMessage?: string;
+  onSearchChange?: (term: string) => void;
+  loading?: boolean;
+  emptyText?: string;
+  onValueChange?: (values: number[]) => void;
 }
 
 const FormMultiSelect = <T extends FieldValues>({
@@ -24,6 +28,10 @@ const FormMultiSelect = <T extends FieldValues>({
   disabled,
   error,
   errorMessage,
+  onSearchChange,
+  loading,
+  emptyText,
+  onValueChange,
 }: FormMultiSelectProps<T>) => (
   <Controller
     name={name}
@@ -37,9 +45,15 @@ const FormMultiSelect = <T extends FieldValues>({
         disabled={disabled}
         error={error}
         errorMessage={errorMessage}
-        options={options.map((option) => ({ id: String(option.value), label: option.label }))}
+        options={options.map((option) => ({ id: String(option.value), label: option.label, description: option.description }))}
         value={((field.value as number[] | undefined) ?? []).map(String)}
-        onChange={(values) => field.onChange(values.map(Number))}
+        onChange={(values) => {
+          field.onChange(values.map(Number));
+          onValueChange?.(values.map(Number));
+        }}
+        onSearchChange={onSearchChange}
+        loading={loading}
+        emptyText={emptyText}
       />
     )}
   />

@@ -1783,6 +1783,8 @@ export default {
       successSetPassword: "تم تعيين كلمة المرور",
       searchCustomer: "اكتب اسماً أو رقم هاتف للبحث",
       selectCustomer: "اختر عميلاً",
+      selectCustomers: "اختر العملاء",
+      noCustomersFound: "لا يوجد عملاء",
       customerType: "الدور",
     },
     messageTargets: {
@@ -2214,7 +2216,7 @@ export default {
       cardTypes: "أنواع البطاقات",
       cardTypesChosen: "تم اختيار {{count}} نوع",
       customers: "العملاء",
-      oneCustomer: "عميل واحد",
+      oneCustomer: "عملاء محددون",
       allMatching: "كل المطابقين",
       matchingCustomers: "{{count}} عميل مطابق",
       replaceHint: "العميل ونوع البطاقة اللذان لهما خصم مسبقاً يحصلان على الخصم الجديد بدلاً منه.",
