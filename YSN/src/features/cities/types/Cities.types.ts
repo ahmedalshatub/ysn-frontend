@@ -14,6 +14,40 @@ export interface CityFilter {
 
 export interface CityRequest extends BaseRequest, CityFilter {}
 
+export const CityLinkAction = {
+  Move: 1,
+  Delete: 2,
+} as const;
+
+export type CityLinkActionValue = typeof CityLinkAction[keyof typeof CityLinkAction];
+
+export interface CityLinksDto {
+  customersCount: number;
+  deletedCustomersCount: number;
+  customersWithBalanceCount: number;
+  cardCategoriesCount: number;
+  deletedCardCategoriesCount: number;
+  cardTypesCount: number;
+  employeesCount: number;
+}
+
+export interface PermanentDeleteCityDto {
+  targetCityId?: number;
+  customersAction: CityLinkActionValue;
+  cardCategoriesAction: CityLinkActionValue;
+  employeesAction: CityLinkActionValue;
+}
+
+export interface PermanentDeleteCityResultDto {
+  customersMoved: number;
+  customersDeleted: number;
+  cardCategoriesMoved: number;
+  cardCategoriesDeleted: number;
+  cardTypesDeleted: number;
+  employeesMoved: number;
+  employeesRemoved: number;
+}
+
 export interface CityListDto extends BaseDto {
   sortOrder: number;
   isActive: boolean;

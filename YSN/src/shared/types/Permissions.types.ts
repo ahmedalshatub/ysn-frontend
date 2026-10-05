@@ -129,6 +129,7 @@ export const Permission = {
   CitiesExport: "Cities.Export",
   CitiesViewTvSmsLogs: "Cities.ViewTvSmsLogs",
   CitiesManageEPayment: "Cities.ManageEPayment",
+  CitiesPermanentDelete: "Cities.PermanentDelete",
   CountriesView: "Countries.View",
   CountriesCreate: "Countries.Create",
   CountriesUpdate: "Countries.Update",

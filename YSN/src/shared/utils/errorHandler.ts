@@ -3,8 +3,11 @@ import i18n from '../../core/i18n';
 const translateKey = (key: string): string => {
   const trimmed = key.trim();
   if (!trimmed) return trimmed;
-  const translated = i18n.t(`errors.${trimmed}`);
-  return translated === `errors.${trimmed}` || !translated ? trimmed : translated;
+  const [name, ...details] = trimmed.split('|');
+  const detail = details.join('|').trim();
+  const translated = i18n.t(`errors.${name}`, { detail });
+  if (translated === `errors.${name}` || !translated) return trimmed;
+  return detail && !translated.includes(detail) ? `${translated}: ${detail}` : translated;
 };
 
 export const getErrorMessage = (error: any): string => {

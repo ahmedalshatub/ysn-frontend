@@ -25,6 +25,7 @@ interface CitiesTableProps {
   onDelete: (city: CityListDto) => void;
   onRestore: (city: CityListDto) => void;
   onEPayment: (city: CityListDto) => void;
+  onPermanentDelete: (city: CityListDto) => void;
 }
 
 const CitiesTable = ({
@@ -39,6 +40,7 @@ const CitiesTable = ({
   onDelete,
   onRestore,
   onEPayment,
+  onPermanentDelete,
 }: CitiesTableProps) => {
   const { t, i18n } = useTranslation();
   const { can } = usePermission();
@@ -135,6 +137,9 @@ const CitiesTable = ({
                 ...(can(Permission.CitiesRestore)
                   ? [{ label: t("common.restore"), icon: <Undo2Icon />, onClick: () => onRestore(row) }]
                   : []),
+                ...(can(Permission.CitiesPermanentDelete)
+                  ? [{ label: t("cities.permanentDelete"), icon: <TrashIcon />, variant: "danger" as const, onClick: () => onPermanentDelete(row) }]
+                  : []),
               ]
             : [
                 ...(can(Permission.CitiesUpdate)
@@ -152,12 +157,15 @@ const CitiesTable = ({
                 ...(can(Permission.CitiesDelete) && row.customersCount === 0
                   ? [{ label: t("common.delete"), icon: <TrashIcon />, variant: "danger" as const, onClick: () => onDelete(row) }]
                   : []),
+                ...(can(Permission.CitiesPermanentDelete)
+                  ? [{ label: t("cities.permanentDelete"), icon: <TrashIcon />, variant: "danger" as const, onClick: () => onPermanentDelete(row) }]
+                  : []),
               ];
           return actions.length > 0 ? <TableActionDropdown size="sm" actions={actions} /> : null;
         },
       },
     ],
-    [t, i18n.language, can, onEdit, onDelete, onRestore, onEPayment]
+    [t, i18n.language, can, onEdit, onDelete, onRestore, onEPayment, onPermanentDelete]
   );
 
   return (

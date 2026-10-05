@@ -27,6 +27,7 @@ import ArrowUpDownIcon from "../../../assets/icons/ArrowUpDownIcon";
 import CityOrderCard from "../components/CityOrderCard";
 import CityEPaymentAlert from "../components/CityEPaymentAlert";
 import AllCitiesEPaymentAlert from "../components/AllCitiesEPaymentAlert";
+import PermanentDeleteCityModal from "../components/PermanentDeleteCityModal";
 import WalletIcon from "../../../assets/icons/WalletIcon";
 
 const initialFilterValues: CityRequest = {
@@ -41,7 +42,7 @@ const initialFilterValues: CityRequest = {
   toDate: undefined,
 };
 
-type DialogName = "form" | "delete" | "restore" | "ePayment" | "ePaymentAllOn" | "ePaymentAllOff";
+type DialogName = "form" | "delete" | "restore" | "ePayment" | "ePaymentAllOn" | "ePaymentAllOff" | "permanentDelete";
 
 const toQueryFilter = (values: CityRequest): CityFilter => ({
   name: values.name || undefined,
@@ -123,6 +124,7 @@ const CitiesPage = () => {
   const handleDelete = useCallback((city: CityListDto) => openDialog("delete", city), [openDialog]);
   const handleRestore = useCallback((city: CityListDto) => openDialog("restore", city), [openDialog]);
   const handleEPayment = useCallback((city: CityListDto) => openDialog("ePayment", city), [openDialog]);
+  const handlePermanentDelete = useCallback((city: CityListDto) => openDialog("permanentDelete", city), [openDialog]);
 
   return (
     <div className="space-y-6">
@@ -217,6 +219,7 @@ const CitiesPage = () => {
             onDelete={handleDelete}
             onRestore={handleRestore}
             onEPayment={handleEPayment}
+            onPermanentDelete={handlePermanentDelete}
           />
         </Card>
       )}
@@ -227,6 +230,9 @@ const CitiesPage = () => {
       {dialog === "ePayment" && <CityEPaymentAlert open onClose={closeDialog} onSuccess={refetch} city={selectedCity} />}
       {dialog === "ePaymentAllOn" && <AllCitiesEPaymentAlert open enabled onClose={closeDialog} onSuccess={refetch} />}
       {dialog === "ePaymentAllOff" && <AllCitiesEPaymentAlert open enabled={false} onClose={closeDialog} onSuccess={refetch} />}
+      {dialog === "permanentDelete" && selectedCity && (
+        <PermanentDeleteCityModal open onClose={closeDialog} onSuccess={refetch} city={selectedCity} />
+      )}
     </div>
   );
 };

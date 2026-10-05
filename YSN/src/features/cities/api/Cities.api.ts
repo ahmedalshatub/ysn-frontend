@@ -1,7 +1,17 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
 import { excelResponseHandler } from "../../../shared/utils/fileDownload";
-import type { AddCityDto, CityDto, CityFilter, CityListDto, CityRequest, UpdateCityDto } from "../types/Cities.types";
+import type {
+  AddCityDto,
+  CityDto,
+  CityFilter,
+  CityLinksDto,
+  CityListDto,
+  CityRequest,
+  PermanentDeleteCityDto,
+  PermanentDeleteCityResultDto,
+  UpdateCityDto,
+} from "../types/Cities.types";
 
 export const citiesApi = instanceApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -48,6 +58,16 @@ export const citiesApi = instanceApi.injectEndpoints({
         body,
       }),
     }),
+    getCityLinks: builder.query<CityLinksDto, number>({
+      query: (id) => `Cities/${id}/links`,
+    }),
+    permanentDeleteCity: builder.mutation<PermanentDeleteCityResultDto, PermanentDeleteCityDto & { id: number }>({
+      query: ({ id, ...body }) => ({
+        url: `Cities/${id}/permanent`,
+        method: "DELETE",
+        body,
+      }),
+    }),
     reorderCities: builder.mutation<boolean, { ids: number[] }>({
       query: (body) => ({
         url: "Cities/reorder",
@@ -84,4 +104,6 @@ export const {
   useExportCitiesMutation,
   useChangeCityEPaymentMutation,
   useChangeAllCitiesEPaymentMutation,
+  useGetCityLinksQuery,
+  usePermanentDeleteCityMutation,
 } = citiesApi;
