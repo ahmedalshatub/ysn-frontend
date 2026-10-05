@@ -134,10 +134,14 @@ const TreeSelectNode = ({
           </span>
         )}
 
-        <span className="treeselect-node-label flex min-w-0 flex-col">
-          <span>{node.label}</span>
-          {node.description && <span className="truncate text-xs ce-muted">{node.description}</span>}
-        </span>
+        {node.description ? (
+          <span className="flex min-w-0 flex-1 flex-col break-words">
+            <span>{node.label}</span>
+            <span className="text-xs ce-muted">{node.description}</span>
+          </span>
+        ) : (
+          <span className="treeselect-node-label">{node.label}</span>
+        )}
       </div>
 
       {hasChildren && isExpanded && (

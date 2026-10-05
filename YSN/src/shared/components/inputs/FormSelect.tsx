@@ -352,8 +352,11 @@ const FormSelect = <T extends FieldValues>({
                 onClick={handleToggle}
                 disabled={disabledStatus}
               >
-                <span className={`min-w-0 truncate text-start ${selectedOption && selectedValue !== "" ? "select-value" : "select-placeholder"}`}>
+                <span className={`min-w-0 text-start ${selectedOption?.description ? "flex flex-col break-words" : "truncate"} ${selectedOption && selectedValue !== "" ? "select-value" : "select-placeholder"}`}>
                   {selectedOption && selectedValue !== "" ? selectedOption.label : placeholder}
+                  {selectedOption && selectedValue !== "" && selectedOption.description && (
+                    <span className="text-xs ce-muted">{selectedOption.description}</span>
+                  )}
                 </span>
                 <ChevronDownIcon
                   className={`select-arrow-icon flex-shrink-0 ms-2 ${isOpen ? "select-arrow-rotated" : ""}`}
@@ -417,7 +420,7 @@ const FormSelect = <T extends FieldValues>({
                           >
                             <span className="flex min-w-0 flex-col">
                               <span>{opt.label}</span>
-                              {opt.description && <span className="truncate text-xs ce-muted">{opt.description}</span>}
+                              {opt.description && <span className="break-words text-xs ce-muted">{opt.description}</span>}
                             </span>
                             {isActive && (
                               <CheckIcon className="flex-shrink-0 w-4 h-4" />
