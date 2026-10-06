@@ -657,6 +657,7 @@ export default {
         MobileNotAllowed: "لا يستطيع الموظفون الدخول إلى التطبيق",
         AppInvalid: "التطبيق غير معروف",
         WrongApp: "هذا الحساب يستخدم التطبيق الآخر",
+        ProfileImageRequired: "اختر صورة الملف الشخصي",
       },
       User: {
         NotFound: "المستخدم غير موجود",
@@ -696,6 +697,10 @@ export default {
         PhoneNumberInvalid: "أدخل من 4 إلى 15 رقماً",
         RoleRequired: "اختر دوراً",
         RoleInvalid: "اختر دوراً صالحاً",
+        SecondNameRequired: "الاسم الثاني مطلوب",
+        SecondNameInvalidLength: "يجب أن يكون الاسم الثاني بين 2 و100 حرف",
+        UserNameInvalidCharacters: "استخدم الحروف الإنجليزية والأرقام والشرطة السفلية والنقطة فقط",
+        ProfileImageRequired: "اختر صورة الملف الشخصي",
       },
       Users: {
         NotFound: "المستخدم غير موجود",
@@ -708,7 +713,7 @@ export default {
         SuperAdminOnly: "فقط المدير العام يستطيع إدارة حسابات المدراء العامين",
         UseResetPassword: "المستخدمون الداخليون يحصلون على كلمة مرور مولّدة. استخدم إعادة تعيين كلمة المرور.",
         UseSetPassword: "العملاء يحتاجون كلمة مرور مكتوبة. استخدم تعيين كلمة المرور.",
-        UserNameAlreadyExists: "اسم تسجيل الدخول مستخدم في حساب آخر",
+        UserNameAlreadyExists: "اسم المستخدم مستخدم في حساب آخر",
       },
       Image: {
         UploadFailed: "تعذر رفع الصورة",
@@ -845,6 +850,11 @@ export default {
         PhoneNumberRequired: "رقم الهاتف مطلوب",
         ProfileImageTooLarge: "يجب ألا يتجاوز حجم الصورة 5 ميغابايت",
         RoleInvalid: "اختر دوراً صالحاً",
+        SecondNameRequired: "الاسم الثاني مطلوب",
+        SecondNameInvalidLength: "يجب أن يكون الاسم الثاني بين 2 و100 حرف",
+        UserNameRequired: "اسم المستخدم مطلوب",
+        UserNameInvalidLength: "يجب أن يكون اسم المستخدم بين 3 و50 حرفاً",
+        UserNameInvalidCharacters: "استخدم الحروف الإنجليزية والأرقام والشرطة السفلية والنقطة فقط",
       },
       Customers: {
         EmailAlreadyExists: "هذا البريد مستخدم في حساب آخر",
@@ -1769,6 +1779,8 @@ export default {
       name: "الاسم",
       firstName: "الاسم الأول",
       lastName: "الاسم الأخير",
+      secondName: "الاسم الثاني",
+      userName: "اسم المستخدم",
       personalInfo: "المعلومات الشخصية",
       phoneCode: "الرمز",
       phoneNumber: "الهاتف",

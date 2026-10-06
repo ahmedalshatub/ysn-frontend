@@ -7,6 +7,7 @@ import ProfileAvatar from "../../../shared/components/media/ProfileAvatar";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
 import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import PhoneIcon from "../../../assets/icons/PhoneIcon";
+import UserIcon from "../../../assets/icons/UserIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
 import WalletIcon from "../../../assets/icons/WalletIcon";
 import { customerFullName, customerPhone, customerRoleConfigs, type CustomerDto } from "../types/Customers.types";
@@ -39,6 +40,10 @@ const CustomerDetailsHeader = ({ customer, actions }: CustomerDetailsHeaderProps
             )}
           </div>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
+            <span className="entity-card-line">
+              <UserIcon className="h-4 w-4" />
+              <span dir="ltr">{customer.userName || "-"}</span>
+            </span>
             <span className="entity-card-line">
               <PhoneIcon className="h-4 w-4" />
               <span dir="ltr">{customerPhone(customer) || "-"}</span>

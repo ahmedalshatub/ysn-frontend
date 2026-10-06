@@ -41,7 +41,9 @@ interface CustomerModalProps {
 const emptyValues: CustomerFormValues = {
   roleId: CustomerRole.Agent,
   firstName: "",
+  secondName: "",
   lastName: "",
+  userName: "",
   countryId: 0,
   phoneNumber: "",
   email: "",
@@ -119,7 +121,9 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
         isUnlimitedTvs: customer.isUnlimitedTvs,
         maxTvCount: customer.maxTvCount,
         firstName: customer.firstName,
+        secondName: customer.secondName ?? "",
         lastName: customer.lastName,
+        userName: customer.userName,
         countryId: customer.countryId ?? defaultCountryId,
         phoneNumber: customer.phoneNumber ?? "",
         email: customer.email ?? "",
@@ -151,7 +155,9 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
 
     const base = {
       firstName: values.firstName.trim(),
+      secondName: values.secondName.trim(),
       lastName: values.lastName.trim(),
+      userName: values.userName.trim(),
       countryId: Number(values.countryId),
       phoneNumber: values.phoneNumber.trim(),
       email: values.email?.trim() || null,
@@ -224,11 +230,26 @@ const CustomerModal = ({ open, customerType, customerId, onClose, onSuccess, onT
               errorMessage={fieldError(errors.firstName?.message)}
             />
             <FormInput<CustomerFormValues>
+              name="secondName"
+              control={control}
+              label={`${t("customers.secondName")} *`}
+              error={!!errors.secondName}
+              errorMessage={fieldError(errors.secondName?.message)}
+            />
+            <FormInput<CustomerFormValues>
               name="lastName"
               control={control}
               label={`${t("customers.lastName")} *`}
               error={!!errors.lastName}
               errorMessage={fieldError(errors.lastName?.message)}
+            />
+            <FormInput<CustomerFormValues>
+              name="userName"
+              control={control}
+              label={`${t("customers.userName")} *`}
+              placeholder="ahmed.ali"
+              error={!!errors.userName}
+              errorMessage={fieldError(errors.userName?.message)}
             />
             <div className="grid grid-cols-5 gap-2">
               <div className="col-span-2">

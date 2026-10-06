@@ -58,6 +58,13 @@ const CustomersTable = ({
         ),
       },
       {
+        key: "userName",
+        header: t("customers.userName"),
+        sortable: true,
+        width: "150px",
+        render: (row: CustomerListDto) => <span dir="ltr">{row.userName || "-"}</span>,
+      },
+      {
         key: "phoneNumber",
         header: t("customers.phoneNumber"),
         sortable: true,

@@ -34,7 +34,9 @@ const CustomerOverviewTab = ({ customer }: CustomerOverviewTabProps) => {
   return (
     <div className="detail-grid">
       <DetailItem icon={<UserIcon />} label={t("customers.firstName")} value={customer.firstName} />
+      <DetailItem icon={<UserIcon />} label={t("customers.secondName")} value={customer.secondName || "-"} />
       <DetailItem icon={<UserIcon />} label={t("customers.lastName")} value={customer.lastName} />
+      <DetailItem icon={<UserIcon />} label={t("customers.userName")} value={<span dir="ltr">{customer.userName || "-"}</span>} />
       <DetailItem icon={<PhoneIcon />} label={t("customers.phoneNumber")} value={<span dir="ltr">{customerPhone(customer) || "-"}</span>} />
       <DetailItem icon={<MailIcon />} label={t("customers.email")} value={customer.email || "-"} />
       <DetailItem icon={<MapPinIcon />} label={t("customers.city")} value={customer.cityName ?? "-"} />

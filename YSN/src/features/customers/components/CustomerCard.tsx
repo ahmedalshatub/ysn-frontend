@@ -10,6 +10,7 @@ import WalletIcon from "../../../assets/icons/WalletIcon";
 import MonitorIcon from "../../../assets/icons/MonitorIcon";
 import CalendarIcon from "../../../assets/icons/CalendarIcon";
 import LinkIcon from "../../../assets/icons/LinkIcon";
+import UserIcon from "../../../assets/icons/UserIcon";
 import { CustomerRole, customerFullName, customerPhone, type CustomerListDto } from "../types/Customers.types";
 
 interface CustomerCardProps {
@@ -54,6 +55,10 @@ const CustomerCard = ({ customer, actions, onOpen }: CustomerCardProps) => {
       </div>
 
       <div className="entity-card-meta">
+        <span className="entity-card-line">
+          <UserIcon className="h-4 w-4 flex-shrink-0" />
+          <span className="truncate" dir="ltr">{customer.userName || "-"}</span>
+        </span>
         <span className="entity-card-line">
           <MapPinIcon className="h-4 w-4 flex-shrink-0" />
           <span className="truncate">{customer.cityName ?? "-"}</span>

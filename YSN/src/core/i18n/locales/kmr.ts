@@ -657,6 +657,7 @@ export default {
         MobileNotAllowed: "فەرمانبەر نەشێن بچنە ناڤ ئەپی",
         AppInvalid: "ئەپ نەیا ناسکرییە",
         WrongApp: "ئەڤ هەژمارە ئەپا دی بکاردئینیت",
+        ProfileImageRequired: "وێنێ پرۆفایلی هەلبژێرە",
       },
       User: {
         NotFound: "بکارهێنەر نەهاتە دیتن",
@@ -696,6 +697,10 @@ export default {
         PhoneNumberInvalid: "4 هەتا 15 ژمارەیان بنڤیسە",
         RoleRequired: "ڕۆڵەکێ هەلبژێرە",
         RoleInvalid: "ڕۆلەکێ دروست هەلبژێرە",
+        SecondNameRequired: "ناڤێ دووێ پێدڤییە",
+        SecondNameInvalidLength: "دڤێت ناڤێ دووێ د ناڤبەرا 2 و 100 پیتان دا بیت",
+        UserNameInvalidCharacters: "تنێ پیتێن ئینگلیزی، ژمارە، هێلا ژێرێ و خال بکاربینە",
+        ProfileImageRequired: "وێنێ پرۆفایلی هەلبژێرە",
       },
       Users: {
         NotFound: "بکارهێنەر نەهاتە دیتن",
@@ -708,7 +713,7 @@ export default {
         SuperAdminOnly: "تنێ ڕێڤەبەرێ گشتی دشێت هژمارێن ڕێڤەبەرێن گشتی ڕێڤەببەت",
         UseResetPassword: "بکارهێنەرێن ناڤخۆ پەیڤەکا نهێنی یا دروستکری وەردگرن. ڕێکخستنەڤەیا پەیڤا نهێنی بکاربینە.",
         UseSetPassword: "کڕیار پێدڤی پەیڤەکا نهێنی یا نڤیسی نە. دانانا پەیڤا نهێنی بکاربینە.",
-        UserNameAlreadyExists: "ئەڤ ناڤێ چوونا ژوور د هەژمارەکا دی دا هاتیە بکارئینان",
+        UserNameAlreadyExists: "ئەڤ ناڤێ بکارهێنەری د هەژمارەکا دی دا هاتیە بکارئینان",
       },
       Image: {
         UploadFailed: "وێنە نەهاتە بارکرن",
@@ -845,6 +850,11 @@ export default {
         PhoneNumberRequired: "ژمارا تەلەفۆنێ پێدڤییە",
         ProfileImageTooLarge: "دڤێت وێنە 5 مێگابایت یان کێمتر بیت",
         RoleInvalid: "ڕۆلەکێ دروست هەلبژێرە",
+        SecondNameRequired: "ناڤێ دووێ پێدڤییە",
+        SecondNameInvalidLength: "دڤێت ناڤێ دووێ د ناڤبەرا 2 و 100 پیتان دا بیت",
+        UserNameRequired: "ناڤێ بکارهێنەری پێدڤییە",
+        UserNameInvalidLength: "دڤێت ناڤێ بکارهێنەری د ناڤبەرا 3 و 50 پیتان دا بیت",
+        UserNameInvalidCharacters: "تنێ پیتێن ئینگلیزی، ژمارە، هێلا ژێرێ و خال بکاربینە",
       },
       Customers: {
         EmailAlreadyExists: "ئەڤ ئیمەیلە د هژمارەکا دی دا هاتییە بکارئینان",
@@ -1769,6 +1779,8 @@ export default {
       name: "ناڤ",
       firstName: "ناڤێ ئێکێ",
       lastName: "ناڤێ دویماهیێ",
+      secondName: "ناڤێ دووێ",
+      userName: "ناڤێ بکارهێنەری",
       personalInfo: "پێزانینێن کەسی",
       phoneCode: "کۆد",
       phoneNumber: "تەلەفۆن",

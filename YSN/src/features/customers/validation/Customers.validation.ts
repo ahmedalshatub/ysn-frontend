@@ -14,13 +14,22 @@ const requiredId = (message: string) =>
     .min(1, message)
     .required(message);
 
-const nameField = (field: "FirstName" | "LastName") =>
+const nameField = (field: "FirstName" | "SecondName" | "LastName") =>
   yup
     .string()
     .trim()
     .required(`errors.Customer.${field}Required`)
     .min(2, `errors.Customer.${field}InvalidLength`)
     .max(100, `errors.Customer.${field}InvalidLength`);
+
+const userNameField = () =>
+  yup
+    .string()
+    .trim()
+    .required("errors.Customer.UserNameRequired")
+    .min(3, "errors.Customer.UserNameInvalidLength")
+    .max(50, "errors.Customer.UserNameInvalidLength")
+    .matches(/^[A-Za-z0-9_.]+$/, "errors.Customer.UserNameInvalidCharacters");
 
 export const passwordField = () =>
   yup
@@ -50,7 +59,9 @@ export const customerSchema = (isEdit: boolean) =>
   yup.object({
     roleId: yup.number().required(),
     firstName: nameField("FirstName"),
+    secondName: nameField("SecondName"),
     lastName: nameField("LastName"),
+    userName: userNameField(),
     countryId: requiredId("errors.Customer.CountryRequired"),
     phoneNumber: yup
       .string()

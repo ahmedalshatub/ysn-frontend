@@ -657,6 +657,7 @@ export default {
         MobileNotAllowed: "Employees cannot sign in to the app",
         AppInvalid: "Unknown app",
         WrongApp: "This account uses the other app",
+        ProfileImageRequired: "Choose a profile image",
       },
       User: {
         NotFound: "User not found",
@@ -696,6 +697,10 @@ export default {
         PhoneNumberInvalid: "Enter 4 to 15 digits",
         RoleRequired: "Select a role",
         RoleInvalid: "Select a valid role",
+        SecondNameRequired: "Second name is required",
+        SecondNameInvalidLength: "Second name must be 2 to 100 characters",
+        UserNameInvalidCharacters: "Use only letters, digits, underscore and dot",
+        ProfileImageRequired: "Choose a profile image",
       },
       Users: {
         NotFound: "User not found",
@@ -708,7 +713,7 @@ export default {
         SuperAdminOnly: "Only a Super Admin can manage Super Admin accounts",
         UseResetPassword: "Internal users get a generated password. Use reset password.",
         UseSetPassword: "Customers need a typed password. Use set password.",
-        UserNameAlreadyExists: "Another account already uses this sign-in name",
+        UserNameAlreadyExists: "Another account already uses this username",
       },
       Image: {
         UploadFailed: "The image could not be uploaded",
@@ -845,6 +850,11 @@ export default {
         PhoneNumberRequired: "Phone number is required",
         ProfileImageTooLarge: "The image must be 5 MB or smaller",
         RoleInvalid: "Select a valid role",
+        SecondNameRequired: "Second name is required",
+        SecondNameInvalidLength: "Second name must be 2 to 100 characters",
+        UserNameRequired: "Username is required",
+        UserNameInvalidLength: "Username must be 3 to 50 characters",
+        UserNameInvalidCharacters: "Use only letters, digits, underscore and dot",
       },
       Customers: {
         EmailAlreadyExists: "Another account already uses this e-mail",
@@ -1769,6 +1779,8 @@ export default {
       name: "Name",
       firstName: "First name",
       lastName: "Last name",
+      secondName: "Second name",
+      userName: "Username",
       personalInfo: "Personal information",
       phoneCode: "Code",
       phoneNumber: "Phone",

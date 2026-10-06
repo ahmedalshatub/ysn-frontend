@@ -657,6 +657,7 @@ export default {
         MobileNotAllowed: "فەرمانبەران ناتوانن بچنە ناو ئەپەکە",
         AppInvalid: "ئەپەکە نەناسراوە",
         WrongApp: "ئەم هەژمارە ئەپەکەی تر بەکاردەهێنێت",
+        ProfileImageRequired: "وێنەی پرۆفایل هەڵبژێرە",
       },
       User: {
         NotFound: "بەکارهێنەر نەدۆزرایەوە",
@@ -696,6 +697,10 @@ export default {
         PhoneNumberInvalid: "4 بۆ 15 ژمارە بنووسە",
         RoleRequired: "ڕۆڵێک هەڵبژێرە",
         RoleInvalid: "ڕۆڵێکی دروست هەڵبژێرە",
+        SecondNameRequired: "ناوی دووەم پێویستە",
+        SecondNameInvalidLength: "ناوی دووەم دەبێت لە نێوان 2 بۆ 100 پیت بێت",
+        UserNameInvalidCharacters: "تەنها پیتی ئینگلیزی، ژمارە، هێڵی خوارەوە و خاڵ بەکاربهێنە",
+        ProfileImageRequired: "وێنەی پرۆفایل هەڵبژێرە",
       },
       Users: {
         NotFound: "بەکارهێنەر نەدۆزرایەوە",
@@ -708,7 +713,7 @@ export default {
         SuperAdminOnly: "تەنها بەڕێوەبەری گشتی دەتوانێت هەژماری بەڕێوەبەرانی گشتی بەڕێوە ببات",
         UseResetPassword: "بەکارهێنەرانی ناوخۆ وشەی نهێنی دروستکراو وەردەگرن. ڕێکخستنەوەی وشەی نهێنی بەکاربهێنە.",
         UseSetPassword: "کڕیاران پێویستیان بە وشەی نهێنی نووسراوە. دانانی وشەی نهێنی بەکاربهێنە.",
-        UserNameAlreadyExists: "ئەم ناوی چوونەژوورەوەیە لە هەژمارێکی تر بەکارهاتووە",
+        UserNameAlreadyExists: "ئەم ناوی بەکارهێنەرە لە هەژمارێکی تر بەکارهاتووە",
       },
       Image: {
         UploadFailed: "وێنەکە بارنەکرا",
@@ -845,6 +850,11 @@ export default {
         PhoneNumberRequired: "ژمارەی تەلەفۆن پێویستە",
         ProfileImageTooLarge: "وێنەکە دەبێت 5 مێگابایت یان کەمتر بێت",
         RoleInvalid: "ڕۆڵێکی دروست هەڵبژێرە",
+        SecondNameRequired: "ناوی دووەم پێویستە",
+        SecondNameInvalidLength: "ناوی دووەم دەبێت لە نێوان 2 بۆ 100 پیت بێت",
+        UserNameRequired: "ناوی بەکارهێنەر پێویستە",
+        UserNameInvalidLength: "ناوی بەکارهێنەر دەبێت لە نێوان 3 بۆ 50 پیت بێت",
+        UserNameInvalidCharacters: "تەنها پیتی ئینگلیزی، ژمارە، هێڵی خوارەوە و خاڵ بەکاربهێنە",
       },
       Customers: {
         EmailAlreadyExists: "ئەم ئیمەیڵە لە هەژمارێکی تردا بەکارهاتووە",
@@ -1769,6 +1779,8 @@ export default {
       name: "ناو",
       firstName: "ناوی یەکەم",
       lastName: "ناوی کۆتایی",
+      secondName: "ناوی دووەم",
+      userName: "ناوی بەکارهێنەر",
       personalInfo: "زانیاریی کەسی",
       phoneCode: "کۆد",
       phoneNumber: "تەلەفۆن",

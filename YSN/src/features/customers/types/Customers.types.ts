@@ -83,6 +83,7 @@ export interface CustomerListDto extends BaseDto {
   roleId: CustomerRoleValue;
   userName: string;
   firstName: string;
+  secondName: string | null;
   lastName: string;
   email: string | null;
   countryId: number | null;
@@ -113,7 +114,9 @@ export interface CustomerDto extends CustomerListDto {
 
 export interface AddCustomerDto {
   firstName: string;
+  secondName: string;
   lastName: string;
+  userName: string;
   countryId: number;
   phoneNumber: string;
   email: string | null;
@@ -128,7 +131,9 @@ export interface AddCustomerDto {
 
 export interface UpdateCustomerDto {
   firstName: string;
+  secondName: string;
   lastName: string;
+  userName: string;
   countryId: number;
   phoneNumber: string;
   email: string | null;
@@ -161,8 +166,8 @@ export interface SetCustomerPasswordDto {
   confirmPassword: string;
 }
 
-export const customerFullName = (customer: Pick<CustomerListDto, "firstName" | "lastName">) =>
-  [customer.firstName, customer.lastName].filter(Boolean).join(" ").trim();
+export const customerFullName = (customer: Pick<CustomerListDto, "firstName" | "lastName"> & { secondName?: string | null }) =>
+  [customer.firstName, customer.secondName, customer.lastName].filter(Boolean).join(" ").trim();
 
 export const customerPhone = (customer: Pick<CustomerListDto, "phoneCode" | "phoneNumber">) =>
   customer.phoneNumber ? `${customer.phoneCode ?? ""} ${customer.phoneNumber}`.trim() : "";

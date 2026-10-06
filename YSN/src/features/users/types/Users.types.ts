@@ -22,6 +22,7 @@ export interface UserListDto extends BaseDto {
   userName: string;
   email: string | null;
   firstName: string;
+  secondName: string | null;
   lastName: string;
   countryId: number | null;
   phoneCode: string | null;
