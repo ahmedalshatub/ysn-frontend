@@ -12,6 +12,7 @@ import CardStockWidget from "../components/widgets/CardStockWidget";
 import MessagesWidget from "../components/widgets/MessagesWidget";
 import EmployeesWidget from "../components/widgets/EmployeesWidget";
 import RecentActivityWidget from "../components/widgets/RecentActivityWidget";
+import TvsWidget from "../components/widgets/TvsWidget";
 import type { DashboardWidgetDefinition } from "./Dashboard.types";
 
 type Can = (permission: PermissionCode) => boolean;
@@ -31,5 +32,6 @@ export const dashboardWidgets: DashboardWidgetDefinition[] = [
   { key: "cardStock", isVisible: (can) => can(Permission.CardsView), component: CardStockWidget },
   { key: "messages", isVisible: (can) => can(Permission.MessagesView), component: MessagesWidget },
   { key: "employees", isVisible: (can) => can(Permission.UsersView), component: EmployeesWidget },
+  { key: "tvs", isVisible: (can) => can(Permission.TvsView), component: TvsWidget },
   { key: "recentActivity", isVisible: (can) => can(Permission.AuditLogsView), component: RecentActivityWidget },
 ];
