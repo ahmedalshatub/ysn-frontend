@@ -562,6 +562,14 @@ export default {
       hasTvSmsApiHint: "تەلەفزیۆنێن ڤی باژێری ب رێکا خزمەتا نامێن تەلەفزیۆنێ دهێنە تۆمارکرن و نویکرن",
     },
     errors: {
+      DeviceToken: {
+        TokenRequired: "کۆدێ ئامێری پێدڤییە",
+        TokenTooLong: "کۆدێ ئامێری زۆر درێژە",
+        PlatformRequired: "سیستەمێ ئامێری پێدڤییە",
+        PlatformInvalid: "سیستەمێ ئامێری دڤێت android یان ios بیت",
+        DeviceNameTooLong: "ناڤێ ئامێری زۆر درێژە",
+        LanguageInvalid: "ئەڤ زمانە پشتەڤانی ناهێتە کرن",
+      },
       City: {
         LinkActionInvalid: "ڤەگوهاستن یان ژێبرن هەلبژێرە",
         SortOrderOutOfRange: "ڕیزەکێ ژ 1 هەتا وێ ژمارێ یا هاتییە نیشاندان هەلبژێرە",

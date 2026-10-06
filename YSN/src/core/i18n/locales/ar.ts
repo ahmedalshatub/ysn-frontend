@@ -562,6 +562,14 @@ export default {
       hasTvSmsApiHint: "تُسجل أجهزة التلفزيون في هذه المدينة وتُجدد عبر خدمة رسائل التلفزيون",
     },
     errors: {
+      DeviceToken: {
+        TokenRequired: "رمز الجهاز مطلوب",
+        TokenTooLong: "رمز الجهاز طويل جداً",
+        PlatformRequired: "نظام الجهاز مطلوب",
+        PlatformInvalid: "نظام الجهاز يجب أن يكون android أو ios",
+        DeviceNameTooLong: "اسم الجهاز طويل جداً",
+        LanguageInvalid: "اللغة غير مدعومة",
+      },
       City: {
         LinkActionInvalid: "اختر النقل أو الحذف",
         SortOrderOutOfRange: "اختر ترتيباً من 1 إلى الرقم المعروض",

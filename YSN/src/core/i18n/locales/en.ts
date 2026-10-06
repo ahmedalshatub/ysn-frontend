@@ -562,6 +562,14 @@ export default {
       hasTvSmsApiHint: "TVs in this city are registered and renewed through the TV SMS API",
     },
     errors: {
+      DeviceToken: {
+        TokenRequired: "The device token is required",
+        TokenTooLong: "The device token is too long",
+        PlatformRequired: "The platform is required",
+        PlatformInvalid: "The platform must be android or ios",
+        DeviceNameTooLong: "The device name is too long",
+        LanguageInvalid: "The language is not supported",
+      },
       City: {
         LinkActionInvalid: "Choose move or delete",
         SortOrderOutOfRange: "Choose an order from 1 to the number shown",

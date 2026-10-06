@@ -562,6 +562,14 @@ export default {
       hasTvSmsApiHint: "تەلەفزیۆنەکانی ئەم شارە لە ڕێگەی خزمەتگوزاری نامەی تەلەفزیۆنەوە تۆمار و نوێ دەکرێنەوە",
     },
     errors: {
+      DeviceToken: {
+        TokenRequired: "کۆدی ئامێر پێویستە",
+        TokenTooLong: "کۆدی ئامێر زۆر درێژە",
+        PlatformRequired: "سیستەمی ئامێر پێویستە",
+        PlatformInvalid: "سیستەمی ئامێر دەبێت android یان ios بێت",
+        DeviceNameTooLong: "ناوی ئامێر زۆر درێژە",
+        LanguageInvalid: "ئەم زمانە پشتگیری ناکرێت",
+      },
       City: {
         LinkActionInvalid: "گواستنەوە یان سڕینەوە هەڵبژێرە",
         SortOrderOutOfRange: "ڕیزێک لە 1 تا ئەو ژمارەیەی پیشان دراوە هەڵبژێرە",
