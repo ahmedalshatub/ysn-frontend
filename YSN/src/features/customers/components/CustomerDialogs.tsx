@@ -13,6 +13,7 @@ import { TransactionType } from "../../transactions/types/Transactions.types";
 import CardsModal from "../../cards/components/CardsModal";
 import CustomerInvoicesModal from "../../invoices/components/CustomerInvoicesModal";
 import CustomerDiscountsModal from "../../cardTypeDiscounts/components/CustomerDiscountsModal";
+import CustomerTvsModal from "../../tvs/components/tvs/CustomerTvsModal";
 
 interface CustomerDialogsProps {
   dialog: CustomerDialogName | null;
@@ -62,6 +63,8 @@ const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onT
       return <CustomerInvoicesModal open customer={customer} onClose={onClose} onChanged={onSuccess} />;
     case "cards":
       return <CardsModal open title={customerFullName(customer)} fixedFilter={{ takenBy: customer.id }} onClose={onClose} />;
+    case "tvs":
+      return <CustomerTvsModal open customer={customer} onClose={onClose} />;
     case "restore":
       return <RestoreCustomerAlert open customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     default:

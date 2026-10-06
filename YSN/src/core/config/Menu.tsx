@@ -7,6 +7,7 @@ import FileTextIcon from "../../assets/icons/FileTextIcon";
 import SettingsIcon from "../../assets/icons/SettingsIcon";
 import WalletIcon from "../../assets/icons/WalletIcon";
 import BarChartIcon from "../../assets/icons/BarChartIcon";
+import MonitorIcon from "../../assets/icons/MonitorIcon";
 import { Permission, type PermissionCode } from "../../shared/types/Permissions.types";
 
 const iconSize = 20;
@@ -85,6 +86,32 @@ const Menu: MenuItem[] = [
     icon: <WalletIcon width={iconSize} height={iconSize} />,
     path: "/transactions",
     permission: Permission.TransactionsView,
+  },
+  {
+    name: "Tvs",
+    title: "tvs.menuGroup",
+    icon: <MonitorIcon width={iconSize} height={iconSize} />,
+    path: "/tvs",
+    subMenu: [
+      {
+        name: "tvs",
+        title: "tvs.pageTitle",
+        path: "/tvs",
+        permission: Permission.TvsView,
+      },
+      {
+        name: "tv-activations",
+        title: "tvActivations.pageTitle",
+        path: "/tv-activations",
+        permission: Permission.TvsView,
+      },
+      {
+        name: "tv-sms-api-logs",
+        title: "tvSmsApiLogs.pageTitle",
+        path: "/tv-sms-api-logs",
+        permission: Permission.CitiesViewTvSmsLogs,
+      },
+    ],
   },
   {
     name: "Cards",
@@ -257,6 +284,24 @@ const Menu: MenuItem[] = [
         title: "reports.messages.title",
         path: "/reports/messages",
         permission: Permission.ReportsMessages,
+      },
+      {
+        name: "tv-activations",
+        title: "reports.tvActivations.title",
+        path: "/reports/tv-activations",
+        permission: Permission.ReportsTvActivations,
+      },
+      {
+        name: "tv-subscriptions-ending",
+        title: "reports.tvSubscriptionsEnding.title",
+        path: "/reports/tv-subscriptions-ending",
+        permission: Permission.ReportsTvSubscriptionsEnding,
+      },
+      {
+        name: "tvs-by-city",
+        title: "reports.tvsByCity.title",
+        path: "/reports/tvs-by-city",
+        permission: Permission.ReportsTvsByCity,
       },
     ],
   },

@@ -48,6 +48,14 @@ const CityTvSmsApiFields = ({ control, errors, isEdit, storedSecrets }: CityTvSm
               error={!!errors.tvSmsUserId}
               errorMessage={fieldError(errors.tvSmsUserId?.message)}
             />
+            <FormInput<CityFormValues>
+              name="tvSmsCertificateThumbprint"
+              control={control}
+              label={t("cities.tvSmsCertificateThumbprint")}
+              placeholder={t("cities.tvSmsCertificateThumbprintHint")}
+              error={!!errors.tvSmsCertificateThumbprint}
+              errorMessage={fieldError(errors.tvSmsCertificateThumbprint?.message)}
+            />
           </>
         )}
       </FormSection>

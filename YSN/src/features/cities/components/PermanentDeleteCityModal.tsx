@@ -92,6 +92,7 @@ const PermanentDeleteCityModal = ({ open, onClose, onSuccess, city }: PermanentD
       ) : (
         <div className="space-y-8">
           <Message variant="warning">{t("cities.permanentDeleteWarning", { name: city.name })}</Message>
+          {(links.tvsCount ?? 0) > 0 && <Message variant="danger">{t("cities.hasTvs", { count: links.tvsCount })}</Message>}
           {needsTarget && (
             <FormSection icon={<MapPinIcon />} title={t("cities.targetCity")}>
               <Select

@@ -29,6 +29,7 @@ export interface CityLinksDto {
   deletedCardCategoriesCount: number;
   cardTypesCount: number;
   employeesCount: number;
+  tvsCount: number;
 }
 
 export interface PermanentDeleteCityDto {
@@ -77,6 +78,7 @@ export interface CityDto extends BaseDto {
   hasTvSmsPassword: boolean;
   hasTvSmsAuthKey: boolean;
   hasTvSmsPublicKey: boolean;
+  tvSmsCertificateThumbprint: string | null;
   translations: CityTranslationDto[];
 }
 
@@ -94,6 +96,7 @@ export interface AddCityDto {
   tvSmsPassword?: string;
   tvSmsAuthKey?: string;
   tvSmsPublicKey?: string;
+  tvSmsCertificateThumbprint?: string;
   tvSmsDefaultLanguage: number;
   tvSmsDefaultDepartmentId: number;
   tvSmsDefaultRegionId: number;

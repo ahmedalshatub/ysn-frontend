@@ -29,6 +29,9 @@ const InactiveCustomersReport = lazy(() => import("../../features/reports/inacti
 const InvoiceDeletionsReport = lazy(() => import("../../features/reports/invoiceDeletions/pages/InvoiceDeletionsReportPage"));
 const TransactionReversalsReport = lazy(() => import("../../features/reports/transactionReversals/pages/TransactionReversalsReportPage"));
 const MessagesReport = lazy(() => import("../../features/reports/messages/pages/MessagesReportPage"));
+const TvActivationsReport = lazy(() => import("../../features/reports/tvActivations/pages/TvActivationsReportPage"));
+const TvSubscriptionsEndingReport = lazy(() => import("../../features/reports/tvSubscriptionsEnding/pages/TvSubscriptionsEndingReportPage"));
+const TvsByCityReport = lazy(() => import("../../features/reports/tvsByCity/pages/TvsByCityReportPage"));
 const Users = lazy(() => import("../../features/users/pages/UsersPage"));
 const Agents = lazy(() => import("../../features/customers/pages/AgentsPage"));
 const SubAgents = lazy(() => import("../../features/customers/pages/SubAgentsPage"));
@@ -47,6 +50,9 @@ const RoleForm = lazy(() => import("../../features/roles/pages/RoleFormPage"));
 const AuditLogs = lazy(() => import("../../features/auditLogs/pages/AuditLogsPage"));
 const Countries = lazy(() => import("../../features/countries/pages/CountriesPage"));
 const Cities = lazy(() => import("../../features/cities/pages/CitiesPage"));
+const Tvs = lazy(() => import("../../features/tvs/pages/tvs/TvsPage"));
+const TvActivations = lazy(() => import("../../features/tvs/pages/tvActivations/TvActivationsPage"));
+const TvSmsApiLogs = lazy(() => import("../../features/tvs/pages/tvSmsApiLogs/TvSmsApiLogsPage"));
 
 const dashboardRoutes: any = [
   {
@@ -120,6 +126,24 @@ const dashboardRoutes: any = [
       Permission.MessagesSendToRoleInCity,
       Permission.MessagesSendToAll,
     ],
+  },
+  {
+    path: "/tvs",
+    name: "Tvs",
+    element: <Tvs />,
+    permission: Permission.TvsView,
+  },
+  {
+    path: "/tv-activations",
+    name: "TvActivations",
+    element: <TvActivations />,
+    permission: Permission.TvsView,
+  },
+  {
+    path: "/tv-sms-api-logs",
+    name: "TvSmsApiLogs",
+    element: <TvSmsApiLogs />,
+    permission: Permission.CitiesViewTvSmsLogs,
   },
   {
     path: "/customers/:id",
@@ -295,6 +319,24 @@ const reportsRoutes: any = [
     name: "MessagesReport",
     element: <MessagesReport />,
     permission: Permission.ReportsMessages,
+  },
+  {
+    path: "/reports/tv-activations",
+    name: "TvActivationsReport",
+    element: <TvActivationsReport />,
+    permission: Permission.ReportsTvActivations,
+  },
+  {
+    path: "/reports/tv-subscriptions-ending",
+    name: "TvSubscriptionsEndingReport",
+    element: <TvSubscriptionsEndingReport />,
+    permission: Permission.ReportsTvSubscriptionsEnding,
+  },
+  {
+    path: "/reports/tvs-by-city",
+    name: "TvsByCityReport",
+    element: <TvsByCityReport />,
+    permission: Permission.ReportsTvsByCity,
   },
 ];
 

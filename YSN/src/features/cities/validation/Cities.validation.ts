@@ -17,6 +17,11 @@ const isBase64 = (value?: string) => {
   return text.length % 4 === 0 && /^[A-Za-z0-9+/]*={0,2}$/.test(text);
 };
 
+const isThumbprint = (value?: string) => {
+  const text = (value ?? "").replace(/[:\s]/g, "");
+  return (text.length === 40 || text.length === 64) && /^[0-9A-Fa-f]+$/.test(text);
+};
+
 const translationSchema = yup.object({
   languageCode: yup.string().required("errors.City.LanguageRequired"),
   name: yup
@@ -74,6 +79,11 @@ export const citySchema = (storedSecrets: CityStoredSecrets) =>
       4000,
       "errors.City.TvSmsPublicKeyTooLong"
     ).test("base64", "errors.City.TvSmsPublicKeyInvalid", (value) => !value || isBase64(value)),
+    tvSmsCertificateThumbprint: yup
+      .string()
+      .trim()
+      .default("")
+      .test("thumbprint", "errors.City.TvSmsCertificateThumbprintInvalid", (value) => !value || isThumbprint(value)),
     tvSmsDefaultLanguage: defaultValue,
     tvSmsDefaultDepartmentId: defaultValue,
     tvSmsDefaultRegionId: defaultValue,

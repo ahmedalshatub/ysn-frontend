@@ -10,6 +10,12 @@ export const NotificationType = {
   EPaymentFailed: 9,
   CustomerTypeChanged: 11,
   EPaymentNeedsReview: 13,
+  TvActivated: 14,
+  TvActivationFailed: 15,
+  TvAddedByCompany: 16,
+  TvRemovedByCompany: 17,
+  TvActivationNeedsChecking: 18,
+  TvSubscriptionEndingSoon: 19,
   TransactionRestored: 20,
   SubAgentDisabledAgentChanged: 21,
   CustomerRegistered: 30,
@@ -17,6 +23,9 @@ export const NotificationType = {
   EPaymentFailedInternal: 32,
   AgentDepositMade: 33,
   InvoiceCreated: 34,
+  TvAddedByCustomer: 35,
+  TvActivatedInternal: 36,
+  TvActivationFailedInternal: 37,
   DepositMade: 38,
   WithdrawMadeInternal: 39,
   TransactionDeleted: 40,
@@ -50,6 +59,25 @@ export const internalNotificationTypes: NotificationTypeValue[] = [
   NotificationType.SubAgentsDisabled,
   NotificationType.CustomerDisabled,
   NotificationType.CardsAdded,
+  NotificationType.TvActivationNeedsChecking,
+  NotificationType.TvAddedByCustomer,
+  NotificationType.TvActivatedInternal,
+  NotificationType.TvActivationFailedInternal,
+];
+
+export const tvNotificationTypes: number[] = [
+  NotificationType.TvAddedByCompany,
+  NotificationType.TvRemovedByCompany,
+  NotificationType.TvSubscriptionEndingSoon,
+  NotificationType.TvAddedByCustomer,
+];
+
+export const tvActivationNotificationTypes: number[] = [
+  NotificationType.TvActivated,
+  NotificationType.TvActivationFailed,
+  NotificationType.TvActivationNeedsChecking,
+  NotificationType.TvActivatedInternal,
+  NotificationType.TvActivationFailedInternal,
 ];
 
 export const transactionNotificationTypes: number[] = [

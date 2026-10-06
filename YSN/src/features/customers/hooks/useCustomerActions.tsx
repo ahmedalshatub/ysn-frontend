@@ -9,6 +9,7 @@ import RefreshCwIcon from "../../../assets/icons/RefreshCwIcon";
 import type { ActionItem } from "../../../shared/types/ActionItem.types";
 import MailIcon from "../../../assets/icons/MailIcon";
 import WalletIcon from "../../../assets/icons/WalletIcon";
+import MonitorIcon from "../../../assets/icons/MonitorIcon";
 import TrendUpIcon from "../../../assets/icons/TrendUpIcon";
 import TrendDownIcon from "../../../assets/icons/TrendDownIcon";
 import usePermission from "../../../shared/hooks/usePermission";
@@ -29,7 +30,8 @@ export type CustomerDialogName =
   | "withdraw"
   | "cards"
   | "invoices"
-  | "discounts";
+  | "discounts"
+  | "tvs";
 
 interface CustomerActionOptions {
   onOpen?: (customer: CustomerListDto) => void;
@@ -78,6 +80,9 @@ const useCustomerActions = ({ onOpen, onDialog }: CustomerActionOptions) => {
           : []),
         ...(canPermission(Permission.CardsView)
           ? [{ label: t("cards.takenCards"), icon: <WalletIcon />, onClick: () => onDialog("cards", customer) }]
+          : []),
+        ...(canPermission(Permission.TvsView)
+          ? [{ label: t("tvs.pageTitle"), icon: <MonitorIcon />, onClick: () => onDialog("tvs", customer) }]
           : []),
         ...(can("ChangeStatus")
           ? [{

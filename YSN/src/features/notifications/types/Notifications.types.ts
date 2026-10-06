@@ -40,4 +40,6 @@ export interface UpdateNotificationSettingsDto {
 export type NotificationTarget =
   | { kind: "path"; path: string }
   | { kind: "transaction"; id: number }
-  | { kind: "invoice"; id: number };
+  | { kind: "invoice"; id: number }
+  | { kind: "tv"; id: number }
+  | { kind: "tvActivation"; id: number };

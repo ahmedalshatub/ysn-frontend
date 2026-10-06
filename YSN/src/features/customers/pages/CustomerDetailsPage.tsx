@@ -20,6 +20,7 @@ import CardsView from "../../cards/components/CardsView";
 import InvoicesView from "../../invoices/components/InvoicesView";
 import CardTypeDiscountsView from "../../cardTypeDiscounts/components/CardTypeDiscountsView";
 import CustomerCardCategoryAccessTab from "../../cardCategories/components/CustomerCardCategoryAccessTab";
+import CustomerTvsTab from "../../tvs/components/tvs/CustomerTvsTab";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
 import { CustomerRole, customerFullName, customerRoleConfigs } from "../types/Customers.types";
@@ -40,7 +41,7 @@ const CustomerDetailsPage = () => {
 
   const openDialog = useCallback((name: CustomerDialogName) => setDialog(name), []);
   const getActions = useCustomerActions({ onDialog: openDialog });
-  const actions = customer ? getActions(customer).filter((action) => action.label !== t("messages.messages") && action.label !== t("transactions.pageTitle") && action.label !== t("cards.takenCards") && action.label !== t("invoices.pageTitle") && action.label !== t("discounts.cardTypeDiscounts")) : [];
+  const actions = customer ? getActions(customer).filter((action) => action.label !== t("messages.messages") && action.label !== t("transactions.pageTitle") && action.label !== t("cards.takenCards") && action.label !== t("invoices.pageTitle") && action.label !== t("discounts.cardTypeDiscounts") && action.label !== t("tvs.pageTitle")) : [];
 
   const tabs = useMemo(() => {
     const list = [{ id: "overview", label: t("customers.overviewTab") }];
@@ -49,6 +50,7 @@ const CustomerDetailsPage = () => {
     if (can(Permission.CardTypeDiscountsView)) list.push({ id: "discounts", label: t("discounts.cardTypeDiscounts") });
     if (can(Permission.InvoicesView)) list.push({ id: "invoices", label: t("invoices.pageTitle") });
     if (can(Permission.CardsView)) list.push({ id: "cards", label: t("cards.takenCards") });
+    if (can(Permission.TvsView)) list.push({ id: "tvs", label: t("tvs.pageTitle") });
     if (can(Permission.MessagesView)) list.push({ id: "messages", label: t("messages.messages") });
     if (can(Permission.CardCategoriesView)) list.push({ id: "cardCategories", label: t("cardCategories.customerTab") });
     return list;
@@ -95,6 +97,7 @@ const CustomerDetailsPage = () => {
           {activeTab === "discounts" && <CardTypeDiscountsView customer={customer} />}
           {activeTab === "invoices" && <InvoicesView customerId={customer.id} onChanged={refetch} />}
           {activeTab === "cards" && <CardsView fixedFilter={{ takenBy: customer.id }} />}
+          {activeTab === "tvs" && <CustomerTvsTab customer={customer} />}
           {activeTab === "messages" && <MessagesTab customer={customer} />}
           {activeTab === "cardCategories" && <CustomerCardCategoryAccessTab customer={customer} onChanged={refetch} />}
           {activeTab === "subAgents" && customer.roleId === CustomerRole.Agent && (
