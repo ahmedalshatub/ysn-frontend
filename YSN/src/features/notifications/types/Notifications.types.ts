@@ -28,14 +28,27 @@ export interface MarkAsReadDto {
   notificationIds: number[];
 }
 
-export interface NotificationSettingDto {
+export type EmailLanguage = "ar" | "en";
+
+export interface NotificationTypeSettingDto {
   type: number;
-  isEnabled: boolean;
+  systemEnabled: boolean;
+  emailEnabled: boolean;
+}
+
+export interface NotificationSettingsDto {
+  emailLanguage: EmailLanguage;
+  email?: string | null;
+  hasEmail: boolean;
+  types: NotificationTypeSettingDto[];
 }
 
 export interface UpdateNotificationSettingsDto {
-  disabledTypes: number[];
+  emailLanguage: EmailLanguage;
+  types: NotificationTypeSettingDto[];
 }
+
+export type NotificationChannelKey = "systemEnabled" | "emailEnabled";
 
 export type NotificationTarget =
   | { kind: "path"; path: string }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { RootState } from "../../../app/store";
 import Drawer from "../../../shared/components/navigation/Drawer";
@@ -10,10 +11,10 @@ import { showError } from "../../../shared/components/feedback/Toast";
 import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import { useGetNotificationsFeedQuery, useMarkAllAsReadMutation } from "../api/Notifications.api";
 import NotificationItem from "./NotificationItem";
-import NotificationSettings from "./NotificationSettings";
+import SettingsIcon from "../../../assets/icons/SettingsIcon";
 import type { NotificationDto } from "../types/Notifications.types";
 
-type DrawerTab = "all" | "unread" | "settings";
+type DrawerTab = "all" | "unread";
 
 interface NotificationDrawerProps {
   open: boolean;
@@ -26,6 +27,7 @@ const PAGE_SIZE = 20;
 const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationDrawerProps) => {
   const { t } = useTranslation();
   const isEmployee = useSelector((state: RootState) => state.auth.roleId != null);
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<DrawerTab>("all");
   const [page, setPage] = useState(1);
   const sentinel = useRef<HTMLDivElement | null>(null);
@@ -38,7 +40,7 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
       pageSize: PAGE_SIZE,
       isRead: activeTab === "unread" ? false : undefined,
     },
-    { skip: !open || activeTab === "settings" }
+    { skip: !open }
   );
   const [markAllAsRead, { isLoading: isMarking }] = useMarkAllAsReadMutation();
 
@@ -58,6 +60,11 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
   const changeTab = (tab: DrawerTab) => {
     setActiveTab(tab);
     setPage(1);
+  };
+
+  const openSettings = () => {
+    onClose();
+    navigate("/profile?tab=notificationSettings");
   };
 
   const handleMarkAll = async () => {
@@ -108,7 +115,6 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
           tabs={[
             { id: "all", label: t("notifications.all") },
             { id: "unread", label: t("notifications.unread") },
-            ...(isEmployee ? [{ id: "settings", label: t("notifications.settings") }] : []),
           ]}
           activeTab={activeTab}
           onChange={(id) => changeTab(id as DrawerTab)}
@@ -116,16 +122,20 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
           size="sm"
         />
 
-        {activeTab === "settings" ? (
-          <NotificationSettings />
-        ) : (
-          <>
-            <div className="flex justify-end px-4">
-              <Button variant="primary" outline size="sm" loading={isMarking} label={t("notifications.markAllAsRead")} onClick={handleMarkAll} />
-            </div>
-            {renderList()}
-          </>
-        )}
+        <div className="flex justify-end gap-2 px-4">
+          {isEmployee && (
+            <Button
+              variant="secondary"
+              outline
+              size="sm"
+              icon={<SettingsIcon className="h-4 w-4" />}
+              label={t("notifications.settings")}
+              onClick={openSettings}
+            />
+          )}
+          <Button variant="primary" outline size="sm" loading={isMarking} label={t("notifications.markAllAsRead")} onClick={handleMarkAll} />
+        </div>
+        {renderList()}
       </div>
     </Drawer>
   );

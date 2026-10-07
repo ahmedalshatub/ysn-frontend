@@ -65,6 +65,44 @@ export const internalNotificationTypes: NotificationTypeValue[] = [
   NotificationType.TvActivationFailedInternal,
 ];
 
+export const notificationSettingGroups: { key: string; types: number[] }[] = [
+  {
+    key: "customers",
+    types: [
+      NotificationType.CustomerRegistered,
+      NotificationType.CustomerTypeChangedInternal,
+      NotificationType.CustomerDisabled,
+      NotificationType.SubAgentsDisabled,
+    ],
+  },
+  {
+    key: "money",
+    types: [
+      NotificationType.DepositMade,
+      NotificationType.WithdrawMadeInternal,
+      NotificationType.AgentDepositMade,
+      NotificationType.EPaymentReceived,
+      NotificationType.EPaymentFailedInternal,
+      NotificationType.EPaymentNeedsReview,
+      NotificationType.TransactionDeleted,
+      NotificationType.TransactionRestoredInternal,
+    ],
+  },
+  {
+    key: "invoicesCards",
+    types: [NotificationType.InvoiceCreated, NotificationType.InvoiceDeleted, NotificationType.CardsAdded],
+  },
+  {
+    key: "tvs",
+    types: [
+      NotificationType.TvAddedByCustomer,
+      NotificationType.TvActivatedInternal,
+      NotificationType.TvActivationFailedInternal,
+      NotificationType.TvActivationNeedsChecking,
+    ],
+  },
+];
+
 export const tvNotificationTypes: number[] = [
   NotificationType.TvAddedByCompany,
   NotificationType.TvRemovedByCompany,

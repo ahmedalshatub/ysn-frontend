@@ -4,7 +4,7 @@ import type {
   MarkAsReadDto,
   NotificationDto,
   NotificationRequest,
-  NotificationSettingDto,
+  NotificationSettingsDto,
   UpdateNotificationSettingsDto,
 } from "../types/Notifications.types";
 
@@ -55,7 +55,7 @@ export const notificationApi = instanceApi.injectEndpoints({
       }),
       invalidatesTags: ["Notification"],
     }),
-    getNotificationSettings: builder.query<NotificationSettingDto[], void>({
+    getNotificationSettings: builder.query<NotificationSettingsDto, void>({
       query: () => "Notifications/settings",
     }),
     updateNotificationSettings: builder.mutation<boolean, UpdateNotificationSettingsDto>({
