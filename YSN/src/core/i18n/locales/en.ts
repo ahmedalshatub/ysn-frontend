@@ -1186,6 +1186,7 @@ export default {
       createdFrom: "Created from",
       createdTo: "Created to",
       systemRoleLocked: "Super Admin is a system role. It always has every permission and cannot be changed.",
+      customerRoleLocked: "This is a customer type role (Agent, Sub-agent or Client). Its app permissions are fixed and cannot be changed.",
       deleteMessage: "Delete the role {{name}}?",
       restoreMessage: "Restore the role {{name}}?",
       successCreate: "Role added",

@@ -1186,6 +1186,7 @@ export default {
       createdFrom: "تاريخ الإنشاء من",
       createdTo: "تاريخ الإنشاء إلى",
       systemRoleLocked: "المدير العام دور نظامي، يملك كل الصلاحيات دائماً ولا يمكن تعديله.",
+      customerRoleLocked: "هذا دور خاص بنوع الزبون (وكيل أو وكيل فرعي أو زبون). صلاحياته في التطبيق ثابتة ولا يمكن تعديلها.",
       deleteMessage: "حذف الدور {{name}}؟",
       restoreMessage: "استعادة الدور {{name}}؟",
       successCreate: "تمت إضافة الدور",

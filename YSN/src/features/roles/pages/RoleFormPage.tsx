@@ -133,7 +133,11 @@ const RoleFormPage = () => {
 
       {!isLoadingRole && !isLoadingPermissions && (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {isLocked && <Message variant="warning">{t("roles.systemRoleLocked")}</Message>}
+          {isLocked && (
+            <Message variant="warning">
+              {t(role && isCustomerRoleId(role.id) ? "roles.customerRoleLocked" : "roles.systemRoleLocked")}
+            </Message>
+          )}
 
           <Card variant="elevated" padding="lg">
             <div className="space-y-8">
