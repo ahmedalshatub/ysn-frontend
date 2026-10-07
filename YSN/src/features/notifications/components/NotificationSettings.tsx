@@ -19,8 +19,8 @@ const NotificationSettings = () => {
 
   useEffect(() => {
     if (!data) return;
-    setTypes(data.types);
-    setEmailLanguage(data.emailLanguage);
+    setTypes(Array.isArray(data.types) ? data.types : []);
+    setEmailLanguage(data.emailLanguage === "en" ? "en" : "ar");
   }, [data]);
 
   const change = (changed: number[], channel: NotificationChannelKey, enabled: boolean) =>
