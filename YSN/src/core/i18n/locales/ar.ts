@@ -740,6 +740,8 @@ export default {
         LastSuperAdmin: "يجب أن يبقى مدير عام واحد مفعّل على الأقل",
         PasswordEmailFailed: "تعذر إرسال كلمة المرور بالبريد. حاول مجدداً.",
         PhoneAlreadyExists: "رقم الهاتف مستخدم في حساب آخر",
+        SelfDeletedCannotRestore: "حذف الزبون حسابه بنفسه، لذلك لا يمكن استعادته",
+        CannotDeleteOwnAccount: "الزبائن فقط يمكنهم حذف حساباتهم",
         RoleInvalid: "الدور المختار غير متاح",
         SuperAdminOnly: "فقط المدير العام يستطيع إدارة حسابات المدراء العامين",
         UseResetPassword: "المستخدمون الداخليون يحصلون على كلمة مرور مولّدة. استخدم إعادة تعيين كلمة المرور.",
@@ -1885,6 +1887,7 @@ export default {
       isActive: "مفعّل",
       isActiveHint: "العميل الموقوف لا يستطيع استخدام التطبيق",
       disabled: "موقوف",
+      deletedByCustomer: "حذفه الزبون",
       password: "كلمة المرور",
       newPassword: "كلمة المرور الجديدة",
       confirmPassword: "تأكيد كلمة المرور",
@@ -2045,6 +2048,11 @@ export default {
         title: "تم تعطيل وكلاء فرعيين",
         body: "عُطّل {{count}} وكيل فرعي تابع لـ {{agent}} لأن الوكيل لم يعد فعالاً.",
         setting: "الوكلاء الفرعيون المعطلون",
+      },
+      customerDeletedAccount: {
+        title: "زبون حذف حسابه",
+        body: "حذف {{customer}} ({{typeName}}) حسابه من التطبيق.",
+        setting: "الزبائن الذين حذفوا حساباتهم",
       },
       customerDisabled: {
         title: "تم تعطيل عميل",

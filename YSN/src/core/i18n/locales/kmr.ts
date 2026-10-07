@@ -740,6 +740,8 @@ export default {
         LastSuperAdmin: "دڤێت کێمتر ئێک ڕێڤەبەرێ گشتیێ چالاک بمینیت",
         PasswordEmailFailed: "پەیڤا نهێنی ب ئیمەیلێ نەهاتە هنارتن. دیسا هەول بدە.",
         PhoneAlreadyExists: "ئەڤ ژمارا تەلەفۆنێ د هژمارەکا دی دا هاتییە بکارئینان",
+        SelfDeletedCannotRestore: "کڕیاری ب خۆ هژمارا خۆ ژێبر، لەوما نەشێت بهێتە زڤڕاندن",
+        CannotDeleteOwnAccount: "بتنێ کڕیار دشێن هژمارا خۆ ژێببەن",
         RoleInvalid: "ڕۆڵێ هەلبژارتی بەردەست نینە",
         SuperAdminOnly: "تنێ ڕێڤەبەرێ گشتی دشێت هژمارێن ڕێڤەبەرێن گشتی ڕێڤەببەت",
         UseResetPassword: "بکارهێنەرێن ناڤخۆ پەیڤەکا نهێنی یا دروستکری وەردگرن. ڕێکخستنەڤەیا پەیڤا نهێنی بکاربینە.",
@@ -1885,6 +1887,7 @@ export default {
       isActive: "چالاک",
       isActiveHint: "کڕیارێ نەچالاک نەشێت ئەپی بکاربینیت",
       disabled: "نەچالاک",
+      deletedByCustomer: "کڕیاری ب خۆ ژێبر",
       password: "پەیڤا نهێنی",
       newPassword: "پەیڤا نهێنی یا نوو",
       confirmPassword: "دووپاتکرنا پەیڤا نهێنی",
@@ -2045,6 +2048,11 @@ export default {
         title: "بریکارێن لاوەکی هاتنە نەچالاککرن",
         body: "{{count}} بریکارێن لاوەکی یێن {{agent}} هاتنە نەچالاککرن چونکی بریکار ئێدی نە چالاکە.",
         setting: "بریکارێن لاوەکی یێن نەچالاک",
+      },
+      customerDeletedAccount: {
+        title: "کڕیارەکی هژمارا خۆ ژێبر",
+        body: "{{customer}} ({{typeName}}) هژمارا خۆ ژ ئەپێ ژێبر.",
+        setting: "ئەو کڕیارێن هژمارا خۆ ژێبرین",
       },
       customerDisabled: {
         title: "کڕیار هاتە نەچالاککرن",

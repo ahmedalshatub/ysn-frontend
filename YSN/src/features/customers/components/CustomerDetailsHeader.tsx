@@ -30,7 +30,7 @@ const CustomerDetailsHeader = ({ customer, actions }: CustomerDetailsHeaderProps
           <div className="mt-2 flex flex-wrap gap-2">
             <Badge label={t(customerRoleConfigs[customer.roleId].labelKey)} variant="info" size="sm" />
             {customer.isDeleted ? (
-              <Badge label={t("common.deleted")} variant="danger" size="sm" />
+              <Badge label={t(customer.isSelfDeleted ? "customers.deletedByCustomer" : "common.deleted")} variant="danger" size="sm" />
             ) : (
               <Badge
                 label={customer.isActive ? t("common.active") : t("customers.disabled")}

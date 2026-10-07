@@ -49,7 +49,7 @@ const useCustomerActions = ({ onOpen, onDialog }: CustomerActionOptions) => {
       const can = (action: Parameters<typeof canCustomer>[1]) => canCustomer(type, action);
 
       if (customer.isDeleted) {
-        return can("Restore")
+        return can("Restore") && !customer.isSelfDeleted
           ? [{ label: t("common.restore"), icon: <Undo2Icon />, onClick: () => onDialog("restore", customer) }]
           : [];
       }

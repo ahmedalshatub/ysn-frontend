@@ -24,6 +24,7 @@ const notificationRoutes: Record<number, TargetBuilder> = {
   [NotificationType.CustomerRegistered]: customerPage,
   [NotificationType.CustomerTypeChangedInternal]: customerPage,
   [NotificationType.CustomerDisabled]: customerPage,
+  [NotificationType.CustomerDeletedAccount]: customerPage,
   [NotificationType.SubAgentsDisabled]: customerPage,
   [NotificationType.CardsAdded]: ({ referenceId, parameters }) => ({
     kind: "path",

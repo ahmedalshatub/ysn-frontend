@@ -35,6 +35,7 @@ export const NotificationType = {
   SubAgentsDisabled: 44,
   CustomerDisabled: 45,
   CardsAdded: 46,
+  CustomerDeletedAccount: 48,
 } as const;
 
 export type NotificationTypeValue = (typeof NotificationType)[keyof typeof NotificationType];
@@ -63,6 +64,7 @@ export const internalNotificationTypes: NotificationTypeValue[] = [
   NotificationType.TvAddedByCustomer,
   NotificationType.TvActivatedInternal,
   NotificationType.TvActivationFailedInternal,
+  NotificationType.CustomerDeletedAccount,
 ];
 
 export const notificationSettingGroups: { key: string; types: number[] }[] = [
@@ -72,6 +74,7 @@ export const notificationSettingGroups: { key: string; types: number[] }[] = [
       NotificationType.CustomerRegistered,
       NotificationType.CustomerTypeChangedInternal,
       NotificationType.CustomerDisabled,
+      NotificationType.CustomerDeletedAccount,
       NotificationType.SubAgentsDisabled,
     ],
   },

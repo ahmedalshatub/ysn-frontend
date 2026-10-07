@@ -98,6 +98,7 @@ export interface CustomerListDto extends BaseDto {
   maxTvCount: number | null;
   isUnlimitedTvs: boolean;
   balance: number;
+  isSelfDeleted?: boolean;
   discountType: number;
   discountValue: number;
   cardTypeDiscountsCount: number;

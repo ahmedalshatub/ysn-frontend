@@ -23,7 +23,7 @@ const CustomerCard = ({ customer, actions, onOpen }: CustomerCardProps) => {
   const { t, i18n } = useTranslation();
   const name = customerFullName(customer);
   const status = customer.isDeleted
-    ? { label: t("common.deleted"), variant: "danger" as const }
+    ? { label: t(customer.isSelfDeleted ? "customers.deletedByCustomer" : "common.deleted"), variant: "danger" as const }
     : customer.isActive
       ? { label: t("common.active"), variant: "success" as const }
       : { label: t("customers.disabled"), variant: "secondary" as const };

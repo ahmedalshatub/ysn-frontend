@@ -740,6 +740,8 @@ export default {
         LastSuperAdmin: "There must be at least one active Super Admin",
         PasswordEmailFailed: "The password could not be e-mailed. Try again.",
         PhoneAlreadyExists: "Another account already uses this phone number",
+        SelfDeletedCannotRestore: "This customer deleted their own account, so it cannot be restored",
+        CannotDeleteOwnAccount: "Only customers can delete their own account",
         RoleInvalid: "The selected role is not available",
         SuperAdminOnly: "Only a Super Admin can manage Super Admin accounts",
         UseResetPassword: "Internal users get a generated password. Use reset password.",
@@ -1885,6 +1887,7 @@ export default {
       isActive: "Active",
       isActiveHint: "A disabled customer cannot use the app",
       disabled: "Disabled",
+      deletedByCustomer: "Deleted by the customer",
       password: "Password",
       newPassword: "New password",
       confirmPassword: "Confirm password",
@@ -2045,6 +2048,11 @@ export default {
         title: "Sub-agents disabled",
         body: "{{count}} sub-agents of {{agent}} were disabled because the agent is no longer active.",
         setting: "Disabled sub-agents",
+      },
+      customerDeletedAccount: {
+        title: "A customer deleted their account",
+        body: "{{customer}} ({{typeName}}) deleted their account from the app.",
+        setting: "Customers who deleted their account",
       },
       customerDisabled: {
         title: "Customer disabled",
