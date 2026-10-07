@@ -111,8 +111,8 @@ const NotificationDrawer = ({ open, onClose, onOpenNotification }: NotificationD
           size="sm"
         />
 
-        <div className="flex justify-end px-4">
-          <Button variant="primary" outline size="sm" loading={isMarking} label={t("notifications.markAllAsRead")} onClick={handleMarkAll} />
+        <div className="px-4">
+          <Button variant="primary" outline size="sm" block loading={isMarking} label={t("notifications.markAllAsRead")} onClick={handleMarkAll} />
         </div>
         {renderList()}
       </div>

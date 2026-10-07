@@ -4,7 +4,7 @@ import PanelDropdown from "../../../shared/components/navigation/PanelDropdown";
 import BellIcon from "../../../assets/icons/BellIcon";
 import { useGetAllNotificationsQuery, useGetUnreadCountQuery, useMarkAllAsReadMutation } from "../api/Notifications.api";
 import useNotificationOpener from "../hooks/useNotificationOpener";
-import NotificationItem from "./NotificationItem";
+import NotificationListItem from "./NotificationListItem";
 import NotificationDrawer from "./NotificationDrawer";
 
 const NotificationBell = () => {
@@ -27,7 +27,7 @@ const NotificationBell = () => {
               <BellIcon className="h-5 w-5" />
             </button>
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4.5 h-4.5 ce-danger-bg text-white text-[10px] font-bold rounded-full flex items-center justify-center ring-2 ring-white">
+              <span className="notification-badge">
                 {unreadCount > 99 ? "99+" : unreadCount}
               </span>
             )}
@@ -56,9 +56,9 @@ const NotificationBell = () => {
         }
       >
         {items.length > 0 ? (
-          <div className="flex flex-col gap-2 p-3">
+          <div className="divide-y ce-divider">
             {items.map((item) => (
-              <NotificationItem key={item.id} notification={item} onOpen={open} />
+              <NotificationListItem key={item.id} notification={item} onOpen={open} />
             ))}
           </div>
         ) : (
