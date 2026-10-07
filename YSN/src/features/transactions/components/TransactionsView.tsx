@@ -104,7 +104,7 @@ const TransactionsView = ({ framed, actionsTarget, customer, onChanged, initialF
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
             {can(Permission.TransactionsExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportTransactions(queryFilter).unwrap()} />
+              <ExportButton loading={isExporting} onExport={(format) => exportTransactions({ ...queryFilter, format }).unwrap()} />
             )}
             {(can(Permission.TransactionsDeposit) || can(Permission.TransactionsWithdraw)) && (
               <Button

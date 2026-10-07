@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddCustomerDto,
   CustomerDto,
@@ -74,12 +75,12 @@ export const customersApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportCustomers: builder.mutation<null, CustomerFilter>({
+    exportCustomers: builder.mutation<null, CustomerFilter & ExportRequest>({
       query: (params) => ({
         url: "Users/export",
         method: "GET",
         params: { customersOnly: true, ...params },
-        responseHandler: excelResponseHandler("Customers"),
+        responseHandler: exportResponseHandler("Customers", params.format),
       }),
     }),
     getCustomerStats: builder.query<CustomerTypeStatsDto[], Partial<CustomerFilter>>({

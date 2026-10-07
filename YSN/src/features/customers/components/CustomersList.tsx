@@ -157,7 +157,7 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
             {canCustomer(customerType, "Export") && (
               <ExportButton
                 loading={isExporting}
-                onExport={() => exportCustomers(queryFilter).unwrap()}
+                onExport={(format) => exportCustomers({ ...queryFilter, format }).unwrap()}
               />
             )}
             {canCustomer(customerType, "Create") && !fixedFilter && (

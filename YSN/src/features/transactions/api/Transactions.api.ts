@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddTransactionDto,
   TransactionDto,
@@ -48,12 +49,12 @@ export const transactionsApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportTransactions: builder.mutation<null, TransactionFilter>({
+    exportTransactions: builder.mutation<null, TransactionFilter & ExportRequest>({
       query: (params) => ({
         url: "Transactions/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("Transactions"),
+        responseHandler: exportResponseHandler("Transactions", params.format),
       }),
     }),
     getTransactionDailyTotals: builder.query<DailyTransactionTotalDto[], TransactionFilter>({

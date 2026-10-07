@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   SubAgentsByAgentReportDto,
   SubAgentsByAgentReportFilter,
@@ -14,12 +15,12 @@ export const subAgentsByAgentReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportSubAgentsByAgentReport: builder.mutation<null, SubAgentsByAgentReportFilter>({
+    exportSubAgentsByAgentReport: builder.mutation<null, SubAgentsByAgentReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/sub-agents-by-agent/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("SubAgentsByAgent"),
+        responseHandler: exportResponseHandler("SubAgentsByAgent", params.format),
       }),
     }),
   }),

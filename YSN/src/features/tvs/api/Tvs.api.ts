@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddCustomerTvDto,
   CustomerTvDto,
@@ -50,12 +51,12 @@ export const tvsApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportTvs: builder.mutation<null, CustomerTvFilter>({
+    exportTvs: builder.mutation<null, CustomerTvFilter & ExportRequest>({
       query: (params) => ({
         url: "Tvs/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("Tvs"),
+        responseHandler: exportResponseHandler("Tvs", params.format),
       }),
     }),
   }),

@@ -156,7 +156,7 @@ const UsersPage = () => {
         actions={
           <div className="flex items-center gap-2">
             {can(Permission.UsersExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportUsers(toQueryFilter(filterValues)).unwrap()} />
+              <ExportButton loading={isExporting} onExport={(format) => exportUsers({ ...toQueryFilter(filterValues), format }).unwrap()} />
             )}
             {can(Permission.UsersCreate) && (
               <Button

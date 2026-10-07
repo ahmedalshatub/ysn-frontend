@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   TvSubscriptionsEndingReportDto,
   TvSubscriptionsEndingReportFilter,
@@ -14,12 +15,12 @@ export const tvSubscriptionsEndingReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportTvSubscriptionsEndingReport: builder.mutation<null, TvSubscriptionsEndingReportFilter>({
+    exportTvSubscriptionsEndingReport: builder.mutation<null, TvSubscriptionsEndingReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/tv-subscriptions-ending/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("TvSubscriptionsEnding"),
+        responseHandler: exportResponseHandler("TvSubscriptionsEnding", params.format),
       }),
     }),
   }),

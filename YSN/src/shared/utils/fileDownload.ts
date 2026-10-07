@@ -1,3 +1,5 @@
+import { ExportFormat, type ExportFormatType } from "../types/ExportFormat.types";
+
 const timestamp = () => {
   const now = new Date();
   const pad = (value: number) => String(value).padStart(2, "0");
@@ -15,11 +17,35 @@ export const saveBlob = (blob: Blob, fileName: string) => {
   URL.revokeObjectURL(url);
 };
 
-export const excelResponseHandler = (baseName: string) => async (response: Response) => {
+const PRINT_FRAME_ID = "export-print-frame";
+
+export const printBlob = (blob: Blob) => {
+  const previous = document.getElementById(PRINT_FRAME_ID) as HTMLIFrameElement | null;
+  if (previous) {
+    URL.revokeObjectURL(previous.src);
+    previous.remove();
+  }
+  const url = URL.createObjectURL(blob);
+  const frame = document.createElement("iframe");
+  frame.id = PRINT_FRAME_ID;
+  frame.className = "fixed bottom-0 right-0 w-0 h-0 border-0";
+  frame.src = url;
+  frame.onload = () => {
+    frame.contentWindow?.focus();
+    frame.contentWindow?.print();
+  };
+  document.body.appendChild(frame);
+};
+
+export const exportResponseHandler = (baseName: string, format: ExportFormatType = ExportFormat.Excel) => async (response: Response) => {
   if (!response.ok) {
     return response.json();
   }
   const blob = await response.blob();
-  saveBlob(blob, `${baseName}_${timestamp()}.xlsx`);
+  if (format === ExportFormat.Print) {
+    printBlob(blob);
+  } else {
+    saveBlob(blob, `${baseName}_${timestamp()}.${format === ExportFormat.Pdf ? "pdf" : "xlsx"}`);
+  }
   return null;
 };

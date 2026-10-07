@@ -88,7 +88,7 @@ const TvActivationsView = ({ framed, actionsTarget, fixedFilter, initialFilter }
           </h3>
           <PageActions target={actionsTarget}>
             {can(Permission.TvsExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportActivations(queryFilter).unwrap()} />
+              <ExportButton loading={isExporting} onExport={(format) => exportActivations({ ...queryFilter, format }).unwrap()} />
             )}
           </PageActions>
         </div>

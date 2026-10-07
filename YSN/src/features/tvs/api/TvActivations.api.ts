@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   ActivateTvDto,
   ResolveTvActivationDto,
@@ -43,12 +44,12 @@ export const tvActivationsApi = instanceApi.injectEndpoints({
         body: data,
       }),
     }),
-    exportTvActivations: builder.mutation<null, TvActivationFilter>({
+    exportTvActivations: builder.mutation<null, TvActivationFilter & ExportRequest>({
       query: (params) => ({
         url: "TvActivations/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("TvActivations"),
+        responseHandler: exportResponseHandler("TvActivations", params.format),
       }),
     }),
   }),

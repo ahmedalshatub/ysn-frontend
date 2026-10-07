@@ -99,7 +99,7 @@ const RolesPage = () => {
         actions={
           <div className="flex items-center gap-2">
             {can(Permission.RolesExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportRoles(toQueryFilter(filterValues)).unwrap()} />
+              <ExportButton loading={isExporting} onExport={(format) => exportRoles({ ...toQueryFilter(filterValues), format }).unwrap()} />
             )}
             {can(Permission.RolesCreate) && (
               <Button

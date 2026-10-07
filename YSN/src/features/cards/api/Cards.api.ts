@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddCardsDto,
   AddCardsResultDto,
@@ -44,8 +45,8 @@ export const cardsApi = instanceApi.injectEndpoints({
     restoreCard: builder.mutation<boolean, number>({
       query: (id) => ({ url: `Cards/${id}/restore`, method: "POST" }),
     }),
-    exportCards: builder.mutation<null, CardFilter>({
-      query: (params) => ({ url: "Cards/export", method: "GET", params, responseHandler: excelResponseHandler("Cards") }),
+    exportCards: builder.mutation<null, CardFilter & ExportRequest>({
+      query: (params) => ({ url: "Cards/export", method: "GET", params, responseHandler: exportResponseHandler("Cards", params.format) }),
     }),
     getCardStatsByType: builder.query<CardTypeStockDto[], CardFilter>({
       query: (params) => ({ url: "Cards/stats/by-type", params }),

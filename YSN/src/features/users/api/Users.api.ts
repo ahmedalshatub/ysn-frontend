@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type { UpdateProfileData, UserDto, UserFilter, UserFormData, UserListDto, UserRequest,  } from "../types/Users.types";
 
 const toUserFormData = (data: UserFormData) => {
@@ -70,12 +71,12 @@ export const userApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportUsers: builder.mutation<null, UserFilter>({
+    exportUsers: builder.mutation<null, UserFilter & ExportRequest>({
       query: (params) => ({
         url: "Users/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("Employees"),
+        responseHandler: exportResponseHandler("Employees", params.format),
       }),
     }),
     getMyProfile: builder.query<UserDto, void>({

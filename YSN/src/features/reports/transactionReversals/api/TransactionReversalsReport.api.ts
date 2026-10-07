@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   TransactionReversalsReportDto,
   TransactionReversalsReportFilter,
@@ -14,12 +15,12 @@ export const transactionReversalsReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportTransactionReversalsReport: builder.mutation<null, TransactionReversalsReportFilter>({
+    exportTransactionReversalsReport: builder.mutation<null, TransactionReversalsReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/transaction-reversals/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("TransactionReversals"),
+        responseHandler: exportResponseHandler("TransactionReversals", params.format),
       }),
     }),
   }),

@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type { InvoiceDto, InvoiceFilter, InvoiceListDto, InvoiceRequest, InvoiceStatsDto, DailyInvoiceTotalDto, TopCardTypeDto } from "../types/Invoices.types";
 
 export const invoicesApi = instanceApi.injectEndpoints({
@@ -17,8 +18,8 @@ export const invoicesApi = instanceApi.injectEndpoints({
     deleteInvoice: builder.mutation<boolean, { id: number; reason: string }>({
       query: ({ id, reason }) => ({ url: `Invoices/${id}`, method: "DELETE", body: { reason } }),
     }),
-    exportInvoices: builder.mutation<null, InvoiceFilter>({
-      query: (params) => ({ url: "Invoices/export", method: "GET", params, responseHandler: excelResponseHandler("Invoices") }),
+    exportInvoices: builder.mutation<null, InvoiceFilter & ExportRequest>({
+      query: (params) => ({ url: "Invoices/export", method: "GET", params, responseHandler: exportResponseHandler("Invoices", params.format) }),
     }),
     getInvoiceDailyTotals: builder.query<DailyInvoiceTotalDto[], InvoiceFilter>({
       query: (params) => ({ url: "Invoices/stats/daily", params }),

@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type { CardTypeDto, CardTypeFilter, CardTypeFormData, CardTypeListDto, CardTypeRequest } from "../types/CardTypes.types";
 
 const toFormData = (data: CardTypeFormData) => {
@@ -67,12 +68,12 @@ export const cardTypesApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportCardTypes: builder.mutation<null, CardTypeFilter>({
+    exportCardTypes: builder.mutation<null, CardTypeFilter & ExportRequest>({
       query: (params) => ({
         url: "CardTypes/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("CardTypes"),
+        responseHandler: exportResponseHandler("CardTypes", params.format),
       }),
     }),
   }),

@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   DailyFinanceReportDto,
   DailyFinanceReportFilter,
@@ -14,12 +15,12 @@ export const dailyFinanceReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportDailyFinanceReport: builder.mutation<null, DailyFinanceReportFilter>({
+    exportDailyFinanceReport: builder.mutation<null, DailyFinanceReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/daily-finance/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("DailyFinance"),
+        responseHandler: exportResponseHandler("DailyFinance", params.format),
       }),
     }),
   }),

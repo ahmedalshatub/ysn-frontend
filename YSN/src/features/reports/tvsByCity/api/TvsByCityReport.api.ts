@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type { TvsByCityReportDto, TvsByCityReportFilter, TvsByCityReportRequest } from "../types/TvsByCityReport.types";
 
 export const tvsByCityReportApi = instanceApi.injectEndpoints({
@@ -10,12 +11,12 @@ export const tvsByCityReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportTvsByCityReport: builder.mutation<null, TvsByCityReportFilter>({
+    exportTvsByCityReport: builder.mutation<null, TvsByCityReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/tvs-by-city/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("TvsByCity"),
+        responseHandler: exportResponseHandler("TvsByCity", params.format),
       }),
     }),
   }),

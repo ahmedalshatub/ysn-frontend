@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type { PriceListReportDto, PriceListReportFilter, PriceListReportRequest } from "../types/PriceListReport.types";
 
 export const priceListReportApi = instanceApi.injectEndpoints({
@@ -10,12 +11,12 @@ export const priceListReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportPriceListReport: builder.mutation<null, PriceListReportFilter>({
+    exportPriceListReport: builder.mutation<null, PriceListReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/price-list/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("PriceList"),
+        responseHandler: exportResponseHandler("PriceList", params.format),
       }),
     }),
   }),

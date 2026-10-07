@@ -106,7 +106,7 @@ const MessagesList = ({ framed, actionsTarget, recipient, initialFilter }: Messa
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
             {can(Permission.MessagesExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportMessages(queryFilter).unwrap()} />
+              <ExportButton loading={isExporting} onExport={(format) => exportMessages({ ...queryFilter, format }).unwrap()} />
             )}
             {canSend && (
               <Button

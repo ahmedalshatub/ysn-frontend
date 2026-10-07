@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   CustomerBalancesReportDto,
   CustomerBalancesReportFilter,
@@ -14,12 +15,12 @@ export const customerBalancesReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportCustomerBalancesReport: builder.mutation<null, CustomerBalancesReportFilter>({
+    exportCustomerBalancesReport: builder.mutation<null, CustomerBalancesReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/customer-balances/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("CustomerBalances"),
+        responseHandler: exportResponseHandler("CustomerBalances", params.format),
       }),
     }),
   }),

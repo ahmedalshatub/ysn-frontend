@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddCardTypeDiscountsDto,
   CardTypeDiscountFilter,
@@ -24,8 +25,8 @@ export const cardTypeDiscountsApi = instanceApi.injectEndpoints({
     deleteCardTypeDiscounts: builder.mutation<number, DeleteCardTypeDiscountsDto>({
       query: (body) => ({ url: "CardTypeDiscounts/bulk-delete", method: "POST", body }),
     }),
-    exportCardTypeDiscounts: builder.mutation<null, CardTypeDiscountFilter>({
-      query: (params) => ({ url: "CardTypeDiscounts/export", method: "GET", params, responseHandler: excelResponseHandler("CardTypeDiscounts") }),
+    exportCardTypeDiscounts: builder.mutation<null, CardTypeDiscountFilter & ExportRequest>({
+      query: (params) => ({ url: "CardTypeDiscounts/export", method: "GET", params, responseHandler: exportResponseHandler("CardTypeDiscounts", params.format) }),
     }),
   }),
 });

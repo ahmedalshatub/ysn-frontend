@@ -107,7 +107,7 @@ const CardTypeDiscountsView = ({ framed, actionsTarget, customer }: CardTypeDisc
           </h3>
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
-            {can(Permission.CardTypeDiscountsExport) && <ExportButton loading={isExporting} onExport={() => exportDiscounts(filter).unwrap()} />}
+            {can(Permission.CardTypeDiscountsExport) && <ExportButton loading={isExporting} onExport={(format) => exportDiscounts({ ...filter, format }).unwrap()} />}
             {can(Permission.CardTypeDiscountsCreate) && (
               <Button
                 variant="dark"

@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type { TvSmsApiLogDto, TvSmsApiLogFilter, TvSmsApiLogRequest } from "../types/TvSmsApiLogs.types";
 
 export const tvSmsApiLogsApi = instanceApi.injectEndpoints({
@@ -11,12 +12,12 @@ export const tvSmsApiLogsApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportTvSmsApiLogs: builder.mutation<null, TvSmsApiLogFilter>({
+    exportTvSmsApiLogs: builder.mutation<null, TvSmsApiLogFilter & ExportRequest>({
       query: (params) => ({
         url: "TvSmsApiLogs/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("TvSmsApiLogs"),
+        responseHandler: exportResponseHandler("TvSmsApiLogs", params.format),
       }),
     }),
   }),

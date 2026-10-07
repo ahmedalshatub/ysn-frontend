@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddCityDto,
   CityDto,
@@ -81,12 +82,12 @@ export const citiesApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportCities: builder.mutation<null, CityFilter>({
+    exportCities: builder.mutation<null, CityFilter & ExportRequest>({
       query: (params) => ({
         url: "Cities/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("Cities"),
+        responseHandler: exportResponseHandler("Cities", params.format),
       }),
     }),
   }),

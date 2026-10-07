@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   InvoiceDeletionsReportDto,
   InvoiceDeletionsReportFilter,
@@ -14,12 +15,12 @@ export const invoiceDeletionsReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportInvoiceDeletionsReport: builder.mutation<null, InvoiceDeletionsReportFilter>({
+    exportInvoiceDeletionsReport: builder.mutation<null, InvoiceDeletionsReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/invoice-deletions/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("InvoiceDeletions"),
+        responseHandler: exportResponseHandler("InvoiceDeletions", params.format),
       }),
     }),
   }),

@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type { TvActivationsReportDto, TvActivationsReportFilter, TvActivationsReportRequest } from "../types/TvActivationsReport.types";
 
 export const tvActivationsReportApi = instanceApi.injectEndpoints({
@@ -10,12 +11,12 @@ export const tvActivationsReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportTvActivationsReport: builder.mutation<null, TvActivationsReportFilter>({
+    exportTvActivationsReport: builder.mutation<null, TvActivationsReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/tv-activations/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("TvActivations"),
+        responseHandler: exportResponseHandler("TvActivations", params.format),
       }),
     }),
   }),

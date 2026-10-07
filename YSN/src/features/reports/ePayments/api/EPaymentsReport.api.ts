@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   EPaymentsReportDto,
   EPaymentsReportFilter,
@@ -14,12 +15,12 @@ export const ePaymentsReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportEPaymentsReport: builder.mutation<null, EPaymentsReportFilter>({
+    exportEPaymentsReport: builder.mutation<null, EPaymentsReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/e-payments/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("EPayments"),
+        responseHandler: exportResponseHandler("EPayments", params.format),
       }),
     }),
   }),

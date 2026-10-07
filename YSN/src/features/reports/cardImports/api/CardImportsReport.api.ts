@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type { CardImportsReportDto, CardImportsReportFilter, CardImportsReportRequest } from "../types/CardImportsReport.types";
 
 export const cardImportsReportApi = instanceApi.injectEndpoints({
@@ -10,12 +11,12 @@ export const cardImportsReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportCardImportsReport: builder.mutation<null, CardImportsReportFilter>({
+    exportCardImportsReport: builder.mutation<null, CardImportsReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/card-imports/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("CardImports"),
+        responseHandler: exportResponseHandler("CardImports", params.format),
       }),
     }),
   }),

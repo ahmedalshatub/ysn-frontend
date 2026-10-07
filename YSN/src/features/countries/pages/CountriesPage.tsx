@@ -128,7 +128,7 @@ const CountriesPage = () => {
             {can(Permission.CountriesExport) && (
               <ExportButton
                 loading={isExporting}
-                onExport={() => exportCountries(toQueryFilter(filterValues)).unwrap()}
+                onExport={(format) => exportCountries({ ...toQueryFilter(filterValues), format }).unwrap()}
               />
             )}
             {can(Permission.CountriesCreate) && (

@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddCountryDto,
   CountryDto,
@@ -60,12 +61,12 @@ export const countriesApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportCountries: builder.mutation<null, CountryFilter>({
+    exportCountries: builder.mutation<null, CountryFilter & ExportRequest>({
       query: (params) => ({
         url: "Countries/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("Countries"),
+        responseHandler: exportResponseHandler("Countries", params.format),
       }),
     }),
   }),

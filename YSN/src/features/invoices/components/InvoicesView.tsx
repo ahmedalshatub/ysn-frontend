@@ -89,7 +89,7 @@ const InvoicesView = ({ framed, actionsTarget, customerId, onChanged, initialFil
             {t("invoices.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
           </h3>
           <PageActions target={actionsTarget}>
-            {can(Permission.InvoicesExport) && <ExportButton loading={isExporting} onExport={() => exportInvoices(queryFilter).unwrap()} />}
+            {can(Permission.InvoicesExport) && <ExportButton loading={isExporting} onExport={(format) => exportInvoices({ ...queryFilter, format }).unwrap()} />}
           </PageActions>
         </div>
         <InvoicesTable

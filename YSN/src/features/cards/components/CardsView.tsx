@@ -132,7 +132,7 @@ const CardsView = ({ framed, actionsTarget, fixedFilter, initialFilter }: CardsV
           </h3>
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
-            {can(Permission.CardsExport) && <ExportButton loading={isExporting} onExport={() => exportCards(queryFilter).unwrap()} />}
+            {can(Permission.CardsExport) && <ExportButton loading={isExporting} onExport={(format) => exportCards({ ...queryFilter, format }).unwrap()} />}
             {can(Permission.CardsCreate) && fixedFilter?.takenBy === undefined && (
               <Dropdown
                 placement="bottom-end"

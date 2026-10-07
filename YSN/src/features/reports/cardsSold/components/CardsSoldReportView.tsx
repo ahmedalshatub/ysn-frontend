@@ -83,7 +83,7 @@ const CardsSoldReportView = ({ framed, actionsTarget }: CardsSoldReportViewProps
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
               {ready && can(Permission.ReportsExport) && (
-                <ExportButton loading={isExporting} onExport={() => exportReport(queryFilter).unwrap()} />
+                <ExportButton loading={isExporting} onExport={(format) => exportReport({ ...queryFilter, format }).unwrap()} />
               )}
             </PageActions>
           </div>

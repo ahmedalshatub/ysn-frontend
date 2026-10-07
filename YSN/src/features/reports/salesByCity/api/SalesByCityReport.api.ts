@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   SalesByCityReportDto,
   SalesByCityReportFilter,
@@ -14,12 +15,12 @@ export const salesByCityReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportSalesByCityReport: builder.mutation<null, SalesByCityReportFilter>({
+    exportSalesByCityReport: builder.mutation<null, SalesByCityReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/sales-by-city/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("SalesByCity"),
+        responseHandler: exportResponseHandler("SalesByCity", params.format),
       }),
     }),
   }),

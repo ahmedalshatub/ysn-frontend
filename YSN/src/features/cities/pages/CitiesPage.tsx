@@ -7,10 +7,13 @@ import Card from "../../../shared/components/cards/Card";
 import Button from "../../../shared/components/buttons/Button";
 import Dropdown from "../../../shared/components/navigation/Dropdown";
 import ChevronDownIcon from "../../../assets/icons/ChevronDownIcon";
-import DownloadIcon from "../../../assets/icons/DownloadIcon";
+import SpreadsheetIcon from "../../../assets/icons/SpreadsheetIcon";
+import FileTextIcon from "../../../assets/icons/FileTextIcon";
+import PrinterIcon from "../../../assets/icons/PrinterIcon";
 import PlusIcon from "../../../assets/icons/PlusIcon";
 import MapPinIcon from "../../../assets/icons/MapPinIcon";
 import { Permission } from "../../../shared/types/Permissions.types";
+import { ExportFormat } from "../../../shared/types/ExportFormat.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import { useExportCitiesMutation, useGetCitiesQuery, useLazyGetCitiesQuery, useReorderCitiesMutation } from "../api/Cities.api";
 import CityFilters from "../components/CityFilters";
@@ -138,7 +141,13 @@ const CitiesPage = () => {
           { key: "ePaymentAllOff", label: t("cities.ePaymentOffForAll"), icon: <WalletIcon /> },
         ]
       : []),
-    ...(can(Permission.CitiesExport) ? [{ key: "export", label: t("common.export"), icon: <DownloadIcon /> }] : []),
+    ...(can(Permission.CitiesExport)
+      ? [
+          { key: ExportFormat.Excel, label: t("common.exportExcel"), icon: <SpreadsheetIcon /> },
+          { key: ExportFormat.Pdf, label: t("common.exportPdf"), icon: <FileTextIcon /> },
+          { key: ExportFormat.Print, label: t("common.print"), icon: <PrinterIcon /> },
+        ]
+      : []),
   ];
 
   const handleAction = async (key: string) => {
@@ -150,9 +159,9 @@ const CitiesPage = () => {
       openDialog(key);
       return;
     }
-    if (key === "export") {
+    if (key === ExportFormat.Excel || key === ExportFormat.Pdf || key === ExportFormat.Print) {
       try {
-        await exportCities(toQueryFilter(filterValues)).unwrap();
+        await exportCities({ ...toQueryFilter(filterValues), format: key }).unwrap();
       } catch (error) {
         showError(getErrorMessage(error));
       }

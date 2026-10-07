@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type { AddRoleDto, PermissionDto, RoleDto, RoleFilter, RoleListDto, RoleRequest, UpdateRoleDto } from "../types/Roles.types";
 
 export const rolesApi = instanceApi.injectEndpoints({
@@ -43,12 +44,12 @@ export const rolesApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportRoles: builder.mutation<null, RoleFilter>({
+    exportRoles: builder.mutation<null, RoleFilter & ExportRequest>({
       query: (params) => ({
         url: "Roles/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("Roles"),
+        responseHandler: exportResponseHandler("Roles", params.format),
       }),
     }),
   }),

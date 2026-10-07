@@ -152,7 +152,7 @@ const CardCategoriesPage = () => {
               />
             )}
             {can(Permission.CardCategoriesExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportCategories(queryFilter).unwrap()} />
+              <ExportButton loading={isExporting} onExport={(format) => exportCategories({ ...queryFilter, format }).unwrap()} />
             )}
             {can(Permission.CardCategoriesCreate) && (
               <Button

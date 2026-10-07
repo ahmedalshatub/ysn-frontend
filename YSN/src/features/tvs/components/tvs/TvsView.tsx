@@ -120,7 +120,7 @@ const TvsView = ({ framed, actionsTarget, customer, initialFilter, onChanged }: 
           </h3>
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
-              {can(Permission.TvsExport) && <ExportButton loading={isExporting} onExport={() => exportTvs(queryFilter).unwrap()} />}
+              {can(Permission.TvsExport) && <ExportButton loading={isExporting} onExport={(format) => exportTvs({ ...queryFilter, format }).unwrap()} />}
               {can(Permission.TvsCreate) && (!customer || customer.isActive) && (
                 <Button
                   variant="dark"

@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   MessageDto,
   MessageFilter,
@@ -40,12 +41,12 @@ export const messagesApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportMessages: builder.mutation<null, MessageFilter>({
+    exportMessages: builder.mutation<null, MessageFilter & ExportRequest>({
       query: (params) => ({
         url: "Messages/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("Messages"),
+        responseHandler: exportResponseHandler("Messages", params.format),
       }),
     }),
     getMessagesCount: builder.query<number, Partial<MessageRequest>>({

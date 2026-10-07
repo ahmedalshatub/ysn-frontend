@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   AgentPerformanceReportDto,
   AgentPerformanceReportFilter,
@@ -14,12 +15,12 @@ export const agentPerformanceReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportAgentPerformanceReport: builder.mutation<null, AgentPerformanceReportFilter>({
+    exportAgentPerformanceReport: builder.mutation<null, AgentPerformanceReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/agent-performance/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("AgentPerformance"),
+        responseHandler: exportResponseHandler("AgentPerformance", params.format),
       }),
     }),
   }),

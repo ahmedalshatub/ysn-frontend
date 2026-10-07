@@ -1,5 +1,6 @@
 import { instanceApi } from "../../../../app/api/instanceApi";
-import { excelResponseHandler } from "../../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../../shared/types/ExportFormat.types";
 import type {
   CardStockReportDto,
   CardStockReportFilter,
@@ -14,12 +15,12 @@ export const cardStockReportApi = instanceApi.injectEndpoints({
         params,
       }),
     }),
-    exportCardStockReport: builder.mutation<null, CardStockReportFilter>({
+    exportCardStockReport: builder.mutation<null, CardStockReportFilter & ExportRequest>({
       query: (params) => ({
         url: "Reports/card-stock/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("CardStock"),
+        responseHandler: exportResponseHandler("CardStock", params.format),
       }),
     }),
   }),

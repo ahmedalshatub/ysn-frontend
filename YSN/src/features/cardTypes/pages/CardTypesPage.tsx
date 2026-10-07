@@ -162,7 +162,7 @@ const CardTypesPage = () => {
               />
             )}
             {can(Permission.CardTypesExport) && (
-              <ExportButton loading={isExporting} onExport={() => exportCardTypes(queryFilter).unwrap()} />
+              <ExportButton loading={isExporting} onExport={(format) => exportCardTypes({ ...queryFilter, format }).unwrap()} />
             )}
             {can(Permission.CardTypesCreate) && (
               <Button

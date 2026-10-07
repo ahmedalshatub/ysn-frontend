@@ -58,7 +58,7 @@ const TvSmsApiLogsList = ({ actionsTarget, initialFilter }: TvSmsApiLogsListProp
             {t("tvSmsApiLogs.pageTitle")} <span className="list-header-count">({data?.totalCount ?? 0})</span>
           </h3>
           <PageActions target={actionsTarget}>
-            <ExportButton loading={isExporting} onExport={() => exportLogs(queryFilter).unwrap()} />
+            <ExportButton loading={isExporting} onExport={(format) => exportLogs({ ...queryFilter, format }).unwrap()} />
           </PageActions>
         </div>
         <TvSmsApiLogsTable

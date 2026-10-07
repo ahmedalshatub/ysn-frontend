@@ -1,6 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
-import { excelResponseHandler } from "../../../shared/utils/fileDownload";
+import { exportResponseHandler } from "../../../shared/utils/fileDownload";
+import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   CardCategoryDto,
   CardCategoryFilter,
@@ -70,12 +71,12 @@ export const cardCategoriesApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    exportCardCategories: builder.mutation<null, CardCategoryFilter>({
+    exportCardCategories: builder.mutation<null, CardCategoryFilter & ExportRequest>({
       query: (params) => ({
         url: "CardCategories/export",
         method: "GET",
         params,
-        responseHandler: excelResponseHandler("CardCategories"),
+        responseHandler: exportResponseHandler("CardCategories", params.format),
       }),
     }),
     getCustomerCardCategoryAccess: builder.query<
