@@ -15,7 +15,8 @@ export type CustomerAction =
   | "ChangeDiscount"
   | "Delete"
   | "Restore"
-  | "Export";
+  | "Export"
+  | "ManageEPayment";
 
 const useCustomerPermission = () => {
   const { can } = usePermission();

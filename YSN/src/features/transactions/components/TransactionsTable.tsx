@@ -11,6 +11,7 @@ import type { SortDirection } from "../../../shared/components/table/TableHeader
 import EyeIcon from "../../../assets/icons/EyeIcon";
 import TrashIcon from "../../../assets/icons/TrashIcon";
 import Undo2Icon from "../../../assets/icons/Undo2Icon";
+import RefreshCwIcon from "../../../assets/icons/RefreshCwIcon";
 import {
   TransactionStatus,
   TransactionType,
@@ -34,6 +35,7 @@ interface TransactionsTableProps {
   onView: (transaction: TransactionListDto) => void;
   onDelete: (transaction: TransactionListDto) => void;
   onRestore: (transaction: TransactionListDto) => void;
+  onCheck: (transaction: TransactionListDto) => void;
 }
 
 const isMoneyIn = (row: TransactionListDto, customerId?: number) => {
@@ -54,6 +56,7 @@ const TransactionsTable = ({
   onView,
   onDelete,
   onRestore,
+  onCheck,
 }: TransactionsTableProps) => {
   const { t, i18n } = useTranslation();
   const { can } = usePermission();
@@ -202,6 +205,9 @@ const TransactionsTable = ({
           const reversible = row.status !== TransactionStatus.Pending;
           const actions = [
             { label: t("transactions.view"), icon: <EyeIcon />, onClick: () => onView(row) },
+            ...(row.type === TransactionType.EPayment && row.status === TransactionStatus.Pending && !row.isDeleted && can(Permission.TransactionsCheckEPayment)
+              ? [{ label: t("transactions.checkEPayment"), icon: <RefreshCwIcon />, onClick: () => onCheck(row) }]
+              : []),
             ...(reversible && row.isDeleted && can(Permission.TransactionsRestore)
               ? [{ label: t("common.restore"), icon: <Undo2Icon />, onClick: () => onRestore(row) }]
               : []),
@@ -217,7 +223,7 @@ const TransactionsTable = ({
         },
       },
     ],
-    [t, i18n.language, can, customerId, onView, onDelete, onRestore]
+    [t, i18n.language, can, customerId, onView, onDelete, onRestore, onCheck]
   );
 
   return (

@@ -50,7 +50,7 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
   const { t } = useTranslation();
   const { can } = usePermission();
   const isEdit = !!cityId;
-  const canSetTvSmsApi = can(isEdit ? Permission.CitiesUpdate : Permission.CitiesCreate);
+  const canSetTvSmsApi = can(isEdit ? Permission.CitiesUpdate : Permission.CitiesCreate) && can(Permission.CitiesViewTvSmsSettings);
 
   const { data: city, isLoading: isLoadingCity } = useGetCityQuery(cityId as number, {
     skip: !isEdit || !open,
@@ -91,7 +91,7 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
         ...emptyValues,
         sortOrder: city.sortOrder,
         isActive: city.isActive,
-        hasTvSmsApi: city.hasTvSmsApi,
+        hasTvSmsApi: canSetTvSmsApi && city.hasTvSmsApi,
         tvSmsBaseUrl: city.tvSmsBaseUrl ?? "",
         tvSmsUserId: city.tvSmsUserId ?? "",
         tvSmsCertificateThumbprint: city.tvSmsCertificateThumbprint ?? "",
@@ -107,7 +107,7 @@ const CityModal = ({ open, onClose, onSuccess, cityId }: CityModalProps) => {
     } else if (!isEdit) {
       reset(emptyValues);
     }
-  }, [open, isEdit, city, reset]);
+  }, [open, isEdit, city, reset, canSetTvSmsApi]);
 
   const { data: activeCities } = useGetCitiesQuery({ isDeleted: false, pageNumber: 1, pageSize: 1 }, { skip: !open, refetchOnMountOrArgChange: true });
   const activeCount = activeCities?.totalCount ?? 0;

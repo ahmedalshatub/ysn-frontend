@@ -6,8 +6,16 @@ import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import PlusIcon from "../../../assets/icons/PlusIcon";
+import RefreshCwIcon from "../../../assets/icons/RefreshCwIcon";
+import { showError, showSuccess } from "../../../shared/components/feedback/Toast";
+import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import type { CustomerListDto } from "../../customers/types/Customers.types";
-import { useExportTransactionsMutation, useGetTransactionsQuery } from "../api/Transactions.api";
+import {
+  useCheckEPaymentMutation,
+  useCheckPendingEPaymentsMutation,
+  useExportTransactionsMutation,
+  useGetTransactionsQuery,
+} from "../api/Transactions.api";
 import TransactionFilters from "./TransactionFilters";
 import TransactionStatsCards from "./TransactionStatsCards";
 import TransactionsTable from "./TransactionsTable";
@@ -15,7 +23,7 @@ import TransactionDetailsModal from "./TransactionDetailsModal";
 import BalanceChangeModal from "./BalanceChangeModal";
 import DeleteTransactionAlert from "./DeleteTransactionAlert";
 import RestoreTransactionAlert from "./RestoreTransactionAlert";
-import type { TransactionFilter, TransactionListDto, TransactionRequest } from "../types/Transactions.types";
+import { transactionStatusKeys, type TransactionFilter, type TransactionListDto, type TransactionRequest } from "../types/Transactions.types";
 import PageActions from "../../../shared/components/navigation/PageActions";
 import ListContainer from "../../../shared/components/cards/ListContainer";
 
@@ -66,6 +74,8 @@ const TransactionsView = ({ framed, actionsTarget, customer, onChanged, initialF
     { refetchOnMountOrArgChange: true }
   );
   const [exportTransactions, { isLoading: isExporting }] = useExportTransactionsMutation();
+  const [checkEPayment] = useCheckEPaymentMutation();
+  const [checkPendingEPayments, { isLoading: isCheckingPending }] = useCheckPendingEPaymentsMutation();
 
   const openDialog = useCallback((name: DialogName, transaction: TransactionListDto | null) => {
     setSelected(transaction);
@@ -84,6 +94,32 @@ const TransactionsView = ({ framed, actionsTarget, customer, onChanged, initialF
   const handleView = useCallback((transaction: TransactionListDto) => openDialog("view", transaction), [openDialog]);
   const handleDelete = useCallback((transaction: TransactionListDto) => openDialog("delete", transaction), [openDialog]);
   const handleRestore = useCallback((transaction: TransactionListDto) => openDialog("restore", transaction), [openDialog]);
+  const handleCheck = async (transaction: TransactionListDto) => {
+    try {
+      const status = await checkEPayment(transaction.id).unwrap();
+      showSuccess(t("transactions.checkResult", { status: t(transactionStatusKeys[status]) }));
+      reload();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
+  const handleCheckPending = async () => {
+    try {
+      const result = await checkPendingEPayments().unwrap();
+      showSuccess(
+        t("transactions.checkPendingResult", {
+          checked: result.checked,
+          completed: result.completed,
+          failed: result.failed,
+          pending: result.stillPending,
+          errors: result.errors,
+        })
+      );
+      reload();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
 
   return (
     <div className={framed ? "space-y-6" : "space-y-4"}>
@@ -103,6 +139,18 @@ const TransactionsView = ({ framed, actionsTarget, customer, onChanged, initialF
           </h3>
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
+            {!customer && can(Permission.TransactionsCheckEPayment) && (
+              <Button
+                variant="dark"
+                outline
+                size="md"
+                label={t("transactions.checkPendingEPayments")}
+                icon={<RefreshCwIcon className="h-4 w-4" />}
+                iconPosition="left"
+                loading={isCheckingPending}
+                onClick={handleCheckPending}
+              />
+            )}
             {can(Permission.TransactionsExport) && (
               <ExportButton loading={isExporting} onExport={(format) => exportTransactions({ ...queryFilter, format }).unwrap()} />
             )}
@@ -133,6 +181,7 @@ const TransactionsView = ({ framed, actionsTarget, customer, onChanged, initialF
           onView={handleView}
           onDelete={handleDelete}
           onRestore={handleRestore}
+          onCheck={handleCheck}
         />
       </ListContainer>
       <TransactionStatsCards filter={queryFilter} refreshKey={refreshKey} />

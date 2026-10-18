@@ -2,33 +2,31 @@ import { instanceApi } from "../../../app/api/instanceApi";
 import type {
   ChangePasswordDto,
   CurrentUserDto,
-  LoginChallengeDto,
   LoginDto,
   LoginResponseDto,
-  ResendLoginCodeDto,
-  VerifyLoginCodeDto,
 } from "../types/Auth.types";
+import type { OtpLoginRequestDto, VerifyOtpLoginDto } from "../types/OtpLogin.types";
 import type { ForgetPasswordDto, VerifyOtpDto, VerifyOtpResponseDto, ResetPasswordDto } from "../types/PasswordReset.types";
 
 export const authApi = instanceApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<LoginChallengeDto, LoginDto>({
+    login: builder.mutation<LoginResponseDto, LoginDto>({
       query: (body) => ({
         url: "Auth/login",
         method: "POST",
         body,
       }),
     }),
-    verifyLoginCode: builder.mutation<LoginResponseDto, VerifyLoginCodeDto>({
+    otpLoginRequest: builder.mutation<void, OtpLoginRequestDto>({
       query: (body) => ({
-        url: "Auth/verify-login-code",
+        url: "Auth/otp-login-request",
         method: "POST",
         body,
       }),
     }),
-    resendLoginCode: builder.mutation<LoginChallengeDto, ResendLoginCodeDto>({
+    verifyOtpLogin: builder.mutation<LoginResponseDto, VerifyOtpLoginDto>({
       query: (body) => ({
-        url: "Auth/resend-login-code",
+        url: "Auth/verify-otp-login",
         method: "POST",
         body,
       }),
@@ -75,8 +73,8 @@ export const authApi = instanceApi.injectEndpoints({
 
 export const {
   useLoginMutation,
-  useVerifyLoginCodeMutation,
-  useResendLoginCodeMutation,
+  useOtpLoginRequestMutation,
+  useVerifyOtpLoginMutation,
   useGetCurrentUserQuery,
   useRevokeTokenMutation,
   useForgetPasswordMutation,

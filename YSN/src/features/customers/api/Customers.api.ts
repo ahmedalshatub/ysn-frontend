@@ -56,6 +56,20 @@ export const customersApi = instanceApi.injectEndpoints({
         body: { isActive },
       }),
     }),
+    changeSubAgentEPayment: builder.mutation<CustomerDto, { id: number; enabled: boolean }>({
+      query: ({ id, enabled }) => ({
+        url: `Users/${id}/epayment`,
+        method: "PUT",
+        body: { enabled },
+      }),
+    }),
+    changeAllSubAgentsEPayment: builder.mutation<number, { enabled: boolean }>({
+      query: (body) => ({
+        url: "Users/sub-agents/epayment",
+        method: "PUT",
+        body,
+      }),
+    }),
     setCustomerPassword: builder.mutation<boolean, { id: number; data: SetCustomerPasswordDto }>({
       query: ({ id, data }) => ({
         url: `Users/${id}/password`,
@@ -98,6 +112,8 @@ export const {
   useAddCustomerMutation,
   useUpdateCustomerMutation,
   useChangeCustomerStatusMutation,
+  useChangeSubAgentEPaymentMutation,
+  useChangeAllSubAgentsEPaymentMutation,
   useSetCustomerPasswordMutation,
   useDeleteCustomerMutation,
   useRestoreCustomerMutation,

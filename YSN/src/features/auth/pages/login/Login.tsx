@@ -4,10 +4,12 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import type { LoginCodeState, LoginDto } from "../../types/Auth.types";
+import type { LoginDto } from "../../types/Auth.types";
 import { toggleTheme } from "../../../../core/slices/theme.slice";
 import { useLoginMutation } from "../../api/Auth.api";
-import { showError } from "../../../../shared/components/feedback/Toast";
+import { login } from "../../slices/Auth.slice";
+import { showError, showSuccess } from "../../../../shared/components/feedback/Toast";
+import { isCustomerRole } from "../../../customers/types/Customers.types";
 import { getErrorMessage } from "../../../../shared/utils/errorHandler";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../../../../app/store";
@@ -51,15 +53,17 @@ const Login = () => {
   });
 
   const onSubmit = async (data: LoginDto) => {
+    const email = data.email.trim();
     try {
-      const challenge = await loginMutation({ email: data.email.trim(), password: data.password }).unwrap();
-      const state: LoginCodeState = {
-        challengeId: challenge.challengeId,
-        email: data.email.trim(),
-        resendAfterSeconds: challenge.resendAfterSeconds,
-        next: redirectUrl,
-      };
-      navigate("/login-code", { state });
+      const result = await loginMutation({ email, password: data.password }).unwrap();
+      if (result.roleId !== null && isCustomerRole(result.roleId)) {
+        showError(t("errors.Auth.DashboardNotAllowed"));
+        return;
+      }
+
+      dispatch(login(result));
+      showSuccess(t("login.loginSuccess"));
+      navigate(redirectUrl, { replace: true });
     } catch (error: any) { showError(getErrorMessage(error)); }
   };
 

@@ -3,20 +3,6 @@ export interface LoginDto {
   password: string;
 }
 
-export interface LoginChallengeDto {
-  challengeId: string;
-  expiresAt: string;
-  resendAfterSeconds: number;
-}
-
-export interface VerifyLoginCodeDto {
-  challengeId: string;
-  code: string;
-}
-
-export interface ResendLoginCodeDto {
-  challengeId: string;
-}
 
 export interface CurrentUserDto {
   id: number;
@@ -45,9 +31,3 @@ export interface ChangePasswordDto {
   confirmPassword: string;
 }
 
-export interface LoginCodeState {
-  challengeId: string;
-  email: string;
-  resendAfterSeconds: number;
-  next: string;
-}

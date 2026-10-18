@@ -94,6 +94,14 @@ export interface TransactionDto extends TransactionListDto {
   deleteReason: string | null;
 }
 
+export interface EPaymentCheckResultDto {
+  checked: number;
+  completed: number;
+  failed: number;
+  stillPending: number;
+  errors: number;
+}
+
 export interface TransactionStatsDto {
   transactionsCount: number;
   depositsTotal: number;

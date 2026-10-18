@@ -12,6 +12,9 @@ import useViewMode from "../../../shared/hooks/useViewMode";
 import { ViewMode, type ViewModeType } from "../../../shared/types/ViewMode.types";
 import type { SortDirection } from "../../../shared/components/table/TableHeader";
 import PlusIcon from "../../../assets/icons/PlusIcon";
+import WalletIcon from "../../../assets/icons/WalletIcon";
+import ChevronDownIcon from "../../../assets/icons/ChevronDownIcon";
+import Dropdown from "../../../shared/components/navigation/Dropdown";
 import { useExportCustomersMutation, useGetCustomersQuery } from "../api/Customers.api";
 import useCustomerActions, { type CustomerDialogName } from "../hooks/useCustomerActions";
 import useCustomerPermission from "../hooks/useCustomerPermission";
@@ -19,7 +22,9 @@ import CustomerFilters from "./CustomerFilters";
 import CustomersTable from "./CustomersTable";
 import CustomerCard from "./CustomerCard";
 import CustomerDialogs from "./CustomerDialogs";
+import AllSubAgentsEPaymentAlert from "./AllSubAgentsEPaymentAlert";
 import {
+  CustomerRole,
   customerRoleConfigs,
   type CustomerFilter,
   type CustomerListDto,
@@ -91,6 +96,7 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
   const [filterValues, setFilterValues] = useState<CustomerRequest>(initialValues);
   const [dialog, setDialog] = useState<CustomerDialogName | null>(null);
   const [selected, setSelected] = useState<CustomerListDto | null>(null);
+  const [allEPayment, setAllEPayment] = useState<boolean | null>(null);
 
   const queryFilter = { ...toQueryFilter(filterValues), ...fixedFilter, roleId: customerType };
   const { data, isLoading, isFetching, refetch } = useGetCustomersQuery(
@@ -154,6 +160,25 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
           </h3>
           <div className="flex flex-wrap items-center gap-2">
             <PageActions target={actionsTarget}>
+            {customerType === CustomerRole.SubAgent && canCustomer(customerType, "ManageEPayment") && !fixedFilter && (
+              <Dropdown
+                placement="bottom-end"
+                trigger={
+                  <Button
+                    variant="light"
+                    size="md"
+                    label={t("customers.ePayment")}
+                    icon={<ChevronDownIcon className="h-4 w-4" />}
+                    iconPosition="right"
+                  />
+                }
+                items={[
+                  { key: "on", label: t("customers.ePaymentOnForAll"), icon: <WalletIcon /> },
+                  { key: "off", label: t("customers.ePaymentOffForAll"), icon: <WalletIcon /> },
+                ]}
+                onSelect={(key) => setAllEPayment(key === "on")}
+              />
+            )}
             {canCustomer(customerType, "Export") && (
               <ExportButton
                 loading={isExporting}
@@ -223,6 +248,9 @@ const CustomersList = ({ actionsTarget, customerType, viewKey, fixedFilter, init
         onClose={closeDialog}
         onSuccess={refetch}
       />
+      {allEPayment !== null && (
+        <AllSubAgentsEPaymentAlert open enabled={allEPayment} onClose={() => setAllEPayment(null)} onSuccess={refetch} />
+      )}
     </div>
   );
 };

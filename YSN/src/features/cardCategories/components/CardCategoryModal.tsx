@@ -180,7 +180,6 @@ const CardCategoryModal = ({ open, categoryId, onClose, onSuccess }: CardCategor
             valueKey="value"
             labelKey="name"
             searchable
-            disabledStatus={isEdit && (category?.cardTypesCount ?? 0) > 0}
             error={!!errors.cityId}
             errorMessage={fieldError(errors.cityId?.message)}
           />

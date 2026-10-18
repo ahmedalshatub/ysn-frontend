@@ -78,6 +78,14 @@ const CustomerCard = ({ customer, actions, onOpen }: CustomerCardProps) => {
           </span>
         </span>
         {customer.roleId === CustomerRole.SubAgent && (
+          <span className={`entity-card-line ${customer.subAgentEPaymentEnabled ? "" : "entity-card-line-warning"}`}>
+            <WalletIcon className="h-4 w-4 flex-shrink-0" />
+            <span className="truncate">
+              {t("customers.ePayment")}: {t(customer.subAgentEPaymentEnabled ? "customers.ePaymentOn" : "customers.ePaymentOff")}
+            </span>
+          </span>
+        )}
+        {customer.roleId === CustomerRole.SubAgent && (
           <span className={`entity-card-line col-span-2 ${customer.parentAgentIsActive ? "" : "entity-card-line-warning"}`}>
             <LinkIcon className="h-4 w-4 flex-shrink-0" />
             <span className="truncate">

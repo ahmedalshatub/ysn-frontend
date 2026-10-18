@@ -1,5 +1,9 @@
 import { useTranslation } from "react-i18next";
 import Modal from "../../../shared/components/modals/Modal";
+import Button from "../../../shared/components/buttons/Button";
+import PrinterIcon from "../../../assets/icons/PrinterIcon";
+import { showError } from "../../../shared/components/feedback/Toast";
+import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import Loader from "../../../shared/components/feedback/Loader";
 import Badge from "../../../shared/components/badges/Badge";
 import DetailItem from "../../../shared/components/cards/DetailItem";
@@ -17,7 +21,7 @@ import TrashIcon from "../../../assets/icons/TrashIcon";
 import AlertCircleIcon from "../../../assets/icons/AlertCircleIcon";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
-import { useGetTransactionQuery } from "../api/Transactions.api";
+import { useGetTransactionQuery, usePrintTransactionMutation } from "../api/Transactions.api";
 import { TransactionType, transactionStatusKeys, transactionStatusVariants, transactionTypeKeys, transactionTypeVariants } from "../types/Transactions.types";
 
 interface TransactionDetailsModalProps {
@@ -29,6 +33,15 @@ interface TransactionDetailsModalProps {
 const TransactionDetailsModal = ({ open, transactionId, onClose }: TransactionDetailsModalProps) => {
   const { t, i18n } = useTranslation();
   const { data: transaction, isLoading } = useGetTransactionQuery(transactionId, { refetchOnMountOrArgChange: true });
+  const [printTransaction, { isLoading: isPrinting }] = usePrintTransactionMutation();
+
+  const handlePrint = async () => {
+    try {
+      await printTransaction(transactionId).unwrap();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
   const date = (value: string | null) => (value ? formatDate(value, { locale: i18n.language }) : "-");
   const balances = (before: number | null, after: number | null) =>
     after === null ? "-" : `${formatCurrency(before)} → ${formatCurrency(after)}`;
@@ -36,7 +49,10 @@ const TransactionDetailsModal = ({ open, transactionId, onClose }: TransactionDe
   return (
     <Modal open={open} onClose={onClose} size="lg">
       <div className="max-h-[85vh] space-y-6 overflow-y-auto p-6">
-        <h3 className="form-modal-title text-lg">{t("transactions.transaction")} #{transactionId}</h3>
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="form-modal-title text-lg">{t("transactions.transaction")} #{transactionId}</h3>
+          <Button variant="secondary" size="sm" label={t("common.print")} icon={<PrinterIcon className="w-4 h-4" />} iconPosition="left" loading={isPrinting} onClick={handlePrint} />
+        </div>
         {isLoading || !transaction ? (
           <div className="flex justify-center py-10">
             <Loader variant="spinner" size="lg" />

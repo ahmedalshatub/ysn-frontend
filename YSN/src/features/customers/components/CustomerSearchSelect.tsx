@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { Control, FieldValues, Path } from "react-hook-form";
+import { useWatch, type Control, type FieldValues, type Path } from "react-hook-form";
 import FormSelect from "../../../shared/components/inputs/FormSelect";
 import FormMultiSelect from "../../../shared/components/inputs/FormMultiSelect";
 import { useGetCustomersQuery } from "../api/Customers.api";
@@ -18,8 +18,20 @@ interface CustomerSearchSelectProps<T extends FieldValues> {
   onValueChange?: (value: number) => void;
 }
 
-const MIN_SEARCH_LENGTH = 2;
-const PAGE_SIZE = 20;
+const MIN_PHONE_DIGITS = 3;
+
+const normalize = (value: string) => value.toLowerCase().replace(/\s+/g, " ").trim();
+
+const phoneDigits = (value: string) => value.replace(/\D/g, "").replace(/^964/, "").replace(/^0/, "");
+
+const matches = (customer: CustomerListDto, search: string) => {
+  if (!search) return true;
+  if (normalize(customerFullName(customer)).includes(search)) return true;
+  if (customer.userName && normalize(customer.userName).includes(search)) return true;
+  if (customer.email && customer.email.toLowerCase().includes(search)) return true;
+  const digits = phoneDigits(search);
+  return digits.length >= MIN_PHONE_DIGITS && phoneDigits(customerPhone(customer)).includes(digits);
+};
 
 const CustomerSearchSelect = <T extends FieldValues>({
   name,
@@ -34,50 +46,34 @@ const CustomerSearchSelect = <T extends FieldValues>({
 }: CustomerSearchSelectProps<T>) => {
   const { t } = useTranslation();
   const [term, setTerm] = useState("");
-  const [debouncedTerm, setDebouncedTerm] = useState("");
-  const [known, setKnown] = useState<CustomerListDto[]>(initialCustomer ? [initialCustomer] : []);
+  const selected = useWatch({ control, name });
 
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedTerm(term.trim()), 400);
-    return () => clearTimeout(timer);
-  }, [term]);
-
-  const search = debouncedTerm.length >= MIN_SEARCH_LENGTH ? debouncedTerm : "";
-  const isPhone = /^[+0-9 ]+$/.test(search);
-  const isEmail = search.includes("@");
   const { data, isFetching } = useGetCustomersQuery(
     {
-      name: search && !isPhone && !isEmail ? search : undefined,
-      phoneNumber: search && isPhone ? search.replace(/^\+?964|^0/, "") : undefined,
-      email: search && isEmail ? search : undefined,
       roleId,
       isActive: true,
       isDeleted: false,
       sortBy: "firstName",
       isAscending: true,
-      pageSize: PAGE_SIZE,
     },
     { skip: !!initialCustomer, refetchOnMountOrArgChange: true }
   );
 
-  useEffect(() => {
-    const items = data?.items;
-    if (!items?.length) return;
-    setKnown((previous) => [...previous, ...items.filter((item) => !previous.some((customer) => customer.id === item.id))]);
-  }, [data]);
-
   const options = useMemo(() => {
-    const results = data?.items ?? [];
-    const customers = [...results, ...known.filter((customer) => !results.some((item) => item.id === customer.id))];
-    return customers.map((customer) => ({
-      value: customer.id,
-      name: customerFullName(customer),
-      label: customerFullName(customer),
-      description: [t(customerRoleConfigs[customer.roleId].labelKey), customerPhone(customer), customer.email, customer.cityName]
-        .filter(Boolean)
-        .join(" - "),
-    }));
-  }, [data, known, t]);
+    const customers = initialCustomer ? [initialCustomer] : data?.items ?? [];
+    const selectedIds = (Array.isArray(selected) ? selected : [selected]).map(Number);
+    const search = normalize(term);
+    return customers
+      .filter((customer) => selectedIds.includes(customer.id) || matches(customer, search))
+      .map((customer) => ({
+        value: customer.id,
+        name: customerFullName(customer),
+        label: customerFullName(customer),
+        description: [t(customerRoleConfigs[customer.roleId].labelKey), customerPhone(customer), customer.email, customer.cityName]
+          .filter(Boolean)
+          .join(" - "),
+      }));
+  }, [data, initialCustomer, selected, term, t]);
 
   if (multiple) {
     return (

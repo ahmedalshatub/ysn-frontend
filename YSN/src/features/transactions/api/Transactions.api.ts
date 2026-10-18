@@ -1,7 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
 import { exportResponseHandler } from "../../../shared/utils/fileDownload";
-import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
+import { ExportFormat, type ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type {
   AddTransactionDto,
   TransactionDto,
@@ -9,7 +9,9 @@ import type {
   TransactionListDto,
   TransactionRequest,
   TransactionStatsDto,
+  TransactionStatusValue,
   DailyTransactionTotalDto,
+  EPaymentCheckResultDto,
 } from "../types/Transactions.types";
 
 export const transactionsApi = instanceApi.injectEndpoints({
@@ -49,6 +51,9 @@ export const transactionsApi = instanceApi.injectEndpoints({
         method: "POST",
       }),
     }),
+    printTransaction: builder.mutation<null, number>({
+      query: (id) => ({ url: `Transactions/${id}/print`, method: "GET", responseHandler: exportResponseHandler("Transaction", ExportFormat.Print) }),
+    }),
     exportTransactions: builder.mutation<null, TransactionFilter & ExportRequest>({
       query: (params) => ({
         url: "Transactions/export",
@@ -56,6 +61,12 @@ export const transactionsApi = instanceApi.injectEndpoints({
         params,
         responseHandler: exportResponseHandler("Transactions", params.format),
       }),
+    }),
+    checkEPayment: builder.mutation<TransactionStatusValue, number>({
+      query: (id) => ({ url: `EPayment/${id}/check`, method: "POST" }),
+    }),
+    checkPendingEPayments: builder.mutation<EPaymentCheckResultDto, void>({
+      query: () => ({ url: "EPayment/check-pending", method: "POST" }),
     }),
     getTransactionDailyTotals: builder.query<DailyTransactionTotalDto[], TransactionFilter>({
       query: (params) => ({ url: "Transactions/stats/daily", params }),
@@ -71,5 +82,8 @@ export const {
   useDeleteTransactionMutation,
   useRestoreTransactionMutation,
   useExportTransactionsMutation,
+  usePrintTransactionMutation,
   useGetTransactionDailyTotalsQuery,
+  useCheckEPaymentMutation,
+  useCheckPendingEPaymentsMutation,
 } = transactionsApi;

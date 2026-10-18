@@ -271,6 +271,7 @@ const FormSelect = <T extends FieldValues>({
 
           const handleKeyDown = (e: React.KeyboardEvent) => {
             if (disabledStatus) return;
+            if (e.key === " " && e.target === searchRef.current) return;
 
             switch (e.key) {
               case "Enter":

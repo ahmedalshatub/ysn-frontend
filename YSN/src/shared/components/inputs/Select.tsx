@@ -250,6 +250,7 @@ const Select: React.FC<SelectProps> = ({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (disabled) return;
+    if (e.key === " " && e.target === searchRef.current) return;
 
     switch (e.key) {
       case "Enter":

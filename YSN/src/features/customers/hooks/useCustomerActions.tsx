@@ -15,7 +15,7 @@ import TrendDownIcon from "../../../assets/icons/TrendDownIcon";
 import usePermission from "../../../shared/hooks/usePermission";
 import { Permission } from "../../../shared/types/Permissions.types";
 import useCustomerPermission from "./useCustomerPermission";
-import type { CustomerListDto } from "../types/Customers.types";
+import { CustomerRole, type CustomerListDto } from "../types/Customers.types";
 
 export type CustomerDialogName =
   | "form"
@@ -31,7 +31,8 @@ export type CustomerDialogName =
   | "cards"
   | "invoices"
   | "discounts"
-  | "tvs";
+  | "tvs"
+  | "ePayment";
 
 interface CustomerActionOptions {
   onOpen?: (customer: CustomerListDto) => void;
@@ -83,6 +84,13 @@ const useCustomerActions = ({ onOpen, onDialog }: CustomerActionOptions) => {
           : []),
         ...(canPermission(Permission.TvsView)
           ? [{ label: t("tvs.pageTitle"), icon: <MonitorIcon />, onClick: () => onDialog("tvs", customer) }]
+          : []),
+        ...(type === CustomerRole.SubAgent && can("ManageEPayment")
+          ? [{
+              label: customer.subAgentEPaymentEnabled ? t("customers.turnEPaymentOff") : t("customers.turnEPaymentOn"),
+              icon: <WalletIcon />,
+              onClick: () => onDialog("ePayment", customer),
+            }]
           : []),
         ...(can("ChangeStatus")
           ? [{

@@ -19,8 +19,8 @@ const AccountStatementReportSummaryCards = ({ summary }: AccountStatementReportS
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
       <MiniStatCard icon={<WalletIcon />} label={t("reports.accountStatement.openingBalance")} value={formatCurrency(summary.openingBalance)} variant="dark" />
-      <MiniStatCard icon={<TrendUpIcon />} label={t("reports.accountStatement.totalCredit")} value={formatCurrency(summary.totalCredit)} variant="success" />
-      <MiniStatCard icon={<TrendDownIcon />} label={t("reports.accountStatement.totalDebit")} value={formatCurrency(summary.totalDebit)} variant="danger" />
+      <MiniStatCard icon={<TrendUpIcon />} label={t("reports.accountStatement.totalIncrease")} value={formatCurrency(summary.totalIncrease)} variant="success" />
+      <MiniStatCard icon={<TrendDownIcon />} label={t("reports.accountStatement.totalDecrease")} value={formatCurrency(summary.totalDecrease)} variant="danger" />
       <MiniStatCard icon={<WalletIcon />} label={t("reports.accountStatement.closingBalance")} value={formatCurrency(summary.closingBalance)} variant="primary" />
       <MiniStatCard icon={<WalletIcon />} label={t("reports.accountStatement.currentBalance")} value={formatCurrency(summary.currentBalance)} variant="info" />
       <MiniStatCard icon={<ArrowUpDownIcon />} label={t("reports.accountStatement.linesCount")} value={summary.linesCount} variant="dark" />

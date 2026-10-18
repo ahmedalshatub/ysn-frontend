@@ -31,9 +31,9 @@ export interface AccountStatementReportRowDto {
   otherPartyId: number | null;
   otherPartyName: string | null;
   createdByName: string | null;
-  credit: number;
-  debit: number;
-  runningBalance: number | null;
+  balanceBefore: number | null;
+  amount: number;
+  balanceAfter: number | null;
 }
 
 export interface AccountStatementReportSummaryDto {
@@ -41,8 +41,8 @@ export interface AccountStatementReportSummaryDto {
   customerName: string;
   customerRoleId: number;
   openingBalance: number;
-  totalCredit: number;
-  totalDebit: number;
+  totalIncrease: number;
+  totalDecrease: number;
   closingBalance: number;
   linesCount: number;
   notAppliedCount: number;

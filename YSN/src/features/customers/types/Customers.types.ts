@@ -94,6 +94,7 @@ export interface CustomerListDto extends BaseDto {
   parentAgentId: number | null;
   parentAgentName: string | null;
   parentAgentIsActive: boolean;
+  subAgentEPaymentEnabled: boolean;
   subAgentsCount: number;
   maxTvCount: number | null;
   isUnlimitedTvs: boolean;

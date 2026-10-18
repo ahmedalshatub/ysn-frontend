@@ -1,7 +1,7 @@
 import { instanceApi } from "../../../app/api/instanceApi";
 import type { BaseListResponse } from "../../../shared/types/base";
 import { exportResponseHandler } from "../../../shared/utils/fileDownload";
-import type { ExportRequest } from "../../../shared/types/ExportFormat.types";
+import { ExportFormat, type ExportRequest } from "../../../shared/types/ExportFormat.types";
 import type { InvoiceDto, InvoiceFilter, InvoiceListDto, InvoiceRequest, InvoiceStatsDto, DailyInvoiceTotalDto, TopCardTypeDto } from "../types/Invoices.types";
 
 export const invoicesApi = instanceApi.injectEndpoints({
@@ -17,6 +17,9 @@ export const invoicesApi = instanceApi.injectEndpoints({
     }),
     deleteInvoice: builder.mutation<boolean, { id: number; reason: string }>({
       query: ({ id, reason }) => ({ url: `Invoices/${id}`, method: "DELETE", body: { reason } }),
+    }),
+    printInvoice: builder.mutation<null, number>({
+      query: (id) => ({ url: `Invoices/${id}/print`, method: "GET", responseHandler: exportResponseHandler("Invoice", ExportFormat.Print) }),
     }),
     exportInvoices: builder.mutation<null, InvoiceFilter & ExportRequest>({
       query: (params) => ({ url: "Invoices/export", method: "GET", params, responseHandler: exportResponseHandler("Invoices", params.format) }),
@@ -36,6 +39,7 @@ export const {
   useGetInvoiceQuery,
   useDeleteInvoiceMutation,
   useExportInvoicesMutation,
+  usePrintInvoiceMutation,
   useGetInvoiceDailyTotalsQuery,
   useGetTopCardTypesQuery,
 } = invoicesApi;

@@ -1,5 +1,9 @@
 import { useTranslation } from "react-i18next";
 import Modal from "../../../shared/components/modals/Modal";
+import Button from "../../../shared/components/buttons/Button";
+import PrinterIcon from "../../../assets/icons/PrinterIcon";
+import { showError } from "../../../shared/components/feedback/Toast";
+import { getErrorMessage } from "../../../shared/utils/errorHandler";
 import Loader from "../../../shared/components/feedback/Loader";
 import Badge from "../../../shared/components/badges/Badge";
 import DetailItem from "../../../shared/components/cards/DetailItem";
@@ -14,7 +18,7 @@ import TrashIcon from "../../../assets/icons/TrashIcon";
 import AlertCircleIcon from "../../../assets/icons/AlertCircleIcon";
 import { formatDate } from "../../../shared/hooks/dateFormatter";
 import { formatCurrency } from "../../../shared/utils/formatCurrency";
-import { useGetInvoiceQuery } from "../api/Invoices.api";
+import { useGetInvoiceQuery, usePrintInvoiceMutation } from "../api/Invoices.api";
 
 interface InvoiceDetailsModalProps {
   open: boolean;
@@ -25,12 +29,25 @@ interface InvoiceDetailsModalProps {
 const InvoiceDetailsModal = ({ open, invoiceId, onClose }: InvoiceDetailsModalProps) => {
   const { t, i18n } = useTranslation();
   const { data: invoice, isLoading } = useGetInvoiceQuery(invoiceId, { refetchOnMountOrArgChange: true });
+  const [printInvoice, { isLoading: isPrinting }] = usePrintInvoiceMutation();
+
+  const handlePrint = async () => {
+    try {
+      await printInvoice(invoiceId).unwrap();
+    } catch (error) {
+      showError(getErrorMessage(error));
+    }
+  };
+
   const date = (value: string | null) => (value ? formatDate(value, { locale: i18n.language }) : "-");
 
   return (
     <Modal open={open} onClose={onClose} size="lg">
       <div className="max-h-[85vh] space-y-6 overflow-y-auto p-6">
-        <h3 className="form-modal-title text-lg">{t("invoices.invoice")} #{invoiceId}</h3>
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="form-modal-title text-lg">{t("invoices.invoice")} #{invoiceId}</h3>
+          <Button variant="secondary" size="sm" label={t("common.print")} icon={<PrinterIcon className="w-4 h-4" />} iconPosition="left" loading={isPrinting} onClick={handlePrint} />
+        </div>
         {isLoading || !invoice ? (
           <div className="flex justify-center py-10">
             <Loader variant="spinner" size="lg" />

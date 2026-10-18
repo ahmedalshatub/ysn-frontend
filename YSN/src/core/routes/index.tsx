@@ -4,7 +4,7 @@ import { Permission } from "../../shared/types/Permissions.types";
 
 const NotFound = lazy(() => import("../../features/exceptions/pages/NotFound"));
 const Login = lazy(() => import("../../features/auth/pages/login/Login"));
-const LoginCode = lazy(() => import("../../features/auth/pages/login-code/LoginCode"));
+const OtpLogin = lazy(() => import("../../features/auth/pages/otp-login/OtpLogin"));
 const ForgotPassword = lazy(() => import("../../features/auth/pages/forgot-password/ForgotPassword"));
 const ServerError = lazy(() => import("../../features/exceptions/pages/ServerError"));
 
@@ -352,9 +352,9 @@ const authRoutes: any = [
     element: <Login />,
   },
   {
-    path: "/login-code",
-    name: "Login Code",
-    element: <LoginCode />,
+    path: "/otp-login",
+    name: "OTP Login",
+    element: <OtpLogin />,
   },
   {
     path: "/forgot-password",

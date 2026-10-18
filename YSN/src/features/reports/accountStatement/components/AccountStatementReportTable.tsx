@@ -72,26 +72,41 @@ const AccountStatementReportTable = ({ items, totalCount, loading, pageNumber, p
         render: (row: AccountStatementReportRowDto) => <span>{row.createdByName || "-"}</span>,
       },
       {
-        key: "credit",
-        header: t("reports.accountStatement.credit"),
-        width: "130px",
+        key: "balanceBefore",
+        header: t("reports.accountStatement.balanceBefore"),
+        width: "140px",
+        render: (row: AccountStatementReportRowDto) => <span>{row.balanceBefore === null ? "-" : formatCurrency(row.balanceBefore)}</span>,
+      },
+      {
+        key: "amount",
+        header: t("reports.accountStatement.amount"),
+        width: "140px",
         render: (row: AccountStatementReportRowDto) => (
-          <span className="font-semibold text-success">{row.credit > 0 ? formatCurrency(row.credit) : "-"}</span>
+          <span className={`font-semibold ${row.amount > 0 ? "text-success" : "text-danger"}`}>
+            {row.amount > 0 ? "+" : ""}{formatCurrency(row.amount)}
+          </span>
         ),
       },
       {
-        key: "debit",
-        header: t("reports.accountStatement.debit"),
-        width: "130px",
-        render: (row: AccountStatementReportRowDto) => (
-          <span className="font-semibold text-danger">{row.debit > 0 ? formatCurrency(row.debit) : "-"}</span>
-        ),
+        key: "action",
+        header: t("reports.accountStatement.action"),
+        width: "110px",
+        render: (row: AccountStatementReportRowDto) =>
+          row.amount === 0 ? (
+            <span>-</span>
+          ) : (
+            <Badge
+              label={t(row.amount > 0 ? "reports.accountStatement.increase" : "reports.accountStatement.decrease")}
+              variant={row.amount > 0 ? "success" : "danger"}
+              size="sm"
+            />
+          ),
       },
       {
-        key: "runningBalance",
+        key: "balanceAfter",
         header: t("reports.accountStatement.runningBalance"),
         width: "140px",
-        render: (row: AccountStatementReportRowDto) => <span className="font-semibold">{row.runningBalance === null ? "-" : formatCurrency(row.runningBalance)}</span>,
+        render: (row: AccountStatementReportRowDto) => <span className="font-semibold">{row.balanceAfter === null ? "-" : formatCurrency(row.balanceAfter)}</span>,
       },
     ],
     [t, i18n.language]

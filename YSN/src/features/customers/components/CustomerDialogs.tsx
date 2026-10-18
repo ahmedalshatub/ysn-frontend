@@ -5,6 +5,7 @@ import ChangeCustomerStatusAlert from "./ChangeCustomerStatusAlert";
 import SetCustomerPasswordModal from "./SetCustomerPasswordModal";
 import DeleteCustomerAlert from "./DeleteCustomerAlert";
 import RestoreCustomerAlert from "./RestoreCustomerAlert";
+import SubAgentEPaymentAlert from "./SubAgentEPaymentAlert";
 import MessagesModal from "../../messages/components/MessagesModal";
 import SendMessageModal from "../../messages/components/SendMessageModal";
 import CustomerTransactionsModal from "../../transactions/components/CustomerTransactionsModal";
@@ -65,6 +66,8 @@ const CustomerDialogs = ({ dialog, customer, createType, onClose, onSuccess, onT
       return <CardsModal open title={customerFullName(customer)} fixedFilter={{ takenBy: customer.id }} onClose={onClose} />;
     case "tvs":
       return <CustomerTvsModal open customer={customer} onClose={onClose} />;
+    case "ePayment":
+      return <SubAgentEPaymentAlert open customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     case "restore":
       return <RestoreCustomerAlert open customer={customer} onClose={onClose} onSuccess={onSuccess} />;
     default:
